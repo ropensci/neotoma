@@ -34,6 +34,7 @@ GEM
     httparty (0.10.2)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
+    json (1.7.7)
     launchy (2.2.0)
       addressable (~> 2.3)
     mime-types (1.21)
@@ -82,5 +83,6 @@ DEPENDENCIES
   dashing
   heroku
   httparty
+  json
   sinatra
   thin

@@ -1,5 +1,5 @@
 require 'httparty'
-require 'JSON'
+require 'json'
 
 SCHEDULER.every '60s', :first_in => 0 do |job|
   result = HTTParty.get('http://taxosaurus.org/sources/list')
