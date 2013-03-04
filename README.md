@@ -4,7 +4,7 @@ This app is built on [Dashing](http://shopify.github.com/dashing), from [Shopify
 
 The app is hosted on Heroku.
 
-See the dashboard here [http://rodash.herokuapp.com/sample](http://rodash.herokuapp.com/sample).  You can move the tiles (or in their words, widgets) around - put them in new places, etc. Here's a screenshot:
+See the dashboard here [http://rodash.herokuapp.com/roapi](http://rodash.herokuapp.com/roapi).  You can move the tiles (or in their words, widgets) around - put them in new places, etc. Here's a screenshot:
 
 ![](https://raw.github.com/ropensci/rodash/master/assets/images/app_sshot.png)
 
@@ -19,6 +19,14 @@ You can modify the default 'apis' app, or create a new app inside the /dashboard
 ##### Tiles
 Each tile in the app is a 'widget'. Go to /jobs/filename.rb to edit a particular tile, or within that folder to add a new tile, etc. 
 
+If you add a new tile you need to add a `<li>` element within a dashboard file (e.g., /dashboards/roapi.erb) for it to show up, like this:
+
+```html
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="nameofwidget" data-view="datatype" data-title="whatevername"></div>
+</li>
+```
+
 ##### Styling
 Files of interest:
 
@@ -32,9 +40,9 @@ Files of interest:
 
 ##### Looking at changes locally
 
-Go to the repo folder in terminal, and run `dashing start`
+Go to the repo folder in terminal, and run `dashing start`, then point browser to [http://localhost:3030/](http://localhost:3030/)
 
-### Push to GitHub or to Heroku
+### Push to GitHub/Heroku
 
 #### Github
 
@@ -42,7 +50,7 @@ As you normally would commit and push.
 
 #### Heroku
 
-If you just pushed to Github, files are already committed for Heroku, so we just need to bundle up the app, and push to Heroku.  
+If you just pushed to Github, files are already committed for Heroku, so we just need to bundle up the app, and push to Heroku.  If you didn't push to github, remember to add and commit files first, then do the below.
 
 ```
 bundle install
