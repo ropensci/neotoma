@@ -2,7 +2,7 @@
 $(function() {
   // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
   // Dashing.gridsterLayout('[{"col":1,"row":1},{"col":2,"row":1},{"col":3,"row":1},{"col":4,"row":1},{"col":5,"row":1},{"col":6,"row":1},{"col":1,"row":2},{"col":2,"row":2},{"col":3,"row":2},{"col":4,"row":2},{"col":5,"row":2},{"col":6,"row":2},{"col":1,"row":3},{"col":2,"row":3},{"col":3,"row":3},{"col":4,"row":3},{"col":5,"row":3},{"col":6,"row":3}]')
-  Dashing.widget_base_dimensions = [200, 100]
+  Dashing.widget_base_dimensions = [200, 300]
   Dashing.numColumns = 6
 });
 </script>
@@ -17,37 +17,30 @@ $(function() {
       <div data-view="Image" data-image="/ropensci_main.png"></div>
     </li>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="impactstory" data-view="Text" data-title="ImpactStory"></div> -->
       <div data-id="impactstory" data-view="Meter" data-title="ImpactStory" data-min="0" data-max="100" style="background-color:#BA6E39"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="plosalm" data-view="Text" data-title="PLoS ALM API" style="background-color:#ff9618">></div> -->
       <div data-id="plosalm" data-view="Meter" data-title="PLoS ALM" data-min="0" data-max="100" style="background-color:#F8BD1C"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="opensnporg" data-view="Text" data-title="OpenSNP API" style="background-color:#67681B">></div> -->
       <div data-id="opensnporg" data-view="Meter" data-title="OpenSNP" data-min="0" data-max="100" style="background-color:#E8BE85"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="altmetric" data-view="Text" data-title="Altmetric API" style="background-color:#FFCBC4">></div> -->
       <div data-id="altmetric" data-view="Meter" data-title="Altmetric" data-min="0" data-max="100" style="background-color:#AD8D22"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="figshare" data-view="Text" data-title="Figshare API" style="background-color:#F5DA00">></div> -->
       <div data-id="figshare" data-view="Meter" data-title="Figshare" data-min="0" data-max="100" style="background-color:#EF8E36"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="figshare" data-view="Text" data-title="Figshare API" style="background-color:#F5DA00">></div> -->
       <div data-id="bhl" data-view="Meter" data-title="BiodHerLibr" data-min="0" data-max="100" style="background-color:#AD8257"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <!-- <div data-id="figshare" data-view="Text" data-title="Figshare API" style="background-color:#F5DA00">></div> -->
       <div data-id="ebird" data-view="Meter" data-title="eBird" data-min="0" data-max="100" style="background-color:#E7B854"></div>
     </li>
 

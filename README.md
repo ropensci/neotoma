@@ -30,6 +30,10 @@ Files of interest:
 + /config.ru (setting configuration settings)
 + Dashboards are in /dashboards/ (the default one is called apis.erb)
 
+##### Looking at changes locally
+
+Go to the repo folder in terminal, and run `dashing start`
+
 ### Push to GitHub or to Heroku
 
 #### Github
