@@ -2,6 +2,7 @@ require 'dashing'
 
 configure do
   set :auth_token, 'wadup'
+  set :default_dashboard, 'apis'
 
   helpers do
     def protected!
