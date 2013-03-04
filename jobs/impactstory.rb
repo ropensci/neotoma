@@ -9,12 +9,12 @@ SCHEDULER.every '60s', :first_in => 0 do |job|
   result = HTTParty.get("http://api.impactstory.org/v1?key=chamberlain-i46lg5")
 
 	if result["message"] == "Congratulations! You have found the ImpactStory API."
-			# out = "BOOM! It's up"
-			out = 100
+			out = "BOOM! It's up"
+			# out = 100
 		else
-			# out = "Sad face. It's down"
-			out = 0
+			out = "Sad. It's down"
+			# out = 0
 		end
   
-  send_event('impactstory', { value: out })
+  send_event('impactstory', { text: out })
 end
