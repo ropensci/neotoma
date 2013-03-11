@@ -3,7 +3,7 @@ require 'httparty'
 SCHEDULER.every '60s', :first_in => 0 do |job|
   result = HTTParty.get('http://resolver.globalnames.org/name_resolvers.json?names=Plantago+major&data_source_ids=1')
   
-	if result['context'][0]['context_clade'] == "Plantago major"
+	if result['data'][0]['supplied_name_string'] == "Plantago major"
 			out = "BOOM! It's up"
 			# out = 100
 		else
