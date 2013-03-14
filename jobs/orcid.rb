@@ -1,5 +1,5 @@
 require 'httparty'
-require 'Crack'
+require 'crack'
 
 SCHEDULER.every '60s', :first_in => 0 do |job|
 	
