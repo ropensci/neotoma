@@ -1,19 +1,47 @@
-##################################################################
-#  Patching functions into the Neotoma API
-#
-#  
-
-require(RJSONIO)
-require(RCurl)
-require(reshape)
-require(plyr)
-
+#' Return Site Information.
+#' 
+#' \code{get.sites} returns site information from the Neotoma Paleoecological Database 
+#'    based on parameters defined by the user.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param siteid The numerical site ID.
+#' @param sitename A character string representing the full or partial site name.
+#' @param altmin Minimum site altitude  (in m).
+#' @param altmax Maximum site altitude (in m).
+#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
+#' @param gpid A character string, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
+#' 
+#' @author Simon J. Goring
+#' @details A table:
+#'    
+#'    \item{SiteID}{Unique database record identifier for the site.}
+#'    \item{SiteName}{Name of the site.}
+#'    \item{Altitude}{Altitude in meters.}
+#'    \item{LatitudeNorth}{North bounding latitude, in decimal degrees, for a site.}
+#'    \item{LatitudeSouth}{South bounding latitude, in decimal degrees, for a site.}
+#'    \item{LongitudeEast}{East bounding longitude, in decimal degrees, for a site.}
+#'    \item{LongitudeWest}{West bounding longitude, in decimal degrees, for a site.}
+#'    \item{SiteDescription}{Free form description of a site, including such information as physiography and vegetation around the site.}
+#'    
+#'    Extended response variables when only a single site is returned:
+#'    \item{CollectionUnitID}{Unique database record identifier for the collection unit.}
+#'    \item{Handle}{Code name for the collection unit. This code may be up to 10 characters, but an effort is made to keep these to 8 characters or less. Data are frequently distributed by collection unit, and the handle is used for file names.}
+#'    \item{CollType}{The collection type. Types include cores, sections, excavations, and animal middens. Collection Units may be modern collections, surface float, or isolated specimens. Composite Collections Units include different kinds of Analysis Units, for example a modern surface sample for ostracodes and an associated water sample.}
+#'    \item{Datasets}{An array of objects that describe datasets associated with a site.}
+#' @examples \dontrun{
+#' #  What is the distribution of site elevations in Neotoma?
+#' all.sites <- get.sites()  #takes a bit of time.
+#' 
+#' plot(density(all.sites$Altitude, from = 0, na.rm=TRUE),
+#' main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
-
+  
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
   
   cl <- as.list(match.call())
@@ -92,11 +120,44 @@ get.sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
   output
 }
 
+#' Function to return full dataset records.
+#' 
+#' Using the dataset ID, return all records associated with the data.  At present, 
+#'    only returns the dataset in an unparsed format, not as a data table.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param datasetid Dataset ID, as returned by \code{get.datasets}.
+#' @author Simon J. Goring
+#' @details This command returns either a 'try-error' definined by the error returned 
+#'    from the Neotoma API call, or a list comprising the following values:
+#'    
+#'    \item{DatasetID}{Unique database record identifier for the dataset.}
+#'    \item{DatasetName}{Name of the dataset; not commonly used.}
+#'    \item{CollUnitHandle}{Code name of the Collection Unit with which the dataset is associated. This code may be up to 10 characters. Data are frequently distributed by Collection Unit, and the Handle is used for file names.}
+#'    \item{CollUnitType}{The collection type. Types include cores, sections, excavations, and animal middens.}
+#'    \item{DatasetType}{The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.}
+#'    \item{NeotomaLastSub}{The date of the most recent submission.}
+#'    \item{DefChronologyID}{The unique database identifier for the default chronology.}
+#'    \item{DatasetPIs}{An array of objects that describe Principal Investigators associated with a dataset}
+#'    \item{Site}{  An object describing the site where the dataset samples were taken}
+#'    \item{Samples}{	An array of objects describing the individual dataset samples}
+#'    
+#'    Here the \code{Samples} is the real prize, but at present the format of 
+#'    the data object is simply a list of lists.  This needs work.
+#' @examples \dontrun{
+#' #  Search for sites with "Thuja" pollen that are older than 8kyr BP and
+#' #  that are on the west coast of North America:
+#' t8kyr.datasets <- get.datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' 
+#' #  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
+#' GOLDKBG <- get.download(t8kyr.datasets[[1]]$DatasetID)
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.download <- function(datasetid){
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
   
   #This needs work.
   base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
@@ -127,12 +188,57 @@ get.download <- function(datasetid){
   
 }
 
+#' A function to obtain contact information for data contributors from the Neotoma 
+#'    Paleoecological Database.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param contactid Contact ID is a numerical value associated with the Neotoma 
+#'    Contact table's numerical Contact ID.
+#' @param contactname A character string indicating the data contributors' project, 
+#'    organization or personal name.  May be a partial string and can include wildcards. 
+#' @param contactstatus The current status of the contact.  Possible values include: 
+#'    active, deceased, defunct, extant, inactive, retired, unknown.
+#' @param familyname A character string.  Full or partial string indicating the 
+#'    contact's last name.
+#' @author Simon J. Goring
+#' @details The function takes parameters defined by the user and returns a list 
+#'    of contact information supplied by the Neotoma Paleoecological Database.  
+#'    The user may define all or none of the possible fields.  The function contains 
+#'    data chacks for each defined parameter.
+#'    
+#'    The function returns either a single item of class "try-error" describing 
+#'    the reason for failure (either mis-defined parameters or an error from the Neotoma API), 
+#'    or a table of contacts, with rows corresponding to the number of individual 
+#'    contacts returned by the Neotoma API.  Each row entry includes the following parameters:
+#'    \item{ContactID}{Unique database record identifier for the contact.}
+#'    \item{AliasID}{The ContactID of a person's current name. If the AliasID is different from the ContactID, the ContactID refers to the person's former name.}
+#'    \item{ContactName}{Full name of the person, last name first (e.g. “Simpson, George Gaylord”) or name of organization or project (e.g. “Great Plains Flora Association”).}
+#'    \item{ContactStatus}{Current status of the person, organization, or project. Field links to the ContactStatuses lookup table.}
+#'    \item{FamilyName}{Family or surname name of a person.}
+#'    \item{LeadingInitials}{Leading initials for given or forenames without spaces (e.g. “G.G.”).}
+#'    \item{GivenNames}{Given or forenames of a person (e.g. “George Gaylord”). Initials with spaces are used if full given names are not known (e.g. “G. G”).}
+#'    \item{Suffix}{Suffix of a person's name (e.g. “Jr.”, “III”).}
+#'    \item{Title}{A person’s title (e.g. “Dr.”, “Prof.”, “Prof. Dr”).}
+#'    \item{Phone}{Telephone number.}
+#'    \item{Fax}{Fax number.}
+#'    \item{Email}{Email address.}
+#'    \item{URL}{Universal Resource Locator, an Internet World Wide Web address.}
+#'    \item{Address}{Full mailing address.}
+#'    \item{Notes}{Free form notes or comments about the person, organization, or project.}
+#' @examples \dontrun{
+#' #  To find all data contributors who are active:
+#' active.cont <- get.contacts(contactstatus = 'active')
+#' 
+#' # To find all data contributors who have the last name "Smith"
+#' smith.cont <- get.contacts(familyname = 'Smith')
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.contacts <- function(contactid, contactname, contactstatus, familyname){
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
-  
+
   base.uri <- 'http://api.neotomadb.org/v1/data/contacts'
   
   cl <- as.list(match.call())
@@ -192,13 +298,61 @@ get.contacts <- function(contactid, contactname, contactstatus, familyname){
   output  
 }
 
+#' Obtain full datasets from the Neotoma Paleoecological Database.
+#' 
+#' A function to access the Neotoma API and return datasets corresponding to the 
+#'    parameters defined by the user.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param siteid A numeric value corresponding to the site ID.
+#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: 'geochronologic', 'loss-on-ignition', 'pollen', 'plant macrofossils', 'vertebrate fauna', 'mollusks', and 'pollen surface sample'.
+#' @param piid Numeric value for the Principle Investigator's ID number.
+#' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with altmax).
+#' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with altmin).
+#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator}
+#' @param gpid A character string, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
+#' @param taxonids A numeric identifier for the taxon.  Use get.tables('Taxa') for a list of acceptable values.
+#' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  Use get.tables('Taxa') for a list of acceptable values.}
+#' @param ageold The oldest date acceptable for the search (in years before present).
+#' @param ageyoung The youngest date acceptable for the search.
+#' @param ageof If a taxon ID or taxon name is defined this parameter must be set to "taxon", otherwise it may refer to "sample", in which case the age bounds are for any samples within datasets or "dataset" if you want only datasets that are within the bounds of ageold and ageyoung.
+#' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
+#' 
+#' @author Simon J. Goring
+#' @details More details on the use of these parameters can be obtained from 
+#'    http://api.neotomadb.org/doc/resources/datasets.  
+#'
+#'    A list, with each item corresponding to an individual record.  Each list item 
+#'    (each dataset record) includes the following components:
+#'    \item{DatasetID}{Unique database record identifier for the dataset.}
+#'    \item{DatasetName}{Name of the dataset; not commonly used.}
+#'    \item{CollUnitHandle}{Code name of the Collection Unit with which the dataset is associated. This code may be up to 10 characters. Data are frequently distributed by Collection Unit, and the Handle is used for file names.}
+#'    \item{CollUnitID}{Unique database record identifier for the collection unit.}
+#'    \item{CollType}{The collection type. Types include cores, sections, excavations, and animal middens.}
+#'    \item{DatasetType}{The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.}
+#'    \item{AgeOldest}{The oldest of all sample ages (in calendar years before present) in the dataset.}
+#'    \item{AgeYoungest}{The youngest of all sample ages (in calendar years before present) in the dataset.}
+#'    \item{SubDates}{An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.}
+#'    \item{DatasetPIs}{An array of objects that describe Principal Investigators associated with a dataset.}
+#'    \item{Site}{An object describing the site where the dataset samples were taken.}
+#' @examples \dontrun{
+#' # Search for sites with "Thuja" pollen that are older than 8kyr BP and
+#' # that are on the west coast of North America:
+#' t8kyr.datasets <- get.datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' 
+#' # Search for vertebrate fossils in Canada (gpid: 756) within the last 2kyr.
+#' gpids <- get.table(table.name='GeoPoliticalUnits')
+#' canID <- gpids[which(gpids$GeoPoliticalName == 'Canada'),1]
+#' 
+#' v2kyr.datasets <- get.datasets(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
 #  The issue here is that these objects have multiple tables of multiple lengths.
-  
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
   
   base.uri <- 'http://api.neotomadb.org/v1/data/datasets'
   
@@ -331,12 +485,43 @@ get.datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
   
 }
 
+#' A file to get publications for sites or datasets in the Neotoma Database using the API.
+#' 
+#' The function takes the parameters, defined by the user, and returns a table with 
+#'    publication information from the Neotoma Paleoecological Database.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param pubid Numeric Publication ID value, either from \code{get.datasets} or known.
+#' @param contactid Numeric Contact ID value, either from \code{get.datasets} or \code{get.contacts}
+#' @param datasetid Numeric Dataset ID, known or from \code{get.datasets}
+#' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
+#' @param pubtype Character string, one of eleven allowable types, see \code{get.table('PublicationTypes')}
+#' @param year Numeric publication year.
+#' @param search A character string to search for within the article citation.
+#' 
+#' @author Simon J. Goring
+#' @details A table is returned with several fixed columns, and a variable number 
+#'    of author fields:
+#'    
+#'    \item{PublicationID  Unique database record identifier for the publication.}
+#'    \item{PubType  Publication type}
+#'    \item{Year	Year of publication.}
+#'    \item{Citation	The complete citation in a standard style. For legacy citations inherited from other databases, this field holds the citation as ingested from the other databases.}
+#'    \item{Authors	Array of author objects, can be of variable length.  Includes \code{Authors.ContactName.n}, \code{Authors.ContactID.n}, \code{Authors.Order.n}, where n ranges from 1 to the maximum number of authors returned by the API call.  When the maximum number of authors is 1 the number is excluded.
+#' @examples \dontrun{
+#' #  To find all data contributors who are active:
+#' active.cont <- get.contacts(contactstatus = 'active')
+#' 
+#' # To find all data contributors who have the last name "Smith"
+#' smith.cont <- get.contacts(familyname = 'Smith')
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.publication <- function(pubid, contactid, datasetid, author, pubtype, year, search){
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
-  
+
   base.uri <- 'http://api.neotomadb.org/v1/data/publications'
   
   cl <- as.list(match.call())
@@ -409,11 +594,29 @@ get.publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
   output
 }
 
+
+#' Get Neotoma value tables.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param table.name Call one of the available tables in the Neotoma Database.  
+#'    A full listing of tables can be found here: \link{http://api.neotomadb.org/doc/resources/dbtables}.  
+#'    By default it returns all objects in the table.
+#' 
+#' @author Simon J. Goring
+#' @details A table of values corresponding to the parameter of interest.
+#' @examples \dontrun{
+#' taxon.table <- get.table('Taxa')
+#' 
+#' #  Get the frequency of the first ten taxa in Neotoma.
+#' tester <- function(x){ length(get.datasets(taxonname=x)) }
+#' taxon.counts <- ldply(as.character(taxon.table$TaxonName)[1:10], tester, .progress='text')
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.table <- function(table.name = NULL){
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
 
   base.uri <- 'http://api.neotomadb.org/v1/dbtables/'
   
@@ -482,12 +685,43 @@ get.table <- function(table.name = NULL){
   out
 }
 
+#' Get taxon information from Neotoma.
+#' 
+#' @import RJSONIO RCurl reshape plyr
+#' @param taxonid Numeric taxon identifier used in Neotoma
+#' @param taxonname A character string representing the full or partial name of taxa of interest.
+#' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.
+#' @param taxagroup The taxonomic grouping for the taxa. See \link{http://api.neotomadb.org/doc/resources/taxa} for the list of approved groupings.
+#' @param ecolgroup The ecological group of the taxa. More detailed than \code{taxagroup}, can be obtained using \code{get.table("EcolGroupTypes")}.
+#' 
+#' @author Simon J. Goring
+#' @details Returns a table.
+#' 
+#' \item{TaxonID}{Unique database record identifier for a taxon.}
+#' \item{TaxonCode}{Shorthand notation for a taxon identification.}
+#' \item{TaxonName}{Name of the taxon.}
+#' \item{Author}{Author(s) of the name. Used almost exclusively with beetle taxa.}
+#' \item{Extinct}{True if extinct; false if extant.}
+#' \item{TaxaGroup}{Code for taxa group to which taxon belongs.}
+#' \item{EcolGroups}{Array of ecological group codes to which the taxon belongs.}
+#' \item{HigherTaxonID}{TaxonID of the next higher taxonomic rank.}
+#' \item{PublicationID}{Publication identification number.}
+#' \item{Notes}{Free-form notes or comments about the taxon.}
+#' 
+#' @examples \dontrun{
+#' taxon.table <- get.table('Taxa')
+#' 
+#' #  Get the frequency of the first ten taxa in Neotoma.
+#' tester <- function(x){ length(get.datasets(taxonname=x)) }
+#' taxon.counts <- ldply(as.character(taxon.table$TaxonName)[1:10], tester, .progress='text')
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export 
 get.taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
-  require(RJSONIO)
-  require(RCurl)
-  require(reshape)
-  require(plyr)
-
+  
   base.uri <- 'http://api.neotomadb.org/v1/data/taxa'
   
   cl <- as.list(match.call())
@@ -554,4 +788,3 @@ get.taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
   output
   
 }
-
