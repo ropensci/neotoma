@@ -27,27 +27,28 @@
   \item{search}{A character string to search for within the
   article citation.}
 }
+\value{
+  A table is returned with several fixed columns, and a
+  variable number of author fields:
+
+  \itemize{ \item{PublicationID}{Unique database record
+  identifier for the publication.}
+  \item{PubType}{Publication type} \item{Year}{Year of
+  publication.} \item{Citation}{The complete citation in a
+  standard style. For legacy citations inherited from other
+  databases, this field holds the citation as ingested from
+  the other databases.} \item{Authors}{Array of author
+  objects, can be of variable length.  Includes
+  \code{Authors.ContactName.n}, \code{Authors.ContactID.n},
+  \code{Authors.Order.n}, where n ranges from 1 to the
+  maximum number of authors returned by the API call.  When
+  the maximum number of authors is 1 the number is
+  excluded.} }
+}
 \description{
   The function takes the parameters, defined by the user,
   and returns a table with publication information from the
   Neotoma Paleoecological Database.
-}
-\details{
-  A table is returned with several fixed columns, and a
-  variable number of author fields:
-
-  \item{PublicationID Unique database record identifier for
-  the publication.} \item{PubType Publication type}
-  \item{Year Year of publication.} \item{Citation The
-  complete citation in a standard style. For legacy
-  citations inherited from other databases, this field
-  holds the citation as ingested from the other databases.}
-  \item{Authors Array of author objects, can be of variable
-  length.  Includes \code{Authors.ContactName.n},
-  \code{Authors.ContactID.n}, \code{Authors.Order.n}, where
-  n ranges from 1 to the maximum number of authors returned
-  by the API call.  When the maximum number of authors is 1
-  the number is excluded.
 }
 \examples{
 \dontrun{

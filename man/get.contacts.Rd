@@ -22,11 +22,7 @@
   \item{familyname}{A character string.  Full or partial
   string indicating the contact's last name.}
 }
-\description{
-  A function to obtain contact information for data
-  contributors from the Neotoma Paleoecological Database.
-}
-\details{
+\value{
   The function takes parameters defined by the user and
   returns a list of contact information supplied by the
   Neotoma Paleoecological Database.  The user may define
@@ -39,13 +35,14 @@
   or a table of contacts, with rows corresponding to the
   number of individual contacts returned by the Neotoma
   API.  Each row entry includes the following parameters:
-  \item{ContactID}{Unique database record identifier for
-  the contact.} \item{AliasID}{The ContactID of a person's
-  current name. If the AliasID is different from the
-  ContactID, the ContactID refers to the person's former
-  name.} \item{ContactName}{Full name of the person, last
-  name first (e.g. “Simpson, George Gaylord”) or name of
-  organization or project (e.g. “Great Plains Flora
+
+  \itemize{ \item{ContactID}{Unique database record
+  identifier for the contact.} \item{AliasID}{The ContactID
+  of a person's current name. If the AliasID is different
+  from the ContactID, the ContactID refers to the person's
+  former name.} \item{ContactName}{Full name of the person,
+  last name first (e.g. “Simpson, George Gaylord”) or name
+  of organization or project (e.g. “Great Plains Flora
   Association”).} \item{ContactStatus}{Current status of
   the person, organization, or project. Field links to the
   ContactStatuses lookup table.} \item{FamilyName}{Family
@@ -62,7 +59,11 @@
   \item{URL}{Universal Resource Locator, an Internet World
   Wide Web address.} \item{Address}{Full mailing address.}
   \item{Notes}{Free form notes or comments about the
-  person, organization, or project.}
+  person, organization, or project.} }
+}
+\description{
+  A function to obtain contact information for data
+  contributors from the Neotoma Paleoecological Database.
 }
 \examples{
 \dontrun{

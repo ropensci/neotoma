@@ -8,25 +8,21 @@
   \item{datasetid}{Dataset ID, as returned by
   \code{get.datasets}.}
 }
-\description{
-  Using the dataset ID, return all records associated with
-  the data.  At present, only returns the dataset in an
-  unparsed format, not as a data table.
-}
-\details{
+\value{
   This command returns either a 'try-error' definined by
   the error returned from the Neotoma API call, or a list
   comprising the following values:
 
-  \item{DatasetID}{Unique database record identifier for
-  the dataset.} \item{DatasetName}{Name of the dataset; not
-  commonly used.} \item{CollUnitHandle}{Code name of the
-  Collection Unit with which the dataset is associated.
-  This code may be up to 10 characters. Data are frequently
-  distributed by Collection Unit, and the Handle is used
-  for file names.} \item{CollUnitType}{The collection type.
-  Types include cores, sections, excavations, and animal
-  middens.} \item{DatasetType}{The dataset type, such as:
+  \itemize{ \item{DatasetID}{Unique database record
+  identifier for the dataset.} \item{DatasetName}{Name of
+  the dataset; not commonly used.}
+  \item{CollUnitHandle}{Code name of the Collection Unit
+  with which the dataset is associated. This code may be up
+  to 10 characters. Data are frequently distributed by
+  Collection Unit, and the Handle is used for file names.}
+  \item{CollUnitType}{The collection type. Types include
+  cores, sections, excavations, and animal middens.}
+  \item{DatasetType}{The dataset type, such as:
   geochronologic, loss-on-ignition, pollen, plant
   macrofossils, vertebrate fauna, etc.}
   \item{NeotomaLastSub}{The date of the most recent
@@ -36,11 +32,16 @@
   Principal Investigators associated with a dataset}
   \item{Site}{ An object describing the site where the
   dataset samples were taken} \item{Samples}{ An array of
-  objects describing the individual dataset samples}
+  objects describing the individual dataset samples} }
 
   Here the \code{Samples} is the real prize, but at present
   the format of the data object is simply a list of lists.
   This needs work.
+}
+\description{
+  Using the dataset ID, return all records associated with
+  the data.  At present, only returns the dataset in an
+  unparsed format, not as a data table.
 }
 \examples{
 \dontrun{

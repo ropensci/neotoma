@@ -32,20 +32,22 @@
   representing the bounding box within which to search for
   sites.  The convention here is to use negative values for
   longitudes west of Grewnwich or longitudes south of the
-  equator}}
+  equator}
 
   \item{gpid}{A character string, must correspond to a
   valid geopolitical identity in the Neotoma Database.  Use
-  get.tables('GeoPoliticalUnits') for a list of acceptable
-  values, or link here:
-  http://api.neotomadb.org/apdx/geopol.htm}
+  \code{get.tables('GeoPoliticalUnits')} for a list of
+  acceptable values, or link here:
+  \url{http://api.neotomadb.org/apdx/geopol.htm}}
 
   \item{taxonids}{A numeric identifier for the taxon.  Use
-  get.tables('Taxa') for a list of acceptable values.}
+  \code{get.tables('Taxa')} for a list of acceptable
+  values.}
 
   \item{taxonname}{A character string corresponding to a
   valid taxon identity in the Neotoma Database.  Use
-  get.tables('Taxa') for a list of acceptable values.}}
+  \code{get.tables('Taxa')} for a list of acceptable
+  values.}
 
   \item{ageold}{The oldest date acceptable for the search
   (in years before present).}
@@ -63,30 +65,28 @@
   \item{subdate}{Date of dataset submission, either
   YYYY-MM-DD or MM-DD-YYYY.}
 }
-\description{
-  A function to access the Neotoma API and return datasets
-  corresponding to the parameters defined by the user.
-}
-\details{
+\value{
   More details on the use of these parameters can be
   obtained from
-  http://api.neotomadb.org/doc/resources/datasets.
+  \url{http://api.neotomadb.org/doc/resources/datasets.}
 
   A list, with each item corresponding to an individual
   record.  Each list item (each dataset record) includes
-  the following components: \item{DatasetID}{Unique
-  database record identifier for the dataset.}
-  \item{DatasetName}{Name of the dataset; not commonly
-  used.} \item{CollUnitHandle}{Code name of the Collection
-  Unit with which the dataset is associated. This code may
-  be up to 10 characters. Data are frequently distributed
-  by Collection Unit, and the Handle is used for file
-  names.} \item{CollUnitID}{Unique database record
-  identifier for the collection unit.} \item{CollType}{The
-  collection type. Types include cores, sections,
-  excavations, and animal middens.} \item{DatasetType}{The
-  dataset type, such as: geochronologic, loss-on-ignition,
-  pollen, plant macrofossils, vertebrate fauna, etc.}
+  the following components:
+
+  \itemize{ \item{DatasetID}{Unique database record
+  identifier for the dataset.} \item{DatasetName}{Name of
+  the dataset; not commonly used.}
+  \item{CollUnitHandle}{Code name of the Collection Unit
+  with which the dataset is associated. This code may be up
+  to 10 characters. Data are frequently distributed by
+  Collection Unit, and the Handle is used for file names.}
+  \item{CollUnitID}{Unique database record identifier for
+  the collection unit.} \item{CollType}{The collection
+  type. Types include cores, sections, excavations, and
+  animal middens.} \item{DatasetType}{The dataset type,
+  such as: geochronologic, loss-on-ignition, pollen, plant
+  macrofossils, vertebrate fauna, etc.}
   \item{AgeOldest}{The oldest of all sample ages (in
   calendar years before present) in the dataset.}
   \item{AgeYoungest}{The youngest of all sample ages (in
@@ -96,7 +96,11 @@
   this is a table.} \item{DatasetPIs}{An array of objects
   that describe Principal Investigators associated with a
   dataset.} \item{Site}{An object describing the site where
-  the dataset samples were taken.}
+  the dataset samples were taken.} }
+}
+\description{
+  A function to access the Neotoma API and return datasets
+  corresponding to the parameters defined by the user.
 }
 \examples{
 \dontrun{

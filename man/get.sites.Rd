@@ -26,16 +26,11 @@
   values, or link here:
   http://api.neotomadb.org/apdx/geopol.htm}
 }
-\description{
-  \code{get.sites} returns site information from the
-  Neotoma Paleoecological Database based on parameters
-  defined by the user.
-}
-\details{
+\value{
   A table:
 
-  \item{SiteID}{Unique database record identifier for the
-  site.} \item{SiteName}{Name of the site.}
+  \itemize{ \item{SiteID}{Unique database record identifier
+  for the site.} \item{SiteName}{Name of the site.}
   \item{Altitude}{Altitude in meters.}
   \item{LatitudeNorth}{North bounding latitude, in decimal
   degrees, for a site.} \item{LatitudeSouth}{South bounding
@@ -45,23 +40,29 @@
   longitude, in decimal degrees, for a site.}
   \item{SiteDescription}{Free form description of a site,
   including such information as physiography and vegetation
-  around the site.}
+  around the site.} }
 
   Extended response variables when only a single site is
-  returned: \item{CollectionUnitID}{Unique database record
-  identifier for the collection unit.} \item{Handle}{Code
-  name for the collection unit. This code may be up to 10
-  characters, but an effort is made to keep these to 8
-  characters or less. Data are frequently distributed by
-  collection unit, and the handle is used for file names.}
-  \item{CollType}{The collection type. Types include cores,
-  sections, excavations, and animal middens. Collection
-  Units may be modern collections, surface float, or
-  isolated specimens. Composite Collections Units include
-  different kinds of Analysis Units, for example a modern
-  surface sample for ostracodes and an associated water
-  sample.} \item{Datasets}{An array of objects that
-  describe datasets associated with a site.}
+  returned: \itemize{ \item{CollectionUnitID}{Unique
+  database record identifier for the collection unit.}
+  \item{Handle}{Code name for the collection unit. This
+  code may be up to 10 characters, but an effort is made to
+  keep these to 8 characters or less. Data are frequently
+  distributed by collection unit, and the handle is used
+  for file names.} \item{CollType}{The collection type.
+  Types include cores, sections, excavations, and animal
+  middens. Collection Units may be modern collections,
+  surface float, or isolated specimens. Composite
+  Collections Units include different kinds of Analysis
+  Units, for example a modern surface sample for ostracodes
+  and an associated water sample.} \item{Datasets}{An array
+  of objects that describe datasets associated with a
+  site.} }
+}
+\description{
+  \code{get.sites} returns site information from the
+  Neotoma Paleoecological Database based on parameters
+  defined by the user.
 }
 \examples{
 \dontrun{

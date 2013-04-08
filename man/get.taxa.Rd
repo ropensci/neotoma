@@ -22,15 +22,13 @@
   detailed than \code{taxagroup}, can be obtained using
   \code{get.table("EcolGroupTypes")}.}
 }
-\description{
-  Get taxon information from Neotoma.
-}
-\details{
+\value{
   Returns a table.
 
-  \item{TaxonID}{Unique database record identifier for a
-  taxon.} \item{TaxonCode}{Shorthand notation for a taxon
-  identification.} \item{TaxonName}{Name of the taxon.}
+  \itemize{ \item{TaxonID}{Unique database record
+  identifier for a taxon.} \item{TaxonCode}{Shorthand
+  notation for a taxon identification.}
+  \item{TaxonName}{Name of the taxon.}
   \item{Author}{Author(s) of the name. Used almost
   exclusively with beetle taxa.} \item{Extinct}{True if
   extinct; false if extant.} \item{TaxaGroup}{Code for taxa
@@ -39,7 +37,10 @@
   \item{HigherTaxonID}{TaxonID of the next higher taxonomic
   rank.} \item{PublicationID}{Publication identification
   number.} \item{Notes}{Free-form notes or comments about
-  the taxon.}
+  the taxon.} }
+}
+\description{
+  Get taxon information from Neotoma.
 }
 \examples{
 \dontrun{

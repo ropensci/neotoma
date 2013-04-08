@@ -92,7 +92,7 @@ Now we're going to do something awesome.  Let's see if we can track the migratio
 #  We want only North America.  The bounding box for North America is:
 #  LonW -167.3, LatS 5.4, LonE -52,2, LatN 83.2
 #  Let's see how many total records we could get:
-source('base.functions.R')
+library(neotoma)
 
 all.NA <- get.datasets(loc=c(-167, 5.4, -83, 52))
 

@@ -10,5 +10,5 @@ This package is a programmatic R interface to the [Neotoma Paleoecological Datab
 #### Quick start
 
 ```r
-coming soon...
+
 ```
