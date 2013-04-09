@@ -75,7 +75,7 @@ smith.cont <- get.contacts(familyname = 'Smith')
 }
 }
 \author{
-  Simon J. Goring
+  Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
   Neotoma Project Website: http://www.neotomadb.org API

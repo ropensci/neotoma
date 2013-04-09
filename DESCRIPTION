@@ -12,10 +12,11 @@ Description: The package accesses the Neotoma Paleoecological Database using
 License: CC BY-SA 3.0
 URL: https://github.com/ropensci/neotoma
 BugReports: https://github.com/ropensci/neotoma/issues
+Depends:
+    reshape
 Imports:
     RJSONIO,
     RCurl (>= 1.6),
-    plyr,
-    reshape
+    plyr
 Collate:
     'base.functions.R'

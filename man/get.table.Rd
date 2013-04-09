@@ -28,7 +28,7 @@ taxon.counts <- ldply(as.character(taxon.table$TaxonName)[1:10], tester, .progre
 }
 }
 \author{
-  Simon J. Goring
+  Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
   Neotoma Project Website: http://www.neotomadb.org API

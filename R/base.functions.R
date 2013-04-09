@@ -3,7 +3,7 @@
 #' \code{get.sites} returns site information from the Neotoma Paleoecological Database 
 #'    based on parameters defined by the user.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param siteid The numerical site ID.
 #' @param sitename A character string representing the full or partial site name.
 #' @param altmin Minimum site altitude  (in m).
@@ -129,7 +129,7 @@ get.sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
 #' Using the dataset ID, return all records associated with the data.  At present, 
 #'    only returns the dataset in an unparsed format, not as a data table.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param datasetid Dataset ID, as returned by \code{get.datasets}.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned 
@@ -197,7 +197,7 @@ get.download <- function(datasetid){
 #' A function to obtain contact information for data contributors from the Neotoma 
 #'    Paleoecological Database.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param contactid Contact ID is a numerical value associated with the Neotoma 
 #'    Contact table's numerical Contact ID.
 #' @param contactname A character string indicating the data contributors' project, 
@@ -312,7 +312,7 @@ get.contacts <- function(contactid, contactname, contactstatus, familyname){
 #' A function to access the Neotoma API and return datasets corresponding to the 
 #'    parameters defined by the user.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param siteid A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: 'geochronologic', 'loss-on-ignition', 'pollen', 'plant macrofossils', 'vertebrate fauna', 'mollusks', and 'pollen surface sample'.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -502,7 +502,7 @@ get.datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
 #' The function takes the parameters, defined by the user, and returns a table with 
 #'    publication information from the Neotoma Paleoecological Database.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param pubid Numeric Publication ID value, either from \code{get.datasets} or known.
 #' @param contactid Numeric Contact ID value, either from \code{get.datasets} or \code{get.contacts}
 #' @param datasetid Numeric Dataset ID, known or from \code{get.datasets}
@@ -611,7 +611,7 @@ get.publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
 
 #' Get Neotoma value tables.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param table.name Call one of the available tables in the Neotoma Database.  
 #'    A full listing of tables can be found here: \url{http://api.neotomadb.org/doc/resources/dbtables}.  
 #'    By default it returns all objects in the table.
@@ -701,7 +701,7 @@ get.table <- function(table.name = NULL){
 
 #' Get taxon information from Neotoma.
 #' 
-#' @import RJSONIO RCurl reshape plyr
+#' @import RJSONIO RCurl plyr
 #' @param taxonid Numeric taxon identifier used in Neotoma
 #' @param taxonname A character string representing the full or partial name of taxa of interest.
 #' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.

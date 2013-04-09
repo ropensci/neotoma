@@ -54,7 +54,7 @@ GOLDKBG <- get.download(t8kyr.datasets[[1]]$DatasetID)
 }
 }
 \author{
-  Simon J. Goring
+  Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
   Neotoma Project Website: http://www.neotomadb.org API

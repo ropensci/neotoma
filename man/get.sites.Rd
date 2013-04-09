@@ -74,7 +74,7 @@ main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='
 }
 }
 \author{
-  Simon J. Goring
+  Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
   Neotoma Project Website: http://www.neotomadb.org API

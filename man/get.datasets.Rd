@@ -116,7 +116,7 @@ v2kyr.datasets <- get.datasets(datasettype='vertebrate fauna', gpid=canID, ageol
 }
 }
 \author{
-  Simon J. Goring
+  Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
   Neotoma Project Website: http://www.neotomadb.org API
