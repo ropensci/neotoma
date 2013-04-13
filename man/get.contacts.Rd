@@ -36,29 +36,29 @@
   number of individual contacts returned by the Neotoma
   API.  Each row entry includes the following parameters:
 
-  \itemize{ \item{ContactID}{Unique database record
-  identifier for the contact.} \item{AliasID}{The ContactID
-  of a person's current name. If the AliasID is different
-  from the ContactID, the ContactID refers to the person's
-  former name.} \item{ContactName}{Full name of the person,
-  last name first (e.g. “Simpson, George Gaylord”) or name
-  of organization or project (e.g. “Great Plains Flora
-  Association”).} \item{ContactStatus}{Current status of
-  the person, organization, or project. Field links to the
-  ContactStatuses lookup table.} \item{FamilyName}{Family
-  or surname name of a person.}
-  \item{LeadingInitials}{Leading initials for given or
-  forenames without spaces (e.g. “G.G.”).}
-  \item{GivenNames}{Given or forenames of a person (e.g.
-  “George Gaylord”). Initials with spaces are used if full
-  given names are not known (e.g. “G. G”).}
-  \item{Suffix}{Suffix of a person's name (e.g. “Jr.”,
-  “III”).} \item{Title}{A person’s title (e.g. “Dr.”,
-  “Prof.”, “Prof. Dr”).} \item{Phone}{Telephone number.}
-  \item{Fax}{Fax number.} \item{Email}{Email address.}
-  \item{URL}{Universal Resource Locator, an Internet World
-  Wide Web address.} \item{Address}{Full mailing address.}
-  \item{Notes}{Free form notes or comments about the
+  \itemize{ \item{ContactID}{ Unique database record
+  identifier for the contact.} \item{AliasID}{ The
+  ContactID of a person's current name. If the AliasID is
+  different from the ContactID, the ContactID refers to the
+  person's former name.} \item{ContactName}{ Full name of
+  the person, last name first (e.g. "Simpson, George
+  Gaylord") or name of organization or project (e.g. "Great
+  Plains Flora Association").} \item{ContactStatus}{
+  Current status of the person, organization, or project.
+  Field links to the ContactStatuses lookup table.}
+  \item{FamilyName}{ Family or surname name of a person.}
+  \item{LeadingInitials}{ Leading initials for given or
+  forenames without spaces (e.g. "G.G.").}
+  \item{GivenNames}{ Given or forenames of a person (e.g.
+  "George Gaylord"). Initials with spaces are used if full
+  given names are not known (e.g. "G. G").} \item{Suffix}{
+  Suffix of a person's name (e.g. \"Jr.\", "III").}
+  \item{Title}{ A person’s title (e.g. "Dr.", "Prof.",
+  "Prof. Dr").} \item{Phone}{ Telephone number.}
+  \item{Fax}{ Fax number.} \item{Email}{ Email address.}
+  \item{URL}{ Universal Resource Locator, an Internet World
+  Wide Web address.} \item{Address}{ Full mailing address.}
+  \item{Notes}{ Free form notes or comments about the
   person, organization, or project.} }
 }
 \description{
