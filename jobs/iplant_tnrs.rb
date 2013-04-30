@@ -7,13 +7,14 @@ SCHEDULER.every '60s', :first_in => 0 do |job|
   out = JSON.parse(result)['message']
   jobid = out.split(' ')[1]
 
+  tt = 'found'
+
   while tt == 'found'  do
-  	sleep 1.5
   	result2 = HTTParty.get('http://sharp.iplantcollaborative.org/retrieve/' + jobid)
   	tt = JSON.parse(result2)['status']
   end
 
-  if JSON.parse(result2)['names'][1]['matches'][1]['acceptedName'] == "Panthera tigris"
+  if JSON.parse(result2)['names'][1]['matches'][1]['acceptedName'] == "Mangifera indica"
   	out = "BOOM! It's up"
   else
   	out = "Sad. It's down"
