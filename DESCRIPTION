@@ -18,5 +18,3 @@ Imports:
     RJSONIO,
     RCurl (>= 1.6),
     plyr
-Collate:
-    'base.functions.R'

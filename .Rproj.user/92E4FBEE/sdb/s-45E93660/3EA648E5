@@ -1,0 +1,15 @@
+{
+    "contents" : "Package: neotoma\nType: Package\nTitle: A Package to access the Neotoma Paleoecological Database using an API.\nVersion: 1.0\nDate: 2013-04-04\nAuthor: Simon J. Goring\nMaintainer: Simon Goring <goring@wisc.edu>\nDescription: The package accesses the Neotoma Paleoecological Database using\n    the published API (http://api.neotomadb.org/).  The functions in this\n    package access various pre-built API functions and attempt to return the\n    results from Neotoma in a usable format for researchers and the public.\nLicense: CC BY-SA 3.0\nURL: https://github.com/ropensci/neotoma\nBugReports: https://github.com/ropensci/neotoma/issues\nDepends:\n    reshape\nImports:\n    RJSONIO,\n    RCurl (>= 1.6),\n    plyr\n",
+    "created" : 1367699258245.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3425525220",
+    "id" : "3EA648E5",
+    "lastKnownWriteTime" : 1367699304,
+    "path" : "~/GitHub/neotoma/DESCRIPTION",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "dcf"
+}
