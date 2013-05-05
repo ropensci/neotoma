@@ -1,0 +1,15 @@
+{
+    "contents" : "export(get_contacts)\nexport(get_datasets)\nexport(get_download)\nexport(get_publication)\nexport(get_sites)\nexport(get_table)\nexport(get_taxa)\nimport(plyr)\nimport(RCurl)\nimport(RJSONIO)",
+    "created" : 1367699179902.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "58774938",
+    "id" : "9E344828",
+    "lastKnownWriteTime" : 1367699210,
+    "path" : "~/GitHub/neotoma/NAMESPACE",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_namespace"
+}
