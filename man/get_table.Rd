@@ -1,8 +1,8 @@
-\name{get.table}
-\alias{get.table}
+\name{get_table}
+\alias{get_table}
 \title{Get Neotoma value tables.}
 \usage{
-  get.table(table.name = NULL)
+  get_table(table.name = NULL)
 }
 \arguments{
   \item{table.name}{Call one of the available tables in the
@@ -20,7 +20,7 @@
 }
 \examples{
 \dontrun{
-taxon.table <- get.table('Taxa')
+taxon.table <- get_table('Taxa')
 
 #  Get the frequency of the first ten taxa in Neotoma.
 tester <- function(x){ length(get.datasets(taxonname=x)) }

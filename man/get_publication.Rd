@@ -1,8 +1,8 @@
-\name{get.publication}
-\alias{get.publication}
+\name{get_publication}
+\alias{get_publication}
 \title{A file to get publications for sites or datasets in the Neotoma Database using the API.}
 \usage{
-  get.publication(pubid, contactid, datasetid, author,
+  get_publication(pubid, contactid, datasetid, author,
     pubtype, year, search)
 }
 \arguments{
@@ -52,11 +52,11 @@
 }
 \examples{
 \dontrun{
-#  To find all data contributors who are active:
-active.cont <- get.contacts(contactstatus = 'active')
+#  To find all publications from 1998:
+year.cont <- get_publication(year = 1998)
 
 # To find all data contributors who have the last name "Smith"
-smith.cont <- get.contacts(familyname = 'Smith')
+smith.cont <- get_publication(author = 'Smith')
 }
 }
 \author{

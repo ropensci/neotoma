@@ -2,10 +2,10 @@
 #' Function to return full dataset records.
 #' 
 #' Using the dataset ID, return all records associated with the data.  At present, 
-#'    only returns the dataset in an unparsed format, not as a data table.
+#'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #' 
 #' @import RJSONIO RCurl plyr
-#' @param datasetid Dataset ID, as returned by \code{get_datasets}.
+#' @param datasetid A single numeric dataset ID, as returned by \code{get_datasets}.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned 
 #'    from the Neotoma API call, or a list comprising the following items:

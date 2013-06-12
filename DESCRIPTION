@@ -18,3 +18,11 @@ Imports:
     RJSONIO,
     RCurl (>= 1.6),
     plyr
+Collate:
+    'get_contacts.R'
+    'get_datasets.R'
+    'get_download.R'
+    'get_publications.R'
+    'get_sites.R'
+    'get_table.R'
+    'get_taxa.R'

@@ -1,8 +1,8 @@
-\name{get.sites}
-\alias{get.sites}
+\name{get_sites}
+\alias{get_sites}
 \title{Return Site Information.}
 \usage{
-  get.sites(siteid, sitename, altmin, altmax, loc, gpid)
+  get_sites(siteid, sitename, altmin, altmax, loc, gpid)
 }
 \arguments{
   \item{siteid}{The numerical site ID.}
@@ -60,14 +60,14 @@
   site.} }
 }
 \description{
-  \code{get.sites} returns site information from the
+  \code{get_sites} returns site information from the
   Neotoma Paleoecological Database based on parameters
   defined by the user.
 }
 \examples{
 \dontrun{
 #  What is the distribution of site elevations in Neotoma?
-all.sites <- get.sites()  #takes a bit of time.
+all.sites <- get_sites()  #takes a bit of time.
 
 plot(density(all.sites$Altitude, from = 0, na.rm=TRUE),
 main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')

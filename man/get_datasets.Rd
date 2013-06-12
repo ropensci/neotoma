@@ -1,8 +1,8 @@
-\name{get.datasets}
-\alias{get.datasets}
+\name{get_datasets}
+\alias{get_datasets}
 \title{Obtain full datasets from the Neotoma Paleoecological Database.}
 \usage{
-  get.datasets(siteid, datasettype, piid, altmin, altmax,
+  get_datasets(siteid, datasettype, piid, altmin, altmax,
     loc, gpid, taxonids, taxonname, ageold, ageyoung,
     ageof, subdate)
 }
@@ -106,13 +106,13 @@
 \dontrun{
 # Search for sites with "Thuja" pollen that are older than 8kyr BP and
 # that are on the west coast of North America:
-t8kyr.datasets <- get.datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.datasets <- get_datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 # Search for vertebrate fossils in Canada (gpid: 756) within the last 2kyr.
 gpids <- get.table(table.name='GeoPoliticalUnits')
 canID <- gpids[which(gpids$GeoPoliticalName == 'Canada'),1]
 
-v2kyr.datasets <- get.datasets(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)
+v2kyr.datasets <- get_datasets(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)
 }
 }
 \author{

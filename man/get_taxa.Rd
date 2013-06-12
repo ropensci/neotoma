@@ -1,8 +1,8 @@
-\name{get.taxa}
-\alias{get.taxa}
+\name{get_taxa}
+\alias{get_taxa}
 \title{Get taxon information from Neotoma.}
 \usage{
-  get.taxa(taxonid, taxonname, status, taxagroup,
+  get_taxa(taxonid, taxonname, status, taxagroup,
     ecolgroup)
 }
 \arguments{
@@ -20,7 +20,7 @@
 
   \item{ecolgroup}{The ecological group of the taxa. More
   detailed than \code{taxagroup}, can be obtained using
-  \code{get.table("EcolGroupTypes")}.}
+  \code{get_table("EcolGroupTypes")}.}
 }
 \value{
   Returns a table.
@@ -44,7 +44,7 @@
 }
 \examples{
 \dontrun{
-taxon.table <- get.table('Taxa')
+taxon.table <- get_table('Taxa')
 
 #  Get the frequency of the first ten taxa in Neotoma.
 tester <- function(x){ length(get.datasets(taxonname=x)) }
