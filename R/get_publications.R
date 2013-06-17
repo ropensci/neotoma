@@ -101,10 +101,13 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
     cat('The API call was successful, you have returned ', length(aa), 'records.\n')
   }
   
-  if(class(aa) == 'try-error') output <- neotoma.form
+  if(class(aa) == 'try-error' | length(aa) == 0) output <- NA
   else{
     names(aa) <- sapply(aa, function(x)x$SiteName)
-    output <- suppressMessages(cast(melt(lapply(aa, data.frame)))[,-2])
+    
+    aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
+    
+    output <- suppressMessages(cast(melt(lapply(aa, function(x)data.frame(x))))[,-2])
   }
   
   output
