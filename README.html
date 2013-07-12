@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>neotoma</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>neotoma</h1>
+
+<p>The <code>neotoma</code> package is a programmatic R interface to the <a href="http://www.neotomadb.org/">Neotoma Paleoecological Database</a>. The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.</p>
+
+<p><code>neotoma</code> is part of the <a href="http://ropensci.org">rOpenSci</a> project and is also hosted on <a href="http://dx.doi.org/10.6084/m9.figshare.677131">Figshare</a></p>
+
+<h3>Development by</h3>
+
+<p><a href="http://downwithtime.wordpress.com">Simon Goring</a> - University of Wisconsin-Madison, Department of Geography</p>
+
+<p>Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API <a href="http://api.neotomadb.org/doc/resources/home">website</a>.</p>
+
+<h3>Currently implemented in <code>neotoma</code></h3>
+
+<ul>
+<li>compile_list - using established pollen-related taxonomies from the literature, take the published taxon list and standardize it to allow cross site analysis.</li>
+<li>get_contacts - find contact information for data contributors to Neotoma. <a href="http://api.neotomadb.org/doc/resources/contacts">API</a></li>
+<li>get_datasets - obtain dataset metadata from Neotoma. <a href="http://api.neotomadb.org/doc/resources/datasets">API</a></li>
+<li>get_download - obtain full datasets (pollen or mammal) from Neotoma. <a href="http://api.neotomadb.org/doc/resources/downloads">API</a></li>
+<li>get_publication - obtain publication information from Neotoma. <a href="http://api.neotomadb.org/doc/resources/publications">API</a></li>
+<li>get_sites - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). <a href="http://api.neotomadb.org/doc/resources/sites">API</a></li>
+<li>get_table - return matrices corresponding to one of the Neotoma database tables. <a href="http://api.neotomadb.org/doc/resources/dbtables">tables</a></li>
+<li>get_taxa - Get taxon information from Neotoma. <a href="http://api.neotomadb.org/doc/resources/taxa">API</a></li>
+</ul>
+
+<h3>Coming soon</h3>
+
+<ul>
+<li>A broader set of taxonomies for use with datasets, including geography based taxonomies.</li>
+<li>Functions to turn single-site datasets into multi-site datasets.</li>
+<li>Age-modelling capabilities.</li>
+</ul>
+
+<h3>Install <code>neotoma</code></h3>
+
+<ul>
+<li>Development version from GitHub:</li>
+</ul>
+
+<pre><code class="R">install.packages(&quot;devtools&quot;)
+require(devtools)
+install_github(&quot;neotoma&quot;, &quot;ropensci&quot;)
+require(neotoma)
+</code></pre>
+
+<h3>A few examples</h3>
+
+<h4>Find the distribution of sites with Mammoth fossils in Neotoma</h4>
+
+<pre><code class="R">#  Example requires the plyr package and the mapdata package:
+&gt; require(plyr)
+&gt; test &lt;- get_datasets(taxonname=&#39;Mammuthus*&#39;)
+The API call was successful, you have returned  3273 records.
+&gt; site.locs &lt;- ldply(test, function(x)x$Site)
+&gt; map(&#39;world&#39;, xlim=range(site.locs$LongitudeWest)+c(-10, 10), ylim=range(site.locs$LatitudeNorth)+c(-10, 10))
+&gt; points(site.locs$LongitudeWest, site.locs$LatitudeNorth, pch=19, cex=0.5)
+
+</code></pre>
+
+<p><img src="http://ropensci.github.com/neotoma/mammothsites.png" alt="thing"/></p>
+
+<h3>Plot the proportion of publications per year for datasets in Neotoma</h3>
+
+<pre><code class="R">&gt; # Requires ggplot2
+&gt; library(ggplot2)
+&gt; pubs &lt;- get_publication()
+The API call was successful, you have returned  3693 records.
+Warning message:
+In getForm(base.uri, .params = cl) : No inputs passed to form
+&gt; pub.years &lt;- as.numeric(as.character(pubs$Year))
+Warning message:
+NAs introduced by coercion
+&gt; ggplot(data=data.frame(x = pub.years), aes(x)) +
++     stat_bin(aes(y=..density..*100, position=&#39;dodge&#39;), binwidth=1) +
++     theme_bw() +
++     ylab(&#39;Percent of Publications&#39;) +
++     xlab(&#39;Year of Publication&#39;) +
++     scale_y_continuous(expand = c(0, 0.1)) +
++     scale_x_continuous(breaks = seq(min(pub.years, na.rm=TRUE), 2013, by=20))
+
+</code></pre>
+
+<p><img src="http://ropensci.github.com/neotoma/histogramplot.png" alt="thing"/></p>
+
+</body>
+
+</html>
+

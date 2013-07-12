@@ -55,6 +55,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export 
+#' 
 get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   #  The issue here is that these objects have multiple tables of multiple lengths.
   
