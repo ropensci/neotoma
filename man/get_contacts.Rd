@@ -52,12 +52,8 @@
   \item{GivenNames}{ Given or forenames of a person (e.g.
   "George Gaylord"). Initials with spaces are used if full
   given names are not known (e.g. "G. G").} \item{Suffix}{
-<<<<<<< HEAD:man/get.contacts.Rd
-  Suffix of a person's name (e.g. \"Jr.\", "III").}
-=======
   Suffix of a person's name (e.g. "Jr.", "III").}
->>>>>>> 9a7a9118a815defe72427557322d5a304b85e28d:man/get_contacts.Rd
-  \item{Title}{ A person’s title (e.g. "Dr.", "Prof.",
+  \item{Title}{ A person's title (e.g. "Dr.", "Prof.",
   "Prof. Dr").} \item{Phone}{ Telephone number.}
   \item{Fax}{ Fax number.} \item{Email}{ Email address.}
   \item{URL}{ Universal Resource Locator, an Internet World

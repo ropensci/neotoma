@@ -5,7 +5,7 @@
 #' @param taxonid Numeric taxon identifier used in Neotoma
 #' @param taxonname A character string representing the full or partial name of taxa of interest.
 #' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.
-#' @param taxagroup The taxonomic grouping for the taxa. See \link{http://api.neotomadb.org/doc/resources/taxa} for the list of approved groupings.
+#' @param taxagroup The taxonomic grouping for the taxa. See \url{http://api.neotomadb.org/doc/resources/taxa} for the list of approved groupings.
 #' @param ecolgroup The ecological group of the taxa. More detailed than \code{taxagroup}, can be obtained using \code{get_table("EcolGroupTypes")}.
 #' 
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -76,7 +76,8 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
     }
   }
   
-  aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue=NA))
+  neotoma.form <- getForm(base.uri, .params = cl)
+  aa <- try(fromJSON(neotoma.form, nullValue=NA))
   
   if(aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)

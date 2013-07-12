@@ -31,7 +31,7 @@
 #'  \item{LeadingInitials}{  Leading initials for given or forenames without spaces (e.g. "G.G.").}
 #'  \item{GivenNames}{  Given or forenames of a person (e.g. "George Gaylord"). Initials with spaces are used if full given names are not known (e.g. "G. G").}
 #'  \item{Suffix}{  Suffix of a person's name (e.g. "Jr.", "III").}
-#'  \item{Title}{  A person’s title (e.g. "Dr.", "Prof.", "Prof. Dr").}
+#'  \item{Title}{  A person's title (e.g. "Dr.", "Prof.", "Prof. Dr").}
 #'  \item{Phone}{  Telephone number.}
 #'  \item{Fax}{  Fax number.}
 #'  \item{Email}{  Email address.}
@@ -93,7 +93,8 @@ get_contacts <- function(contactid, contactname, contactstatus, familyname){
     }
   }
 
-  aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue = NA))
+  neotoma.form <- getForm(base.uri, .params = cl)
+  aa <- try(fromJSON(neotoma.form, nullValue = NA))
 
   if(aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
