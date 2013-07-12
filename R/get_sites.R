@@ -101,7 +101,8 @@ get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
     #}
   }
   
-  aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue = NA))
+  neotoma.form <- getForm(base.uri, .params = cl)
+  aa <- try(fromJSON(neotoma.form, nullValue = NA))
   
   if(aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
