@@ -5,16 +5,18 @@ Version: 1.0
 Date: 2013-04-04
 Author: Simon J. Goring
 Maintainer: Simon Goring <goring@wisc.edu>
-Description: The package accesses the Neotoma Paleoecological Database using the published API (http://api.neotomadb.org/).  The functions in this package access various pre-built API functions and attempt to return the results from Neotoma in a usable format for researchers and the public.
+Description: The package accesses the Neotoma Paleoecological Database using
+    the published API (http://api.neotomadb.org/).  The functions in this
+    package access various pre-built API functions and attempt to return the
+    results from Neotoma in a usable format for researchers and the public.
 License: CC BY-SA 3.0
 URL: https://github.com/ropensci/neotoma
 BugReports: https://github.com/ropensci/neotoma/issues
-Depends:
-    reshape
 Imports:
     RJSONIO,
     RCurl (>= 1.6),
-    plyr
+    plyr,
+    reshape2
 Collate:
     'get_contacts.R'
     'get_datasets.R'
@@ -24,4 +26,3 @@ Collate:
     'get_table.R'
     'get_taxa.R'
     'compile_list.R'
-	
