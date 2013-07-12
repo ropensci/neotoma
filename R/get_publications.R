@@ -107,7 +107,7 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
     
     aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
     
-    output <- suppressMessages(cast(melt(lapply(aa, function(x)data.frame(x))))[,-2])
+    output <- suppressMessages(dcast(melt(lapply(aa, function(x)data.frame(x))))[,-2])
   }
   
   output
