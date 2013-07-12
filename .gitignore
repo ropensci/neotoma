@@ -1,2 +1,8 @@
 .DS_Store
 .Rproj.user
+
+## backup files
+*~ 
+
+# history
+.Rhistory
