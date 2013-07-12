@@ -94,11 +94,6 @@ get_download <- function(datasetid){
                                   if(is.null(x$SampleUnitName)) NA
                                   else x$SampleUnitName}),
                                 unit.name = sapply(samples, function(x) x$AnalysisUnitName))
-<<<<<<< HEAD
-
-=======
-
->>>>>>> 9a7a9118a815defe72427557322d5a304b85e28d
       sample.data <- suppressMessages(melt(llply(samples, function(x) ldply(x$SampleData, data.frame))))
       taxon.list <- sample.data[!duplicated(sample.data[,1]),1:5]
 
@@ -116,9 +111,4 @@ get_download <- function(datasetid){
   if(class(aa) == 'try-error') aa <- aa
 
   aa
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9a7a9118a815defe72427557322d5a304b85e28d

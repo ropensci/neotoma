@@ -15,8 +15,8 @@
   'extinct', 'extant', 'all'.}
 
   \item{taxagroup}{The taxonomic grouping for the taxa. See
-  \link{http://api.neotomadb.org/doc/resources/taxa} for
-  the list of approved groupings.}
+  \url{http://api.neotomadb.org/doc/resources/taxa} for the
+  list of approved groupings.}
 
   \item{ecolgroup}{The ecological group of the taxa. More
   detailed than \code{taxagroup}, can be obtained using

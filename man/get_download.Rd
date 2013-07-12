@@ -5,13 +5,8 @@
   get_download(datasetid)
 }
 \arguments{
-<<<<<<< HEAD
-  \item{datasetid}{Dataset ID, as returned by
-  \code{get_datasets}.}
-=======
   \item{datasetid}{A single numeric dataset ID, as returned
   by \code{get_datasets}.}
->>>>>>> 9a7a9118a815defe72427557322d5a304b85e28d
 }
 \value{
   This command returns either a 'try-error' definined by
@@ -43,12 +38,8 @@
 \description{
   Using the dataset ID, return all records associated with
   the data.  At present, only returns the dataset in an
-<<<<<<< HEAD
-  unparsed format, not as a data table.
-=======
   unparsed format, not as a data table.  This function will
   only download one dataset at a time.
->>>>>>> 9a7a9118a815defe72427557322d5a304b85e28d
 }
 \examples{
 \dontrun{
