@@ -1,3 +1,4 @@
+export(compile_list)
 export(get_contacts)
 export(get_datasets)
 export(get_download)
