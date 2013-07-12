@@ -3,6 +3,7 @@
 #'    Paleoecological Database.
 #'
 #' @import RJSONIO RCurl plyr
+#' @importFrom reshape2 dcast melt
 #' @param contactid Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
 #' @param contactname A character string indicating the data contributors' project,
@@ -107,7 +108,7 @@ get_contacts <- function(contactid, contactname, contactstatus, familyname){
   if(class(aa) == 'try-error') output <- neotoma.form
   else{
     names(aa) <- sapply(aa, function(x)x$ContactID)
-    output <- suppressMessages(cast(melt(lapply(aa, data.frame)))[,-2])
+    output <- suppressMessages(dcast(melt(lapply(aa, data.frame)))[,-2])
   }
 
   output
