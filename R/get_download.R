@@ -6,6 +6,7 @@
 #'
 #' @import RJSONIO RCurl plyr
 #' @param datasetid A single numeric dataset ID, as returned by \code{get_datasets}.
+#' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned
 #'    from the Neotoma API call, or a list comprising the following items:
@@ -45,74 +46,132 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_download <- function(datasetid){
+get_download <- function(datasetid, verbose = TRUE){
 
-  #This needs work.
-  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
+    ## Updated the processing here. There is no need to be fiddling with
+    ## call. Use missing() to check for presence of argument
+    ## and then process as per usual
+    base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
 
-  cl <- as.list(match.call())
-  cl[[1]] <- NULL
-  cl <- lapply(cl, eval, envir=parent.frame())
-
-  #  Parameter check on siteid:
-  if('datasetid' %in% names(cl)){
-    if(!is.numeric(datasetid)) stop('datasetid must be numeric.')
-  }
-
-  aa <- try(fromJSON(paste(base.uri, '/', cl, sep=''), nullValue = NA))
-
-  if(aa[[1]] == 0){
-    stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
-  }
-  if(aa[[1]] == 1){
-    aa <- aa[[2]]
-    cat('The API call was successful, you have returned ', length(aa), 'records.\n')
-
-    #  So here the goal is to reduce this list of lists to as simple a set of
-    #  matrices as possible.
-    if('Samples' %in% names(aa[[1]])){
-      meta.data <- with(aa[[1]], data.frame(dataset.id = DatasetID,
-                                            dataset.name = DatasetName,
-                                            collection.type = CollUnitType,
-                                            collection.handle = CollUnitHandle,
-                                            dataset.type = DatasetType))
-      site.data <- as.data.frame(aa[[1]]$Site)
-      site.data <- site.data[,c('SiteID', 'SiteName', 'Altitude',
-                                'LatitudeNorth', 'LongitudeWest',
-                                'LatitudeSouth', 'LongitudeEast',
-                                'SiteDescription', 'SiteNotes')]
-
-      pi.data <- aa[[1]]$DatasetPIs
-
-      #  This is the part I'm less sure about doing nicely:
-      samples <- aa[[1]]$Samples
-      sample.meta <- data.frame(depths = sapply(samples, function(x) x$AnalysisUnitDepth),
-                                thickness = sapply(samples, function(x) x$AnalysisUnitName),
-                                ldply(samples, function(x) data.frame(x$SampleAges)),
-                                IDs = sapply(samples, function(x) x$SampleID),
-                                sample.name = sapply(samples, function(x) {
-                                  if(is.null(x$SampleUnitName)) NA
-                                  else x$SampleUnitName}),
-                                unit.name = sapply(samples, function(x) x$AnalysisUnitName))
-
-      sample.data <- suppressMessages(melt(llply(samples, function(x) ldply(x$SampleData, data.frame))))
-      taxon.list <- sample.data[!duplicated(sample.data[,1]),1:5]
-
-      count.table <- xtabs(value ~ L1 + TaxonName, sample.data)
-
-      aa <- list(metadata = meta.data,
-                 pi.data = pi.data,
-                 site.data = site.data,
-                 sample.meta = sample.meta,
-                 taxon.list = taxon.list,
-                 counts = count.table)
+    if(missing(datasetid)) {
+        stop(paste(sQuote("datasetid"), "must be provided."))
+    } else {
+        if(!is.numeric(datasetid))
+            stop('datasetid must be numeric.')
+        if(length(datasetid) > 1L) {
+            datasetid <- datasetid[1]
+            warning(paste("Only a single database call can be processed.\nUsing the first",
+                          sQuote("datasetid"), "only:", datasetid))
+        }
     }
-  }
 
-  if(class(aa) == 'try-error') aa <- aa
+    ## query Neotoma for data set
+    aa <- try(fromJSON(paste0(base.uri, '/', datasetid), nullValue = NA))
 
-  aa
+    ## Might as well check here for error and bail
+    if(inherits(aa, "try-error"))
+        return(aa)
 
+    ## if no error continue processing
+    if (isTRUE(all.equal(aa[[1]], 0))) {
+        stop(paste('Server returned an error message:\n', aa[[2]]),
+             call.=FALSE)
+    }
 
+    if (isTRUE(all.equal(aa[[1]], 1))) {
+        aa <- aa[[2]]
+        recs <- length(aa)
+
+        if(verbose) {
+            writeLines(strwrap(paste("API call was successful. Returned",
+                                     recs,
+                                     ifelse(recs > 1, "records.",
+                                            "record."))))
+        }
+
+        ##  Here the goal is to reduce this list of lists to as
+        ##  simple a set of matrices as possible.
+        nams <- names(aa[[1]])
+        aa1 <- aa[[1]]
+        if ('Samples' %in% nams) {
+            ## data set meta data
+            meta.data <-
+                data.frame(dataset.id = aa1$DatasetID,
+                           dataset.name = aa1$DatasetName,
+                           collection.type = aa1$CollUnitType,
+                           collection.handle = aa1$CollUnitHandle,
+                           dataset.type =  aa1$DatasetType)
+
+            ## information on the site
+            site.data <-
+                as.data.frame(aa1$Site[c('SiteID', 'SiteName',
+                                         'Altitude','LatitudeNorth',
+                                         'LongitudeWest','LatitudeSouth',
+                                         'LongitudeEast','SiteDescription',
+                                         'SiteNotes')])
+
+            ## Data on principal investigators
+            pi.data <- aa1$DatasetPIs
+
+            ## copy to make indexing below easier?
+            samples <- aa1$Samples
+
+            ## sample meta data - no with() in functions
+            sample.meta <- do.call(rbind.data.frame,
+                                   lapply(samples, `[`,
+                                          c("AnalysisUnitDepth",
+                                            "AnalysisUnitThickness",
+                                            "SampleID", "AnalysisUnitName"
+                                            )))
+
+            ## sample age data
+            ages <- do.call(rbind.data.frame,
+                            lapply(lapply(samples, `[[`, "SampleAges"),
+                                   `[[`, 1))
+
+            ## sample names - can be NULL hence replace with NA if so
+            tmp <- sapply(sample.names <-
+                          lapply(samples, `[[`, "SampleUnitName"), is.null)
+            sample.names[tmp] <- NA
+
+            ## stick all that together, setting names, & reordering cols
+            sample.meta <- cbind.data.frame(sample.meta, ages,
+                                            unlist(sample.names))
+            names(sample.meta) <- c("depths", "thickness", "IDs", "unit.name",
+                                    names(ages), "sample.name")
+            sample.meta <- sample.meta[, c(1:2, 5:10, 3, 11, 4)]
+
+            ## sample data/counts
+            ##  1) extract each SampleData component & then rbind. Gives a
+            ##     list of data frames
+            sample.data <- lapply(lapply(samples, `[[`, "SampleData"),
+                                  function(x) do.call(rbind.data.frame, x))
+            ##  2) How many counts/species in each data frame?
+            nsamp <- sapply(sample.data, nrow)
+            ##  3) bind each data frame - result is a data frame in long format
+            sample.data <- do.call(rbind, sample.data)
+            ##  4) add a Sample column that is the ID from smaple.meta
+            sample.data$Sample <- rep(sample.meta$IDs, times = nsamp)
+
+            ## data frame of unique taxon info
+            taxon.list <- sample.data[!duplicated(sample.data$TaxonName), 1:5]
+
+            ## reshape long sample.data into a sample by taxon data frame
+            counts <- dcast(sample.data, Sample ~ TaxonName,
+                            value.var = "Value")
+            ## add Sample col as the rownames
+            rownames(counts) <- counts$Sample
+            ## remove the Sample col, but robustly
+            counts <- counts[, -which(names(counts) == "Sample")]
+
+            ## stick all this together
+            aa <- list(metadata = meta.data,
+                       pi.data = pi.data,
+                       site.data = site.data,
+                       sample.meta = sample.meta,
+                       taxon.list = taxon.list,
+                       counts = counts)
+        }
+    }
+    aa
 }
-
