@@ -68,6 +68,11 @@ get_download <- function(datasetid, verbose = TRUE){
     ## query Neotoma for data set
     aa <- try(fromJSON(paste0(base.uri, '/', datasetid), nullValue = NA))
 
+    ## Might as well check here for error and bail
+    if(inherits(aa, "try-error"))
+        return(aa)
+
+    ## if no error continue processing
     if (isTRUE(all.equal(aa[[1]], 0))) {
         stop(paste('Server returned an error message:\n', aa[[2]]),
              call.=FALSE)
