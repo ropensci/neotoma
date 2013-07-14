@@ -159,6 +159,10 @@ get_download <- function(datasetid, verbose = TRUE){
             ## reshape long sample.data into a sample by taxon data frame
             counts <- dcast(sample.data, Sample ~ TaxonName,
                             value.var = "Value")
+            ## add Sample col as the rownames
+            rownames(counts) <- counts$Sample
+            ## remove the Sample col, but robustly
+            counts <- counts[, -which(names(counts) == "Sample")]
 
             ## stick all this together
             aa <- list(metadata = meta.data,
