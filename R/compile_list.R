@@ -69,7 +69,7 @@ compile_list <- function(sample, list.name){
 
   new.listname <- rep(NA, length(sets))
 
-  for(i in 1:length(sets)){
+  for(i in seq_along(sets)){
     taxa.class <- laply(taxa.list, function(x)any(sets[i] %in% x))
     if(any(taxa.class))  new.listname[i] <- translate.table[taxa.class, 2]
     else  new.listname[i] <- 'Other'
