@@ -3,7 +3,7 @@
 #'
 #' From the assemblage data for the core return assemblage data with the assemblage taxa
 #'
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @param data A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param verbose logical; print messages about progress?
