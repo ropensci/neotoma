@@ -62,8 +62,9 @@ gold.p25 <- compile_list(GOLDKBG, 'P25')
   Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
-  Neotoma Project Website: http://www.neotomadb.org API
-  Reference:
+  Neotoma Project Website: http://www.neotomadb.org
+
+  API Reference:
   http://api.neotomadb.org/doc/resources/contacts
 }
 \keyword{API}
