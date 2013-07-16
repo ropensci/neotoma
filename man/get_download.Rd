@@ -30,7 +30,9 @@
   data for the dataset, arranged with each successive depth
   in rows and the taxa as columns.  All taxa are described
   in \code{taxon.list}, the chronology is in
-  \code{sample.data}} \item{lab.data}{} }
+  \code{sample.data}} \item{lab.data}{A data frame of
+  laboratory data, such as exotic pollen spike, amount of
+  sample counted, etc.} }
 
   A full data object containing all the relevant assemblage
   information and metadata neccessary to understand a site.

@@ -18,7 +18,8 @@
 #'  \item{sample.meta}{Dataset information for the core, primarily the age-depth model and chronology.}
 #'  \item{taxon.list}{The list of taxa contained within the dataset, unordered, including information that can be used in \code{get_taxa}}
 #'  \item{counts}{The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
-#'  \item{lab.data}{}
+#'  \item{lab.data}{A data frame of laboratory data, such as exotic pollen
+#'  spike, amount of sample counted, etc.}
 #' }
 #'
 #'    A full data object containing all the relevant assemblage information and metadata neccessary to understand a site.
@@ -168,7 +169,8 @@ get_download <- function(datasetid, verbose = TRUE){
             counts <- counts[, -which(names(counts) == "Sample")]
 
             ## Pull out the lab data
-            lab.data <- sample.data[!take, ]
+            take <- sample.data$TaxaGroup == "Laboratory analyses"
+            lab.data <- sample.data[take, ]
             if(nrow(lab.data) > 0) {
                 lab.data$LabNameUnits <- paste0(lab.data$TaxonName, " (",
                                                 lab.data$VariableElement, ": ",
