@@ -3,9 +3,11 @@
 #'
 #' From the assemblage data for the core return assemblage data with the assemblage taxa
 #'
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @param data A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
+#' @param verbose logical; print messages about progress?
+#'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a list object containing \code{count} and \code{taxon.list} objects, similar to those associated with the \code{get_download} object.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
 #'
@@ -43,7 +45,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_list <- function(sample, list.name){
+compile_list <- function(sample, list.name, verbose = TRUE) {
 
   #  List.name must be an acceptible list, including:
   #  P25 (from Gavin et al)
@@ -58,43 +60,54 @@ compile_list <- function(sample, list.name){
 
   #  A lot of the numbers from Neotoma get returned as factors.  It's annoying, this function
   #  helps.
-  as.num <- function(x) as.numeric(as.character(x))
+  as.num <- function(x) as.numeric(levels(x))[as.integer(x)]
 
   #  Returns the TaxonIDs of the assemblages, by finding the equivalents in the larger taxon table.
-  sets <- as.num(taxon.list$TaxonID[match(sample$taxon.list[,1], taxon.list$TaxonName)])
+  sets <- as.num(taxon.list$TaxonID[match(sample$taxon.list[,1],
+                                          taxon.list$TaxonName)])
 
   #  The transformation table is a tab delimited table with a list of TaxonIDs associated with the lower
   #  taxa nested within each set taxon.
-  taxa.list <- llply(strsplit(translate.table[translate.table[,1] == list.name,3], split=', '), as.numeric)
+  taxa.list <-
+      lapply(strsplit(translate.table[translate.table[,1] == list.name, 3],
+                      split=', '), as.numeric)
 
   new.listname <- rep(NA, length(sets))
 
-  for(i in 1:length(sets)){
-    taxa.class <- laply(taxa.list, function(x)any(sets[i] %in% x))
-    if(any(taxa.class))  new.listname[i] <- translate.table[taxa.class, 2]
-    else  new.listname[i] <- 'Other'
+  for(i in seq_along(sets)){
+    taxa.class <- sapply(taxa.list, function(x, i) any(sets[i] %in% x), i = i)
+    if(any(taxa.class)) {
+        new.listname[i] <- translate.table[taxa.class, 2]
+    } else {
+        new.listname[i] <- 'Other'
+    }
   }
 
   #  This is the actual transformation,
-  new.samp <- sample$count
+  new.samp <- sample$counts
   colnames(new.samp) <- new.listname
-  new.samp <- dcast(melt(new.samp), L1 ~ TaxonName, sum)[,-1]
+  new.samp$Sample <- rownames(new.samp)
+  new.samp <- dcast(melt(new.samp, id.vars = "Sample"), Sample ~ variable,
+                    fun.aggregate = sum, value.var = "value")[,-1]
 
   #  We want to make a taxon list like the one returned in get_downloads:
+  if(verbose)
+      writeLines(strwrap("Querying Neotoma for taxon metadata..."))
   taxon.type <- get_table('TaxaGroupTypes')
   taxon.element <- get_table('VariableElements')
   taxon.variables <- get_table('Variables')
   taxon.varunits <- get_table('VariableUnits')
 
-  taxon.ids <- as.num(with(taxon.list, TaxonID[which(TaxonName %in% colnames(new.samp))]))
+  taxon.ids <- as.num(with(taxon.list,
+                           TaxonID[which(TaxonName %in% colnames(new.samp))]))
   taxon.variables <- taxon.variables[taxon.variables$TaxonID %in% taxon.ids,]
 
   taxon.out <- sample$taxon.list
 
   taxon.out$NewCol <- new.listname
-  colnames(taxon.out)[colnames(taxon.out) == 'NewCol'] <- paste(list.name, '_comp', sep='')
+  colnames(taxon.out)[colnames(taxon.out) == 'NewCol'] <-
+      paste(list.name, '_comp', sep='')
 
   #  Returns a data.frame with taxa in the columns and samples in the rows.
-  return(list(taxon.list = taxon.out,
-              counts = new.samp))
+  list(taxon.list = taxon.out, counts = new.samp)
 }

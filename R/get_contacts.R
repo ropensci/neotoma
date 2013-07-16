@@ -108,7 +108,15 @@ get_contacts <- function(contactid, contactname, contactstatus, familyname){
   if(class(aa) == 'try-error') output <- neotoma.form
   else{
     names(aa) <- sapply(aa, function(x)x$ContactID)
-    output <- suppressMessages(dcast(melt(lapply(aa, data.frame)))[,-2])
+    output <- melt(lapply(aa, data.frame),
+                   id.vars = c("Address", "URL", "GivenNames",
+                   "LeadingInitials", "Fax", "Title", "Email",
+                   "FamilyName", "Phone", "ContactName", "ContactStatus",
+                   "Notes", "Suffix"))
+    output <- dcast(output,
+                    formula = ContactName + ContactStatus + FamilyName +
+                    LeadingInitials + GivenNames + Suffix + Title + Phone +
+                    Fax + Email + URL + Address + Notes ~ variable) ##[,-2]
   }
 
   output
