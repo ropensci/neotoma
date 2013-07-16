@@ -2,10 +2,10 @@
 \alias{compile_list}
 \title{Function to convert assemblage taxa to standardized lists.}
 \usage{
-  compile_list(sample, list.name, verbose = TRUE)
+  compile_list(object, list.name, verbose = TRUE)
 }
 \arguments{
-  \item{data}{A pollen object returned by
+  \item{object}{A pollen object returned by
   \code{get_download}.}
 
   \item{list.name}{The taxon compilation list, one of a set
