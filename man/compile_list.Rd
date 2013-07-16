@@ -2,7 +2,7 @@
 \alias{compile_list}
 \title{Function to convert assemblage taxa to standardized lists.}
 \usage{
-  compile_list(sample, list.name)
+  compile_list(sample, list.name, verbose = TRUE)
 }
 \arguments{
   \item{data}{A pollen object returned by
@@ -11,6 +11,8 @@
   \item{list.name}{The taxon compilation list, one of a set
   of lists from the literature (e.g., P25, Whitmore).  More
   detail in the Description.}
+
+  \item{verbose}{logical; print messages about progress?}
 }
 \value{
   This command returns a list object containing
