@@ -122,6 +122,7 @@ get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
       ## This is much faster by direct calling of the data frame method
       ## of rbind
       output2 <- do.call(rbind.data.frame, aa)
+      ## but we need to fix-up some characters that R changed to factors
       output2$SiteName <- as.character(output2$SiteName)
       output2$SiteDescription <- as.character(output2$SiteDescription)
     }
