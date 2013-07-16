@@ -2,7 +2,7 @@
 #' A function to obtain contact information for data contributors from the Neotoma
 #'    Paleoecological Database.
 #'
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @importFrom reshape2 dcast melt
 #' @param contactid Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
