@@ -84,7 +84,7 @@ compile_list <- function(object, list.name, verbose = TRUE){
   }
 
   #  This is the actual transformation,
-  new.samp <- object$count
+  new.samp <- object$counts
   colnames(new.samp) <- new.listname
   new.samp$Sample <- rownames(new.samp)
   new.samp <- dcast(melt(new.samp, id.vars = "Sample"), Sample ~ variable,
