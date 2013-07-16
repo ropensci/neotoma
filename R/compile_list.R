@@ -1,10 +1,10 @@
 
 #' Function to convert assemblage taxa to standardized lists.
-#'
-#' From the assemblage data for the core return assemblage data with the assemblage taxa
-#'
-#' @import RJSONIO RCurl
-#' @param data A pollen object returned by \code{get_download}.
+#' 
+#' From the assemblage data for the core return assemblage data with the assemblage taxa 
+#' 
+#' @import RJSONIO RCurl plyr
+#' @param object A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param verbose logical; print messages about progress?
 #'
@@ -45,8 +45,8 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_list <- function(sample, list.name, verbose = TRUE) {
-
+compile_list <- function(object, list.name){
+  
   #  List.name must be an acceptible list, including:
   #  P25 (from Gavin et al)
   #  Whitmore (full)
@@ -63,7 +63,7 @@ compile_list <- function(sample, list.name, verbose = TRUE) {
   as.num <- function(x) as.numeric(levels(x))[as.integer(x)]
 
   #  Returns the TaxonIDs of the assemblages, by finding the equivalents in the larger taxon table.
-  sets <- as.num(taxon.list$TaxonID[match(sample$taxon.list[,1],
+  sets <- as.num(taxon.list$TaxonID[match(object$taxon.list[,1], taxon.list$TaxonName)])
                                           taxon.list$TaxonName)])
 
   #  The transformation table is a tab delimited table with a list of TaxonIDs associated with the lower
@@ -82,9 +82,9 @@ compile_list <- function(sample, list.name, verbose = TRUE) {
         new.listname[i] <- 'Other'
     }
   }
-
-  #  This is the actual transformation,
-  new.samp <- sample$counts
+  
+  #  This is the actual transformation, 
+  new.samp <- object$count
   colnames(new.samp) <- new.listname
   new.samp$Sample <- rownames(new.samp)
   new.samp <- dcast(melt(new.samp, id.vars = "Sample"), Sample ~ variable,
@@ -101,9 +101,9 @@ compile_list <- function(sample, list.name, verbose = TRUE) {
   taxon.ids <- as.num(with(taxon.list,
                            TaxonID[which(TaxonName %in% colnames(new.samp))]))
   taxon.variables <- taxon.variables[taxon.variables$TaxonID %in% taxon.ids,]
-
-  taxon.out <- sample$taxon.list
-
+  
+  taxon.out <- object$taxon.list
+  
   taxon.out$NewCol <- new.listname
   colnames(taxon.out)[colnames(taxon.out) == 'NewCol'] <-
       paste(list.name, '_comp', sep='')
