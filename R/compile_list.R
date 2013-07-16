@@ -58,7 +58,7 @@ compile_list <- function(sample, list.name){
 
   #  A lot of the numbers from Neotoma get returned as factors.  It's annoying, this function
   #  helps.
-  as.num <- function(x) as.numeric(levels(f))[as.integer(x)]
+  as.num <- function(x) as.numeric(levels(x))[as.integer(x)]
 
   #  Returns the TaxonIDs of the assemblages, by finding the equivalents in the larger taxon table.
   sets <- as.num(taxon.list$TaxonID[match(sample$taxon.list[,1], taxon.list$TaxonName)])
