@@ -4,7 +4,7 @@
 #' From the assemblage data for the core return assemblage data with the assemblage taxa 
 #' 
 #' @import RJSONIO RCurl plyr
-#' @param data A pollen object returned by \code{get_download}.
+#' @param object A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a list object containing \code{count} and \code{taxon.list} objects, similar to those associated with the \code{get_download} object.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
@@ -43,7 +43,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export 
 
-compile_list <- function(sample, list.name){
+compile_list <- function(object, list.name){
   
   #  List.name must be an acceptible list, including:
   #  P25 (from Gavin et al)
@@ -61,7 +61,7 @@ compile_list <- function(sample, list.name){
   as.num <- function(x) as.numeric(as.character(x))
   
   #  Returns the TaxonIDs of the assemblages, by finding the equivalents in the larger taxon table.
-  sets <- as.num(taxon.list$TaxonID[match(sample$taxon.list[,1], taxon.list$TaxonName)])
+  sets <- as.num(taxon.list$TaxonID[match(object$taxon.list[,1], taxon.list$TaxonName)])
   
   #  The transformation table is a tab delimited table with a list of TaxonIDs associated with the lower
   #  taxa nested within each set taxon.
@@ -76,7 +76,7 @@ compile_list <- function(sample, list.name){
   }
   
   #  This is the actual transformation, 
-  new.samp <- sample$count
+  new.samp <- object$count
   colnames(new.samp) <- new.listname
   new.samp <- cast(melt(new.samp), L1 ~ TaxonName, sum)[,-1]
 
@@ -89,7 +89,7 @@ compile_list <- function(sample, list.name){
   taxon.ids <- as.num(with(taxon.list, TaxonID[which(TaxonName %in% colnames(new.samp))]))
   taxon.variables <- taxon.variables[taxon.variables$TaxonID %in% taxon.ids,]
   
-  taxon.out <- sample$taxon.list
+  taxon.out <- object$taxon.list
   
   taxon.out$NewCol <- new.listname
   colnames(taxon.out)[colnames(taxon.out) == 'NewCol'] <- paste(list.name, '_comp', sep='')
