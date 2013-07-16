@@ -103,16 +103,25 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
 
   if(class(aa) == 'try-error' | length(aa) == 0) output <- NA
   else{
-    names(aa) <- sapply(aa, function(x)x$SiteName)
+      ## This line doesn't do anything
+      ##names(aa) <- sapply(aa, function(x)x$SiteName)
 
-    aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
+      ## This line looses all the author information beyond the first
+      ## suspect it is not needed
+      ##aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
 
-    output <- melt(lapply(aa, data.frame),
-                   id.vars = c("Year", "PubType", #"Authors.ContactName",
-                   "Citation"))
-    output <- dcast(output, formula = ... ~ variable)
-    output <- output[, -which(names(output) %in% "L1")]
-   ## output <- suppressMessages(dcast(melt(lapply(aa, function(x)data.frame(x))))[,-2])
+      ## This is back now doing what is documented to do
+      ## could be neater though - how about returning a list with
+      ## 2 components, the first everything but the Authors array, the
+      ## second the authors array *with* a link to PublicationID??
+      output <- suppressMessages(melt(lapply(aa, data.frame)))
+      output <- dcast(output, formula = ... ~ variable)
+      output <- output[, -which(names(output) %in% "L1")]
+      cols <- c("PublicationID","PubType","Year","Citation")
+      cnames <- names(output)
+      cnames <- cnames[!cnames %in% cols]
+      cols <- c(cols, cnames)
+      output <- output[, cols]
   }
 
   output
