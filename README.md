@@ -50,7 +50,7 @@ The API call was successful, you have returned  3273 records.
 > points(site.locs$LongitudeWest, site.locs$LatitudeNorth, pch=19, cex=0.5)
 
 ```
-![thing](http://ropensci.github.com/neotoma/mammothsites.png)
+![thing](inst/img/mammothsites.png)
 
 ### Plot the proportion of publications per year for datasets in Neotoma
 
@@ -74,4 +74,4 @@ NAs introduced by coercion
 
 ```
 
-![thing](http://ropensci.github.com/neotoma/histogramplot.png)
+![thing](inst/img/histogramplot.png)

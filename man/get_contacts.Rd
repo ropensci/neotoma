@@ -53,7 +53,7 @@
   "George Gaylord"). Initials with spaces are used if full
   given names are not known (e.g. "G. G").} \item{Suffix}{
   Suffix of a person's name (e.g. "Jr.", "III").}
-  \item{Title}{ A person’s title (e.g. "Dr.", "Prof.",
+  \item{Title}{ A person's title (e.g. "Dr.", "Prof.",
   "Prof. Dr").} \item{Phone}{ Telephone number.}
   \item{Fax}{ Fax number.} \item{Email}{ Email address.}
   \item{URL}{ Universal Resource Locator, an Internet World

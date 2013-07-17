@@ -1,2 +1,19 @@
-.DS_Store
+
 .Rproj.user
+
+## backup files
+*~ 
+
+# history
+.Rhistory
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
