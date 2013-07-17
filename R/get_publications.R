@@ -1,10 +1,10 @@
 
 #' A file to get publications for sites or datasets in the Neotoma Database using the API.
-#' 
-#' The function takes the parameters, defined by the user, and returns a table with 
+#'
+#' The function takes the parameters, defined by the user, and returns a table with
 #'    publication information from the Neotoma Paleoecological Database.
-#' 
-#' @import RJSONIO RCurl plyr
+#'
+#' @import RJSONIO RCurl
 #' @param pubid Numeric Publication ID value, either from \code{get.datasets} or known.
 #' @param contactid Numeric Contact ID value, either from \code{get.datasets} or \code{get.contacts}
 #' @param datasetid Numeric Dataset ID, known or from \code{get.datasets}
@@ -12,11 +12,11 @@
 #' @param pubtype Character string, one of eleven allowable types, see \code{get.table('PublicationTypes')}
 #' @param year Numeric publication year.
 #' @param search A character string to search for within the article citation.
-#' 
+#'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return A table is returned with several fixed columns, and a variable number 
+#' @return A table is returned with several fixed columns, and a variable number
 #'    of author fields:
-#'    
+#'
 #' \itemize{
 #'  \item{PublicationID}{Unique database record identifier for the publication.}
 #'  \item{PubType}{Publication type}
@@ -27,7 +27,7 @@
 #' @examples \dontrun{
 #' #  To find all publications from 1998:
 #' year.cont <- get_publication(year = 1998)
-#' 
+#'
 #' # To find all data contributors who have the last name "Smith"
 #' smith.cont <- get_publication(author = 'Smith')
 #' }
@@ -35,64 +35,64 @@
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
-#' @export 
+#' @export
 get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, search){
-  
+
   base.uri <- 'http://api.neotomadb.org/v1/data/publications'
-  
+
   cl <- as.list(match.call())
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir=parent.frame())
-  
+
   #  Parameter check on pubid:
   if('pubid' %in% names(cl)){
     if(!is.numeric(cl$pubid)){
       stop('The pubid must be numeric.')
     }
   }
-  
+
   #  Parameter check on contactid:
   if('contactid' %in% names(cl)){
     if(!is.numeric(cl$contactid)){
       stop('The contactid must be numeric.')
     }
   }
-  
+
   #  Parameter check on datasetid:
   if('datasetid' %in% names(cl)){
     if(!is.numeric(cl$datasetid)){
       stop('The datasetid must be numeric.')
     }
   }
-  
+
   #  Parameter check on author:
   if('author' %in% names(cl)){
     if(!is.character(cl$author)){
       stop('The author must be a character string.')
     }
   }
-  
+
   if('pubtype' %in% names(cl)){
     if(!is.character(cl$pubtype)){
       stop('The pubtype must be a character string.  Use get.table(\'PublicationTypes\') to find acceptable tables.')
     }
   }
-  
+
   if('year' %in% names(cl)){
     if(!is.numeric(cl$year)){
       stop('The year used must be numeric.')
     }
   }
-  
+
   #  Parameter check on author:
   if('search' %in% names(cl)){
     if(!is.character(cl$search)){
       stop('The search string must be a character string.')
     }
   }
-  
+
   aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue = NA))
-  
+
   if(aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
   }
@@ -100,15 +100,29 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
     aa <- aa[[2]]
     cat('The API call was successful, you have returned ', length(aa), 'records.\n')
   }
-  
+
   if(class(aa) == 'try-error' | length(aa) == 0) output <- NA
   else{
-    names(aa) <- sapply(aa, function(x)x$SiteName)
-    
-    aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
-    
-    output <- suppressMessages(dcast(melt(lapply(aa, function(x)data.frame(x))))[,-2])
+      ## This line doesn't do anything
+      ##names(aa) <- sapply(aa, function(x)x$SiteName)
+
+      ## This line looses all the author information beyond the first
+      ## suspect it is not needed
+      ##aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
+
+      ## This is back now doing what is documented to do
+      ## could be neater though - how about returning a list with
+      ## 2 components, the first everything but the Authors array, the
+      ## second the authors array *with* a link to PublicationID??
+      output <- suppressMessages(melt(lapply(aa, data.frame)))
+      output <- dcast(output, formula = ... ~ variable)
+      output <- output[, -which(names(output) %in% "L1")]
+      cols <- c("PublicationID","PubType","Year","Citation")
+      cnames <- names(output)
+      cnames <- cnames[!cnames %in% cols]
+      cols <- c(cols, cnames)
+      output <- output[, cols]
   }
-  
+
   output
 }

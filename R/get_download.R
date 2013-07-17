@@ -4,7 +4,7 @@
 #' Using the dataset ID, return all records associated with the data.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @param datasetid A single numeric dataset ID, as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -18,6 +18,8 @@
 #'  \item{sample.meta}{Dataset information for the core, primarily the age-depth model and chronology.}
 #'  \item{taxon.list}{The list of taxa contained within the dataset, unordered, including information that can be used in \code{get_taxa}}
 #'  \item{counts}{The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
+#'  \item{lab.data}{A data frame of laboratory data, such as exotic pollen
+#'  spike, amount of sample counted, etc.}
 #' }
 #'
 #'    A full data object containing all the relevant assemblage information and metadata neccessary to understand a site.
@@ -34,9 +36,9 @@
 #'
 #' #  Of the 60 taxa in the record, plot the pollen curve for Abies over time:
 #'
-#' pollen <- GOLDKBG$taxon.list$VariableElement == 'pollen'
+#' ##pollen <- GOLDKBG$taxon.list$VariableElement == 'pollen'
 #' pol.curve <- data.frame(age = GOLDKBG$sample.meta$Age,
-#'                         Abies = GOLDKBG$counts[,'Abies'] / rowSums(GOLDKBG$counts[,pollen]))
+#'                         Abies = GOLDKBG$counts[,'Abies'] / rowSums(GOLDKBG$counts, na.rm = TRUE))
 #' plot(Abies * 100 ~ age, data = pol.curve, type='b',
 #'      ylab = '% Abies', xlab='Calibrated Years BP', pch=19)
 #'
@@ -157,12 +159,27 @@ get_download <- function(datasetid, verbose = TRUE){
             taxon.list <- sample.data[!duplicated(sample.data$TaxonName), 1:5]
 
             ## reshape long sample.data into a sample by taxon data frame
-            counts <- dcast(sample.data, Sample ~ TaxonName,
-                            value.var = "Value")
+            ## take here *only* counts - but needs work FIXME
+            take <- sample.data$TaxaGroup != "Laboratory analyses"
+            counts <- dcast(sample.data[take, ],
+                            formula = Sample ~ TaxonName, value.var = "Value")
             ## add Sample col as the rownames
             rownames(counts) <- counts$Sample
             ## remove the Sample col, but robustly
             counts <- counts[, -which(names(counts) == "Sample")]
+
+            ## Pull out the lab data
+            take <- sample.data$TaxaGroup == "Laboratory analyses"
+            lab.data <- sample.data[take, ]
+            if(nrow(lab.data) > 0) {
+                lab.data$LabNameUnits <- paste0(lab.data$TaxonName, " (",
+                                                lab.data$VariableElement, ": ",
+                                                lab.data$VariableUnits, ")")
+                lab.data <- dcast(lab.data, formula = Sample ~ LabNameUnits,
+                                  value.var = "Value")
+            } else {
+                lab.data <- NA
+            }
 
             ## stick all this together
             aa <- list(metadata = meta.data,
@@ -170,7 +187,8 @@ get_download <- function(datasetid, verbose = TRUE){
                        site.data = site.data,
                        sample.meta = sample.meta,
                        taxon.list = taxon.list,
-                       counts = counts)
+                       counts = counts,
+                       lab.data = lab.data)
         }
     }
     aa

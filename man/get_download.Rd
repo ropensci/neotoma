@@ -30,7 +30,9 @@
   data for the dataset, arranged with each successive depth
   in rows and the taxa as columns.  All taxa are described
   in \code{taxon.list}, the chronology is in
-  \code{sample.data}} }
+  \code{sample.data}} \item{lab.data}{A data frame of
+  laboratory data, such as exotic pollen spike, amount of
+  sample counted, etc.} }
 
   A full data object containing all the relevant assemblage
   information and metadata neccessary to understand a site.
@@ -57,9 +59,9 @@ taxa.no <- nrow(GOLDKBG$taxon.list)
 
 #  Of the 60 taxa in the record, plot the pollen curve for Abies over time:
 
-pollen <- GOLDKBG$taxon.list$VariableElement == 'pollen'
+##pollen <- GOLDKBG$taxon.list$VariableElement == 'pollen'
 pol.curve <- data.frame(age = GOLDKBG$sample.meta$Age,
-                        Abies = GOLDKBG$counts[,'Abies'] / rowSums(GOLDKBG$counts[,pollen]))
+                        Abies = GOLDKBG$counts[,'Abies'] / rowSums(GOLDKBG$counts, na.rm = TRUE))
 plot(Abies * 100 ~ age, data = pol.curve, type='b',
      ylab = '\% Abies', xlab='Calibrated Years BP', pch=19)
 
