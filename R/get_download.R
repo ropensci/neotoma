@@ -12,9 +12,7 @@
 #'    from the Neotoma API call, or a list comprising the following items:
 #'
 #' \itemize{
-#'  \item{metadata}{A table describing the collection, including the dataset ID, dataset name, collection type, collection handle and dataset type.}
-#'  \item{pi.data}{A list of PI data, compatable with \code{get_contacts}.}
-#'  \item{site.data}{Site information, compatable with \code{get_sites}}
+#'  \item{metadata}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
 #'  \item{sample.meta}{Dataset information for the core, primarily the age-depth model and chronology.}
 #'  \item{taxon.list}{The list of taxa contained within the dataset, unordered, including information that can be used in \code{get_taxa}}
 #'  \item{counts}{The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
@@ -82,13 +80,10 @@ get_download <- function(datasetid, verbose = TRUE){
 
     if (isTRUE(all.equal(aa[[1]], 1))) {
         aa <- aa[[2]]
-        recs <- length(aa)
-
+      
         if(verbose) {
-            writeLines(strwrap(paste("API call was successful. Returned",
-                                     recs,
-                                     ifelse(recs > 1, "records.",
-                                            "record."))))
+            writeLines(strwrap(paste("API call was successful. Returned record for ",
+                                     aa$Site$SiteName)))
         }
 
         ##  Here the goal is to reduce this list of lists to as
@@ -97,23 +92,18 @@ get_download <- function(datasetid, verbose = TRUE){
         aa1 <- aa[[1]]
         if ('Samples' %in% nams) {
             ## data set meta data
-            meta.data <-
-                data.frame(dataset.id = aa1$DatasetID,
-                           dataset.name = aa1$DatasetName,
-                           collection.type = aa1$CollUnitType,
-                           collection.handle = aa1$CollUnitHandle,
-                           dataset.type =  aa1$DatasetType)
-
-            ## information on the site
-            site.data <-
-                as.data.frame(aa1$Site[c('SiteID', 'SiteName',
+            meta.data <- list(
+                dataset = data.frame(dataset.id = aa1$DatasetID,
+                                     dataset.name = aa1$DatasetName,
+                                     collection.type = aa1$CollUnitType,
+                                     collection.handle = aa1$CollUnitHandle,
+                                     dataset.type =  aa1$DatasetType),
+                site.data = as.data.frame(aa1$Site[c('SiteID', 'SiteName',
                                          'Altitude','LatitudeNorth',
                                          'LongitudeWest','LatitudeSouth',
                                          'LongitudeEast','SiteDescription',
-                                         'SiteNotes')])
-
-            ## Data on principal investigators
-            pi.data <- aa1$DatasetPIs
+                                         'SiteNotes')]),
+                pi.data = aa1$DatasetPIs)
 
             ## copy to make indexing below easier?
             samples <- aa1$Samples
@@ -183,8 +173,6 @@ get_download <- function(datasetid, verbose = TRUE){
 
             ## stick all this together
             aa <- list(metadata = meta.data,
-                       pi.data = pi.data,
-                       site.data = site.data,
                        sample.meta = sample.meta,
                        taxon.list = taxon.list,
                        counts = counts,
