@@ -80,9 +80,9 @@ get_download <- function(datasetid, verbose = TRUE){
 
     if (isTRUE(all.equal(aa[[1]], 1))) {
         aa <- aa[[2]]
-      
+
         if(verbose) {
-            writeLines(strwrap(paste("API call was successful. Returned record for ",
+            writeLines(strwrap(paste("API call was successful. Returned record for",
                                      aa$Site$SiteName)))
         }
 
