@@ -44,11 +44,8 @@
 }
 \examples{
 \dontrun{
-taxon.table <- get_table('Taxa')
-
-#  Get the frequency of the first ten taxa in Neotoma.
-tester <- function(x){ length(get.datasets(taxonname=x)) }
-taxon.counts <- ldply(as.character(taxon.table$TaxonName)[1:10], tester, .progress='text')
+## Return all species taxa with "Abies" in name - note wildcard
+taxa <- get_taxa(taxonname = "Abies*")
 }
 }
 \author{
