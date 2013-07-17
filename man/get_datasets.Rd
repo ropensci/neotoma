@@ -109,7 +109,7 @@
 t8kyr.datasets <- get_datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 # Search for vertebrate fossils in Canada (gpid: 756) within the last 2kyr.
-gpids <- get.table(table.name='GeoPoliticalUnits')
+gpids <- get_table(table.name='GeoPoliticalUnits')
 canID <- gpids[which(gpids$GeoPoliticalName == 'Canada'),1]
 
 v2kyr.datasets <- get_datasets(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)

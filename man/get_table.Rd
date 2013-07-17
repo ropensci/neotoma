@@ -23,8 +23,8 @@
 taxon.table <- get_table('Taxa')
 
 #  Get the frequency of the first ten taxa in Neotoma.
-tester <- function(x){ length(get.datasets(taxonname=x)) }
-taxon.counts <- ldply(as.character(taxon.table$TaxonName)[1:10], tester, .progress='text')
+tester <- function(x) length(get_datasets(taxonname = x))
+taxon.counts2 <- sapply(taxon.table$TaxonName[1:10], tester)
 }
 }
 \author{
