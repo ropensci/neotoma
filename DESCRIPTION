@@ -28,3 +28,6 @@ Collate:
     'get_table.R'
     'get_taxa.R'
     'compile_list.R'
+	'pollen.equiv.R'
+    'taxon.table.R'
+    'translate.table.R'
