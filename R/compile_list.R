@@ -53,8 +53,7 @@ compile_list <- function(object, list.name, verbose = TRUE){
   #  Whit_trunc (from Goring et al)
 
   data(taxon.list)
-  data(translate.table)
-  translate.table <- apply(translate.table, 2, as.character)
+  data(pollen.equiv)
 
   #  These can be deprecated if we decide to include the taxon table as a fixed data object in the project.
 
@@ -66,48 +65,39 @@ compile_list <- function(object, list.name, verbose = TRUE){
   sets <- as.num(taxon.list$TaxonID[match(object$taxon.list[,1],
                                           taxon.list$TaxonName)])
 
-  #  The transformation table is a tab delimited table with a list of TaxonIDs associated with the lower
-  #  taxa nested within each set taxon.
-  taxa.list <-
-      lapply(strsplit(translate.table[translate.table[,1] == list.name, 3],
-                      split=', '), as.numeric)
-
-  new.listname <- rep(NA, length(sets))
-
-  for(i in seq_along(sets)){
-    taxa.class <- sapply(taxa.list, function(x, i) any(sets[i] %in% x), i = i)
-    if(any(taxa.class)) {
-        new.listname[i] <- translate.table[taxa.class, 2]
-    } else {
-        new.listname[i] <- 'Other'
-    }
-  }
-
-  #  This is the actual transformation,
-  new.samp <- object$counts
-  colnames(new.samp) <- new.listname
-  new.samp$Sample <- rownames(new.samp)
-  new.samp <- dcast(melt(new.samp, id.vars = "Sample"), Sample ~ variable,
-                    fun.aggregate = sum, value.var = "value")[,-1]
-
+  used.taxa <- pollen.equiv[match(colnames(object$counts), pollen.equiv$taxon),]
+  
+  #  Currently there are 4 lists:
+  avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+  
+  #  This generates the list onto which the original data will be aggregated, and adds
+  #  a class of 'Other' to indicate the number of taxa not represented by the simplified
+  #  taxon list.
+  use.list <- which(avail.lists %in% list.name)
+  
+  agg.list <- as.vector(used.taxa[,use.list + 2])
+  agg.list[is.na(agg.list)] <- 'Other'
+  
+  #  Now compress the dataset:
+  compressed.list <- aggregate(t(object$counts), by = list(agg.list), sum, na.rm=TRUE)
+  
+  compressed.cols <- compressed.list[,1]
+  
+  compressed.list <- t(compressed.list[,-1])
+  colnames(compressed.list) <- compressed.cols
+  
   #  We want to make a taxon list like the one returned in get_downloads:
-  if(verbose)
-      writeLines(strwrap("Querying Neotoma for taxon metadata..."))
-  taxon.type <- get_table('TaxaGroupTypes')
-  taxon.element <- get_table('VariableElements')
-  taxon.variables <- get_table('Variables')
-  taxon.varunits <- get_table('VariableUnits')
-
-  taxon.ids <- as.num(with(taxon.list,
-                           TaxonID[which(TaxonName %in% colnames(new.samp))]))
-  taxon.variables <- taxon.variables[taxon.variables$TaxonID %in% taxon.ids,]
-
-  taxon.out <- object$taxon.list
-
-  taxon.out$NewCol <- new.listname
-  colnames(taxon.out)[colnames(taxon.out) == 'NewCol'] <-
-      paste(list.name, '_comp', sep='')
+  new.list <- object$taxon.list
+  new.list$compressed <- NA
+  
+  new.list$compressed <- pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon),use.list + 2]
+  
+  new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(object$counts)] <- 'Other'
 
   #  Returns a data.frame with taxa in the columns and samples in the rows.
-  list(taxon.list = taxon.out, counts = new.samp)
+  list(metadata = object$metadata,
+       sample.meta = object$sample.meta,
+       taxon.list = new.list, 
+       counts = compressed.list,
+       lab.data = object$lab.data)
 }

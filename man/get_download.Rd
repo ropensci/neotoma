@@ -17,11 +17,9 @@
   comprising the following items:
 
   \itemize{ \item{metadata}{A table describing the
-  collection, including the dataset ID, dataset name,
-  collection type, collection handle and dataset type.}
-  \item{pi.data}{A list of PI data, compatable with
-  \code{get_contacts}.} \item{site.data}{Site information,
-  compatable with \code{get_sites}}
+  collection, including dataset information, PI data
+  compatable with \code{get_contacts} and site data
+  compatable with \code{get_sites}.}
   \item{sample.meta}{Dataset information for the core,
   primarily the age-depth model and chronology.}
   \item{taxon.list}{The list of taxa contained within the
