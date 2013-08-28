@@ -6,3 +6,4 @@
 #' @format a \code{data.frame} object
 #' @source The Neotoma database.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
+NULL

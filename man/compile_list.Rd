@@ -11,8 +11,6 @@
   \item{list.name}{The taxon compilation list, one of a set
   of lists from the literature (e.g., P25, Whitmore).  More
   detail in the Description.}
-
-  \item{verbose}{logical; print messages about progress?}
 }
 \value{
   This command returns a list object containing
@@ -35,11 +33,13 @@
   return only subsets that have been defined in the
   literature.  These lists include: \itemize{ \item{P25}{
   This list is derived from Gavin et al., (2003), and
-  includes 25 pollen taxa.} \item{WhitmoreFull}{ This is
-  the full list associated with the Whitmore et al., (2008)
-  North American Modern Pollen Database.} \item{Whitmore}{
-  As above, but taxa for which both fully resolved and
-  undifferentiated exist these taxa are summed.} }
+  includes 25 pollen taxa.} \item{WS64}{ This list is
+  derived from Williams and Shuman (2008).}
+  \item{WhitmoreFull}{ This is the full list associated
+  with the Whitmore et al., (2008) North American Modern
+  Pollen Database.} \item{Whitmore}{ As above, but taxa for
+  which both fully resolved and undifferentiated exist
+  these taxa are summed.} }
 }
 \description{
   From the assemblage data for the core return assemblage
@@ -65,6 +65,11 @@ gold.p25 <- compile_list(GOLDKBG, 'P25')
 }
 \references{
   Neotoma Project Website: http://www.neotomadb.org
+  Williams J, Shuman B. 2008. Obtaining accurate and
+  precise environmental reconstructions from the modern
+  analog technique and North American surface pollen
+  dataset. Quaternary Science Reviews. 27:669-687.
+  http://dx.doi.org/10.1016/j.quascirev.2008.01.004
 
   API Reference:
   http://api.neotomadb.org/doc/resources/contacts
