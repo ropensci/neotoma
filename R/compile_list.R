@@ -6,7 +6,6 @@
 #' @import RJSONIO RCurl
 #' @param object A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
-#' @param verbose logical; print messages about progress?
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a list object containing \code{count} and \code{taxon.list} objects, similar to those associated with the \code{get_download} object.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
@@ -21,6 +20,7 @@
 #'    Currently we can return only subsets that have been defined in the literature.  These lists include:
 #'  \itemize{
 #'   \item{P25}{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
+#'   \item{WS64}{  This list is derived from Williams and Shuman (2008).}
 #'   \item{WhitmoreFull}{  This is the full list associated with the Whitmore et al., (2008) North American Modern Pollen Database.}
 #'   \item{Whitmore}{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #'  }
@@ -40,6 +40,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
+#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687. http://dx.doi.org/10.1016/j.quascirev.2008.01.004
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
@@ -47,23 +48,7 @@
 
 compile_list <- function(object, list.name, verbose = TRUE){
 
-  #  List.name must be an acceptible list, including:
-  #  P25 (from Gavin et al)
-  #  Whitmore (full)
-  #  Whit_trunc (from Goring et al)
-
-  data(taxon.list)
   data(pollen.equiv)
-
-  #  These can be deprecated if we decide to include the taxon table as a fixed data object in the project.
-
-  #  A lot of the numbers from Neotoma get returned as factors.  It's annoying, this function
-  #  helps.
-  as.num <- function(x) as.numeric(levels(x))[as.integer(x)]
-
-  #  Returns the TaxonIDs of the assemblages, by finding the equivalents in the larger taxon table.
-  sets <- as.num(taxon.list$TaxonID[match(object$taxon.list[,1],
-                                          taxon.list$TaxonName)])
 
   used.taxa <- pollen.equiv[match(colnames(object$counts), pollen.equiv$taxon),]
   
