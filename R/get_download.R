@@ -86,8 +86,11 @@ get_download <- function(datasetid, verbose = TRUE){
           ##  simple a set of matrices as possible.
           nams <- names(aa[[1]])
           aa1 <- aa[[1]]
+          
+          #  If there are actual stratigraphic samples with data in the dataset returned.
           if ('Samples' %in% nams) {
-              ## data set meta data
+              
+            ## Build the metadata for the dataset.
               meta.data <- list(
                   dataset = data.frame(dataset.id = aa1$DatasetID,
                                        dataset.name = aa1$DatasetName,
@@ -104,7 +107,7 @@ get_download <- function(datasetid, verbose = TRUE){
               ## copy to make indexing below easier?
               samples <- aa1$Samples
   
-              ## sample meta data - no with() in functions
+              ## Build the metadata for each sample in the dataset.
               sample.meta <- do.call(rbind.data.frame,
                                      lapply(samples, `[`,
                                             c("AnalysisUnitDepth",
@@ -141,7 +144,8 @@ get_download <- function(datasetid, verbose = TRUE){
               ##  4) add a Sample column that is the ID from smaple.meta
               sample.data$Sample <- rep(sample.meta$IDs, times = nsamp)
   
-              #  We're going to isolate the count data and clean it up:
+              #  We're going to isolate the count data and clean it up by excluding
+              #  lab data and charcoal.  The charcoal exclusion needs some further consideration.
               take <- !(sample.data$TaxaGroup == "Laboratory analyses" | sample.data$TaxaGroup == "Charcoal")
               
               count.data <- sample.data[take, ]
@@ -151,9 +155,13 @@ get_download <- function(datasetid, verbose = TRUE){
               var.context <- !is.na(count.data$VariableContext)
               count.data$TaxonName[var.context] <- paste(count.data$TaxonName, count.data$VariableContext, sep='.')[var.context]
               
-              ## data frame of unique taxon info
+              ## data frame of unique taxon info.  This gets included in the final dataset output by the function.
               taxon.list <- sample.data[!duplicated(sample.data$TaxonName), 1:5]
   
+              #  Some taxa/objects get duplicated because different identifiers for taphonomic modification
+              #  get excluded in the API table.  Because the data is excluded we can't be sure that the
+              #  modifications map exactly from sample to sample, so here we just sum all duplicated taxa and
+              #  throw a warning to the user:
               mod.dups <- duplicated(count.data[,c(1,7)])
               
               if(sum(mod.dups) > 0){
@@ -170,16 +178,16 @@ get_download <- function(datasetid, verbose = TRUE){
               
               ## reshape long sample.data into a sample by taxon data frame
               ## take here *only* counts - but needs work FIXME
-              
               counts <- dcast(count.data,
                               formula = Sample ~ TaxonName, value.var = "Value", fun.aggregate = sum, na.rm=TRUE)
+              
               ## add Sample col as the rownames
               rownames(counts) <- counts$Sample
               ## remove the Sample col, but robustly
               counts <- counts[, -which(names(counts) == "Sample")]
   
-              ## Pull out the lab data
               
+              ## Pull out the lab data and treat it in the same way as the previous:
               take <- sample.data$TaxaGroup == "Laboratory analyses" | sample.data$TaxaGroup == "Charcoal"
               lab.data <- sample.data[take, ]
               
@@ -188,6 +196,19 @@ get_download <- function(datasetid, verbose = TRUE){
                                                   lab.data$VariableElement, ": ",
                                                   lab.data$VariableUnits, ")")
                   
+                  mod.dups <- duplicated(lab.data[,c(1,7)])
+                  
+                  if(sum(mod.dups) > 0){
+                    lab.dups <- unique(lab.data$TaxonName[duplicated(lab.data[,c(1,7)])])
+                    if(length(lab.dups) == 1){
+                      message <- paste('\nModifiers are absent from the lab object ', lab.dups, '. \nget_download will use unique identifiers to resolve the problem.', sep = '')
+                    }
+                    if(length(lab.dups) > 1){
+                      lab.dups.col <- paste(lab.dups, collapse = ', ')
+                      message <- paste('\nModifiers are absent from the lab objects ', lab.dups.col, '. \nget_download will use unique identifiers to resolve the problem.', sep = '')
+                    }
+                    warning(immediate. = TRUE, message, call. = FALSE)
+                  }
                   
                   lab.data <- dcast(lab.data, formula = Sample ~ LabNameUnits,
                                     value.var = "Value")
