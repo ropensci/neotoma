@@ -2,7 +2,8 @@
 \alias{compile_list}
 \title{Function to convert assemblage taxa to standardized lists.}
 \usage{
-  compile_list(object, list.name, verbose = TRUE)
+  compile_list(object, list.name, verbose = TRUE,
+    cf = TRUE, type = TRUE)
 }
 \arguments{
   \item{object}{A pollen object returned by
