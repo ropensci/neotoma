@@ -46,7 +46,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_list <- function(object, list.name, verbose = TRUE){
+compile_list <- function(object, list.name, verbose = TRUE, cf = TRUE, type = TRUE){
 
   data(pollen.equiv)
 

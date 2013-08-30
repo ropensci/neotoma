@@ -5,8 +5,9 @@
   get_download(datasetid, verbose = TRUE)
 }
 \arguments{
-  \item{datasetid}{A single numeric dataset ID, as returned
-  by \code{get_datasets}.}
+  \item{datasetid}{A single numeric dataset ID or a vector
+  of numeric dataset IDs as returned by
+  \code{get_datasets}.}
 
   \item{verbose}{logical; should messages on API call be
   printed?}
