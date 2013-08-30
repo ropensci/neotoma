@@ -31,13 +31,18 @@
   in \code{taxon.list}, the chronology is in
   \code{sample.data}} \item{lab.data}{A data frame of
   laboratory data, such as exotic pollen spike, amount of
-  sample counted, etc.} }
+  sample counted, charcoal counts, etc.} }
 
   A full data object containing all the relevant assemblage
   information and metadata neccessary to understand a site.
   The data object is a list of lists and data.frames that
   describe an assemblage, the constituent taxa, the
-  chronology, site and PIs who contributed the data.
+  chronology, site and PIs who contributed the data.  NOTE:
+  The function returns a warning in cases where single taxa
+  are defined by multiple taphonomic characteristics, for
+  example grains that are identified seperately as crumpled
+  and torn in the same sample and sums these values within
+  a sample.
 }
 \description{
   Using the dataset ID, return all records associated with
@@ -47,23 +52,37 @@
 }
 \examples{
 \dontrun{
-#  Search for sites with "Thuja" pollen that are older than 8kyr BP and
+#  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #  that are on the west coast of North America:
-t8kyr.datasets <- get_datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.datasets <- get_datasets(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
-#  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
-GOLDKBG <- get_download(t8kyr.datasets[[1]]$DatasetID)
+#  Returns 3 records (as of 04/04/2013), get the dataset for all records:
+pollen.records <- get_download(sapply(t8kyr.datasets, function(x) x$DatasetID))
 
-taxa.no <- nrow(GOLDKBG$taxon.list)
+#  Standardize the taxonomies for the different records using the WS64 taxonomy.
+compiled.sites <- lapply(pollen.records, function(x) compile_list(x, list.name='WS64'))
 
-#  Of the 60 taxa in the record, plot the pollen curve for Abies over time:
+#  Extract the Cupressaceae curves for the sites:
+get.curve <- function(x, taxa) {
+               data.frame(site = x$metadata$site.data$SiteName,
+               age = x$sample.meta$Age,
+               count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
+             }
 
-##pollen <- GOLDKBG$taxon.list$VariableElement == 'pollen'
-pol.curve <- data.frame(age = GOLDKBG$sample.meta$Age,
-                        Abies = GOLDKBG$counts[,'Abies'] / rowSums(GOLDKBG$counts, na.rm = TRUE))
-plot(Abies * 100 ~ age, data = pol.curve, type='b',
-     ylab = '\% Abies', xlab='Calibrated Years BP', pch=19)
+curves <- do.call(rbind.data.frame,
+                  lapply(compiled.sites, get.curve, taxa = 'Larix/Pseudotsuga'))
 
+#  For illustration, remove the sites with no Pseudotsuga occurance:
+curves <- curves[curves$count > 0, ]
+
+smooth.curve <- predict(loess(sqrt(count)~age, data=curves), data.frame(age=seq(20000, 0, by = -100)))
+plot(sqrt(count) ~ age, data = curves,
+     ylab = '\% Pseudotsuga/Larix', xlab='Calibrated Years BP', pch=19,
+     col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
+lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
+
+#  This map shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
+#  lends support to a warmer, drier early-Holocene in western North America.
 }
 }
 \author{
