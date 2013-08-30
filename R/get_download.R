@@ -93,12 +93,12 @@ get_download <- function(datasetid, verbose = TRUE){
                                        dataset.name = aa1$DatasetName,
                                        collection.type = aa1$CollUnitType,
                                        collection.handle = aa1$CollUnitHandle,
-                                       dataset.type =  aa1$DatasetType),
+                                       dataset.type =  aa1$DatasetType, stringsAsFactors = FALSE),
                   site.data = as.data.frame(aa1$Site[c('SiteID', 'SiteName',
                                            'Altitude','LatitudeNorth',
                                            'LongitudeWest','LatitudeSouth',
                                            'LongitudeEast','SiteDescription',
-                                           'SiteNotes')]),
+                                           'SiteNotes')], stringsAsFactors = FALSE),
                   pi.data = aa1$DatasetPIs)
   
               ## copy to make indexing below easier?
@@ -141,26 +141,54 @@ get_download <- function(datasetid, verbose = TRUE){
               ##  4) add a Sample column that is the ID from smaple.meta
               sample.data$Sample <- rep(sample.meta$IDs, times = nsamp)
   
+              #  We're going to isolate the count data and clean it up:
+              take <- !(sample.data$TaxaGroup == "Laboratory analyses" | sample.data$TaxaGroup == "Charcoal")
+              
+              count.data <- sample.data[take, ]
+              
+              ## Ensure duplicate taxa are renamed (if variable context is different)
+              count.data$TaxonName <- as.character(count.data$TaxonName)
+              var.context <- !is.na(count.data$VariableContext)
+              count.data$TaxonName[var.context] <- paste(count.data$TaxonName, count.data$VariableContext, sep='.')[var.context]
+              
               ## data frame of unique taxon info
               taxon.list <- sample.data[!duplicated(sample.data$TaxonName), 1:5]
   
+              mod.dups <- duplicated(count.data[,c(1,7)])
+              
+              if(sum(mod.dups) > 0){
+                tax.dups <- unique(count.data$TaxonName[duplicated(count.data[,c(1,7)])])
+                if(length(tax.dups) == 1){
+                  message <- paste('\nModifiers seem absent from the taxon ', tax.dups, '. \nget_download will sum at depths with multiple entries to resolve the problem.', sep = '')
+                }
+                if(length(tax.dups) > 1){
+                  tax.dups.col <- paste(tax.dups, collapse = ', ')
+                  message <- paste('\nModifiers seem absent from the taxons ', tax.dups.col, '. \nget_download will sum at depths with multiple entries to resolve the problem.', sep = '')
+                }
+                warning(immediate. = TRUE, message, call. = FALSE)
+              }
+              
               ## reshape long sample.data into a sample by taxon data frame
               ## take here *only* counts - but needs work FIXME
-              take <- sample.data$TaxaGroup != "Laboratory analyses"
-              counts <- dcast(sample.data[take, ],
-                              formula = Sample ~ TaxonName, value.var = "Value")
+              
+              counts <- dcast(count.data,
+                              formula = Sample ~ TaxonName, value.var = "Value", fun.aggregate = sum, na.rm=TRUE)
               ## add Sample col as the rownames
               rownames(counts) <- counts$Sample
               ## remove the Sample col, but robustly
               counts <- counts[, -which(names(counts) == "Sample")]
   
               ## Pull out the lab data
-              take <- sample.data$TaxaGroup == "Laboratory analyses"
+              
+              take <- sample.data$TaxaGroup == "Laboratory analyses" | sample.data$TaxaGroup == "Charcoal"
               lab.data <- sample.data[take, ]
+              
               if(nrow(lab.data) > 0) {
                   lab.data$LabNameUnits <- paste0(lab.data$TaxonName, " (",
                                                   lab.data$VariableElement, ": ",
                                                   lab.data$VariableUnits, ")")
+                  
+                  
                   lab.data <- dcast(lab.data, formula = Sample ~ LabNameUnits,
                                     value.var = "Value")
               } else {
