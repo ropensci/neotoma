@@ -56,6 +56,10 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
   
   data(pollen.equiv)
   avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+  
+  if(cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
+  if(type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
+  
   use.list <- which(avail.lists %in% list.name)
   
   if(class(object) == 'list'){
