@@ -8,11 +8,13 @@
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return This command returns a list object containing \code{count} and \code{taxon.list} objects, similar to those associated with the \code{get_download} object.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
+#' @return This command returns a list object with the same structure as the parent pollen object returned by \code{get_download}, or a \code{matrix} (or \code{data.frame}) depending on whether \code{object} is one or the other.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
 #'
 #' \itemize{
-#'  \item{taxon.list}{  The list of taxa contained within the dataset, unordered, including information that can be used in \code{get_taxa}}
-#'  \item{counts}{  The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
+#'  \item{object}{Either a pollen object as returned by \code{get_download} or a \code{matrix} or \code{data.frame} containing the pollen data with rows representing strata and columns representing individual pollen taxa.}
+#'  \item{list.name}{One of a set of predefined lists, 'P25', 'WS64', 'WhitmoreFull', or 'WhitmoreSmall'.  See below for more details.}
+#'  \item{cf}{Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?}
+#'  \item{type}{Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?}
 #' }
 #'
 #'    The data object uses the smaller pollen subset.  As this package develops we will add the
@@ -46,43 +48,58 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_list <- function(object, list.name, verbose = TRUE, cf = TRUE, type = TRUE){
+compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
 
+  if(!class(object) %in% c('list', 'matrix', 'data.frame')){
+    stop('Data object must be a pollen object returned by function get_download or a matrix or data.frame')
+  }
+  
   data(pollen.equiv)
-
-  used.taxa <- pollen.equiv[match(colnames(object$counts), pollen.equiv$taxon),]
-  
-  #  Currently there are 4 lists:
   avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
-  
-  #  This generates the list onto which the original data will be aggregated, and adds
-  #  a class of 'Other' to indicate the number of taxa not represented by the simplified
-  #  taxon list.
   use.list <- which(avail.lists %in% list.name)
   
-  agg.list <- as.vector(used.taxa[,use.list + 2])
-  agg.list[is.na(agg.list)] <- 'Other'
+  if(class(object) == 'list'){
+    used.taxa <- pollen.equiv[match(colnames(object$counts), pollen.equiv$taxon),]
+    agg.list <- as.vector(used.taxa[,use.list + 2])
+    agg.list[is.na(agg.list)] <- 'Other'
+    
+    compressed.list <- aggregate(t(object$counts), by = list(agg.list), sum, na.rm=TRUE)
   
-  #  Now compress the dataset:
-  compressed.list <- aggregate(t(object$counts), by = list(agg.list), sum, na.rm=TRUE)
+    compressed.cols <- compressed.list[,1]
+    
+    compressed.list <- t(compressed.list[,-1])
+    colnames(compressed.list) <- compressed.cols
+    
+    #  We want to make a taxon list like the one returned in get_downloads:
+    new.list <- object$taxon.list
+    new.list$compressed <- NA
+    
+    new.list$compressed <- pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon),use.list + 2]
+    
+    new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(object$counts)] <- 'Other'
   
-  compressed.cols <- compressed.list[,1]
-  
-  compressed.list <- t(compressed.list[,-1])
-  colnames(compressed.list) <- compressed.cols
-  
-  #  We want to make a taxon list like the one returned in get_downloads:
-  new.list <- object$taxon.list
-  new.list$compressed <- NA
-  
-  new.list$compressed <- pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon),use.list + 2]
-  
-  new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(object$counts)] <- 'Other'
+    #  Returns a data.frame with taxa in the columns and samples in the rows.
+    output <- list(metadata = object$metadata,
+                   sample.meta = object$sample.meta,
+                   taxon.list = new.list, 
+                   counts = compressed.list,
+                   lab.data = object$lab.data)
+  }
+  if(class(object) %in% c('matrix', 'data.frame')){
+    used.taxa <- pollen.equiv[match(colnames(object), pollen.equiv$taxon),]
+    agg.list <- as.vector(used.taxa[,use.list + 2])
+    agg.list[is.na(agg.list)] <- 'Other'
 
-  #  Returns a data.frame with taxa in the columns and samples in the rows.
-  list(metadata = object$metadata,
-       sample.meta = object$sample.meta,
-       taxon.list = new.list, 
-       counts = compressed.list,
-       lab.data = object$lab.data)
+    compressed.list <- aggregate(t(object), by = list(agg.list), sum, na.rm=TRUE)
+    
+    compressed.cols <- compressed.list[,1]
+    
+    compressed.list <- t(compressed.list[,-1])
+    colnames(compressed.list) <- compressed.cols
+    
+    output <- compressed.list
+  }
+  
+  return(output)
+  
 }
