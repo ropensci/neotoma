@@ -78,7 +78,7 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
     new.list <- object$taxon.list
     new.list$compressed <- NA
     
-    new.list$compressed <- pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon),use.list + 2]
+    new.list$compressed <- as.character(pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon),use.list + 2])
     
     new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(object$counts)] <- 'Other'
   
