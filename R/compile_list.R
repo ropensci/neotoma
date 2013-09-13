@@ -24,7 +24,7 @@
 #'   \item{P25}{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
 #'   \item{WS64}{  This list is derived from Williams and Shuman (2008).}
 #'   \item{WhitmoreFull}{  This is the full list associated with the Whitmore et al., (2008) North American Modern Pollen Database.}
-#'   \item{Whitmore}{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
+#'   \item{WhitmoreSmall}{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #'  }
 #'
 #' @examples \dontrun{
