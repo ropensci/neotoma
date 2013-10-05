@@ -123,8 +123,8 @@ get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
       ## of rbind
       output <- do.call(rbind.data.frame, aa)
       ## but we need to fix-up some characters that R changed to factors
-      output$SiteName <- as.character(output2$SiteName)
-      output$SiteDescription <- as.character(output2$SiteDescription)
+      output$SiteName <- as.character(output$SiteName)
+      output$SiteDescription <- as.character(output$SiteDescription)
     }
   }
   output
