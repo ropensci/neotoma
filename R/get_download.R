@@ -242,6 +242,7 @@ get_download <- function(datasetid, verbose = TRUE){
       aa
     }
     
+
     if(length(datasetid) == 1) aa <- get.sample(datasetid)
     else                       aa <- lapply(datasetid, get.sample)
     
