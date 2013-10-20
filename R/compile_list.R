@@ -23,7 +23,7 @@
 #'  \itemize{
 #'   \item{P25}{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
 #'   \item{WS64}{  This list is derived from Williams and Shuman (2008).}
-#'   \item{WhitmoreFull}{  This is the full list associated with the Whitmore et al., (2008) North American Modern Pollen Database.}
+#'   \item{WhitmoreFull}{  This is the full list associated with the Whitmore et al., (2005) North American Modern Pollen Database.}
 #'   \item{WhitmoreSmall}{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #'  }
 #'
@@ -42,8 +42,13 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687. http://dx.doi.org/10.1016/j.quascirev.2008.01.004
+#' 
+#' Gavin DG, Oswald WW, Wahl ER, Williams JW. 2003. A statistical approach to evaluating distance metrics and analog assignments for pollen records. Quaternary Research 60: 356-367.
 #'
+#' Whitmore J, Gajewski K, Sawada M, Williams JW, Shuman B, Bartlein PJ, Minckley T, Viau AE, Webb III T, Shafer S, Anderson P, Brubaker L. 2005. Modern pollen data from North America and Greenland for multi-scale paleoenvironmental applications. Quaternary Science Reviews 24: 1828-1848.
+#'
+#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687.
+#' 
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
