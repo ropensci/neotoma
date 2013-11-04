@@ -29,7 +29,7 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 
 + Development version from GitHub:
 
-```R 
+```coffee 
 install.packages("devtools")
 require(devtools)
 install_github("neotoma", "ropensci")
@@ -40,7 +40,7 @@ require(neotoma)
 
 #### Find the distribution of sites with Mammoth fossils in Neotoma
 
-```R
+```coffee
 #  Example requires the plyr package and the mapdata package:
 > require(plyr)
 > test <- get_datasets(taxonname='Mammuthus*')
@@ -54,7 +54,7 @@ The API call was successful, you have returned  3273 records.
 
 ### Plot the proportion of publications per year for datasets in Neotoma
 
-```R
+```coffee
 > # Requires ggplot2
 > library(ggplot2)
 > pubs <- get_publication()
@@ -75,3 +75,7 @@ NAs introduced by coercion
 ```
 
 ![thing](inst/img/histogramplot.png)
+
+---
+
+[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
