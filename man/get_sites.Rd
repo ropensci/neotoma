@@ -20,10 +20,10 @@
   longitudes west of Grewnwich or longitudes south of the
   equator.}
 
-  \item{gpid}{A character string, must correspond to a
-  valid geopolitical identity in the Neotoma Database.  Use
-  get.tables('GeoPoliticalUnits') for a list of acceptable
-  values, or link here:
+  \item{gpid}{A character string or numeric value, must
+  correspond to a valid geopolitical identity in the
+  Neotoma Database.  Use get.tables('GeoPoliticalUnits')
+  for a list of acceptable values, or link here:
   http://api.neotomadb.org/apdx/geopol.htm}
 }
 \value{

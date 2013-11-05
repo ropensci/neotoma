@@ -9,7 +9,7 @@
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
-#' @param gpid A character string, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return A table:
@@ -93,14 +93,22 @@ get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
     }
   }
 
-  #  Parameter check on 'gpid', the name needs to be in the big table in
-  #  data object geopol:
   if('gpid' %in% names(cl)){
-    #if(!cl$gpid %in% geopol[,5]){
-    #  stop('Unrecognized geopolitical entity.  Check for acceptible names in data(geopol).')
-    #}
+    if(is.character(gpid)){
+      data(gp.table)
+      gprow <- match(x=gpid, table=gp.table$GeoPoliticalName)
+      if(is.na(gprow)){
+        stop('Cannot find a match for the gpid provided.')
+      }
+      gpid <- gp.table$GeoPoliticalID[gprow]
+    }
+    else{
+      if(!is.numeric(gpid)){
+        stop('The gpid must be either a character string or an integer.')
+      }
+    }
   }
-
+  
   neotoma.form <- getForm(base.uri, .params = cl)
   aa <- try(fromJSON(neotoma.form, nullValue = NA))
 

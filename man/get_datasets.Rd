@@ -34,11 +34,11 @@
   longitudes west of Grewnwich or longitudes south of the
   equator}
 
-  \item{gpid}{A character string, must correspond to a
-  valid geopolitical identity in the Neotoma Database.  Use
-  \code{get.tables('GeoPoliticalUnits')} for a list of
-  acceptable values, or link here:
-  \url{http://api.neotomadb.org/apdx/geopol.htm}}
+  \item{gpid}{A character string or numeric value, must
+  correspond to a valid geopolitical identity in the
+  Neotoma Database.  Use get.tables('GeoPoliticalUnits')
+  for a list of acceptable values, or link here:
+  http://api.neotomadb.org/apdx/geopol.htm}
 
   \item{taxonids}{A numeric identifier for the taxon.  Use
   \code{get.tables('Taxa')} for a list of acceptable
