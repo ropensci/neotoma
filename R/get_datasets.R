@@ -177,9 +177,12 @@ get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
 
     output <- lapply(output,
                      function(x) {
-                         x$SubDates <- do.call(rbind.data.frame, x$SubDates)
+                       sub.test <- try(do.call(rbind.data.frame, x$SubDates))  
+                       x$SubDates <- sub.test
+                       if(length(x$SubDates) > 0){
                          names(x$SubDates) <- c("SubmissionDate","SubmissionType")
-                         x})
+                       }
+                       x})
 
     output <- lapply(output,
                       function(x) {
