@@ -11,7 +11,7 @@
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with altmax).
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with altmin).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator
-#' @param gpid A character string, must correspond to a valid geopolitical identity in the Neotoma Database.  Use \code{get.tables('GeoPoliticalUnits')} for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
 #' @param taxonids A numeric identifier for the taxon.  Use \code{get.tables('Taxa')} for a list of acceptable values.
 #' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  Use \code{get.tables('Taxa')} for a list of acceptable values.
 #' @param ageold The oldest date acceptable for the search (in years before present).
@@ -88,6 +88,22 @@ get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
     else{
       if(any(c('taxonid', 'taxonname') %in% names(cl)) & !cl$ageof == 'taxon'){
         stop('When taxonid or taxonname is invoked, ageof must be taxon')
+      }
+    }
+  }
+  
+  if('gpid' %in% names(cl)){
+    if(is.character(gpid)){
+      data(gp.table)
+      gprow <- match(x=gpid, table=gp.table$GeoPoliticalName)
+      if(is.na(gprow)){
+        stop('Cannot find a match for the gpid provided.')
+      }
+      gpid <- gp.table$GeoPoliticalID[gprow]
+    }
+    else{
+      if(!is.numeric(gpid)){
+        stop('The gpid must be either a character string or an integer.')
       }
     }
   }

@@ -31,3 +31,4 @@ Collate:
     'pollen.equiv.R'
     'taxon.table.R'
     'translate.table.R'
+    'check_tables.R'

@@ -1,3 +1,4 @@
+export(check.tables)
 export(compile_list)
 export(get_contacts)
 export(get_datasets)
