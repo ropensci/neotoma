@@ -71,7 +71,13 @@ get_table <- function(table.name = NULL){
 
         ## this is slightly quicker, but advantage is that it maintains
         ## logical variable Extinct in correct mode
+        
+        old.string <- getOption("stringsAsFactors") #I don't know how else to do this with the do.call command.
+        options(stringsAsFactors = FALSE)
+        
         table <- do.call(rbind.data.frame, aa[[2]])
+        
+        options(stringsAsFactors = old.string)
 
         ## get rid of the rownames
         rownames(table) <- NULL
