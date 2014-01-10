@@ -33,33 +33,24 @@
 #'
 #' #  Returns 74 records (as of 01/08/2014), get the dataset IDs for all records:
 #' dataset.ids <- sapply(t8kyr.datasets, function(x) x$DatasetID)
-#' geochron.records <- lapply(dataset.ids, function(x)try(get_geochron(x)))
+#' geochron.records <- sapply(dataset.ids, function(x)try(get_geochron(x)))
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
-#' compiled.sites <- lapply(pollen.records, function(x) compile_list(x, list.name='WS64'))
-#'
-#' #  Extract the Cupressaceae curves for the sites:
-#' get.curve <- function(x, taxa) {
-#'                data.frame(site = x$metadata$site.data$SiteName,
-#'                age = x$sample.meta$Age,
-#'                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
-#'              }
-#'              
-#' curves <- do.call(rbind.data.frame,
-#'                   lapply(compiled.sites, get.curve, taxa = 'Larix/Pseudotsuga'))
 #' 
-#' #  For illustration, remove the sites with no Pseudotsuga occurance:
-#' curves <- curves[curves$count > 0, ]
-#' 
-#' smooth.curve <- predict(loess(sqrt(count)~age, data=curves), data.frame(age=seq(20000, 0, by = -100)))
-#' plot(sqrt(count) ~ age, data = curves,
-#'      ylab = '% Pseudotsuga/Larix', xlab='Calibrated Years BP', pch=19,
-#'      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
-#' lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
-#'
-#' #  This map shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
-#' #  lends support to a warmer, drier early-Holocene in western North America.
+#' get_ages <- function(x){
+#'   any.ages <- try(x$age[x$age.type.id == 4])
+#'   if(class(any.ages) == 'try-error') output <- NA
+#'   if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
+#'   output
 #' }
+#' 
+#' radio_chron <- unlist(sapply(geochron.records, get_ages))
+#' 
+#' hist(radio_chron, breaks=seq(0, 40000, by = 500), 
+#'      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
+#'      xlab = 'Radiocarbon date (14C years before 1950)')
+#' }
+#' 
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
@@ -90,11 +81,18 @@ get_geochron <- function(datasetid, verbose = TRUE){
   
       ## if no error continue processing
       if (isTRUE(all.equal(aa[[1]], 0))) {
+        #  The API did not return a record, or returned an error.
           stop(paste('Server returned an error message:\n', aa[[2]]),
                call.=FALSE)
       }
   
+      if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
+        #  The API returned a record, but the record did not have associated geochronology information.
+        stop('No geochronological record is associated with this sample', call.=FALSE)
+      }
+      
       if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) > 0)) {
+        # The API returned a record with geochron data.
         aa <- aa[[2]]
       
         if(verbose) {
@@ -127,11 +125,9 @@ get_geochron <- function(datasetid, verbose = TRUE){
       out <- t(sapply(aa, pull.rec))
           
       }
-      if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
-        stop('No geochronological record is associated with this sample', call.=FALSE)
-      }
       
-      out
+      
+      as.data.frame(out)
     }
     
     lapply(datasetid, get_sample)

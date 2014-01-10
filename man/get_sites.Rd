@@ -29,9 +29,9 @@
 \value{
   A table:
 
-  \itemize{ \item{SiteID}{Unique database record identifier
-  for the site.} \item{SiteName}{Name of the site.}
-  \item{Altitude}{Altitude in meters.}
+  \describe{ \item{SiteID}{Unique database record
+  identifier for the site.} \item{SiteName}{Name of the
+  site.} \item{Altitude}{Altitude in meters.}
   \item{LatitudeNorth}{North bounding latitude, in decimal
   degrees, for a site.} \item{LatitudeSouth}{South bounding
   latitude, in decimal degrees, for a site.}
