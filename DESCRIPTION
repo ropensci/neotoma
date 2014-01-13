@@ -32,3 +32,4 @@ Collate:
     'taxon.table.R'
     'translate.table.R'
     'check_tables.R'
+    'get_geochron.R'

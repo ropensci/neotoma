@@ -14,7 +14,7 @@
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return A table:
 #'
-#' \itemize{
+#' \describe{
 #'  \item{SiteID}{Unique database record identifier for the site.}
 #'  \item{SiteName}{Name of the site.}
 #'  \item{Altitude}{Altitude in meters.}
