@@ -19,17 +19,3 @@ Imports:
     RCurl (>= 1.6),
     plyr,
     reshape2
-Collate:
-    'get_contacts.R'
-    'get_datasets.R'
-    'get_download.R'
-    'get_publications.R'
-    'get_sites.R'
-    'get_table.R'
-    'get_taxa.R'
-    'compile_list.R'
-    'pollen.equiv.R'
-    'taxon.table.R'
-    'translate.table.R'
-    'check_tables.R'
-    'get_geochron.R'

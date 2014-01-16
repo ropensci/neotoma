@@ -130,6 +130,6 @@ get_geochron <- function(datasetid, verbose = TRUE){
       as.data.frame(out)
     }
     
-    lapply(datasetid, get_sample)
+    lapply(datasetid, try(get_sample))
 
 }
