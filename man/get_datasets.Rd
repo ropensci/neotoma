@@ -2,9 +2,8 @@
 \alias{get_datasets}
 \title{Obtain full datasets from the Neotoma Paleoecological Database.}
 \usage{
-  get_datasets(siteid, datasettype, piid, altmin, altmax,
-    loc, gpid, taxonids, taxonname, ageold, ageyoung,
-    ageof, subdate)
+get_datasets(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
+  taxonname, ageold, ageyoung, ageof, subdate)
 }
 \arguments{
   \item{siteid}{A numeric value corresponding to the site
@@ -66,41 +65,40 @@
   YYYY-MM-DD or MM-DD-YYYY.}
 }
 \value{
-  More details on the use of these parameters can be
-  obtained from
-  \url{http://api.neotomadb.org/doc/resources/datasets.}
+More details on the use of these parameters can be obtained
+from \url{http://api.neotomadb.org/doc/resources/datasets.}
 
-  A list, with each item corresponding to an individual
-  record.  Each list item (each dataset record) includes
-  the following components:
+A list, with each item corresponding to an individual
+record.  Each list item (each dataset record) includes the
+following components:
 
-  \itemize{ \item{DatasetID}{Unique database record
-  identifier for the dataset.} \item{DatasetName}{Name of
-  the dataset; not commonly used.}
-  \item{CollUnitHandle}{Code name of the Collection Unit
-  with which the dataset is associated. This code may be up
-  to 10 characters. Data are frequently distributed by
-  Collection Unit, and the Handle is used for file names.}
-  \item{CollUnitID}{Unique database record identifier for
-  the collection unit.} \item{CollType}{The collection
-  type. Types include cores, sections, excavations, and
-  animal middens.} \item{DatasetType}{The dataset type,
-  such as: geochronologic, loss-on-ignition, pollen, plant
-  macrofossils, vertebrate fauna, etc.}
-  \item{AgeOldest}{The oldest of all sample ages (in
-  calendar years before present) in the dataset.}
-  \item{AgeYoungest}{The youngest of all sample ages (in
-  calendar years before present) in the dataset.}
-  \item{SubDates}{An array of objects that describe dataset
-  submission events.  If multiple submissions occured then
-  this is a table.} \item{DatasetPIs}{An array of objects
-  that describe Principal Investigators associated with a
-  dataset.} \item{Site}{An object describing the site where
-  the dataset samples were taken.} }
+\itemize{ \item{DatasetID}{Unique database record
+identifier for the dataset.} \item{DatasetName}{Name of the
+dataset; not commonly used.} \item{CollUnitHandle}{Code
+name of the Collection Unit with which the dataset is
+associated. This code may be up to 10 characters. Data are
+frequently distributed by Collection Unit, and the Handle
+is used for file names.} \item{CollUnitID}{Unique database
+record identifier for the collection unit.}
+\item{CollType}{The collection type. Types include cores,
+sections, excavations, and animal middens.}
+\item{DatasetType}{The dataset type, such as:
+geochronologic, loss-on-ignition, pollen, plant
+macrofossils, vertebrate fauna, etc.} \item{AgeOldest}{The
+oldest of all sample ages (in calendar years before
+present) in the dataset.} \item{AgeYoungest}{The youngest
+of all sample ages (in calendar years before present) in
+the dataset.} \item{SubDates}{An array of objects that
+describe dataset submission events.  If multiple
+submissions occured then this is a table.}
+\item{DatasetPIs}{An array of objects that describe
+Principal Investigators associated with a dataset.}
+\item{Site}{An object describing the site where the dataset
+samples were taken.} }
 }
 \description{
-  A function to access the Neotoma API and return datasets
-  corresponding to the parameters defined by the user.
+A function to access the Neotoma API and return datasets
+corresponding to the parameters defined by the user.
 }
 \examples{
 \dontrun{
@@ -116,12 +114,11 @@ v2kyr.datasets <- get_datasets(datasettype='vertebrate fauna', gpid=canID, ageol
 }
 }
 \author{
-  Simon J. Goring \email{simon.j.goring@gmail.com}
+Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \references{
-  Neotoma Project Website: http://www.neotomadb.org API
-  Reference:
-  http://api.neotomadb.org/doc/resources/contacts
+Neotoma Project Website: http://www.neotomadb.org API
+Reference: http://api.neotomadb.org/doc/resources/contacts
 }
 \keyword{API}
 \keyword{Neotoma}

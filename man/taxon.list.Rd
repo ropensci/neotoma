@@ -4,14 +4,16 @@
 \title{Neotoma taxon list}
 \format{a \code{data.frame} object}
 \source{
-  The Neotoma database.
+The Neotoma database.
+}
+\usage{
+taxon.list
 }
 \description{
-  The taxonomy table for datasets in neotoma, as would be
-  returned by \code{get_table}
+The taxonomy table for datasets in neotoma, as would be
+returned by \code{get_table}
 }
 \author{
-  Simon J. Goring \email{simon.j.goring@gmail.com}
+Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-\keyword{datasets}
 

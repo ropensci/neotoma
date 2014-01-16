@@ -4,15 +4,17 @@
 \title{A table to convert the original taxa to standardized lists.}
 \format{a \code{data.frame} object}
 \source{
-  The Neotoma database.
+The Neotoma database.
+}
+\usage{
+translate.table
 }
 \description{
-  A list of standardized (published) taxonomies from the
-  literature to help standardize taxonomies for synthesis
-  work.
+A list of standardized (published) taxonomies from the
+literature to help standardize taxonomies for synthesis
+work.
 }
 \author{
-  Simon J. Goring \email{simon.j.goring@gmail.com}
+Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-\keyword{datasets}
 
