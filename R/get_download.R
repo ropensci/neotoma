@@ -132,10 +132,34 @@ get_download <- function(datasetid, verbose = TRUE){
                                               )))
   
               ## sample age data
-              ages <- lapply(1:length(samples[[1]]$SampleAges), function(x){
-                do.call(rbind.data.frame,
-                        lapply(lapply(samples, `[[`, "SampleAges"), `[[`, x)) })
-  
+              ## not all depths have the same number of chronologies, which is a bit annoying,
+              ## and actually more complicated than I originally thought.
+              
+              ## There may be multiple chronologies associated with each record, and not all chronologies
+              ## will cover the entire core, which makes things frustrating and difficult.
+              
+              #  first, get all unique chronology names.  Some cores don't have age models, so we use a try function.
+              chrons <- try(unique(unlist((sapply(samples, function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent=TRUE)
+              
+              base.frame <- as.data.frame(matrix(ncol = 6, nrow = nrow(sample.meta)))
+              colnames(base.frame) <- c('AgeOlder', 'Age', 'AgeYounger', 'ChronologyName', 'AgeType', 'ChronologyID')
+              
+              if(!class(chrons) == 'try-error'){
+                #  Create the list:
+                chron.list <- list()
+                for(i in 1:length(chrons)) chron.list[[i]] <- base.frame
+                names(chron.list) <- chrons
+                
+                for(i in 1:length(samples)){
+                  for(j in 1:length(samples[[i]]$SampleAges)){
+                    chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i,] <- data.frame(samples[[i]]$SampleAges[[j]], stringsAsFactors = FALSE)
+                  }
+                }
+              }
+              if(class(chrons)=='try-error'){
+                chron.list <- list(base.frame)
+              }
+                
               ## sample names - can be NULL hence replace with NA if so
               tmp <- sapply(sample.names <-
                             lapply(samples, `[[`, "SampleUnitName"), is.null)
@@ -143,10 +167,11 @@ get_download <- function(datasetid, verbose = TRUE){
   
               ## stick all that together, setting names, & reordering cols
               ## the most recent age model is provided as the default.
-              sample.meta <- cbind.data.frame(sample.meta, ages[[length(ages)]],
+              sample.meta <- cbind.data.frame(sample.meta, chron.list[[length(chron.list)]],
                                               unlist(sample.names))
               names(sample.meta) <- c("depths", "thickness", "IDs", "unit.name",
-                                      names(ages), "sample.name")
+                                      colnames(chron.list[[length(chron.list)]]), "sample.name")
+              
               sample.meta <- sample.meta[, c(1:2, 5:10, 3, 11, 4)]
   
               ## sample data/counts
@@ -251,7 +276,7 @@ get_download <- function(datasetid, verbose = TRUE){
                          taxon.list = taxon.list,
                          counts = counts,
                          lab.data = lab.data,
-                         chronologies = ages)
+                         chronologies = chron.list)
           }
       }
       aa
