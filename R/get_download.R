@@ -200,7 +200,19 @@ get_download <- function(datasetid, verbose = TRUE){
               rownames(counts) <- counts$Sample
               ## remove the Sample col, but robustly
               counts <- counts[, -which(names(counts) == "Sample")]
-  
+              
+              ## It is possible that some depths have no count data, but that they were sampled.
+              ## This will be reflected as a row with '0' counts for all taxa.
+              if(any(!sample.meta$IDs %in% rownames(counts))){
+                no.missing <- sum(!sample.meta$IDs %in% rownames(counts))
+                
+                for(i in 1:no.missing){
+                  counts <- rbind(counts, rep(NA, ncol(counts)))
+                }
+                rownames(counts)[(nrow(counts)+1 - no.missing):nrow(counts)] <- sample.meta$IDs[!sample.meta$IDs %in% rownames(counts)]
+                
+                counts <- counts[sample.meta$IDs,]
+              }
               
               ## Pull out the lab data and treat it in the same way as the previous:
               take <- sample.data$TaxaGroup == "Laboratory analyses" | sample.data$TaxaGroup == "Charcoal"
