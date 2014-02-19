@@ -13,11 +13,12 @@
 #'
 #' \itemize{
 #'  \item{metadata}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
-#'  \item{sample.meta}{Dataset information for the core, primarily the age-depth model and chronology.}
+#'  \item{sample.meta}{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
 #'  \item{taxon.list}{The list of taxa contained within the dataset, unordered, including information that can be used in \code{get_taxa}}
 #'  \item{counts}{The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
 #'  \item{lab.data}{A data frame of laboratory data, such as exotic pollen
 #'  spike, amount of sample counted, charcoal counts, etc.}
+#'  \item{chronologies}{A list of existing chronologies.  If only a single chronology exists for a record then this is the same as the age-model in \code{sample.meta}.}
 #' }
 #'
 #'    A full data object containing all the relevant assemblage information and metadata neccessary to understand a site.
@@ -131,9 +132,9 @@ get_download <- function(datasetid, verbose = TRUE){
                                               )))
   
               ## sample age data
-              ages <- do.call(rbind.data.frame,
-                              lapply(lapply(samples, `[[`, "SampleAges"),
-                                     `[[`, 1))
+              ages <- lapply(1:length(samples[[1]]$SampleAges), function(x){
+                do.call(rbind.data.frame,
+                        lapply(lapply(samples, `[[`, "SampleAges"), `[[`, x)) })
   
               ## sample names - can be NULL hence replace with NA if so
               tmp <- sapply(sample.names <-
@@ -141,7 +142,8 @@ get_download <- function(datasetid, verbose = TRUE){
               sample.names[tmp] <- NA
   
               ## stick all that together, setting names, & reordering cols
-              sample.meta <- cbind.data.frame(sample.meta, ages,
+              ## the most recent age model is provided as the default.
+              sample.meta <- cbind.data.frame(sample.meta, ages[[length(ages)]],
                                               unlist(sample.names))
               names(sample.meta) <- c("depths", "thickness", "IDs", "unit.name",
                                       names(ages), "sample.name")
@@ -248,7 +250,8 @@ get_download <- function(datasetid, verbose = TRUE){
                          sample.meta = sample.meta,
                          taxon.list = taxon.list,
                          counts = counts,
-                         lab.data = lab.data)
+                         lab.data = lab.data,
+                         chronologies = ages)
           }
       }
       aa
