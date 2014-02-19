@@ -211,7 +211,7 @@ get_download <- function(datasetid, verbose = TRUE){
                 }
                 rownames(counts)[(nrow(counts)+1 - no.missing):nrow(counts)] <- sample.meta$IDs[!sample.meta$IDs %in% rownames(counts)]
                 
-                counts <- counts[sample.meta$IDs,]
+                counts <- counts[as.character(sample.meta$IDs),]
               }
               
               ## Pull out the lab data and treat it in the same way as the previous:
