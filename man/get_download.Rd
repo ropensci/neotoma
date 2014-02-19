@@ -22,7 +22,9 @@ collection, including dataset information, PI data
 compatable with \code{get_contacts} and site data
 compatable with \code{get_sites}.}
 \item{sample.meta}{Dataset information for the core,
-primarily the age-depth model and chronology.}
+primarily the age-depth model and chronology.  In cases
+where multiple age models exist for a single record the
+most recent chronology is provided here.}
 \item{taxon.list}{The list of taxa contained within the
 dataset, unordered, including information that can be used
 in \code{get_taxa}} \item{counts}{The assemblage data for
@@ -31,7 +33,10 @@ and the taxa as columns.  All taxa are described in
 \code{taxon.list}, the chronology is in \code{sample.data}}
 \item{lab.data}{A data frame of laboratory data, such as
 exotic pollen spike, amount of sample counted, charcoal
-counts, etc.} }
+counts, etc.} \item{chronologies}{A list of existing
+chronologies.  If only a single chronology exists for a
+record then this is the same as the age-model in
+\code{sample.meta}.} }
 
 A full data object containing all the relevant assemblage
 information and metadata neccessary to understand a site.
