@@ -94,7 +94,7 @@ get_download <- function(datasetid, verbose = TRUE){
           aa <- aa[[2]]
         
           if(verbose) {
-              writeLines(strwrap(paste("API call was successful. Returned record for ",
+              message(strwrap(paste("API call was successful. Returned record for ",
                                        aa[[1]]$Site$SiteName)))
           }
   

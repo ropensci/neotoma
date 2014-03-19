@@ -1,4 +1,4 @@
-export(check.tables)
+export(check_tables)
 export(compile_list)
 export(get_chroncontrol)
 export(get_contacts)
