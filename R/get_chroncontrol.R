@@ -1,4 +1,3 @@
-
 #' Function to return chronologia control tables used to build age models.
 #'
 #' Using the dataset ID, return all records associated with the data.  At present,
@@ -6,7 +5,7 @@
 #'
 #' @import RJSONIO RCurl
 #' @param chronologyid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
-#' @param verbose logical; should messages on API call be printed?
+#' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned
 #'    from the Neotoma API call, or a list comprising the following items:
@@ -20,6 +19,7 @@
 #' @examples \dontrun{
 #' #  The point of pulling chronology tables is to re-build or examine the chronological 
 #' #  information that was used to build the age-depth model for the core.
+#' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts

@@ -16,7 +16,7 @@
 #' @export
 #'
 
-check.tables <- function(){
+check_tables <- function(){
   aa <- get_table('GeoPoliticalUnits')
   data(gp.table)
   if(!all.equal(aa, gp.table)){
