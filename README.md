@@ -5,8 +5,13 @@ The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecologi
 
 `neotoma` is part of the [rOpenSci](http://ropensci.org) project and is also hosted on [Figshare](http://dx.doi.org/10.6084/m9.figshare.677131)
 
-### Development by
-[Simon Goring](http://downwithtime.wordpress.com) - University of Wisconsin-Madison, Department of Geography
+### Development
++ [Simon Goring](http://downwithtime.wordpress.com) - University of Wisconsin-Madison, Department of Geography
+
+### Contributors
++ [Gavin Simpson](http://www.fromthebottomoftheheap.net/) - University of Regina, Department of Biology
++ [Jeremiah Marsicek](http://geoweb.uwyo.edu/ggstudent/jmarsice/Site/Home.html) - University of Wyoming, Department of Geology and Geophysics
++ [Karthik Ram](http://nature.berkeley.edu/~kram/) - University of California - Berkely, College of Natural Resources
 
 Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](http://api.neotomadb.org/doc/resources/home).
 
@@ -19,11 +24,11 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 + get_sites - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
 + get_table - return matrices corresponding to one of the Neotoma database tables. [tables](http://api.neotomadb.org/doc/resources/dbtables)
 + get_taxa - Get taxon information from Neotoma. [API](http://api.neotomadb.org/doc/resources/taxa)
++ get_chroncontrol - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Coming soon
 + A broader set of taxonomies for use with datasets, including geography based taxonomies.
 + Functions to turn single-site datasets into multi-site datasets.
-+ Age-modelling capabilities.
 
 ### Install `neotoma` 
 
