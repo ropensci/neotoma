@@ -159,14 +159,12 @@ get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
     }
   }
 
-  #  Parameter check on 'gpid', the name needs to be in the big table in
-  #  data object geopol:
-  #if('gpid' %in% names(cl)){
-  #  if(!cl$gpid %in% geopol[,5]){
-  #    stop('Unrecognized geopolitical entity.  Check for acceptible names in data(geopol).')
-  #  }
-  #}
-
+  if('taxonname' %in% names(cl)){
+    if(!class(cl$taxonname) == 'character'){
+      stop('The taxonname must be a character.')
+    }
+  }
+  
   neotoma.form <- getForm(base.uri, .params = cl, binary=FALSE,
                           .encoding='utf-8', )
 
@@ -177,7 +175,12 @@ get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
   }
   if(aa[[1]] == 1){
     output <- aa[[2]]
-    cat('The API call was successful, you have returned ', length(output), 'records.\n')
+    if(length(aa[[2]]) > 1){
+      message(paste('The API call was successful, you have returned ', length(output), ' records.\n', sep=''))
+    }
+    else{
+      message(paste('The API call was successful, you have returned ', length(output), ' record.\n', sep=''))
+    }
   }
 
 
