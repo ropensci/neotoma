@@ -102,7 +102,7 @@ get_contacts <- function(contactid, contactname, contactstatus, familyname){
   }
   if(aa[[1]] == 1){
     aa <- aa[[2]]
-    cat('The API call was successful, you have returned ', length(aa), 'records.\n')
+    message(paste('The API call was successful, you have returned ', length(aa), 'records.\n', sep=''))
   }
 
   if(class(aa) == 'try-error') output <- neotoma.form
