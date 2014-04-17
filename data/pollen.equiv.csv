@@ -14,7 +14,7 @@ Allium,12,NA,NA,LILIACEAE,LILIACEAE,NA,NA
 Alnus incana-type,13,Alnus,Alnus rugosa,ALRUGOSA,ALNUSX,TRUE,NA
 Alnus viridis-type,14,Alnus,AlnusXC,ALNUSX,ALNUSX,NA,NA
 Alnus undiff.,15,Alnus,AlnusXC,ALNUSX,ALNUSX,NA,NA
-Ambrosia-type,16,Prairie Forbs,NA,NA,NA,TRUE,NA
+Ambrosia-type,16,Prairie Forbs,NA,AMBROSIA,AMBROSIA,TRUE,NA
 Amorpha-type,17,NA,NA,FABACEAE,FABACEAE,TRUE,NA
 Anacardiaceae undiff.,18,NA,NA,ANACARDI,ANACARDI,NA,NA
 Apocynum,19,NA,NA,NA,NA,NA,NA
@@ -1105,7 +1105,7 @@ Closterium idiosporum,1199,NA,NA,NA,NA,NA,NA
 "Unknown (type 69, Van Geel 1978)",1200,NA,NA,NA,NA,NA,NA
 "Unknown (type 75, Van Geel 1978)",1201,NA,NA,NA,NA,NA,NA
 "Unknown (type 354, Van Geel et al. 1981)",1202,NA,NA,NA,NA,NA,NA
-Ulmaceae,1203,NA,NA,URTICACX,URTICACX,NA,NA
+Ulmaceae,1203,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Coptis,1204,NA,NA,THALICTRUM,THALICTRUM,NA,NA
 cf. Gentiana,1205,NA,NA,NA,NA,NA,NA
 Osmundaceae,1206,NA,NA,POLYPOD,POLYPOD,NA,NA
@@ -1188,7 +1188,7 @@ Picea abies,1288,Picea,Picea,PICEAX,PICEAX,NA,NA
 Betula sect. Betula,1289,Betula,Betula,BETULA,BETULA,NA,NA
 Betula sect. Nanae,1290,Betula,Betula,BETULA,BETULA,NA,NA
 Betula sect. Fruticosae,1291,Betula,Betula,BETULA,BETULA,NA,NA
-Ulmus minor,1293,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
+Ulmus minor,1293,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Rosaceae subf. Maloideae,1294,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Larix gmelinii,1296,Larix,Larix/Pseudotsuga,LARIXPSEU,LARIXPSEU,NA,NA
 Carex,1297,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
@@ -1206,12 +1206,12 @@ Echinops,1308,Prairie Forbs,Asteraceae,ASTERX,ASTERX,NA,NA
 Tamaricaceae,1309,NA,NA,NA,NA,NA,NA
 Myriophyllum spicatum,1310,NA,NA,NA,NA,NA,NA
 Myriophyllum verticillatum,1311,NA,NA,NA,NA,NA,NA
-Ulmus glabra,1312,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
+Ulmus glabra,1312,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Spergula/Spergularia,1313,NA,Caryophyllaceae,CARYOPHYLL,CARYOPHYLL,NA,NA
 Ephedra monosperma,1314,NA,Ephedra,EPHEDRA,EPHEDRA,NA,NA
 Sorbus aucuparia,1315,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Corylus avellana,1316,Corylus,Corylus,CORYLUS,CORYLUS,NA,NA
-Ulmus laevis,1317,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
+Ulmus laevis,1317,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Acer platanoides,1318,Acer,Acer,ACERX,ACERX,NA,NA
 Carpinus betulus,1319,Ostrya/Carpinus,Ostrya/Carpinus,OSTRYCAR,OSTRYCAR,NA,NA
 Fagus sylvatica,1320,Fagus,Fagus,FAGUS,FAGUS,NA,NA
@@ -1252,7 +1252,7 @@ Xyris,1354,NA,NA,NA,NA,NA,NA
 Cupressaceae/Taxaceae,1358,Cupressaceae/Taxaceae,NA,NA,NA,NA,NA
 Picea abies subsp. obovata,1369,Picea,Picea,PICEAX,PICEAX,NA,NA
 Thelypteris palustris,1370,NA,NA,POLYPOD,POLYPOD,NA,NA
-Ulmus undiff.,1386,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
+Ulmus undiff.,1386,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Diphasiastrum complanatum-type undiff.,1387,NA,NA,LYCOPODX,LYCOPODX,NA,NA
 Diphasiastrum alpinum-type undiff.,1388,NA,NA,LYCOPODX,LYCOPODX,NA,NA
 Lythraceae undiff.,1390,NA,NA,NA,NA,NA,NA
@@ -2301,7 +2301,7 @@ Primulaceae subf. Myrsinoideae undiff.,2539,NA,NA,NA,NA,NA,NA
 Cyatheaceae undiff.,2540,NA,NA,POLYPOD,POLYPOD,NA,NA
 Escallonia undiff.,2541,NA,NA,NA,NA,NA,NA
 Euphorbiaceae undiff.,2542,NA,Minor Forbs,EUPHORB,EUPHORB,NA,NA
-Ulmaceae undiff.,2543,NA,NA,URTICACX,URTICACX,NA,NA
+Ulmaceae undiff.,2543,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Alchornea undiff.,2544,NA,Minor Forbs,NA,NA,NA,NA
 Urticaceae-type undiff.,2545,NA,NA,URTICACX,URTICACX,NA,NA
 Viscaceae sensu stricto/Loranthaceae,2546,NA,NA,NA,NA,NA,NA
@@ -3226,8 +3226,8 @@ Salix caroliniana,3543,Salix,Salix,SALIX,SALIX,NA,NA
 Saururus cernuus,3544,NA,NA,NA,NA,NA,NA
 Saururaceae,3545,NA,NA,NA,NA,NA,NA
 Taxodium distichum,3546,Cupressaceae/Taxaceae,Taxodium,TAXODIUM,TAXODIUM,NA,NA
-Trema micrantha,3547,NA,NA,URTICACX,URTICACX,NA,NA
-Ulmus alata,3548,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
+Trema micrantha,3547,NA,NA,NA,NA,NA,NA
+Ulmus alata,3548,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Unknown (triporate),3549,NA,NA,NA,NA,NA,NA
 Unknown (tetraporate),3550,NA,NA,NA,NA,NA,NA
 Unknown (pentaporate),3551,NA,NA,NA,NA,NA,NA
@@ -3252,7 +3252,7 @@ Cousinia,3571,Prairie Forbs,Asteraceae,ASTERX,ASTERX,NA,NA
 Ephedra distachya-type,3572,NA,Ephedra,EPHEDRA,EPHEDRA,NA,NA
 Bursera simaruba,3573,NA,NA,NA,NA,NA,NA
 Hippocratea,3574,NA,NA,NA,NA,NA,NA
-Ulmaceae cf. Planera aquatica,3576,NA,NA,URTICACX,URTICACX,NA,NA
+Ulmaceae cf. Planera aquatica,3576,NA,NA,NA,NA,NA,NA
 Codonorchis,3577,NA,NA,NA,NA,NA,NA
 Ephedra fragilis-type,3578,NA,Ephedra,EPHEDRA,EPHEDRA,NA,NA
 Fraxinus excelsior,3579,Fraxinus,Total Fraxinus (sum of nigra/penn/undiff),FRAXINUX,FRAXINUX,NA,NA
@@ -4522,11 +4522,11 @@ cf. Trollius europaeus,4924,NA,NA,NA,NA,NA,NA
 Trollius-type,4925,NA,NA,RANUNCUL,RANUNCUL,NA,NA
 Tulipa sylvestris,4926,NA,NA,LILIACEAE,LILIACEAE,NA,NA
 Tulipa-type,4927,NA,NA,LILIACEAE,LILIACEAE,NA,NA
-Ulmus (type A),4930,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
-Ulmus (type B),4931,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
-Ulmus pumila,4932,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
-Ulmus/Zelkova,4933,NA,NA,URTICACX,URTICACX,NA,NA
-Zelkova abelicea,4934,NA,NA,URTICACX,URTICACX,NA,NA
+Ulmus (type A),4930,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
+Ulmus (type B),4931,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
+Ulmus pumila,4932,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
+Ulmus/Zelkova,4933,NA,NA,ULMUS,ULMUS,NA,NA
+Zelkova abelicea,4934,NA,NA,ULMUS,ULMUS,NA,NA
 Apiaceae (type 1),4935,NA,Minor Forbs,APIACEAE,APIACEAE,NA,NA
 Apiaceae (type 2),4936,NA,Minor Forbs,APIACEAE,APIACEAE,NA,NA
 Apiaceae (type 3),4937,NA,Minor Forbs,APIACEAE,APIACEAE,NA,NA
