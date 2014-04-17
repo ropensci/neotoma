@@ -139,7 +139,7 @@ get_download <- function(datasetid, verbose = TRUE){
               ## will cover the entire core, which makes things frustrating and difficult.
               
               #  first, get all unique chronology names.  Some cores don't have age models, so we use a try function.
-              chrons <- try(unique(unlist((sapply(samples, function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent=TRUE)
+              chrons <- try(unique(as.vector((sapply(samples, function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent=TRUE)
               
               base.frame <- as.data.frame(matrix(ncol = 6, nrow = nrow(sample.meta)))
               colnames(base.frame) <- c('AgeOlder', 'Age', 'AgeYounger', 'ChronologyName', 'AgeType', 'ChronologyID')
