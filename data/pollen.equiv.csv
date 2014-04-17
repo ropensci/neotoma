@@ -14,7 +14,7 @@ Allium,12,NA,NA,LILIACEAE,LILIACEAE,NA,NA
 Alnus incana-type,13,Alnus,Alnus rugosa,ALRUGOSA,ALNUSX,TRUE,NA
 Alnus viridis-type,14,Alnus,AlnusXC,ALNUSX,ALNUSX,NA,NA
 Alnus undiff.,15,Alnus,AlnusXC,ALNUSX,ALNUSX,NA,NA
-Ambrosia-type,16,Prairie Forbs,NA,NA,NA,TRUE,NA
+Ambrosia-type,16,Prairie Forbs,NA,AMBROSIA,AMBROSIA,TRUE,NA
 Amorpha-type,17,NA,NA,FABACEAE,FABACEAE,TRUE,NA
 Anacardiaceae undiff.,18,NA,NA,ANACARDI,ANACARDI,NA,NA
 Apocynum,19,NA,NA,NA,NA,NA,NA
@@ -291,7 +291,7 @@ Tsuga,306,Tsuga,Tsuga undifferentiated,TSUGAX,TSUGAX,NA,NA
 Asteraceae subf. Asteroideae undiff.,307,Prairie Forbs,Asteraceae,ASTERX,ASTERX,NA,NA
 Typha/Sparganium,308,NA,NA,NA,NA,NA,NA
 Typha latifolia,309,NA,NA,NA,NA,NA,NA
-Ulmus,310,Ulmus,Ulmus,URTICACX,URTICACX,NA,NA
+Ulmus,310,Ulmus,Ulmus,ULMUS,ULMUS,NA,NA
 Apiaceae,311,NA,Minor Forbs,APIACEAE,APIACEAE,NA,NA
 Indeterminable,312,NA,NA,NA,NA,NA,NA
 Unknown,313,NA,NA,NA,NA,NA,NA
