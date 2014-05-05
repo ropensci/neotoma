@@ -139,7 +139,7 @@ get_download <- function(datasetid, verbose = TRUE){
               ## will cover the entire core, which makes things frustrating and difficult.
               
               #  first, get all unique chronology names.  Some cores don't have age models, so we use a try function.
-              chrons <- try(unique(as.vector((sapply(samples, function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent=TRUE)
+              chrons <- try(unique(as.vector(unlist(sapply(samples, function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent=TRUE)
               
               base.frame <- as.data.frame(matrix(ncol = 6, nrow = nrow(sample.meta)))
               colnames(base.frame) <- c('AgeOlder', 'Age', 'AgeYounger', 'ChronologyName', 'AgeType', 'ChronologyID')
@@ -204,10 +204,10 @@ get_download <- function(datasetid, verbose = TRUE){
               #  get excluded in the API table.  Because the data is excluded we can't be sure that the
               #  modifications map exactly from sample to sample, so here we just sum all duplicated taxa and
               #  throw a warning to the user:
-              mod.dups <- duplicated(count.data[,c(1,7)])
+              mod.dups <- duplicated(count.data[,c('TaxonName', 'Sample')])
               
               if(sum(mod.dups) > 0){
-                tax.dups <- unique(count.data$TaxonName[duplicated(count.data[,c(1,7)])])
+                tax.dups <- unique(count.data$TaxonName[duplicated(count.data[,c('TaxonName', 'Sample')])])
                 if(length(tax.dups) == 1){
                   message <- paste('\nModifiers seem absent from the taxon ', tax.dups, '. \nget_download will sum at depths with multiple entries to resolve the problem.', sep = '')
                 }
