@@ -14,15 +14,11 @@
 #' @param search A character string to search for within the article citation.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return A table is returned with several fixed columns, and a variable number
-#'    of author fields:
+#' @return A list is returned with two data.frame elements:
 #'
 #' \itemize{
-#'  \item{PublicationID}{Unique database record identifier for the publication.}
-#'  \item{PubType}{Publication type}
-#'  \item{Year}{Year of publication.}
-#'  \item{Citation}{The complete citation in a standard style. For legacy citations inherited from other databases, this field holds the citation as ingested from the other databases.}
-#'  \item{Authors}{Array of author objects, can be of variable length.  Includes \code{Authors.ContactName.n}, \code{Authors.ContactID.n}, \code{Authors.Order.n}, where n ranges from 1 to the maximum number of authors returned by the API call.  When the maximum number of authors is 1 the number is excluded.}
+#'  \item{meta}{A single row with Publication ID, type, year of publication and full citation.}
+#'  \item{Authors}{data.frame of author names, order and IDs, can be of variable length.}
 #' }
 #' @examples \dontrun{
 #' #  To find all publications from 1998:
@@ -114,14 +110,14 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
       ## could be neater though - how about returning a list with
       ## 2 components, the first everything but the Authors array, the
       ## second the authors array *with* a link to PublicationID??
-      output <- suppressMessages(melt(lapply(aa, data.frame)))
-      output <- dcast(output, formula = ... ~ variable)
-      output <- output[, -which(names(output) %in% "L1")]
-      cols <- c("PublicationID","PubType","Year","Citation")
-      cnames <- names(output)
-      cnames <- cnames[!cnames %in% cols]
-      cols <- c(cols, cnames)
-      output <- output[, cols]
+    output <- list(meta = data.frame(ID = aa[[1]]$PublicationID,
+                              PubType = aa[[1]]$PubType,
+                              Year = aa[[1]]$Year,
+                              Citation = aa[[1]]$Citation))
+    output$Authors <- ldply(aa[[1]]$Authors, .fun=function(x){
+      data.frame(ContactID = x$ContactID, 
+                 Order = x$Order, 
+                 ContactName = as.character(x$ContactName))})
   }
 
   output

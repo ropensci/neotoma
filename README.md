@@ -26,9 +26,12 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 + get_taxa - Get taxon information from Neotoma. [API](http://api.neotomadb.org/doc/resources/taxa)
 + get_chroncontrol - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
+### Recent Changes
++ Minor fixes to the way that `get_download` treats age models reflecting the fact that some age models cover only part of the record.
++ Changed the output format of `get_publication` to improve data structure and readability.
+
 ### Coming soon
 + A broader set of taxonomies for use with datasets, including geography based taxonomies.
-+ Functions to turn single-site datasets into multi-site datasets.
 
 ### Install `neotoma` 
 
