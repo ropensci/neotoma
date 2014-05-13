@@ -4,7 +4,7 @@
 #' The function takes the parameters, defined by the user, and returns a table with
 #'    publication information from the Neotoma Paleoecological Database.
 #'
-#' @import RJSONIO RCurl
+#' @import RJSONIO RCurl plyr
 #' @param pubid Numeric Publication ID value, either from \code{get.datasets} or known.
 #' @param contactid Numeric Contact ID value, either from \code{get.datasets} or \code{get.contacts}
 #' @param datasetid Numeric Dataset ID, known or from \code{get.datasets}
@@ -87,7 +87,7 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
     }
   }
 
-  aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue = NA))
+  aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue = NA), silent=TRUE)
 
   if(aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
@@ -110,15 +110,21 @@ get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, 
       ## could be neater though - how about returning a list with
       ## 2 components, the first everything but the Authors array, the
       ## second the authors array *with* a link to PublicationID??
-    output <- list(meta = data.frame(ID = aa[[1]]$PublicationID,
-                              PubType = aa[[1]]$PubType,
-                              Year = aa[[1]]$Year,
-                              Citation = aa[[1]]$Citation))
-    output$Authors <- ldply(aa[[1]]$Authors, .fun=function(x){
-      data.frame(ContactID = x$ContactID, 
-                 Order = x$Order, 
-                 ContactName = as.character(x$ContactName))})
+    get_results <- function(x){
+      output <- list(meta = data.frame(ID = as.numeric(x$PublicationID),
+                                PubType = x$PubType,
+                                Year = as.numeric(x$Year),
+                                Citation = x$Citation))
+      output$Authors <- ldply(x$Authors, .fun=function(y){
+        data.frame(ContactID = y$ContactID, 
+                   Order = y$Order, 
+                   ContactName = as.character(y$ContactName))})
+      
+      output
+    }
   }
-
+  
+  output <- lapply(aa, get_results)
+  
   output
 }
