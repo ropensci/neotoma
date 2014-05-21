@@ -10,7 +10,7 @@
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned
 #'    from the Neotoma API call, or geochronology table:
-#'
+#'  
 #' \itemize{
 #'  \item{sample.id}{A unique identifier for the geochronological unit.}
 #'  \item{age.type.id}{Numeric. One of five possible age types.}

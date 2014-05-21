@@ -1,6 +1,6 @@
 \name{get_chroncontrol}
 \alias{get_chroncontrol}
-\title{Function to return chronologia control tables used to build age models.}
+\title{Function to return chronological control tables used to build age models.}
 \usage{
 get_chroncontrol(chronologyid, verbose = TRUE)
 }
