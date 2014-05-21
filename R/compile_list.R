@@ -3,7 +3,7 @@
 #'
 #' From the assemblage data for the core return assemblage data with the assemblage taxa
 #'
-#' @import RJSONIO RCurl
+#' @import RJSONIO RCurl plyr
 #' @param object A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param cf Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?
@@ -86,7 +86,8 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
                    sample.meta = object$sample.meta,
                    taxon.list = new.list, 
                    counts = compressed.list,
-                   lab.data = object$lab.data)
+                   lab.data = object$lab.data,
+                   chronologies = object$chronologies)
   }
   if(class(object) %in% c('matrix', 'data.frame')){
     used.taxa <- pollen.equiv[match(colnames(object), pollen.equiv$taxon),]

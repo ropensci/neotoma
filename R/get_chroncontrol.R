@@ -1,4 +1,4 @@
-#' Function to return chronologia control tables used to build age models.
+#' Function to return chronological control tables used to build age models.
 #'
 #' Using the dataset ID, return all records associated with the data.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
