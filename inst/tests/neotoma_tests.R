@@ -1,3 +1,18 @@
+##  TODO:
+# get_chroncontrol
+# get_geochron
+# get_publications
+# get_sites
+# get_table
+# get_taxa
+# compile_list
+#
+#
+## DONE:
+# get_contacts
+# get_downoads
+# get_datasets
+
 context('get_contacts work as expected')
 
 test_that('get_contacts accepts and returns the right data types', 
@@ -53,3 +68,8 @@ test_that('is get_datasets working?',
 })
 
 #-----------------------------------------------------
+
+context('get_datasets works as expected')
+
+test_that('is get_datasets working?', 
+          
