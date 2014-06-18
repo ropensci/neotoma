@@ -3,7 +3,6 @@
 #' Using the dataset ID, return all geochronological data associated with the dataID.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
-#'
 #' @import RJSONIO RCurl
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
@@ -18,7 +17,7 @@
 #'  \item{age}{Dated age of the material.}
 #'  \item{e.older}{The older error limit of the age value.  Commonly 1 standard deviation.}
 #'  \item{e.young}{The younger error limit of the age value.}
-#'  \item{delta13C}{The measured or assumed δ13C value for radiocarbon dates, if provided.}
+#'  \item{delta13C}{The measured or assumed delta13C value for radiocarbon dates, if provided.}
 #'  \item{material.dated}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
 #'  \item{geo.chron.type.id}{Numeric identification for the type of geochronological analysis.}
 #'  \item{geo.chron.type}{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
@@ -26,7 +25,7 @@
 #'  \item{infinite}{Boolean, does the dated material return an "infinte" date?}
 #' }
 #'
-#'    A full data object containing all the relevant geochronological data available for a dataset.
+#'  A full data object containing all the relevant geochronological data available for a dataset.
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #' #  find the relevant geochronological data associated with the samples.  Are some time periods better dated than others?
@@ -57,6 +56,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
+#' 
 get_geochron <- function(datasetid, verbose = TRUE){
 
     ## Updated the processing here. There is no need to be fiddling with
@@ -97,7 +97,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
         aa <- aa[[2]]
       
         if(verbose) {
-            writeLines(strwrap(paste("API call was successful. Returned record for ",
+            message(strwrap(paste("API call was successful. Returned record for ",
                                      aa[[1]]$Site$SiteName)))
         }
 
@@ -108,6 +108,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
         
         pull.rec <- function(x){
           data.frame(sample.id = x$SampleID,
+                     geochron.id = x$GeochronID,
                    age.type.id = x$AgeTypeID,
                    age.type = ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)],
                    age = x$Age,
@@ -117,7 +118,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
                    lab.no = x$LabNumber,
                    material.dated = x$MaterialDated,
                    geo.chron.type.id = x$GeochronTypeID,
-                   geo.chron.type = geoid$GeochronType[match(x$GeochronID, geoid$GeochronTypeID)],
+                   geo.chron.type = geoid$GeochronType[match(x$GeochronTypeID, geoid$GeochronTypeID)],
                    notes = x$Notes,
                    infinite = x$Infinite,
                    stringsAsFactors = FALSE)

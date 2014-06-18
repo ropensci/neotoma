@@ -90,6 +90,9 @@ get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, t
         stop('When taxonid or taxonname is invoked, ageof must be taxon')
       }
     }
+    if(!any(c('ageyoung','ageold') %in% names(cl))){
+      stop('When ageof in invoked you also need to provide an age range using ageyounger or ageolder.')
+    }
   }
   
   if('gpid' %in% names(cl)){
