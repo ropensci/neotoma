@@ -50,12 +50,12 @@ require(neotoma)
 
 ```R
 #  Example requires the plyr package and the mapdata package:
-> require(plyr)
-> test <- get_datasets(taxonname='Mammuthus*')
+require(plyr)
+test <- get_datasets(taxonname='Mammuthus*')
 The API call was successful, you have returned  3273 records.
-> site.locs <- ldply(test, function(x)x$Site)
-> map('world', xlim=range(site.locs$LongitudeWest)+c(-10, 10), ylim=range(site.locs$LatitudeNorth)+c(-10, 10))
-> points(site.locs$LongitudeWest, site.locs$LatitudeNorth, pch=19, cex=0.5)
+site.locs <- ldply(test, function(x)x$Site)
+map('world', xlim=range(site.locs$LongitudeWest)+c(-10, 10), ylim=range(site.locs$LatitudeNorth)+c(-10, 10))
+points(site.locs$LongitudeWest, site.locs$LatitudeNorth, pch=19, cex=0.5)
 
 ```
 ![thing](inst/img/mammothsites.png)
@@ -63,22 +63,16 @@ The API call was successful, you have returned  3273 records.
 ### Plot the proportion of publications per year for datasets in Neotoma
 
 ```R
-> # Requires ggplot2
-> library(ggplot2)
-> pubs <- get_publication()
-The API call was successful, you have returned  3693 records.
-Warning message:
-In getForm(base.uri, .params = cl) : No inputs passed to form
-> pub.years <- as.numeric(as.character(pubs$Year))
-Warning message:
-NAs introduced by coercion
-> ggplot(data=data.frame(x = pub.years), aes(x)) +
-+     stat_bin(aes(y=..density..*100, position='dodge'), binwidth=1) +
-+     theme_bw() +
-+     ylab('Percent of Publications') +
-+     xlab('Year of Publication') +
-+     scale_y_continuous(expand = c(0, 0.1)) +
-+     scale_x_continuous(breaks = seq(min(pub.years, na.rm=TRUE), 2013, by=20))
+# Requires ggplot2
+library(ggplot2)
+pubs <- get_publication()
+ggplot(data=data.frame(x = pub.years), aes(x)) +
+     stat_bin(aes(y=..density..*100, position='dodge'), binwidth=1) +
+     theme_bw() +
+     ylab('Percent of Publications') +
+     xlab('Year of Publication') +
+     scale_y_continuous(expand = c(0, 0.1)) +
+     scale_x_continuous(breaks = seq(min(pub.years, na.rm=TRUE), 2013, by=20))
 
 ```
 
