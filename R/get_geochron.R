@@ -108,6 +108,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
         
         pull.rec <- function(x){
           data.frame(sample.id = x$SampleID,
+                     geochron.id = x$GeochronID,
                    age.type.id = x$AgeTypeID,
                    age.type = ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)],
                    age = x$Age,
@@ -117,7 +118,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
                    lab.no = x$LabNumber,
                    material.dated = x$MaterialDated,
                    geo.chron.type.id = x$GeochronTypeID,
-                   geo.chron.type = geoid$GeochronType[match(x$GeochronID, geoid$GeochronTypeID)],
+                   geo.chron.type = geoid$GeochronType[match(x$GeochronTypeID, geoid$GeochronTypeID)],
                    notes = x$Notes,
                    infinite = x$Infinite,
                    stringsAsFactors = FALSE)
