@@ -21,7 +21,7 @@ This command returns either a 'try-error' definined by the error returned
  \item{age}{Dated age of the material.}
  \item{e.older}{The older error limit of the age value.  Commonly 1 standard deviation.}
  \item{e.young}{The younger error limit of the age value.}
- \item{delta13C}{The measured or assumed δ13C value for radiocarbon dates, if provided.}
+ \item{delta13C}{The measured or assumed delta13C value for radiocarbon dates, if provided.}
  \item{material.dated}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
  \item{geo.chron.type.id}{Numeric identification for the type of geochronological analysis.}
  \item{geo.chron.type}{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
@@ -29,7 +29,7 @@ This command returns either a 'try-error' definined by the error returned
  \item{infinite}{Boolean, does the dated material return an "infinte" date?}
 }
 
-   A full data object containing all the relevant geochronological data available for a dataset.
+ A full data object containing all the relevant geochronological data available for a dataset.
 }
 \description{
 Using the dataset ID, return all geochronological data associated with the dataID.  At present,
