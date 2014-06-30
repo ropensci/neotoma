@@ -12,7 +12,7 @@ compile_list(object, list.name, cf = TRUE, type = TRUE)
 
 \item{cf}{Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?}
 
-\item{type}{Should}{taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?}
+\item{type}{Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?}
 }
 \value{
 This command returns a list object with the same structure as the parent pollen object returned by \code{get_download}, or a \code{matrix} (or \code{data.frame}) depending on whether \code{object} is one or the other.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.

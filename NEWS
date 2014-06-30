@@ -1,0 +1,8 @@
+neotoma 0.1
+====================
+o continued development of API implementation and working toward a common 
+  standard for data output.
+
+o Continued development of tests for the package.
+
+o Changed function names to singular.
