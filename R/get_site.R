@@ -1,6 +1,6 @@
 #' Return Site Information.
 #'
-#' \code{get_sites} returns site information from the Neotoma Paleoecological Database
+#' \code{get_site} returns site information from the Neotoma Paleoecological Database
 #'    based on parameters defined by the user.
 #'
 #' @import RJSONIO RCurl
@@ -34,7 +34,7 @@
 #' }
 #' @examples \dontrun{
 #' #  What is the distribution of site elevations in Neotoma?
-#' all.sites <- get_sites()  #takes a bit of time.
+#' all.sites <- get_site()  #takes a bit of time.
 #'
 #' plot(density(all.sites$Altitude, from = 0, na.rm=TRUE),
 #' main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')
@@ -44,7 +44,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
+get_site <- function(siteid, sitename, altmin, altmax, loc, gpid){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 

@@ -9,16 +9,13 @@ compile_list(object, list.name, cf = TRUE, type = TRUE)
 \item{object}{A pollen object returned by \code{get_download}.}
 
 \item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.}
+
+\item{cf}{Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?}
+
+\item{type}{Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?}
 }
 \value{
 This command returns a list object with the same structure as the parent pollen object returned by \code{get_download}, or a \code{matrix} (or \code{data.frame}) depending on whether \code{object} is one or the other.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
-
-\itemize{
- \item{object}{Either a pollen object as returned by \code{get_download} or a \code{matrix} or \code{data.frame} containing the pollen data with rows representing strata and columns representing individual pollen taxa.}
- \item{list.name}{One of a set of predefined lists, 'P25', 'WS64', 'WhitmoreFull', or 'WhitmoreSmall'.  See below for more details.}
- \item{cf}{Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?}
- \item{type}{Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?}
-}
 
    The data object uses the smaller pollen subset.  As this package develops we will add the
    capacity to summarize data output from the translation.
