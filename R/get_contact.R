@@ -42,10 +42,10 @@
 #' }
 #' @examples \dontrun{
 #' #  To find all data contributors who are active:
-#' active.cont <- get_contacts(contactstatus = 'active')
+#' active.cont <- get_contact(contactstatus = 'active')
 #'
 #' # To find all data contributors who have the last name "Smith"
-#' smith.cont <- get_contacts(familyname = 'Smith')
+#' smith.cont <- get_contact(familyname = 'Smith')
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
