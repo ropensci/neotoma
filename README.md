@@ -1,5 +1,6 @@
 neotoma
 ========
+*PLEASE NOTE*: The most recent change has standardized all function names to singular.    This may break functionality.
 
 The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](http://www.neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
 
@@ -17,11 +18,11 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 
 ### Currently implemented in `neotoma`
 + compile_list - using established pollen-related taxonomies from the literature, take the published taxon list and standardize it to allow cross site analysis.
-+ get_contacts - find contact information for data contributors to Neotoma. [API](http://api.neotomadb.org/doc/resources/contacts)
-+ get_datasets - obtain dataset metadata from Neotoma. [API](http://api.neotomadb.org/doc/resources/datasets)
++ get_contact - find contact information for data contributors to Neotoma. [API](http://api.neotomadb.org/doc/resources/contacts)
++ get_dataset - obtain dataset metadata from Neotoma. [API](http://api.neotomadb.org/doc/resources/datasets)
 + get_download - obtain full datasets (pollen or mammal) from Neotoma. [API](http://api.neotomadb.org/doc/resources/downloads)
 + get_publication - obtain publication information from Neotoma. [API](http://api.neotomadb.org/doc/resources/publications)
-+ get_sites - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
++ get_site - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
 + get_table - return matrices corresponding to one of the Neotoma database tables. [tables](http://api.neotomadb.org/doc/resources/dbtables)
 + get_taxa - Get taxon information from Neotoma. [API](http://api.neotomadb.org/doc/resources/taxa)
 + get_chroncontrol - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
