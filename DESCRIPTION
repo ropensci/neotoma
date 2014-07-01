@@ -1,7 +1,7 @@
 Package: neotoma
 Type: Package
 Title: A Package to access the Neotoma Paleoecological Database using an API.
-Version: 1.0
+Version: 1.0-1
 Date: 2013-04-04
 Author: Simon J. Goring
 Maintainer: Simon Goring <goring@wisc.edu>

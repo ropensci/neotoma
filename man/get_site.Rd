@@ -41,6 +41,8 @@ Extended response variables when only a single site is returned:
 }
 }
 \description{
+Return site information from the Neotoma Paleoecological Database.
+
 \code{get_site} returns site information from the Neotoma Paleoecological Database
    based on parameters defined by the user.
 }

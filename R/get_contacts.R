@@ -1,6 +1,5 @@
-
-#' A function to obtain contact information for data contributors from the Neotoma
-#'    Paleoecological Database.  Deprecated - see \link{\code{get_contact}.}
+#' @title Get contact information.
+#' @description Deprecated - see \code{get_contact}.
 #'
 #' @import RJSONIO RCurl
 #' @importFrom reshape2 dcast melt
@@ -10,7 +9,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_contact <- function(contactid, contactname, contactstatus, familyname){
+get_contacts <- function(contactid, contactname, contactstatus, familyname){
 
   .Deprecated('get_contact')
   
