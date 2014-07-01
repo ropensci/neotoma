@@ -1,7 +1,7 @@
 
-#' A function to obtain contact information for data contributors from the Neotoma
-#'    Paleoecological Database.
+#' @title Get contact information.
 #'
+#' @description A function to obtain contact information for data contributors from the Neotoma Paleoecological Database.
 #' @import RJSONIO RCurl
 #' @importFrom reshape2 dcast melt
 #' @param contactid Contact ID is a numerical value associated with the Neotoma
@@ -42,10 +42,10 @@
 #' }
 #' @examples \dontrun{
 #' #  To find all data contributors who are active:
-#' active.cont <- get_contacts(contactstatus = 'active')
+#' active.cont <- get_contact(contactstatus = 'active')
 #'
 #' # To find all data contributors who have the last name "Smith"
-#' smith.cont <- get_contacts(familyname = 'Smith')
+#' smith.cont <- get_contact(familyname = 'Smith')
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
@@ -102,7 +102,7 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
   }
   if(aa[[1]] == 1){
     aa <- aa[[2]]
-    message(paste('The API call was successful, you have returned ', length(aa), 'records.\n', sep=''))
+    message(paste0('The API call was successful, you have returned ', length(aa), ' records.\n'))
   }
 
   if(class(aa) == 'try-error') output <- neotoma.form
