@@ -74,12 +74,20 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
     }
   }
 
+<<<<<<< HEAD
   # Parameter check on contactstatus:
+=======
+  #  Parameter check on contactstatus:
+>>>>>>> 1b8f68341bc025ba2c17cba0878b5b14ace3022a
   if ('contactstatus' %in% names(cl)){
     if (!is.character(cl$contactstatus)){
       stop('The contactstatus must be a character string.')
     } else {
+<<<<<<< HEAD
       if (!cl$contactstatus %in% c('active', 'deceased', 'defunct',
+=======
+      if(!cl$contactstatus %in% c('active', 'deceased', 'defunct',
+>>>>>>> 1b8f68341bc025ba2c17cba0878b5b14ace3022a
                                   'extant', 'inactive', 'retired', 'unknown')){
         stop('status must be an accepted term.  Use get.table(\'ContactStatues\')')
       }
