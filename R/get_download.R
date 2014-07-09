@@ -172,6 +172,7 @@ get_download <- function(datasetid, verbose = TRUE){
               names(sample.meta) <- c("depths", "thickness", "IDs", "unit.name",
                                       colnames(chron.list[[length(chron.list)]]), "sample.name")
               
+              #  re-ordering the columns so they make sense.
               sample.meta <- sample.meta[, c(1:2, 5:10, 3, 11, 4)]
   
               ## sample data/counts
@@ -226,7 +227,7 @@ get_download <- function(datasetid, verbose = TRUE){
               ## add Sample col as the rownames
               rownames(counts) <- counts$Sample
               ## remove the Sample col, but robustly
-              counts <- counts[, -which(names(counts) == "Sample")]
+              counts <- counts[, -which(names(counts) == "Sample"), drop = F]
               
               ## It is possible that some depths have no count data, but that they were sampled.
               ## This will be reflected as a row with '0' counts for all taxa.
