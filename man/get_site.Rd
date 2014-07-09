@@ -3,7 +3,7 @@
 \alias{get_site}
 \title{Return Site Information.}
 \usage{
-get_site(sitename, altmin, altmax, loc, gpid)
+get_site(sitename, altmin, altmax, loc, gpid, dataset = NULL)
 }
 \arguments{
 \item{sitename}{A character string representing the full or partial site name.}
@@ -15,6 +15,8 @@ get_site(sitename, altmin, altmax, loc, gpid)
 \item{loc}{A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.}
 
 \item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
+
+\item{dataset}{A list object returned by \code{get_dataset}.}
 }
 \value{
 A table:
@@ -43,6 +45,11 @@ all.sites <- get_site()  #takes a bit of time.
 
 plot(density(all.sites$elev, from = 0, na.rm=TRUE),
 main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')
+
+#  Get site information from a dataset:
+nw.datasets <- get_dataset(loc = c(-140, 50, -110, 65), datasettype='pollen',taxonname='Pinus*')
+nw.sites <- get_site(nw.datasets)
+
 }
 }
 \author{
