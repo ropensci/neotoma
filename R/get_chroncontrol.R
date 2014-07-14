@@ -27,26 +27,26 @@
 #' @export
 get_chroncontrol <- function(chronologyid, verbose = TRUE){
 
-  ## Updated the processing here. There is no need to be fiddling with
-  ## call. Use missing() to check for presence of argument
-  ## and then process as per usual
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/chronologies'
 
-  if(missing(chronologyid)) {
+  if (missing(chronologyid)) {
       stop(paste(sQuote("chronologyid"), "must be provided."))
   } else {
-      if(!is.numeric(chronologyid))
+      if (!is.numeric(chronologyid))
           stop('chronologyid must be numeric.')
   }
   
-  ## query Neotoma for data set
+  # query Neotoma for data set
   aa <- try(fromJSON(paste0(base.uri, '/', chronologyid), nullValue = NA))
 
-  ## Might as well check here for error and bail
-  if(inherits(aa, "try-error"))
+  # Might as well check here for error and bail
+  if (inherits(aa, "try-error"))
       return(aa)
 
-  ## if no error continue processing
+  # if no error continue processing
   if (isTRUE(all.equal(aa[[1]], 0))) {
       stop(paste('Server returned an error message:\n', aa[[2]]),
            call.=FALSE)
@@ -55,12 +55,13 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
   if (isTRUE(all.equal(aa[[1]], 1))) {
         aa <- aa[[2]]
       
-        if(verbose) {
-            writeLines(strwrap(paste("API call was successful. Returned chronology.")))
+        if (verbose) {
+            writeLines(strwrap(paste0("API call was successful.",
+                                      " Returned chronology.")))
         }
 
-        ##  Here the goal is to reduce this list of lists to as
-        ##  simple a set of matrices as possible.
+        # Here the goal is to reduce this list of lists to as
+        # simple a set of matrices as possible.
         control.table <- ldply(aa[[1]]$controls, function(x)unlist(x))
         
         meta.table <- data.frame(default    = aa[[1]]$Default,

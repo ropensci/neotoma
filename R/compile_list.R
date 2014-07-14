@@ -48,42 +48,52 @@
 #' @export
 
 compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
+  # Function to convert assemblage taxa to standardized lists.
 
   .Deprecated('compile_taxa', package='neotoma')
   
-  if(!class(object) %in% c('list', 'matrix', 'data.frame')){
-    stop('Data object must be a pollen object returned by function get_download or a matrix or data.frame')
+  if (!class(object) %in% c('list', 'matrix', 'data.frame')){
+    stop(paste0('Data object must be a pollen object returned by function ',
+                'get_download or a matrix or data.frame'))
   }
   
   data(pollen.equiv)
   avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
   
-  if(cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
-  if(type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
+  if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
+  if (type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
   
   use.list <- which(avail.lists %in% list.name)
   
-  if(class(object) == 'list'){
-    used.taxa <- pollen.equiv[match(colnames(object$counts), pollen.equiv$taxon),]
-    agg.list <- as.vector(used.taxa[,use.list + 2])
+  if (class(object) == 'list'){
+    used.taxa <- pollen.equiv[match(colnames(object$counts),
+                                    pollen.equiv$taxon), ]
+    agg.list <- as.vector(used.taxa[, use.list + 2])
     agg.list[is.na(agg.list)] <- 'Other'
     
-    compressed.list <- aggregate(t(object$counts), by = list(agg.list), sum, na.rm=TRUE)
+    compressed.list <- aggregate(t(object$counts),
+                                 by = list(agg.list),
+                                 sum, na.rm = TRUE)
   
-    compressed.cols <- compressed.list[,1]
+    compressed.cols <- compressed.list[, 1]
     
-    compressed.list <- t(compressed.list[,-1])
+    compressed.list <- t(compressed.list[, -1])
     colnames(compressed.list) <- compressed.cols
     
-    #  We want to make a taxon list like the one returned in get_downloads:
+    # We want to make a taxon list like the one returned in get_downloads:
     new.list <- object$taxon.list
     new.list$compressed <- NA
     
-    new.list$compressed <- as.character(pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon),use.list + 2])
+    new.list$compressed <- as.character(pollen.equiv[match(new.list$TaxonName,
+                                                           pollen.equiv$taxon),
+                                                     use.list + 2])
     
-    new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(object$counts)] <- 'Other'
+    other.taxa <- is.na(new.list$compressed) &
+      new.list$TaxonName %in% colnames(object$counts)
+    
+    new.list$compressed[other.taxa] <- 'Other'
   
-    #  Returns a data.frame with taxa in the columns and samples in the rows.
+    # Returns a data.frame with taxa in the columns and samples in the rows.
     output <- list(metadata = object$metadata,
                    sample.meta = object$sample.meta,
                    taxon.list = new.list, 
@@ -91,16 +101,18 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
                    lab.data = object$lab.data,
                    chronologies = object$chronologies)
   }
-  if(class(object) %in% c('matrix', 'data.frame')){
-    used.taxa <- pollen.equiv[match(colnames(object), pollen.equiv$taxon),]
-    agg.list <- as.vector(used.taxa[,use.list + 2])
+  if (class(object) %in% c('matrix', 'data.frame')){
+    used.taxa <- pollen.equiv[match(colnames(object), pollen.equiv$taxon), ]
+    agg.list <- as.vector(used.taxa[, use.list + 2])
     agg.list[is.na(agg.list)] <- 'Other'
 
-    compressed.list <- aggregate(t(object), by = list(agg.list), sum, na.rm=TRUE)
+    compressed.list <- aggregate(t(object),
+                                 by = list(agg.list),
+                                 sum, na.rm = TRUE)
     
-    compressed.cols <- compressed.list[,1]
+    compressed.cols <- compressed.list[, 1]
     
-    compressed.list <- t(compressed.list[,-1])
+    compressed.list <- t(compressed.list[, -1])
     colnames(compressed.list) <- compressed.cols
     
     output <- compressed.list
