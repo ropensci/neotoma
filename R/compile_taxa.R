@@ -1,7 +1,8 @@
 
-#' Deprecated function to convert assemblage taxa to standardized lists.
+#' Function to convert assemblage taxa to standardized lists.
 #'
-#' See the new function `compile_taxa`.
+#' From the assemblage data for the core return assemblage data with the assemblage taxa
+#' Currently implemented only for pollen data.
 #'
 #' @import RJSONIO RCurl plyr
 #' @param object A pollen object returned by \code{get_download}.
@@ -24,14 +25,12 @@
 #' @examples \dontrun{
 #' #  Search for sites with "Thuja" pollen that are older than 8kyr BP and
 #' #  that are on the west coast of North America:
-#' t8kyr.datasets <- get_datasets(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
 #' GOLDKBG <- get_download(t8kyr.datasets[[1]]$DatasetID)
 #'
-#' gold.p25 <- compile_list(GOLDKBG, 'P25')
-#'
-#'
+#' gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 #'
 #' }
 #' @references
@@ -47,9 +46,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
-
-  .Deprecated('compile_taxa', package='neotoma')
+compile_taxa <- function(object, list.name, cf = TRUE, type = TRUE){
   
   if(!class(object) %in% c('list', 'matrix', 'data.frame')){
     stop('Data object must be a pollen object returned by function get_download or a matrix or data.frame')
@@ -64,7 +61,14 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
   use.list <- which(avail.lists %in% list.name)
   
   if(class(object) == 'list'){
-    used.taxa <- pollen.equiv[match(colnames(object$counts), pollen.equiv$taxon),]
+    
+    taxon.matches <- match(colnames(object$counts), pollen.equiv$taxon)
+    
+    if(any(is.na(taxon.matches))){
+      missed.samples <- colnames(object$counts)[is.na(taxon.matches)]
+    }
+    
+    used.taxa <- pollen.equiv[taxon.matches, ]
     agg.list <- as.vector(used.taxa[,use.list + 2])
     agg.list[is.na(agg.list)] <- 'Other'
     
@@ -92,7 +96,14 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
                    chronologies = object$chronologies)
   }
   if(class(object) %in% c('matrix', 'data.frame')){
-    used.taxa <- pollen.equiv[match(colnames(object), pollen.equiv$taxon),]
+    
+    taxon.matches <- match(colnames(object$counts), pollen.equiv$taxon)
+    
+    if(any(is.na(taxon.matches))){
+      missed.samples <- colnames(object$counts)[is.na(taxon.matches)]
+    }
+    
+    used.taxa <- pollen.equiv[taxon.matches, ]
     agg.list <- as.vector(used.taxa[,use.list + 2])
     agg.list[is.na(agg.list)] <- 'Other'
 
@@ -104,6 +115,11 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
     colnames(compressed.list) <- compressed.cols
     
     output <- compressed.list
+  }
+  
+  if(exists('missed.samples')) {
+    warning(paste0('The following taxa could not be found in the existing ',
+                   'conversion table:\n', paste(missed.samples, sep = ', ')))
   }
   
   return(output)
