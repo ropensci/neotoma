@@ -104,7 +104,7 @@ get_download <- function(datasetid, verbose = TRUE){
           aa1 <- aa[[1]]
           
           #  If there are actual stratigraphic samples with data in the dataset returned.
-          if ('Samples' %in% nams) {
+          if ('Samples' %in% nams & length(aa1$Samples) > 0) {
               
             ## Build the metadata for the dataset.
               meta.data <- list(
@@ -278,6 +278,10 @@ get_download <- function(datasetid, verbose = TRUE){
                          counts = counts,
                          lab.data = lab.data,
                          chronologies = chron.list)
+          }
+          if ((!'Samples' %in% nams) | length(aa1$Samples) == 0) {
+            message('Dataset contains no sample data.')
+            return(NULL)
           }
       }
       aa
