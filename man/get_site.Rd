@@ -3,7 +3,7 @@
 \alias{get_site}
 \title{Return Site Information.}
 \usage{
-get_site(sitename, altmin, altmax, loc, gpid, dataset = NULL)
+get_site(sitename, altmin, altmax, loc, gpid)
 }
 \arguments{
 \item{sitename}{A character string representing the full or partial site name.}

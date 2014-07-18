@@ -42,7 +42,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_site <- function(sitename, altmin, altmax, loc, gpid){
+get_site <- function(sitename, altmin, altmax, loc, gpid, dataset = NULL){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
@@ -102,6 +102,7 @@ get_site <- function(sitename, altmin, altmax, loc, gpid){
       if (!is.numeric(gpid)){
         stop('The gpid must be either a character string or an integer.')
       }
+    }
   }
   
   neotoma.form <- getForm(base.uri, .params = cl)
