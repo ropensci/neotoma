@@ -32,84 +32,89 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_publication <- function(pubid, contactid, datasetid, author, pubtype, year, search){
+get_publication <- function(pubid, contactid, datasetid, author,
+                            pubtype, year, search){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/publications'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
-  cl <- lapply(cl, eval, envir=parent.frame())
+  cl <- lapply(cl, eval, envir = parent.frame())
 
-  #  Parameter check on pubid:
-  if('pubid' %in% names(cl)){
-    if(!is.numeric(cl$pubid)){
+  # Parameter check on pubid:
+  if ('pubid' %in% names(cl)){
+    if (!is.numeric(cl$pubid)){
       stop('The pubid must be numeric.')
     }
   }
 
-  #  Parameter check on contactid:
-  if('contactid' %in% names(cl)){
-    if(!is.numeric(cl$contactid)){
+  # Parameter check on contactid:
+  if ('contactid' %in% names(cl)){
+    if (!is.numeric(cl$contactid)){
       stop('The contactid must be numeric.')
     }
   }
 
-  #  Parameter check on datasetid:
-  if('datasetid' %in% names(cl)){
-    if(!is.numeric(cl$datasetid)){
+  # Parameter check on datasetid:
+  if ('datasetid' %in% names(cl)){
+    if (!is.numeric(cl$datasetid)){
       stop('The datasetid must be numeric.')
     }
   }
 
-  #  Parameter check on author:
-  if('author' %in% names(cl)){
-    if(!is.character(cl$author)){
+  # Parameter check on author:
+  if ('author' %in% names(cl)){
+    if (!is.character(cl$author)){
       stop('The author must be a character string.')
     }
   }
 
-  if('pubtype' %in% names(cl)){
-    if(!is.character(cl$pubtype)){
-      stop('The pubtype must be a character string.  Use get.table(\'PublicationTypes\') to find acceptable tables.')
+  if ('pubtype' %in% names(cl)){
+    if (!is.character(cl$pubtype)){
+      stop(paste0('The pubtype must be a character string. Use get.table',
+                  '(\'PublicationTypes\') to find acceptable tables.'))
     }
   }
 
-  if('year' %in% names(cl)){
-    if(!is.numeric(cl$year)){
+  if ('year' %in% names(cl)){
+    if (!is.numeric(cl$year)){
       stop('The year used must be numeric.')
     }
   }
 
-  #  Parameter check on author:
-  if('search' %in% names(cl)){
-    if(!is.character(cl$search)){
+  # Parameter check on author:
+  if ('search' %in% names(cl)){
+    if (!is.character(cl$search)){
       stop('The search string must be a character string.')
     }
   }
 
-  aa <- try(fromJSON(getForm(base.uri, .params = cl), nullValue = NA), silent=TRUE)
+  aa <- try(fromJSON(getForm(base.uri, .params = cl),
+                     nullValue = NA), silent = TRUE)
 
-  if(aa[[1]] == 0){
-    stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
+  if (aa[[1]] == 0){
+    stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
-  if(aa[[1]] == 1){
+  if (aa[[1]] == 1){
     aa <- aa[[2]]
-    cat('The API call was successful, you have returned ', length(aa), 'records.\n')
+    cat('The API call was successful, you have returned ',
+        length(aa), 'records.\n')
   }
 
-  if(class(aa) == 'try-error' | length(aa) == 0) output <- NA
-  else{
-      ## This line doesn't do anything
-      ##names(aa) <- sapply(aa, function(x)x$SiteName)
+  if (class(aa) == 'try-error' | length(aa) == 0){ 
+    output <- NA
+  } else {
+      # This line doesn't do anything
+      # names(aa) <- sapply(aa, function(x)x$SiteName)
 
-      ## This line looses all the author information beyond the first
-      ## suspect it is not needed
-      ##aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
+      # This line looses all the author information beyond the first
+      # suspect it is not needed
+      # aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
 
-      ## This is back now doing what is documented to do
-      ## could be neater though - how about returning a list with
-      ## 2 components, the first everything but the Authors array, the
-      ## second the authors array *with* a link to PublicationID??
+      # This is back now doing what is documented to do
+      # could be neater though - how about returning a list with
+      # 2 components, the first everything but the Authors array, the
+      # second the authors array *with* a link to PublicationID??
     get_results <- function(x){
       output <- list(meta = data.frame(ID = as.numeric(x$PublicationID),
                                 PubType = x$PubType,

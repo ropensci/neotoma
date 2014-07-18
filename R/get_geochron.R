@@ -59,58 +59,68 @@
 #' 
 get_geochron <- function(datasetid, verbose = TRUE){
 
-    ## Updated the processing here. There is no need to be fiddling with
-    ## call. Use missing() to check for presence of argument
-    ## and then process as per usual
+    # Updated the processing here. There is no need to be fiddling with
+    # call. Use missing() to check for presence of argument
+    # and then process as per usual
     base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
 
-    if(missing(datasetid)) {
+    if (missing(datasetid)) {
         stop(paste(sQuote("datasetid"), "must be provided."))
     } else {
-        if(!is.numeric(datasetid))
+        if (!is.numeric(datasetid))
             stop('datasetid must be numeric.')
     }
 
-    #  Get sample is a function because we can now get one or more geochronologies at a time.
+    # Get sample is a function because we can now get
+    # one or more geochronologies at a time.
     get_sample <- function(x){
-      ## query Neotoma for data set
+      # query Neotoma for data set
       aa <- try(fromJSON(paste0(base.uri, '?datasetid=', x), nullValue = NA))
   
-      ## Might as well check here for error and bail
-      if(inherits(aa, "try-error"))
+      # Might as well check here for error and bail
+      if (inherits(aa, "try-error"))
           return(aa)
   
-      ## if no error continue processing
+      # if no error continue processing
       if (isTRUE(all.equal(aa[[1]], 0))) {
-        #  The API did not return a record, or returned an error.
+        # The API did not return a record, or returned an error.
           stop(paste('Server returned an error message:\n', aa[[2]]),
-               call.=FALSE)
+               call. = FALSE)
       }
   
       if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
-        #  The API returned a record, but the record did not have associated geochronology information.
-        stop('No geochronological record is associated with this sample', call.=FALSE)
+        # The API returned a record, but the record did not
+        # have associated geochronology information.
+        stop('No geochronological record is associated with this sample',
+             call. = FALSE)
       }
       
       if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) > 0)) {
         # The API returned a record with geochron data.
         aa <- aa[[2]]
       
-        if(verbose) {
-            message(strwrap(paste("API call was successful. Returned record for ",
+        if (verbose) {
+            message(strwrap(paste0("API call was successful. ",
+                                   "Returned record for",
                                      aa[[1]]$Site$SiteName)))
         }
 
-        #  If there are actual stratigraphic samples with data in the dataset returned.
+        # If there are actual stratigraphic samples
+        # with data in the dataset returned.
 
         ageid <- get_table("AgeTypes")
         geoid <- get_table("GeochronTypes")
         
         pull.rec <- function(x){
+          
+          age.type <- ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)]
+          geo.chron.type <- geoid$GeochronType[match(x$GeochronTypeID,
+                                                     geoid$GeochronTypeID)]
+          
           data.frame(sample.id = x$SampleID,
                      geochron.id = x$GeochronID,
                    age.type.id = x$AgeTypeID,
-                   age.type = ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)],
+                   age.type = age.type,
                    age = x$Age,
                    e.older = x$ErrorOlder,
                    e.young = x$ErrorYounger,
@@ -118,7 +128,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
                    lab.no = x$LabNumber,
                    material.dated = x$MaterialDated,
                    geo.chron.type.id = x$GeochronTypeID,
-                   geo.chron.type = geoid$GeochronType[match(x$GeochronTypeID, geoid$GeochronTypeID)],
+                   geo.chron.type = geo.chron.type,
                    notes = x$Notes,
                    infinite = x$Infinite,
                    stringsAsFactors = FALSE)
