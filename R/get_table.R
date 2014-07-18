@@ -84,7 +84,7 @@ get_table <- function(table.name = NULL){
 
       } else {
         warning(paste0(aa[[2]],
-                       ' Returning list of acceptable variable names.')
+                       ' Returning list of acceptable variable names.'))
         aa <- list()
         aa[[1]] <- 0
       }
@@ -92,13 +92,13 @@ get_table <- function(table.name = NULL){
     } else {
       warning(paste0('Unable to find match for variable name: ',
                     table.name,
-                    '. Returning list of acceptable variable names.')
+                    '. Returning list of acceptable variable names.'))
       aa <- list()
       aa[[1]] <- 0
     }
   } else {
     warning(paste0('No variable name supplied. Returning list of ',
-                   'acceptable variable names.')
+                   'acceptable variable names.'))
     aa <- list()
     aa[[1]] <- 0
   }
