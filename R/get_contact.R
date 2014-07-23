@@ -81,7 +81,8 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
     } else {
       if (!cl$contactstatus %in% c('active', 'deceased', 'defunct',
                                   'extant', 'inactive', 'retired', 'unknown')){
-        stop('status must be an accepted term.  Use get.table(\'ContactStatues\')')
+        stop(paste0('status must be an accepted term.  ',
+                    'Use get.table(\'ContactStatues\')'))
       }
     }
   }

@@ -69,10 +69,11 @@ get_table <- function(table.name = NULL){
       if (aa[[1]] == 1){
         allnames <- unique(unlist(lapply(aa[[2]], names), use.names = FALSE))
 
-        # this is slightly quicker, but advantage is that it maintains
+        # This is slightly quicker, but advantage is that it maintains
         # logical variable Extinct in correct mode
         
-        old.string <- getOption("stringsAsFactors") #I don't know how else to do this with the do.call command.
+        old.string <- getOption("stringsAsFactors") 
+        #I don't know how else to do this with the do.call command.
         options(stringsAsFactors = FALSE)
         
         table <- do.call(rbind.data.frame, aa[[2]])
