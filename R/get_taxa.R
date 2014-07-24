@@ -40,68 +40,75 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
-  cl <- lapply(cl, eval, envir=parent.frame())
+  cl <- lapply(cl, eval, envir = parent.frame())
 
-  #  Parameter check on taxagroup:
-  if('taxagroup' %in% names(cl)){
+  # Parameter check on taxagroup:
+  if ('taxagroup' %in% names(cl)){
     taxon.codes <- c('AVE', 'BIM', 'BRY',
                      'BTL', 'FSH', 'HRP',
                      'LAB', 'MAM', 'MOL',
                      'PHY', 'TES', 'VPL')
 
-    if(!cl$taxagroup %in% taxon.codes){
-      stop('taxonGroup is not an accepted code.  Use get_table(\'TaxaGroupTypes\') to obtain acceptible classes')
+    if (!cl$taxagroup %in% taxon.codes){
+      stop(paste0('taxonGroup is not an accepted code. ',
+                  'Use get_table(\'TaxaGroupTypes\') ',
+                  'to obtain acceptible classes'))
     }
   }
 
-  #  Parameter check on taxonname and taxonids, I'm allowing only one, but I think it can accept two.
-  if(any(c('taxonids', 'taxonname') %in% names(cl))){
+  # Parameter check on taxonname and taxonids, I'm allowing 
+  # only one, but I think it can accept two.
+  if (any(c('taxonids', 'taxonname') %in% names(cl))){
 
-    if(all(c('taxonids', 'taxonname') %in% names(cl))){
+    if (all(c('taxonids', 'taxonname') %in% names(cl))){
       stop('Can only accept either taxonids OR taxonname, not both.')
     }
-    if('taxonids' %in% names(cl) & !is.numeric(cl$taxonids)) {
-      stop('The variable taxonids must be numeric.  To obtain a list of taxon IDs use the get_table command.')
+    if ('taxonids' %in% names(cl) & !is.numeric(cl$taxonids)) {
+      stop(paste0('The variable taxonids must be numeric. ',
+                  'To obtain a list of taxon IDs use the get_table command.'))
     }
-    if('taxonname' %in% names(cl) & !is.character(cl$taxonname)) {
-      stop('The variable taxonname must be a character string.  To obtain a list of taxon names use the get_table command.')
+    if ('taxonname' %in% names(cl) & !is.character(cl$taxonname)) {
+      stop(paste0('The variable taxonname must be a character string. ',
+                  'To obtain a list of taxon names use the get_table command.'))
     }
   }
 
-  if('status' %in% names(cl)){
-    if(!cl$status %in% c('extinct', 'extant', 'all')){
+  if ('status' %in% names(cl)){
+    if (!cl$status %in% c('extinct', 'extant', 'all')){
       stop('Status must be one of: \'extinct\', \'extant\', or \'all\'')
     }
   }
 
   neotoma.form <- getForm(base.uri, .params = cl)
-  aa <- try(fromJSON(neotoma.form, nullValue=NA))
+  aa <- try(fromJSON(neotoma.form, nullValue = NA))
 
-  if(aa[[1]] == 0){
-    stop(paste('Server returned an error message:\n', aa[[2]]), call.=FALSE)
+  if (aa[[1]] == 0){
+    stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
-  if(aa[[1]] == 1){
+  if (aa[[1]] == 1){
     output <- aa[[2]]
-    cat('The API call was successful, you have returned ', length(output), 'records.\n')
+    cat('The API call was successful, you have returned ',
+        length(output), 'records.\n')
   }
 
-  if(class(aa) == 'try-error'){ output <- neotoma.form }
-  else{
+  if (class(aa) == 'try-error'){
+    output <- neotoma.form
+  } else {
 
-      ## don't need anaonymous function here, call `[[()` with
-      ## argument "TaxonName". Equivalent of output[[i]][, "TaxonName"]
+      # Don't need anaonymous function here, call `[[()` with
+      # argument "TaxonName". Equivalent of output[[i]][, "TaxonName"]
       names(output) <- sapply(output, `[[`, "TaxonName")
 
-      ## There are some values in here that are empty lists:
+      # There are some values in here that are empty lists:
       output <- lapply(output, function(x){
           len <- sapply(x, length) == 0
-          if(any(len)){
+          if (any(len)){
               x[[which(len)]] <- NA
           }
           x
       })
 
-      ## bind each list into a single data frame
+      # Bind each list into a single data frame
       output <- do.call(rbind.data.frame, output)
       rownames(output) <- NULL
   }

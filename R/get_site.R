@@ -130,8 +130,10 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, dataset = NULL){
     
     output <- data.frame(siteid = output$SiteID,
                 sitename = output$SiteName,
-                long = rowMeans(output[, c('LongitudeWest', 'LongitudeEast')], na.rm = TRUE),
-                lat = rowMeans(output[, c('LatitudeNorth', 'LatitudeSouth')], na.rm = TRUE),
+                long = rowMeans(output[, c('LongitudeWest', 'LongitudeEast')],
+                                na.rm = TRUE),
+                lat = rowMeans(output[, c('LatitudeNorth', 'LatitudeSouth')],
+                               na.rm = TRUE),
                 elev = output$Altitude,
                 description = output$SiteDescription,
                 long_acc = abs(output$LongitudeWest - output$LongitudeEast),

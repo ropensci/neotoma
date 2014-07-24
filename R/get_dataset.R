@@ -55,7 +55,8 @@
 #'
 get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
                         taxonids, taxonname, ageold, ageyoung, ageof, subdate){
-  # The issue here is that these objects have multiple tables of multiple lengths.
+  # The issue here is that these objects
+  # have multiple tables of multiple lengths.
 
   base.uri <- 'http://api.neotomadb.org/v1/data/datasets'
 
@@ -68,8 +69,9 @@ get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
     if (!is.numeric(cl$piid)) stop('piid must be a numeric value.')
   }
 
-  # Parameter check for the datasettype, make sure it's one of the
-  # accepted types:
+  # Parameter check for the datasettype, make sure
+  # it's one of the accepted types:
+  
   if ('datasettype' %in% names(cl)){
     settypes <- c('geochronologic', 'loss-on-ignition', 'pollen',
                   'plant macrofossils', 'vertebrate fauna', 'mollusks',
@@ -92,7 +94,7 @@ get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
         stop('When taxonid or taxonname is invoked, ageof must be taxon')
       }
     }
-    if (!any(c('ageyoung','ageold') %in% names(cl))){
+    if (!any(c('ageyoung', 'ageold') %in% names(cl))){
       stop(paste0('When ageof in invoked you also need to provide ',
                   'an age range using ageyounger or ageolder.'))
     }
@@ -154,7 +156,7 @@ get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
       # The longitudes must be from -180 to 180
       if (all(findInterval(cl$loc[c(2, 4)], c(-90, 90)) == 1) &
            all(findInterval(cl$loc[c(1, 3)], c(-180, 180)) == 1)){
-        cl$loc <- paste(cl$loc, collapse = ',')
+        cl$loc <- paste(cl$loc, collapse = ', ')
       } else {
         stop(paste0('loc must be in the form c(lonW, latS, lonE, latN).\n',
                     'Longitudes from -180 to 180, latitudes from -90 to 90.'))
