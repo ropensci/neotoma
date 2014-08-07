@@ -49,7 +49,7 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
   # if no error continue processing
   if (isTRUE(all.equal(aa[[1]], 0))) {
       stop(paste('Server returned an error message:\n', aa[[2]]),
-           call.=FALSE)
+           call. = FALSE)
   }
 
   if (isTRUE(all.equal(aa[[1]], 1))) {
@@ -63,8 +63,8 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
         # Here the goal is to reduce this list of lists to as
         # simple a set of matrices as possible.
         control.table <- ldply(aa[[1]]$controls, 
-                               function(x)data.frame(x,stringsAsFactors=FALSE))
-        control.table <- control.table[,c('Depth', 'Thickness',
+                               function(x)data.frame(x, stringsAsFactors = FALSE))
+        control.table <- control.table[, c('Depth', 'Thickness',
                                           'Age', 'AgeYoungest', 'AgeOldest',
                                           'ControlType', 'ChronControlID')]
         

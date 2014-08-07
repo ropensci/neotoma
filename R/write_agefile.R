@@ -22,44 +22,50 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-write_agefile <- function(download, chronology = 1, path, corename, cal.prog = 'Bacon'){
+write_agefile <- function(download, chronology = 1, path, 
+                          corename, cal.prog = 'Bacon'){
 
-  if(!file.exists(paste0(path, '/Cores'))){
-    stop(paste0('Core directory must exist.  There is no directory at ', path, '/Cores'))
+  if (!file.exists(paste0(path, '/Cores'))){
+    stop(paste0('Core directory must exist.  ',
+                'There is no directory at ', path, '/Cores'))
   }
 
-  if(!class(download) == 'list' | !c('chronologies') %in% names(download)){
-    stop('write_agefile can only operate on valid download objects with valid chronologies')
+  if (!class(download) == 'list' | !c('chronologies') %in% names(download)){
+    stop(paste0('write_agefile can only operate on valid download ',
+                'objects with valid chronologies'))
   }
   
-  if(class(download) == 'list' & c('chronologies') %in% names(download)){
+  if (class(download) == 'list' & c('chronologies') %in% names(download)){
     
     
     
-    chron.controls <- get_chroncontrol(chronologyid=download$chronologies[[chronology]]$ChronologyID[1],
+    chron.controls <- get_chroncontrol(chronologyid = download$chronologies[[chronology]]$ChronologyID[1],
                                        verbose = FALSE)
   
-    if(nrow(chron.controls$chron.control) < 2){
+    if (nrow(chron.controls$chron.control) < 2){
       stop('Chronology must have more than a single date for proper analysis.')
     }
     
     uncal <- c('Radiocarbon', 'Radiocarbon, reservoir correction', 
                'Radiocarbon, average of two or more dates')
     
-    if(!tolower(cal.prog) %in% c('bacon', 'clam')){
+    if (!tolower(cal.prog) %in% c('bacon', 'clam')){
       stop('You must define either Bacon or Clam as your model output.')
     }
-    if(cal.prog == 'Bacon'){
-      chron <- data.frame(labid = paste0(chron.controls$chron.control$ControlType, "_",
+    if (cal.prog == 'Bacon'){
+      chron <- data.frame(labid = paste0(chron.controls$chron.control$ControlType, 
+                                         "_",
                                          chron.controls$chron.control$ChronControlID),
                           age = chron.controls$chron.control$Age,
                           error = abs(chron.controls$chron.control$Age - 
                                         chron.controls$chron.control$AgeYoungest),
                           depth = chron.controls$chron.control$Depth,
-                          cc = ifelse(chron.controls$chron.control$ControlType %in% uncal, 1, 0))
+                          cc = ifelse(chron.controls$chron.control$ControlType %in% uncal,
+                                      1, 0))
     }
-    if(cal.prog == 'Clam'){
-      chron <- data.frame(ID =paste0(chron.controls$chron.control$ControlType, "_",
+    if (cal.prog == 'Clam'){
+      chron <- data.frame(ID = paste0(chron.controls$chron.control$ControlType, 
+                                      "_",
                                      chron.controls$chron.control$ChronControlID),
                           C14_age = chron.controls$chron.control$Age,
                           cal_BP = chron.controls$chron.control$Age,
@@ -74,14 +80,17 @@ write_agefile <- function(download, chronology = 1, path, corename, cal.prog = '
       
     depths <- download$sample.meta$depths
     
-    if(!corename %in% list.files(paste0(path, '/Cores'))){
-      works <- dir.create(path=paste0(path, '/Cores/', corename))
-      if(!works) {
-        stop('Could not create the directory.  Check the path, corename and your permissions.')
+    if (!corename %in% list.files(paste0(path, '/Cores'))){
+      works <- dir.create(path = paste0(path, '/Cores/', corename))
+      if (!works) {
+        stop(paste0('Could not create the directory.  ',
+                    'Check the path, corename and your permissions.'))
       }
     }
     
-    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'), row.names=FALSE)
-    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'), row.names=FALSE)
+    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
+              row.names = FALSE)
+    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
+              row.names = FALSE)
   }
 }

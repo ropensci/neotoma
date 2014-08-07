@@ -27,7 +27,7 @@
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #' #  that are on the west coast of North America:
-#' t8kyr.datasets <- get_datasets(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
 #' pollen.records <- get_download(sapply(t8kyr.datasets, function(x) x$DatasetID))
@@ -135,8 +135,8 @@ get_download <- function(datasetid, verbose = TRUE){
                                               "SampleID", "AnalysisUnitName"
                                               )))
   
-              # sample age data
-              # not all depths have the same number of chronologies, 
+              # Sample age data
+              # Not all depths have the same number of chronologies, 
               # which is a bit annoying, and actually more
               # complicated than I originally thought.
               
@@ -144,8 +144,10 @@ get_download <- function(datasetid, verbose = TRUE){
               # and not all chronologies will cover the entire core, 
               # which makes things frustrating and difficult.
               
-              # first, get all unique chronology names.  Some cores don't have age models, so we use a try function.
-              chrons <- try(unique(as.vector(unlist(sapply(samples, function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent = TRUE)
+              # First, get all unique chronology names.  
+              # Some cores don't have age models, so we use a try function.
+              chrons <- try(unique(as.vector(unlist(sapply(samples,
+                                                           function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent = TRUE)
               
               base.frame <- as.data.frame(matrix(ncol = 6, 
                                                  nrow = nrow(sample.meta)))

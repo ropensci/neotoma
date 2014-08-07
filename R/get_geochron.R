@@ -29,7 +29,7 @@
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #' #  find the relevant geochronological data associated with the samples.  Are some time periods better dated than others?
-#' t8kyr.datasets <- get_datasets(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 74 records (as of 01/08/2014), get the dataset IDs for all records:
 #' dataset.ids <- sapply(t8kyr.datasets, function(x) x$DatasetID)

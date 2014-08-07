@@ -127,9 +127,8 @@ get_publication <- function(pubid, contactid, datasetid, author,
       
       output
     }
+
+    output <- lapply(aa, get_results)
   }
-  
-  output <- lapply(aa, get_results)
-  
   output
 }
