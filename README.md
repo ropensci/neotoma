@@ -50,13 +50,31 @@ require(neotoma)
 #### Find the distribution of sites with Mammoth fossils in Neotoma
 
 ```coffee
-#  Example requires the plyr package and the mapdata package:
-require(plyr)
-test <- get_datasets(taxonname='Mammuthus*')
+#  Example requires the mapdata package:
+library('mapdata')
+
+#  You may use either '%' or '*' as wildcards for search terms:
+test <- get_dataset(taxonname='Mammuthus*')
+
 The API call was successful, you have returned  3273 records.
-site.locs <- ldply(test, function(x)x$Site)
-map('world', xlim=range(site.locs$LongitudeWest)+c(-10, 10), ylim=range(site.locs$LatitudeNorth)+c(-10, 10))
-points(site.locs$LongitudeWest, site.locs$LatitudeNorth, pch=19, cex=0.5)
+
+site.locs <- get_site(dataset = test)
+
+# A crude way of making the oceans blue.
+plot(1, type = 'n', 
+     xlim=range(site.locs$long)+c(-10, 10), 
+     ylim=range(site.locs$lat)+c(-10, 10),
+     xlab='Longitude', ylab = 'Latitude')
+rect(par("usr")[1],par("usr")[3],par("usr")[2],par("usr")[4],col = "lightblue")
+map('world', 
+    interior=TRUE,
+    fill=TRUE,
+    col='gray',
+    xlim=range(site.locs$long)+c(-10, 10), 
+    ylim=range(site.locs$lat)+c(-10, 10),
+    add=TRUE)
+
+points(site.locs$long, site.locs$lat, pch=19, cex=0.5, col='red')
 
 ```
 ![thing](inst/img/mammothsites.png)
@@ -65,15 +83,19 @@ points(site.locs$LongitudeWest, site.locs$LatitudeNorth, pch=19, cex=0.5)
 
 ```R
 # Requires ggplot2
-library(ggplot2)
+library('ggplot2')
+library('plyr')
 pubs <- get_publication()
-ggplot(data=data.frame(x = pub.years), aes(x)) +
+
+pub.years <- ldply(pubs, "[[", "meta")
+
+ggplot(data=pub.years, aes(x = Year)) +
      stat_bin(aes(y=..density..*100, position='dodge'), binwidth=1) +
      theme_bw() +
      ylab('Percent of Publications') +
      xlab('Year of Publication') +
      scale_y_continuous(expand = c(0, 0.1)) +
-     scale_x_continuous(breaks = seq(min(pub.years, na.rm=TRUE), 2013, by=20))
+     scale_x_continuous(breaks = seq(min(pub.years$Year, na.rm=TRUE), 2014, by=20))
 
 ```
 

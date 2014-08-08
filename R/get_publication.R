@@ -119,11 +119,13 @@ get_publication <- function(pubid, contactid, datasetid, author,
       output <- list(meta = data.frame(ID = as.numeric(x$PublicationID),
                                 PubType = x$PubType,
                                 Year = as.numeric(x$Year),
-                                Citation = x$Citation))
+                                Citation = x$Citation,
+                                stringsAsFactors=FALSE))
       output$Authors <- ldply(x$Authors, .fun=function(y){
         data.frame(ContactID = y$ContactID, 
                    Order = y$Order, 
-                   ContactName = as.character(y$ContactName))})
+                   ContactName = as.character(y$ContactName),
+                   stringsAsFactors=FALSE)})
       
       output
     }
