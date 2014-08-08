@@ -71,8 +71,9 @@ write_agefile <- function(download, chronology = 1, path,
                           cal_BP = chron.controls$chron.control$Age,
                           error = abs(chron.controls$chron.control$Age - 
                                         chron.controls$chron.control$AgeYoungest),
-                          reservoir = NA,
-                          depth = chron.controls$chron.control$Depth)
+                          offset = NA,
+                          depth = chron.controls$chron.control$Depth,
+                          thickness = chron.controls$chron.control$Thickness)
       chron$cal_BP [ chron.controls$chron.control$ControlType %in% uncal] <- NA
       chron$C14_age[!chron.controls$chron.control$ControlType %in% uncal] <- NA
       

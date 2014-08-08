@@ -201,7 +201,20 @@ get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
     # SubDates
     # I'd like to put this out in a nice table format
 
-    output <- lapply(output, function(x) {x$Site <- data.frame(x$Site); x})
+    output <- lapply(output, function(x) {
+      x$Site <- data.frame(siteid = x$Site$SiteID,
+                           sitename = x$Site$SiteName,
+                           long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                           na.rm = TRUE),
+                           lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                          na.rm = TRUE),
+                           elev = x$Site$Altitude,
+                           description = x$Site$SiteDescription,
+                           long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                           lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                           row.names = x$Site$SiteName,
+                           stringsAsFactors = FALSE) 
+      x})
 
     output <- lapply(output,
                      function(x) {
