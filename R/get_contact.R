@@ -82,7 +82,7 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
       if (!cl$contactstatus %in% c('active', 'deceased', 'defunct',
                                   'extant', 'inactive', 'retired', 'unknown')){
         stop(paste0('status must be an accepted term.  ',
-                    'Use get.table(\'ContactStatues\')'))
+                    'Use get_table(\'ContactStatuses\')'))
       }
     }
   }
@@ -118,7 +118,8 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
     output <- dcast(output,
                     formula = ContactName + ContactStatus + FamilyName +
                     LeadingInitials + GivenNames + Suffix + Title + Phone +
-                    Fax + Email + URL + Address + Notes ~ variable) ##[, -2]
+                    Fax + Email + URL + Address + Notes ~ variable,
+                    fun.aggregate = length) ##[, -2]
   }
 
   output

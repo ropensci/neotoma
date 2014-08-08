@@ -6,6 +6,7 @@
 #'
 #' @import RJSONIO RCurl
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param dataset An optional list object returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned
@@ -62,18 +63,21 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_download <- function(datasetid, verbose = TRUE){
+get_download <- function(datasetid = NULL, dataset = NULL, verbose = TRUE){
 
     # Updated the processing here. There is no need to be fiddling with
     # call. Use missing() to check for presence of argument
     # and then process as per usual
     base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
 
-    if (missing(datasetid)) {
-        stop(paste(sQuote("datasetid"), "must be provided."))
-    } else {
-        if (!is.numeric(datasetid))
+    if (missing(datasetid) & is.null(dataset)) {
+        stop(paste0("Either a ",sQuote("datasetid"), " or a dataset object must be provided."))
+    }
+    if (!missing(datasetid) & !is.numeric(datasetid)) {
             stop('datasetid must be numeric.')
+    }
+    if(!is.null(dataset)){
+      datasetid <- unlist(laply(dataset, '[[', 'DatasetID'))
     }
 
     get.sample <- function(x){
