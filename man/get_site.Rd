@@ -3,7 +3,7 @@
 \alias{get_site}
 \title{Return Site Information.}
 \usage{
-get_site(sitename, altmin, altmax, loc, gpid)
+get_site(sitename, altmin, altmax, loc, gpid, dataset = NULL)
 }
 \arguments{
 \item{sitename}{A character string representing the full or partial site name.}
@@ -16,7 +16,7 @@ get_site(sitename, altmin, altmax, loc, gpid)
 
 \item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
 
-\item{dataset}{A list object returned by \code{get_dataset}.}
+\item{dataset}{An optional list object returned by \code{get_dataset}.}
 }
 \value{
 A table:

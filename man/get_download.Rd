@@ -3,10 +3,12 @@
 \alias{get_download}
 \title{Function to return full dataset records.}
 \usage{
-get_download(datasetid, verbose = TRUE)
+get_download(datasetid = NULL, dataset = NULL, verbose = TRUE)
 }
 \arguments{
 \item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.}
+
+\item{dataset}{An optional list object returned by \code{get_dataset}.}
 
 \item{verbose}{logical; should messages on API call be printed?}
 }
@@ -36,7 +38,7 @@ Using the dataset ID, return all records associated with the data.  At present,
 \dontrun{
 #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #  that are on the west coast of North America:
-t8kyr.datasets <- get_datasets(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
 pollen.records <- get_download(sapply(t8kyr.datasets, function(x) x$DatasetID))
