@@ -1,4 +1,3 @@
-
 #' Function to return full dataset records.
 #'
 #' Using the dataset ID, return all records associated with the data.  At present,
@@ -10,7 +9,7 @@
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either a 'try-error' definined by the error returned
-#'    from the Neotoma API call, or a list comprising the following items:
+#'    from the Neotoma API call, or an object of class `download`, comprising the following items:
 #'
 #' \itemize{
 #'  \item{metadata}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
@@ -31,12 +30,12 @@
 #' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
-#' pollen.records <- get_download(sapply(t8kyr.datasets, function(x) x$DatasetID))
+#' pollen.records <- get_download(dataset = t8kyr.datasets)
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
 #' compiled.sites <- lapply(pollen.records, function(x) compile_list(x, list.name='WS64'))
 #'
-#' #  Extract the Cupressaceae curves for the sites:
+#' #  Extract the Pseudotsuga curves for the sites:
 #' get.curve <- function(x, taxa) {
 #'                data.frame(site = x$metadata$site.data$SiteName,
 #'                age = x$sample.meta$Age,
@@ -65,281 +64,282 @@
 #' @export
 get_download <- function(datasetid = NULL, dataset = NULL, verbose = TRUE){
 
-    # Updated the processing here. There is no need to be fiddling with
-    # call. Use missing() to check for presence of argument
-    # and then process as per usual
-    base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
 
-    if (missing(datasetid) & is.null(dataset)) {
-        stop(paste0("Either a ",sQuote("datasetid"), " or a dataset object must be provided."))
-    }
-    if (!missing(datasetid) & !is.numeric(datasetid)) {
-            stop('datasetid must be numeric.')
-    }
-    if(!is.null(dataset)){
-      datasetid <- unlist(laply(dataset, '[[', 'DatasetID'))
+  if (missing(datasetid) & is.null(dataset)) {
+      stop(paste0("Either a ",sQuote("datasetid"), " or a dataset object must be provided."))
+  }
+  if (!missing(datasetid) & !is.numeric(datasetid)) {
+          stop('datasetid must be numeric.')
+  }
+  if(!is.null(dataset)){
+    datasetid <- unlist(laply(dataset, '[[', 'DatasetID'))
+  }
+
+  get.sample <- function(x){
+    # query Neotoma for data set
+    aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
+
+    # Might as well check here for error and bail
+    if (inherits(aa, "try-error"))
+        return(aa)
+
+    # if no error continue processing
+    if (isTRUE(all.equal(aa[[1]], 0))) {
+        stop(paste('Server returned an error message:\n', aa[[2]]),
+             call. = FALSE)
     }
 
-    get.sample <- function(x){
-      # query Neotoma for data set
-      aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
-  
-      # Might as well check here for error and bail
-      if (inherits(aa, "try-error"))
-          return(aa)
-  
-      # if no error continue processing
-      if (isTRUE(all.equal(aa[[1]], 0))) {
-          stop(paste('Server returned an error message:\n', aa[[2]]),
-               call. = FALSE)
-      }
-  
-      if (isTRUE(all.equal(aa[[1]], 1))) {
-          aa <- aa[[2]]
-        
-          if (verbose) {
-              message(strwrap(paste0("API call was successful. ",
-                                     "Returned record for ",
-                                     aa[[1]]$Site$SiteName)))
-          }
-  
-          # Here the goal is to reduce this list of lists to as
-          # simple a set of matrices as possible.
-          nams <- names(aa[[1]])
-          aa1 <- aa[[1]]
+    if (isTRUE(all.equal(aa[[1]], 1))) {
+        aa <- aa[[2]]
+      
+        if (verbose) {
+            message(strwrap(paste0("API call was successful. ",
+                                   "Returned record for ",
+                                   aa[[1]]$Site$SiteName)))
+        }
 
-          # If there are actual stratigraphic samples with data 
-          # in the dataset returned.
-          if ('Samples' %in% nams  & length(aa1$Samples) > 0) {
+        # Here the goal is to reduce this list of lists to as
+        # simple a set of matrices as possible.
+        nams <- names(aa[[1]])
+        aa1 <- aa[[1]]
+
+        # If there are actual stratigraphic samples with data 
+        # in the dataset returned.
+        if ('Samples' %in% nams  & length(aa1$Samples) > 0) {
+            
+          # Build the metadata for the dataset.
+            meta.data <- list(
+                dataset = data.frame(dataset.id = aa1$DatasetID,
+                                     dataset.name = aa1$DatasetName,
+                                     collection.type = aa1$CollUnitType,
+                                     collection.handle = aa1$CollUnitHandle,
+                                     dataset.type =  aa1$DatasetType, 
+                                     stringsAsFactors = FALSE),
+                site.data = as.data.frame(aa1$Site[c('SiteID', 'SiteName',
+                                         'Altitude', 'LatitudeNorth',
+                                         'LongitudeWest', 'LatitudeSouth',
+                                         'LongitudeEast', 'SiteDescription',
+                                         'SiteNotes')], 
+                                         stringsAsFactors = FALSE),
+                pi.data = aa1$DatasetPIs,
+                access.date = Sys.time())
+
+            # copy to make indexing below easier?
+            samples <- aa1$Samples
+
+            # Build the metadata for each sample in the dataset.
+            sample.meta <- do.call(rbind.data.frame,
+                                   lapply(samples, `[`,
+                                          c("AnalysisUnitDepth",
+                                            "AnalysisUnitThickness",
+                                            "SampleID", "AnalysisUnitName"
+                                            )))
+
+            # Sample age data
+            # Not all depths have the same number of chronologies, 
+            # which is a bit annoying, and actually more
+            # complicated than I originally thought.
+            
+            # There may be multiple chronologies associated with each record, 
+            # and not all chronologies will cover the entire core, 
+            # which makes things frustrating and difficult.
+            
+            # First, get all unique chronology names.  
+            # Some cores don't have age models, so we use a try function.
+            chrons <- try(unique(as.vector(unlist(sapply(samples,
+                                                         function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent = TRUE)
+            
+            base.frame <- as.data.frame(matrix(ncol = 6, 
+                                               nrow = nrow(sample.meta)))
+            colnames(base.frame) <- c('AgeOlder', 'Age',
+                                      'AgeYounger', 'ChronologyName',
+                                      'AgeType', 'ChronologyID')
+            
+            if (!class(chrons) == 'try-error'){
+              # Create the list:
+              chron.list <- list()
+              for (i in 1:length(chrons)) chron.list[[i]] <- base.frame
+              names(chron.list) <- chrons
               
-            # Build the metadata for the dataset.
-              meta.data <- list(
-                  dataset = data.frame(dataset.id = aa1$DatasetID,
-                                       dataset.name = aa1$DatasetName,
-                                       collection.type = aa1$CollUnitType,
-                                       collection.handle = aa1$CollUnitHandle,
-                                       dataset.type =  aa1$DatasetType, 
-                                       stringsAsFactors = FALSE),
-                  site.data = as.data.frame(aa1$Site[c('SiteID', 'SiteName',
-                                           'Altitude', 'LatitudeNorth',
-                                           'LongitudeWest', 'LatitudeSouth',
-                                           'LongitudeEast', 'SiteDescription',
-                                           'SiteNotes')], 
-                                           stringsAsFactors = FALSE),
-                  pi.data = aa1$DatasetPIs)
-  
-              # copy to make indexing below easier?
-              samples <- aa1$Samples
-  
-              # Build the metadata for each sample in the dataset.
-              sample.meta <- do.call(rbind.data.frame,
-                                     lapply(samples, `[`,
-                                            c("AnalysisUnitDepth",
-                                              "AnalysisUnitThickness",
-                                              "SampleID", "AnalysisUnitName"
-                                              )))
-  
-              # Sample age data
-              # Not all depths have the same number of chronologies, 
-              # which is a bit annoying, and actually more
-              # complicated than I originally thought.
+              for (i in 1:length(samples)){
+                for (j in 1:length(samples[[i]]$SampleAges)){
+                  chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <- 
+                    data.frame(samples[[i]]$SampleAges[[j]],
+                               stringsAsFactors = FALSE)
+                }
+              }
+            }
+            if (class(chrons) == 'try-error'){
+              chron.list <- list(base.frame)
+            }
               
-              # There may be multiple chronologies associated with each record, 
-              # and not all chronologies will cover the entire core, 
-              # which makes things frustrating and difficult.
+            # sample names - can be NULL hence replace with NA if so
+            tmp <- sapply(sample.names <-
+                          lapply(samples, `[[`, "SampleUnitName"), is.null)
+            sample.names[tmp] <- NA
+
+            # stick all that together, setting names, & reordering cols
+            # the most recent age model is provided as the default.
+            sample.meta <- cbind.data.frame(sample.meta, 
+                                            chron.list[[length(chron.list)]],
+                                            unlist(sample.names))
+            names(sample.meta) <- c("depths", "thickness",
+                                    "IDs", "unit.name",
+                                    colnames(chron.list[[length(chron.list)]]),
+                                    "sample.name")
+            
+            #  re-ordering the columns so they make sense.
+            sample.meta <- sample.meta[, c(1:2, 5:10, 3, 11, 4)]
+
+            # sample data/counts
+            # 1) extract each SampleData component & then rbind. Gives a
+            # list of data frames
+            sample.data <- lapply(lapply(samples, `[[`, "SampleData"),
+                                  function(x) do.call(rbind.data.frame, x))
+            # 2) How many counts/species in each data frame?
+            nsamp <- sapply(sample.data, nrow)
+            # 3) bind each data frame - result is a data frame in long format
+            sample.data <- do.call(rbind, sample.data)
+            # 4) add a Sample column that is the ID from smaple.meta
+            sample.data$Sample <- rep(sample.meta$IDs, times = nsamp)
+
+            # We're going to isolate the count data and clean it up by
+            # excluding lab data and charcoal.  The charcoal exclusion
+            # needs some further consideration.
+            take <- !(sample.data$TaxaGroup == "Laboratory analyses" | 
+                        sample.data$TaxaGroup == "Charcoal")
+            
+            count.data <- sample.data[take, ]
+            
+            # Ensure duplicate taxa are renamed
+            # (if variable context is different)
+            count.data$TaxonName <- as.character(count.data$TaxonName)
+            var.context <- !is.na(count.data$VariableContext)
+            count.data$TaxonName[var.context] <- paste(count.data$TaxonName,
+                                                       count.data$VariableContext,
+                                                       sep = '.')[var.context]
+            
+            # data frame of unique taxon info.  This gets included in the
+            # final dataset output by the function.
+            taxon.list <- sample.data[!duplicated(sample.data$TaxonName),
+                                      1:5]
+
+            # Some taxa/objects get duplicated because different identifiers
+            # for taphonomic modification get excluded in the API table. 
+            # Because the data is excluded we can't be sure that the
+            # modifications map exactly from sample to sample, so here we
+            # just sum all duplicated taxa and throw a warning to the user:
+            mod.dups <- duplicated(count.data[, c('TaxonName', 'Sample')])
+            
+            if (sum(mod.dups) > 0){
+              tax.dups <- unique(count.data$TaxonName[duplicated(count.data[, c('TaxonName', 'Sample')])])
+              if (length(tax.dups) == 1){
+                message <- paste0('\nModifiers seem absent from the taxon ',
+                                  tax.dups,
+                                  '. \nget_download will sum at depths ',
+                                  'with multiple entries to resolve the problem.')
+              }
+              if (length(tax.dups) > 1){
+                tax.dups.col <- paste(tax.dups, collapse = ', ')
+                message <- paste0('\nModifiers seem absent from the taxons ',
+                                 tax.dups.col,
+                                 '. \nget_download will sum at depths with ',
+                                 'multiple entries to resolve the problem.')
+              }
+              warning (immediate. = TRUE, message, call. = FALSE)
+            }
+            
+            # reshape long sample.data into a sample by taxon data frame
+            # take here *only* counts - but needs work FIXME
+            counts <- dcast(count.data,
+                            formula = Sample ~ TaxonName,
+                            value.var = "Value",
+                            fun.aggregate = sum, na.rm = TRUE)
+            
+            # add Sample col as the rownames
+            rownames(counts) <- counts$Sample
+            ## remove the Sample col, but robustly
+            counts <- counts[, -which(names(counts) == "Sample"), drop = F]
+            
+            # It is possible that some depths have no count data,
+            # but that they were sampled. This will be
+            # reflected as a row with '0' counts for all taxa.
+            if (any(!sample.meta$IDs %in% rownames(counts))){
+              no.missing <- sum(!sample.meta$IDs %in% rownames(counts))
               
-              # First, get all unique chronology names.  
-              # Some cores don't have age models, so we use a try function.
-              chrons <- try(unique(as.vector(unlist(sapply(samples,
-                                                           function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent = TRUE)
+              for (i in 1:no.missing){
+                counts <- rbind(counts, rep(NA, ncol(counts)))
+              }
+              rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$IDs[!sample.meta$IDs %in% rownames(counts)]
               
-              base.frame <- as.data.frame(matrix(ncol = 6, 
-                                                 nrow = nrow(sample.meta)))
-              colnames(base.frame) <- c('AgeOlder', 'Age',
-                                        'AgeYounger', 'ChronologyName',
-                                        'AgeType', 'ChronologyID')
-              
-              if (!class(chrons) == 'try-error'){
-                # Create the list:
-                chron.list <- list()
-                for (i in 1:length(chrons)) chron.list[[i]] <- base.frame
-                names(chron.list) <- chrons
+              counts <- counts[as.character(sample.meta$IDs), ]
+            }
+            
+            # Pull out the lab data and treat it in
+            # the same way as the previous:
+            take <- sample.data$TaxaGroup == "Laboratory analyses" | 
+              sample.data$TaxaGroup == "Charcoal"
+            
+            lab.data <- sample.data[take, ]
+            
+            if (nrow(lab.data) > 0) {
+                lab.data$LabNameUnits <- paste0(lab.data$TaxonName, " (",
+                                                lab.data$VariableElement, ": ",
+                                                lab.data$VariableUnits, ")")
                 
-                for (i in 1:length(samples)){
-                  for (j in 1:length(samples[[i]]$SampleAges)){
-                    chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <- 
-                      data.frame(samples[[i]]$SampleAges[[j]],
-                                 stringsAsFactors = FALSE)
+                mod.dups <- duplicated(lab.data[, c(1, 7)])
+                
+                if (sum(mod.dups) > 0){
+                  lab.dups <- unique(lab.data$TaxonName[duplicated(lab.data[, c(1, 7)])])
+                  if (length(lab.dups) == 1){
+                    message <- paste0('\nModifiers are absent from the lab object ',
+                                      lab.dups,
+                                      '. \nget_download will use unique', 
+                                      'identifiers to resolve the problem.')
                   }
-                }
-              }
-              if (class(chrons) == 'try-error'){
-                chron.list <- list(base.frame)
-              }
-                
-              # sample names - can be NULL hence replace with NA if so
-              tmp <- sapply(sample.names <-
-                            lapply(samples, `[[`, "SampleUnitName"), is.null)
-              sample.names[tmp] <- NA
-  
-              # stick all that together, setting names, & reordering cols
-              # the most recent age model is provided as the default.
-              sample.meta <- cbind.data.frame(sample.meta, 
-                                              chron.list[[length(chron.list)]],
-                                              unlist(sample.names))
-              names(sample.meta) <- c("depths", "thickness",
-                                      "IDs", "unit.name",
-                                      colnames(chron.list[[length(chron.list)]]),
-                                      "sample.name")
-              
-              #  re-ordering the columns so they make sense.
-              sample.meta <- sample.meta[, c(1:2, 5:10, 3, 11, 4)]
-  
-              # sample data/counts
-              # 1) extract each SampleData component & then rbind. Gives a
-              # list of data frames
-              sample.data <- lapply(lapply(samples, `[[`, "SampleData"),
-                                    function(x) do.call(rbind.data.frame, x))
-              # 2) How many counts/species in each data frame?
-              nsamp <- sapply(sample.data, nrow)
-              # 3) bind each data frame - result is a data frame in long format
-              sample.data <- do.call(rbind, sample.data)
-              # 4) add a Sample column that is the ID from smaple.meta
-              sample.data$Sample <- rep(sample.meta$IDs, times = nsamp)
-  
-              # We're going to isolate the count data and clean it up by
-              # excluding lab data and charcoal.  The charcoal exclusion
-              # needs some further consideration.
-              take <- !(sample.data$TaxaGroup == "Laboratory analyses" | 
-                          sample.data$TaxaGroup == "Charcoal")
-              
-              count.data <- sample.data[take, ]
-              
-              # Ensure duplicate taxa are renamed
-              # (if variable context is different)
-              count.data$TaxonName <- as.character(count.data$TaxonName)
-              var.context <- !is.na(count.data$VariableContext)
-              count.data$TaxonName[var.context] <- paste(count.data$TaxonName,
-                                                         count.data$VariableContext,
-                                                         sep = '.')[var.context]
-              
-              # data frame of unique taxon info.  This gets included in the
-              # final dataset output by the function.
-              taxon.list <- sample.data[!duplicated(sample.data$TaxonName),
-                                        1:5]
-  
-              # Some taxa/objects get duplicated because different identifiers
-              # for taphonomic modification get excluded in the API table. 
-              # Because the data is excluded we can't be sure that the
-              # modifications map exactly from sample to sample, so here we
-              # just sum all duplicated taxa and throw a warning to the user:
-              mod.dups <- duplicated(count.data[, c('TaxonName', 'Sample')])
-              
-              if (sum(mod.dups) > 0){
-                tax.dups <- unique(count.data$TaxonName[duplicated(count.data[, c('TaxonName', 'Sample')])])
-                if (length(tax.dups) == 1){
-                  message <- paste0('\nModifiers seem absent from the taxon ',
-                                    tax.dups,
-                                    '. \nget_download will sum at depths ',
-                                    'with multiple entries to resolve the problem.')
-                }
-                if (length(tax.dups) > 1){
-                  tax.dups.col <- paste(tax.dups, collapse = ', ')
-                  message <- paste0('\nModifiers seem absent from the taxons ',
-                                   tax.dups.col,
-                                   '. \nget_download will sum at depths with ',
-                                   'multiple entries to resolve the problem.')
-                }
-                warning (immediate. = TRUE, message, call. = FALSE)
-              }
-              
-              # reshape long sample.data into a sample by taxon data frame
-              # take here *only* counts - but needs work FIXME
-              counts <- dcast(count.data,
-                              formula = Sample ~ TaxonName,
-                              value.var = "Value",
-                              fun.aggregate = sum, na.rm = TRUE)
-              
-              # add Sample col as the rownames
-              rownames(counts) <- counts$Sample
-              ## remove the Sample col, but robustly
-              counts <- counts[, -which(names(counts) == "Sample"), drop = F]
-              
-              # It is possible that some depths have no count data,
-              # but that they were sampled. This will be
-              # reflected as a row with '0' counts for all taxa.
-              if (any(!sample.meta$IDs %in% rownames(counts))){
-                no.missing <- sum(!sample.meta$IDs %in% rownames(counts))
-                
-                for (i in 1:no.missing){
-                  counts <- rbind(counts, rep(NA, ncol(counts)))
-                }
-                rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$IDs[!sample.meta$IDs %in% rownames(counts)]
-                
-                counts <- counts[as.character(sample.meta$IDs), ]
-              }
-              
-              # Pull out the lab data and treat it in
-              # the same way as the previous:
-              take <- sample.data$TaxaGroup == "Laboratory analyses" | 
-                sample.data$TaxaGroup == "Charcoal"
-              
-              lab.data <- sample.data[take, ]
-              
-              if (nrow(lab.data) > 0) {
-                  lab.data$LabNameUnits <- paste0(lab.data$TaxonName, " (",
-                                                  lab.data$VariableElement, ": ",
-                                                  lab.data$VariableUnits, ")")
-                  
-                  mod.dups <- duplicated(lab.data[, c(1, 7)])
-                  
-                  if (sum(mod.dups) > 0){
-                    lab.dups <- unique(lab.data$TaxonName[duplicated(lab.data[, c(1, 7)])])
-                    if (length(lab.dups) == 1){
-                      message <- paste0('\nModifiers are absent from the lab object ',
-                                        lab.dups,
-                                        '. \nget_download will use unique', 
-                                        'identifiers to resolve the problem.')
-                    }
-                    if (length(lab.dups) > 1){
-                      lab.dups.col <- paste(lab.dups, collapse = ', ')
-                      message <- paste0('\nModifiers are absent from the lab objects ',
-                                        lab.dups.col,
-                                        '. \nget_download will use unique', 
-                                        'identifiers to resolve the problem.')
-                    }
-                    warning (immediate. = TRUE, message, call. = FALSE)
+                  if (length(lab.dups) > 1){
+                    lab.dups.col <- paste(lab.dups, collapse = ', ')
+                    message <- paste0('\nModifiers are absent from the lab objects ',
+                                      lab.dups.col,
+                                      '. \nget_download will use unique', 
+                                      'identifiers to resolve the problem.')
                   }
-                  
-                  lab.data <- dcast(lab.data,
-                                    formula = Sample ~ LabNameUnits,
-                                    value.var = "Value")
-              } else {
-                  lab.data <- NA
-              }
-  
-              # stick all this together
-              aa <- list(metadata = meta.data,
-                         sample.meta = sample.meta,
-                         taxon.list = taxon.list,
-                         counts = counts,
-                         lab.data = lab.data,
-                         chronologies = chron.list)
-          }
-          if ((!'Samples' %in% nams) | length(aa1$Samples) == 0) {
-            message('Dataset contains no sample data.')
-            return(NULL)
-          }
-      }
-      aa
-    }
-    
+                  warning (immediate. = TRUE, message, call. = FALSE)
+                }
+                
+                lab.data <- dcast(lab.data,
+                                  formula = Sample ~ LabNameUnits,
+                                  value.var = "Value")
+            } else {
+                lab.data <- NA
+            }
 
-    if (length(datasetid) == 1) {
-      aa <- get.sample(datasetid)
-    } else {                      
-      aa <- lapply(datasetid, get.sample)
+            # stick all this together
+            aa <- list(metadata = meta.data,
+                       sample.meta = sample.meta,
+                       taxon.list = taxon.list,
+                       counts = counts,
+                       lab.data = lab.data,
+                       chronologies = chron.list)
+        }
+        if ((!'Samples' %in% nams) | length(aa1$Samples) == 0) {
+          message('Dataset contains no sample data.')
+          return(NULL)
+        }
     }
+    class(aa) <- c('download', 'list')
     aa
-    
+  }
+  
+  if (length(datasetid) == 1) {
+    aa <- get.sample(datasetid)
+  } else {                      
+    aa <- lapply(datasetid, get.sample)
+    class(aa) <- c('download.list', 'list')
+  }
+  aa
 }

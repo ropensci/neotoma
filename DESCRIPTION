@@ -3,7 +3,8 @@ Type: Package
 Title: A Package to access the Neotoma Paleoecological Database using an API.
 Version: 1.0-1
 Date: 2013-04-04
-Author: Simon J. Goring with contributions from Gavin L. Simpson, Jeremiah P. Marsicek, and Karthik Ram
+Author: Simon J. Goring with contributions from Gavin L. Simpson, Jeremiah P.
+    Marsicek, and Karthik Ram
 Authors@R: c(person(given = c("Simon", "J."), family = "Goring",
     role = c("aut", "cre"), email = "goring@wisc.edu"),
     person(given = c("Gavin", "L."), family = "Simpson", role = "ctb"),
