@@ -14,7 +14,7 @@ get_download(datasetid = NULL, dataset = NULL, verbose = TRUE)
 }
 \value{
 This command returns either a 'try-error' definined by the error returned
-   from the Neotoma API call, or a list comprising the following items:
+   from the Neotoma API call, or an object of class `download`, comprising the following items:
 
 \itemize{
  \item{metadata}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
@@ -41,12 +41,12 @@ Using the dataset ID, return all records associated with the data.  At present,
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
-pollen.records <- get_download(sapply(t8kyr.datasets, function(x) x$DatasetID))
+pollen.records <- get_download(dataset = t8kyr.datasets)
 
 #  Standardize the taxonomies for the different records using the WS64 taxonomy.
 compiled.sites <- lapply(pollen.records, function(x) compile_list(x, list.name='WS64'))
 
-#  Extract the Cupressaceae curves for the sites:
+#  Extract the Pseudotsuga curves for the sites:
 get.curve <- function(x, taxa) {
                data.frame(site = x$metadata$site.data$SiteName,
                age = x$sample.meta$Age,
