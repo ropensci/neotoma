@@ -11,8 +11,20 @@
 
 print.download <- function(x){
   class(x) <- 'list'
-  cat(paste0('A single download object for site ', 
-             x$metadata$site.data$SiteName, '\n',
-             'Accessed on ', format(x$metadata$access.date, '%a %b %d %X %y'), '\n'))
+  
+  if(length(x) == 1) {
+    cat(paste0('A single download object for site ', 
+             x[[1]]$metadata$site.data$SiteName, '\n',
+             'Accessed ', format(x[[1]]$metadata$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
+  }
+  if(length(x)>1){
+    date.ranges <- sapply(range(sapply(x, function(y)y$metadata$access.date)),
+                          function(z)format(as.POSIXct(z, origin="1970-01-01"), "%Y-%m-%d %H:%M"))
+    
+    cat(paste0('Downloads from ', length(x), ' sites.\n',
+               'Accessed from ',date.ranges[1],'h to ', date.ranges[2],'h.\n'))
+  }
+  
+  return(NULL)
   
 }

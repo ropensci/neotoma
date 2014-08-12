@@ -3,8 +3,7 @@
 \alias{get_dataset}
 \title{Obtain dataset information from the Neotoma Paleoecological Database.}
 \usage{
-get_dataset(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
-  taxonname, ageold, ageyoung, ageof, subdate)
+get_dataset(...)
 }
 \arguments{
 \item{siteid}{A numeric value corresponding to the site ID.}
@@ -32,6 +31,8 @@ get_dataset(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 \item{ageof}{If a taxon ID or taxon name is defined this parameter must be set to "taxon", otherwise it may refer to "sample", in which case the age bounds are for any samples within datasets or "dataset" if you want only datasets that are within the bounds of ageold and ageyoung.}
 
 \item{subdate}{Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.}
+
+\item{download}{An object of class \code{download} obtained using the command \code{get_download}.}
 }
 \value{
 More details on the use of these parameters can be obtained from

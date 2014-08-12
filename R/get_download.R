@@ -1,4 +1,4 @@
-#' Function to return full dataset records.
+#' Function to return full download records using either a \code{dataset} or dataset ID.
 #'
 #' Using the dataset ID, return all records associated with the data.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
@@ -62,27 +62,29 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_download <- function(datasetid = NULL, dataset = NULL, verbose = TRUE){
+
+get_download <- function(..., datasetid=NULL, dataset=NULL, verbose = TRUE){
+  UseMethod('get_download')
+}
+
+get_download.default <- function(datasetid, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
 
-  if (missing(datasetid) & is.null(dataset)) {
+  if (missing(datasetid)) {
       stop(paste0("Either a ",sQuote("datasetid"), " or a dataset object must be provided."))
   }
   if (!missing(datasetid) & !is.numeric(datasetid)) {
           stop('datasetid must be numeric.')
   }
-  if(!is.null(dataset)){
-    datasetid <- unlist(laply(dataset, '[[', 'DatasetID'))
-  }
 
   get.sample <- function(x){
     # query Neotoma for data set
     aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
-
+    
     # Might as well check here for error and bail
     if (inherits(aa, "try-error"))
         return(aa)
@@ -113,20 +115,30 @@ get_download <- function(datasetid = NULL, dataset = NULL, verbose = TRUE){
             
           # Build the metadata for the dataset.
             meta.data <- list(
-                dataset = data.frame(dataset.id = aa1$DatasetID,
+              site.data = data.frame(siteid = aa1$Site$SiteID,
+                                     sitename = aa1$Site$SiteName,
+                                     long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                                 na.rm = TRUE),
+                                     lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                                na.rm = TRUE),
+                                     elev = aa1$Site$Altitude,
+                                     description = aa1$Site$SiteDescription,
+                                     long_acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
+                                     lat_acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
+                                     row.names = aa1$Site$SiteName,
+                                     stringsAsFactors = FALSE),
+              dataset = data.frame(dataset.id = aa1$DatasetID,
                                      dataset.name = aa1$DatasetName,
                                      collection.type = aa1$CollUnitType,
                                      collection.handle = aa1$CollUnitHandle,
                                      dataset.type =  aa1$DatasetType, 
                                      stringsAsFactors = FALSE),
-                site.data = as.data.frame(aa1$Site[c('SiteID', 'SiteName',
-                                         'Altitude', 'LatitudeNorth',
-                                         'LongitudeWest', 'LatitudeSouth',
-                                         'LongitudeEast', 'SiteDescription',
-                                         'SiteNotes')], 
-                                         stringsAsFactors = FALSE),
-                pi.data = aa1$DatasetPIs,
-                access.date = Sys.time())
+                
+              pi.data = do.call(rbind.data.frame,
+                                  aa1$DatasetPIs),
+              submission = data.frame(SubmissionDate = aa1$NeotomaLastSub, 
+                                      SubmissionType = 'Last submission to Neotoma'),
+              access.date = Sys.time())
 
             # copy to make indexing below easier?
             samples <- aa1$Samples
@@ -336,10 +348,25 @@ get_download <- function(datasetid = NULL, dataset = NULL, verbose = TRUE){
   }
   
   if (length(datasetid) == 1) {
-    aa <- get.sample(datasetid)
+    aa <- list(get.sample(datasetid))
+    class(aa) <- c('download', 'list')
   } else {                      
     aa <- lapply(datasetid, get.sample)
-    class(aa) <- c('download.list', 'list')
+    class(aa) <- c('download', 'list')
   }
+  aa
+}
+
+get_download.dataset <- function(dataset, verbose = TRUE){
+  
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
+  
+  datasetid <- unlist(laply(dataset, .fun=function(x)x$dataset$dataset.id))
+
+  aa <- get_download(datasetid)
+  
   aa
 }
