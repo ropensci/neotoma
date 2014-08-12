@@ -42,7 +42,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_site <- function(...){
+get_site <- function(x, ...){
   UseMethod('get_site')
 }
 

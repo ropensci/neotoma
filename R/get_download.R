@@ -63,7 +63,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-get_download <- function(..., datasetid=NULL, dataset=NULL, verbose = TRUE){
+get_download <- function(x, ...){
   UseMethod('get_download')
 }
 

@@ -1,12 +1,8 @@
-
 .Rproj.user
-
 ## backup files
-*~ 
-
+*~
 # history
 .Rhistory
-
 # OS generated files #
 ######################
 .DS_Store
@@ -17,3 +13,4 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+ggmapTemp.png

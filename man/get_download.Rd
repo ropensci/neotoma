@@ -3,7 +3,7 @@
 \alias{get_download}
 \title{Function to return full download records using either a \code{dataset} or dataset ID.}
 \usage{
-get_download(..., datasetid = NULL, dataset = NULL, verbose = TRUE)
+get_download(x, ...)
 }
 \arguments{
 \item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.}

@@ -55,7 +55,7 @@
 #' @export
 #'
 
-get_dataset <- function(...){
+get_dataset <- function(x, ...){
   UseMethod('get_dataset')
 }
 

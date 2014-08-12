@@ -3,7 +3,7 @@
 \alias{get_dataset}
 \title{Obtain dataset information from the Neotoma Paleoecological Database.}
 \usage{
-get_dataset(...)
+get_dataset(x, ...)
 }
 \arguments{
 \item{siteid}{A numeric value corresponding to the site ID.}
