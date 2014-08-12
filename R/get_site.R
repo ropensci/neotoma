@@ -114,11 +114,12 @@ get_site.download <- function(download){
   
   site <- ldply(download, .fun=function(x)x$metadata$site.data)
   class(site) <- c('site', 'data.frame')
-  
+  site
 }
 
 #' @export
 get_site.dataset <- function(dataset){
   site <- ldply(dataset, .fun='[[', 'site.data')
   class(site) <- c('site', 'data.frame')
+  site
 }
