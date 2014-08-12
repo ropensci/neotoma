@@ -62,9 +62,19 @@ test_that('is get_dataset working?',
 
 context('Crossing sites, datasets and downloads, using the API:')
 test_that('Crossing APIs',
-          {
-            expect_is(get_dataset(get_download(100)), 'dataset')
-            expect_is(get_site(get_download(100)), 'data.frame')
-            expect_is(get_site(get_dataset(siteid=100)), 'data.frame')
-            expect_is(get_download(get_dataset(siteid=100)), 'download')
-          })
+{
+  expect_is(get_dataset(get_download(100)), 'dataset')
+  expect_is(get_site(get_download(100)), 'data.frame')
+  expect_is(get_site(get_dataset(siteid=100)), 'data.frame')
+  expect_is(get_download(get_dataset(siteid=100)), 'download')
+})
+#-----------------------------------------------------
+
+context('Compiling objects and returning what is expected:')
+test_that('Compiling',
+{
+  expect_is(compile_downloads(get_download(100:103)), 'data.frame')
+  expect_is(get_site(get_download(100)), 'data.frame')
+  expect_is(get_site(get_dataset(siteid=100)), 'data.frame')
+  expect_is(get_download(get_dataset(siteid=100)), 'download')
+})
