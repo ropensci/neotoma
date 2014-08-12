@@ -48,7 +48,7 @@
 
 compile_taxa <- function(object, list.name, cf = TRUE, type = TRUE){
   
-  if (!class(object) %in% c('list', 'matrix', 'data.frame')){
+  if (!class(object) %in% c('list', 'matrix', 'data.frame', 'download')){
     stop(paste0('Data object must be a pollen object returned by ',
                 'function get_download or a matrix or data.frame'))
   }
@@ -61,7 +61,7 @@ compile_taxa <- function(object, list.name, cf = TRUE, type = TRUE){
   
   use.list <- which(avail.lists %in% list.name)
   
-  if (class(object) == 'list'){
+  if (class(object) %in% c('download', 'list')){
     
     taxon.matches <- match(colnames(object$counts), pollen.equiv$taxon)
     
