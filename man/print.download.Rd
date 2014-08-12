@@ -6,7 +6,7 @@
 \method{print}{download}(x)
 }
 \value{
-Returns a very brief discription of the size of the `download` object.
+Returns a very brief discription of the `download` object including site name and access date.
 }
 \description{
 Print function for the `download` class.

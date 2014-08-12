@@ -15,6 +15,7 @@
 #' @param ageyoung The youngest date acceptable for the search.
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to "taxon", otherwise it may refer to "sample", in which case the age bounds are for any samples within datasets or "dataset" if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
+#' @param download An object of class \code{download} obtained using the command \code{get_download}.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return More details on the use of these parameters can be obtained from
@@ -53,22 +54,28 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 #'
-get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
+
+get_dataset <- function(...){
+  UseMethod('get_dataset')
+}
+
+get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
                         taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
-
+  
   base.uri <- 'http://api.neotomadb.org/v1/data/datasets'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
 
-  if ('piid' %in% names(cl)){
-    # piid must be the numeric PI id number in the Neotoma database.
-    if (!is.numeric(cl$piid)) stop('piid must be a numeric value.')
+  #  Pass the parameters to param_check to make sure everything is kosher.
+  error_test <- param_check(cl)
+  if(error_test$flag == 1){
+    stop(paste0(unlist(error_test$message), collapse='\n  '))
   }
-
+  
   # Parameter check for the datasettype, make sure
   # it's one of the accepted types:
   
@@ -86,94 +93,9 @@ get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
     }
   }
 
-  if ('ageof' %in% names(cl)){
-    if (!cl$ageof %in% c('sample', 'taxon', 'dataset')){
-      stop('ageof parameter must be one of: sample, taxon or dataset')
-    } else {
-      if (any(c('taxonid', 'taxonname') %in% names(cl)) & !cl$ageof == 'taxon'){
-        stop('When taxonid or taxonname is invoked, ageof must be taxon')
-      }
-    }
-    if (!any(c('ageyoung', 'ageold') %in% names(cl))){
-      stop(paste0('When ageof in invoked you also need to provide ',
-                  'an age range using ageyounger or ageolder.'))
-    }
-  }
-  
-  if ('gpid' %in% names(cl)){
-    if (is.character(gpid)){
-      data(gp.table)
-      gprow <- match(x = gpid, table = gp.table$GeoPoliticalName)
-      if (is.na(gprow)){
-        stop('Cannot find a match for the gpid provided.')
-      }
-      gpid <- gp.table$GeoPoliticalID[gprow]
-    } else {
-      if (!is.numeric(gpid)){
-        stop('The gpid must be either a character string or an integer.')
-      }
-    }
-  }
-
-  # Parameter check on altitudes:
-  if (all(c('altmin', 'altmax') %in% names(cl))){
-    # If the user defines a minimum and maximum altitude, make sure that the
-    # minimum is smaller than the max.
-    if (cl$altmin > cl$altmax){
-      altmin <- min(c(cl$altmin, cl$altmax))
-      altmax <- max(c(cl$altmin, cl$altmax))
-      warning(paste0('altmin must be smaller than altmax, ',
-                     'values were switched in call.'))
-    }
-  }
-
-  # Parameter check on ages:
-  if (all(c('ageold', 'ageyoung') %in% names(cl))){
-    # If the user defines a minimum and maximum age, make sure that the
-    # minimum is smaller than the max.
-    if (cl$ageyoung > cl$ageold){
-      cl$ageyoung <- min(c(eval(cl$ageold), eval(cl$ageyoung)))
-      cl$ageold <- max(c(eval(cl$ageold), eval(cl$ageyoung)))
-      cat(cl)
-      warning(paste0('ageyoung must be smaller than ageold, ',
-                     'values were switched in call.'))
-    } else {
-      cl$ageold <- eval(cl$ageold)
-      cl$ageyoung <- eval(cl$ageyoung)
-    }
-  }
-
-  # Parameter check on 'loc', ought to be a comma separated list of
-  # lonW, latS, lonE, latN when it is passed out, but it's probably
-  # better to pass in a vector.  Although it might be better to associate
-  # it with a spatial object existing in R like an extent or bbox.
-  if ('loc' %in% names(cl)){
-    cl$loc <- eval(cl$loc)
-
-    if (class(cl$loc) == 'numeric' & length(cl$loc == 4)){
-
-      # The latitudes must be from -90 to 90
-      # The longitudes must be from -180 to 180
-      if (all(findInterval(cl$loc[c(2, 4)], c(-90, 90)) == 1) &
-           all(findInterval(cl$loc[c(1, 3)], c(-180, 180)) == 1)){
-        cl$loc <- paste(cl$loc, collapse = ', ')
-      } else {
-        stop(paste0('loc must be in the form c(lonW, latS, lonE, latN).\n',
-                    'Longitudes from -180 to 180, latitudes from -90 to 90.'))
-      }
-    } else {
-      stop('The loc must be a numeric vector: lonW, latS, lonE, latN.\n')
-    }
-  }
-
-  if ('taxonname' %in% names(cl)){
-    if (!class(cl$taxonname) == 'character'){
-      stop('The taxonname must be a character.')
-    }
-  }
   
   neotoma.form <- getForm(base.uri, .params = cl, binary = FALSE,
-                          .encoding = 'utf-8', )
+                          .encoding = 'utf-16')
 
   aa <- try(fromJSON(neotoma.form, nullValue = NA))
 
@@ -193,49 +115,56 @@ get_dataset <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
 
 
   if (class(output) == 'try-error') {
-    output <- neotoma.form
+    new.output <- neotoma.form
   } else {
-    # This is a bit frustrating, I can't quite figure it out.
-    # The things that are multiple lengths are:
-    # Dataset PIs &
-    # SubDates
-    # I'd like to put this out in a nice table format
-
-    output <- lapply(output, function(x) {
-      x$Site <- data.frame(siteid = x$Site$SiteID,
-                           sitename = x$Site$SiteName,
-                           long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                           na.rm = TRUE),
-                           lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                          na.rm = TRUE),
-                           elev = x$Site$Altitude,
-                           description = x$Site$SiteDescription,
-                           long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                           lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
-                           row.names = x$Site$SiteName,
-                           stringsAsFactors = FALSE) 
-      x})
-
-    output <- lapply(output,
-                     function(x) {
-                       sub.test <- try(do.call(rbind.data.frame, x$SubDates)) 
-                       x$SubDates <- sub.test
-                       if(length(x$SubDates) > 0){
-                         names(x$SubDates) <- c("SubmissionDate", 
-                                                "SubmissionType")
-                       }
-                       x})
-
-    output <- lapply(output,
-                      function(x) {
-                          x$DatasetPIs <- do.call(rbind.data.frame,
-                                                  x$DatasetPIs)
-                          rownames(x$DatasetPIs) <- NULL
-                          x
-                      })
-
+    new.output <- lapply(output, function(x) {
+      new.output <- list()
+      new.output$site.data <- data.frame(siteid = x$Site$SiteID,
+                                         sitename = x$Site$SiteName,
+                                         long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                                         na.rm = TRUE),
+                                         lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                                        na.rm = TRUE),
+                                         elev = x$Site$Altitude,
+                                         description = x$Site$SiteDescription,
+                                         long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                         lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                         row.names = x$Site$SiteName,
+                                         stringsAsFactors = FALSE)
+      new.output$dataset <- data.frame(dataset.id = x$DatasetID,
+                                       dataset.name = x$DatasetName,
+                                       collection.type = x$CollUnitType,
+                                       collection.handle = x$CollUnitHandle,
+                                       dataset.type = x$DatasetType,
+                                       stringsAsFactors = FALSE)
+      new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+      rownames(new.output$pi.data) <- NULL
+      
+      sub.test <- try(do.call(rbind.data.frame, x$SubDates)) 
+      
+      if(length(sub.test) > 0){
+        colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
+      }
+      
+      new.output$submission <- sub.test
+      
+      
+      new.output$access.date = Sys.time()
+      
+      new.output})
+    
   }
+  
+  class(new.output) <- c('dataset')
+  
+  new.output
+  
+}
 
-  output
-
+get_dataset.download <- function(download){
+  # Just pull the dataset out of the download.
+  output <- llply(download, .fun=function(x){
+    x$metadata })
+  class(output) <- c('dataset')
+  return(output)  
 }

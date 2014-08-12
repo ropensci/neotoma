@@ -60,38 +60,10 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
 
-  # Parameter check on contactid:
-  if ('contactid' %in% names(cl)){
-    if (!is.numeric(cl$contactid)){
-      stop('The contactid must be numeric.')
-    }
-  }
-
-  # Parameter check on contactname:
-  if ('contactname' %in% names(cl)){
-    if (!is.character(cl$contactname)){
-      stop('The contactname must be a character string.')
-    }
-  }
-
-  #  Parameter check on contactstatus:
-  if ('contactstatus' %in% names(cl)){
-    if (!is.character(cl$contactstatus)){
-      stop('The contactstatus must be a character string.')
-    } else {
-      if (!cl$contactstatus %in% c('active', 'deceased', 'defunct',
-                                  'extant', 'inactive', 'retired', 'unknown')){
-        stop(paste0('status must be an accepted term.  ',
-                    'Use get_table(\'ContactStatuses\')'))
-      }
-    }
-  }
-
-  # Parameter check on familyname:
-  if ('familyname' %in% names(cl)){
-    if (!is.character(cl$familyname)){
-      stop('The familyname must be a character string.')
-    }
+  #  Pass the parameters to param_check to make sure everything is kosher.
+  error_test <- param_check(cl)
+  if(error_test$flag == 1){
+    stop(paste0(unlist(error_test$message), collapse='\n  '))
   }
 
   neotoma.form <- getForm(base.uri, .params = cl)
