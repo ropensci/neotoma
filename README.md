@@ -28,8 +28,8 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 + get_chroncontrol - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
-+ Minor fixes to the way that `get_download` treats age models reflecting the fact that some age models cover only part of the record.
-+ Changed the output format of `get_publication` to improve data structure and readability.
++ Major changes to `dataset` and `site` objects, as well as the `metadata` for `downloads`.  This involved cleaning up the column names.
++ Added classes to `download`, `dataset` and `site` objects.
 
 ### Coming soon
 + A broader set of taxonomies for use with datasets, including geography based taxonomies.
