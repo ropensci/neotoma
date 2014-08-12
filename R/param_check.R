@@ -1,3 +1,21 @@
+#' @title Internal function to check passed parameters.
+#'
+#' @description Functions \code{get_site}, \code{get_dataset} and others pass parameters to \code{param_check}, \code{param_check} tells them if there's a problem.
+#' @importFrom reshape2 dcast melt
+#' @param cl Contact ID is a numerical value associated with the Neotoma
+#'    Contact table's numerical Contact ID.
+#' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
+#' @return A list with two components:
+#'
+#' \itemize{
+#'  \item{flag}{Returns a 0 if everything's fine, a 1 if there's a problem.}
+#'  \item{message}{A list of error messages.}
+#' }
+#' @references
+#' Neotoma Project Website: http://www.neotomadb.org
+#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' @keywords Neotoma Palaeoecology API
+#' @export
 param_check <- function(cl){
   #  A long list of proper parameter formatting so that it's not stuck in all
   #  the basic functions.
