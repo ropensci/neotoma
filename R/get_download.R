@@ -63,10 +63,11 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-get_download <- function(..., datasetid=NULL, dataset=NULL, verbose = TRUE){
+get_download <- function(x, ...){
   UseMethod('get_download')
 }
 
+#' @export
 get_download.default <- function(datasetid, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
@@ -357,6 +358,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
   aa
 }
 
+#' @export
 get_download.dataset <- function(dataset, verbose = TRUE){
   
   # Updated the processing here. There is no need to be fiddling with

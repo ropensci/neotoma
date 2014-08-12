@@ -42,10 +42,11 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords Neotoma Palaeoecology API
 #' @export
-get_site <- function(...){
+get_site <- function(x, ...){
   UseMethod('get_site')
 }
 
+#' @export
 get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NULL){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
@@ -108,6 +109,7 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
 
 }
 
+#' @export
 get_site.download <- function(download){
   
   site <- ldply(download, .fun=function(x)x$metadata$site.data)
@@ -115,6 +117,7 @@ get_site.download <- function(download){
   
 }
 
+#' @export
 get_site.dataset <- function(dataset){
   site <- ldply(dataset, .fun='[[', 'site.data')
   class(site) <- c('site', 'data.frame')

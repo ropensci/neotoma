@@ -55,10 +55,11 @@
 #' @export
 #'
 
-get_dataset <- function(...){
+get_dataset <- function(x, ...){
   UseMethod('get_dataset')
 }
 
+#' @export
 get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
                         taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
@@ -161,6 +162,7 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   
 }
 
+#' @export
 get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
   output <- llply(download, .fun=function(x){
