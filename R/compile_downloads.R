@@ -45,29 +45,29 @@ compile_downloads <-function(downloads){
   #  We're going to ldply the list to make a data.frame from key metadata, but
   #  first we need a function to turn a single download into a data.frame:
   
-  if(!class(downloads) == 'list'){
+  if(!'download' %in% class(downloads)){
     stop('compile_datasets can only operate on lists as returned from get_download')
   }
   
   down.to.df <- function(x){
-    if(class(x) == 'list'){
+    if('download' %in% class(x)){
       #  There can be NULL values in the download object.  We'll turn them to NA values:
-      if(is.null(x$metadata$site.data$SiteName)) x$metadata$site.data$SiteName <- paste('NoName_ID')
+      if(is.null(x$metadata$site.data$sitename)) x$metadata$site.data$sitename <- paste('NoName_ID')
       if(is.null(x$sample.meta$depths)) x$sample.meta$depths <- NA
       if(is.null(x$sample.meta$Age)) x$sample.meta$Age <- NA
       if(is.null(x$sample.meta$AgeOlder)) x$sample.meta$AgeOlder <- NA
       if(is.null(x$sample.meta$AgeYounger)) x$sample.meta$AgeYounger <- NA
-      if(is.null(x$metadata$site.data$LatitudeNorth)) x$metadata$site.data$LatitudeNorth <- NA
-      if(is.null(x$metadata$site.data$LongitudeWest)) x$metadata$site.data$LongitudeWest <- NA
+      if(is.null(x$metadata$site.data$lat)) x$metadata$site.data$lat <- NA
+      if(is.null(x$metadata$site.data$long)) x$metadata$site.data$long <- NA
       
-      site.info <- data.frame(sitename = x$metadata$site.data$SiteName,
+      site.info <- data.frame(sitename = x$metadata$site.data$sitename,
                               depth = x$sample.meta$depths,
                               age = x$sample.meta$Age,
                               ageold = x$sample.meta$AgeOlder,
                               ageyoung = x$sample.meta$AgeYounger,
                               date.type = x$sample.meta$AgeType,
-                              lat = x$metadata$site.data$LatitudeNorth,
-                              long = x$metadata$site.data$LongitudeWest,
+                              lat = x$metadata$site.data$lat,
+                              long = x$metadata$site.data$long,
                               dataset = x$metadata$dataset$dataset.id,
                               x$counts)
     }
@@ -88,10 +88,10 @@ compile_downloads <-function(downloads){
   }
   
   
-  if(class(downloads) == 'list' & !'metadata'%in%names(downloads)){
+  if('download' %in% class(downloads) & !'metadata'%in%names(downloads)){
     site.info <- ldply(downloads, down.to.df)
   } 
-  if(class(downloads) == 'list' & 'metadata'%in%names(downloads)){
+  if('download' %in% class(downloads) & 'metadata'%in%names(downloads)){
     site.info <- down.to.df(downloads)
   }
   
