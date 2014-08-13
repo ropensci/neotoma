@@ -14,11 +14,13 @@
 #' @param search A character string to search for within the article citation.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return A list is returned with two data.frame elements:
+#' @return A list is returned with two \code{data.frame} elements:
 #'
-#' \itemize{
-#'  \item{meta}{A single row with Publication ID, type, year of publication and full citation.}
-#'  \item{Authors}{data.frame of author names, order and IDs, can be of variable length.}
+#' \describe{
+#' \tabular{rll}{
+#'  \tab \code{meta}\tab A single row with Publication ID, type, year of publication and full citation.\cr
+#'  \tab \code{Authors}\tab \code{data.frame} of author names, order and IDs, can be of variable length.\cr
+#' }
 #' }
 #' @examples \dontrun{
 #' #  To find all publications from 1998:
