@@ -74,7 +74,5 @@ context('Compiling objects and returning what is expected:')
 test_that('Compiling',
 {
   expect_is(compile_downloads(get_download(100:103)), 'data.frame')
-  expect_is(get_site(get_download(100)), 'data.frame')
-  expect_is(get_site(get_dataset(siteid=100)), 'data.frame')
-  expect_is(get_download(get_dataset(siteid=100)), 'download')
+  expect_is(compile_taxa(get_download(100)), 'download')
 })
