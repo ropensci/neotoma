@@ -11,19 +11,20 @@
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return Returns a table.
 #'
-#' \itemize{
-#'  \item{TaxonID}{Unique database record identifier for a taxon.}
-#'  \item{TaxonCode}{Shorthand notation for a taxon identification.}
-#'  \item{TaxonName}{Name of the taxon.}
-#'  \item{Author}{Author(s) of the name. Used almost exclusively with beetle taxa.}
-#'  \item{Extinct}{True if extinct; false if extant.}
-#'  \item{TaxaGroup}{Code for taxa group to which taxon belongs.}
-#'  \item{EcolGroups}{Array of ecological group codes to which the taxon belongs.}
-#'  \item{HigherTaxonID}{TaxonID of the next higher taxonomic rank.}
-#'  \item{PublicationID}{Publication identification number.}
-#'  \item{Notes}{Free-form notes or comments about the taxon.}
+#' \describe{
+#' \tabular{rll}{
+#'  \tab \code{TaxonID}\tab Unique database record identifier for a taxon.\cr
+#'  \tab \code{TaxonCode}\tab Shorthand notation for a taxon identification.\cr
+#'  \tab \code{TaxonName}\tab Name of the taxon.\cr
+#'  \tab \code{Author}\tab Author(s) of the name. Used almost exclusively with beetle taxa.\cr
+#'  \tab \code{Extinct}\tab True if extinct; false if extant.\cr
+#'  \tab \code{TaxaGroup}\tab Code for taxa group to which taxon belongs.\cr
+#'  \tab \code{EcolGroups}\tab Array of ecological group codes to which the taxon belongs.\cr
+#'  \tab \code{HigherTaxonID}\tab TaxonID of the next higher taxonomic rank.\cr
+#'  \tab \code{PublicationID}\tab Publication identification number.\cr
+#'  \tab \code{Notes}\tab Free-form notes or comments about the taxon.\cr
 #' }
-#'
+#' }
 #' @examples
 #' \dontrun{
 #' ## Return all species taxa with "Abies" in name - note wildcard
