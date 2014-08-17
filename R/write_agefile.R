@@ -90,8 +90,8 @@ write_agefile <- function(download, chronology = 1, path,
     }
     
     write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
-              row.names = FALSE)
+              row.names = FALSE, quote = TRUE)
     write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
-              row.names = FALSE)
+              row.names = FALSE, quote = TRUE)
   }
 }
