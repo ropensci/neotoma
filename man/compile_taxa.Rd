@@ -3,10 +3,12 @@
 \alias{compile_taxa}
 \title{Function to convert assemblage taxa to standardized lists.}
 \usage{
-compile_taxa(object, list.name, cf = TRUE, type = TRUE)
+compile_taxa(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE)
 }
 \arguments{
 \item{object}{A pollen object returned by \code{get_download}.}
+
+\item{alt.table}{A user provided table formatted in the same way as \code{data(pollen.equiv)}.}
 
 \item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.}
 

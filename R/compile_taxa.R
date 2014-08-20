@@ -6,6 +6,7 @@
 #'
 #' @import RJSONIO RCurl plyr reshape2
 #' @param object A pollen object returned by \code{get_download}.
+#' @param alt.table A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param cf Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?
 #' @param type Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?
@@ -46,15 +47,32 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_taxa <- function(object, list.name, cf = TRUE, type = TRUE){
+compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE){
   
   if (!class(object)[1] %in% c('matrix', 'data.frame', 'download')){
     stop(paste0('Data object must be a pollen object returned by ',
                 'function get_download or a matrix or data.frame'))
   }
   
-  data(pollen.equiv)
-  avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+  if(!is.null(alt.table)){
+    if(!class(alt.table) %in% c('matrix', 'data.frame')){
+      stop('The alt.table must be either a matrix or a data.frame.')
+    }
+    
+    pollen.equiv <- alt.table
+    avail.lists <- colnames(pollen.equiv)
+    if(!list.name %in% avail.lists){
+      stop('The list name is not included in your alt.table.')
+    }
+    
+    if(!'taxon' %in% (avail.lists)){
+      stop('The alt.table must contain a column titled taxon.')
+    }
+  } else {
+    data(pollen.equiv)
+    avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+  }
+  
   
   if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
   if (type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
