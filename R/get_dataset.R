@@ -24,18 +24,20 @@
 #'    A list, with each item corresponding to an individual record.  Each list item
 #'    (each dataset record) includes the following components:
 #'
-#' \itemize{
-#'  \item{DatasetID}{Unique database record identifier for the dataset.}
-#'  \item{DatasetName}{Name of the dataset; not commonly used.}
-#'  \item{CollUnitHandle}{Code name of the Collection Unit with which the dataset is associated. This code may be up to 10 characters. Data are frequently distributed by Collection Unit, and the Handle is used for file names.}
-#'  \item{CollUnitID}{Unique database record identifier for the collection unit.}
-#'  \item{CollType}{The collection type. Types include cores, sections, excavations, and animal middens.}
-#'  \item{DatasetType}{The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.}
-#'  \item{AgeOldest}{The oldest of all sample ages (in calendar years before present) in the dataset.}
-#'  \item{AgeYoungest}{The youngest of all sample ages (in calendar years before present) in the dataset.}
-#'  \item{SubDates}{An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.}
-#'  \item{DatasetPIs}{An array of objects that describe Principal Investigators associated with a dataset.}
-#'  \item{Site}{An object describing the site where the dataset samples were taken.}
+#' \describe{
+#' \tabular{rll}{
+#'  \tab \code{DatasetID}\tab Unique database record identifier for the dataset.\cr
+#'  \tab \code{DatasetName} \tab Name of the dataset; not commonly used.\cr
+#'  \tab \code{CollUnitHandle} \tab Code name of the Collection Unit with which the dataset is associated. This code may be up to 10 characters. Data are frequently distributed by Collection Unit, and the Handle is used for file names.\cr
+#'  \tab \code{CollUnitID} \tab Unique database record identifier for the collection unit.\cr
+#'  \tab \code{CollType} \tab The collection type. Types include cores, sections, excavations, and animal middens.\cr
+#'  \tab \code{DatasetType} \tab The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.\cr
+#'  \tab \code{AgeOldest} \tab The oldest of all sample ages (in calendar years before present) in the dataset.\cr
+#'  \tab \code{AgeYoungest} \tab The youngest of all sample ages (in calendar years before present) in the dataset.\cr
+#'  \tab \code{SubDates} \tab An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.\cr
+#'  \tab \code{DatasetPIs} \tab An array of objects that describe Principal Investigators associated with a dataset.\cr
+#'  \tab \code{Site} \tab An object describing the site where the dataset samples were taken.\cr
+#' }
 #' }
 #' @examples \dontrun{
 #' # Search for sites with "Thuja" pollen that are older than 8kyr BP and

@@ -6,6 +6,7 @@
 #'
 #' @import RJSONIO RCurl plyr reshape2
 #' @param object A pollen object returned by \code{get_download}.
+#' @param alt.table A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param cf Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?
 #' @param type Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?
@@ -46,63 +47,105 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-compile_taxa <- function(object, list.name, cf = TRUE, type = TRUE){
+compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE){
   
-  if (!class(object) %in% c('list', 'matrix', 'data.frame')){
+  if (!class(object)[1] %in% c('matrix', 'data.frame', 'download')){
     stop(paste0('Data object must be a pollen object returned by ',
                 'function get_download or a matrix or data.frame'))
   }
   
-  data(pollen.equiv)
-  avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+  if(!is.null(alt.table)){
+    if(!class(alt.table) %in% c('matrix', 'data.frame')){
+      stop('The alt.table must be either a matrix or a data.frame.')
+    }
+    
+    pollen.equiv <- alt.table
+    avail.lists <- colnames(pollen.equiv)
+    if(!list.name %in% avail.lists){
+      stop('The list name is not included in your alt.table.')
+    }
+    
+    if(!'taxon' %in% (avail.lists)){
+      stop('The alt.table must contain a column titled taxon.')
+    }
+  } else {
+    data(pollen.equiv)
+    avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+  }
+  
   
   if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
   if (type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
   
   use.list <- which(avail.lists %in% list.name)
   
-  if (class(object) == 'list'){
+  if ('download' %in% class(object)){
     
-    taxon.matches <- match(colnames(object$counts), pollen.equiv$taxon)
+    aggregate.counts <- function(x){
+      taxon.matches <- match(colnames(x$counts), pollen.equiv$taxon)
+      
+      if (any(is.na(taxon.matches))){
+        missed.samples <- colnames(x$counts)[is.na(taxon.matches)]
+      }
+      
+      used.taxa <- pollen.equiv[taxon.matches, ]
+      agg.list <- as.vector(used.taxa[, use.list + 2])
+      agg.list[is.na(agg.list)] <- 'Other'
+      
+      compressed.list <- aggregate(t(x$counts), by = list(agg.list),
+                                   sum, na.rm = TRUE)
     
-    if (any(is.na(taxon.matches))){
-      missed.samples <- colnames(object$counts)[is.na(taxon.matches)]
+      compressed.cols <- compressed.list[, 1]
+      
+      compressed.list <- t(compressed.list[, -1])
+      colnames(compressed.list) <- compressed.cols
+      
+      # We want to make a taxon list like the one returned in get_downloads:
+      new.list <- x$taxon.list
+      new.list$compressed <- NA
+      
+      new.list$compressed <- as.character(pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon), use.list + 2])
+      
+      new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(x$counts)] <- 'Other'
+    
+      # Returns a data.frame with taxa in the columns and samples in the rows.
+      output <- list(metadata = x$metadata,
+                     sample.meta = x$sample.meta,
+                     taxon.list = new.list, 
+                     counts = compressed.list,
+                     full.counts = x$counts,
+                     lab.data = x$lab.data,
+                     chronologies = x$chronologies)
+      class(output) <- c('download', 'list')
+      output
+      
     }
     
-    used.taxa <- pollen.equiv[taxon.matches, ]
-    agg.list <- as.vector(used.taxa[, use.list + 2])
-    agg.list[is.na(agg.list)] <- 'Other'
+    if('download' %in% class(object[[1]])) {
+      output <- llply(object, aggregate.counts)
+    } else {
+      output <- aggregate.counts(object)
+    }
     
-    compressed.list <- aggregate(t(object$counts), by = list(agg.list),
-                                 sum, na.rm = TRUE)
-  
-    compressed.cols <- compressed.list[, 1]
     
-    compressed.list <- t(compressed.list[, -1])
-    colnames(compressed.list) <- compressed.cols
+    missed.samples <- ldply(output, function(x)x$taxon.list[,c('TaxonName', 'compressed')])
     
-    # We want to make a taxon list like the one returned in get_downloads:
-    new.list <- object$taxon.list
-    new.list$compressed <- NA
+    if (any(missed.samples$compressed == 'Other')) {
+      missed <- as.character(unique(missed.samples$TaxonName[which(missed.samples$compressed == 'Other')]))
+      warning(paste0('\nThe following taxa could not be found in the existing ',
+                     'conversion table:\n', paste(missed, sep = '\n')))
+    }
     
-    new.list$compressed <- as.character(pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon), use.list + 2])
-    
-    new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(object$counts)] <- 'Other'
-  
-    # Returns a data.frame with taxa in the columns and samples in the rows.
-    output <- list(metadata = object$metadata,
-                   sample.meta = object$sample.meta,
-                   taxon.list = new.list, 
-                   counts = compressed.list,
-                   lab.data = object$lab.data,
-                   chronologies = object$chronologies)
   }
-  if (class(object) %in% c('matrix', 'data.frame')){
+  
+  if (class(object)[1] %in% c('matrix', 'data.frame')){
     
     taxon.matches <- match(colnames(object$counts), pollen.equiv$taxon)
     
     if (any(is.na(taxon.matches))){
       missed.samples <- colnames(object$counts)[is.na(taxon.matches)]
+      warning(paste0('\nThe following taxa could not be found in the existing ',
+                     'conversion table:\n', paste(missed.samples, sep = '\n')))
     }
     
     used.taxa <- pollen.equiv[taxon.matches, ]
@@ -118,12 +161,10 @@ compile_taxa <- function(object, list.name, cf = TRUE, type = TRUE){
     colnames(compressed.list) <- compressed.cols
     
     output <- compressed.list
+    
   }
-  
-  if (exists('missed.samples')) {
-    warning(paste0('The following taxa could not be found in the existing ',
-                   'conversion table:\n', paste(missed.samples, sep = ', ')))
-  }
+    
+  class(output) <- c('download', 'list')
   
   return(output)
   
