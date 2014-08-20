@@ -8,7 +8,7 @@ compile_taxa(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE)
 \arguments{
 \item{object}{A pollen object returned by \code{get_download}.}
 
-\item{alt.table}{A user provided table formatted in the same way as \code{data(pollen.equiv)}.}
+\item{alt.table}{A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.}
 
 \item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.}
 

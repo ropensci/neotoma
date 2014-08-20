@@ -2,6 +2,7 @@
 
 S3method(get_dataset,default)
 S3method(get_dataset,download)
+S3method(get_dataset,site)
 S3method(get_download,dataset)
 S3method(get_download,default)
 S3method(get_site,dataset)

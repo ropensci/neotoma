@@ -14,11 +14,11 @@
 Currently Implemented:
   \tabular{ll}{
     \code{\link{compile_list}} \tab using established pollen-related taxonomies from the literature, take the published taxon list and standardize it to allow cross site analysis.\cr
-    \code{\link{get_contacts}} \tab find contact information for data contributors to Neotoma.\cr
-    \code{\link{get_datasets}} \tab obtain dataset metadata from Neotoma.\cr
+    \code{\link{get_contact}} \tab find contact information for data contributors to Neotoma.\cr
+    \code{\link{get_dataset}} \tab obtain dataset metadata from Neotoma.\cr
     \code{\link{get_download}} \tab obtain full datasets from Neotoma.\cr
     \code{\link{get_publication}} \tab obtain publication information from Neotoma.\cr
-    \code{\link{get_sites}} \tab obtain information on sites in the Neotoma dataset (which may contain multiple datasets).\cr
+    \code{\link{get_site}} \tab obtain information on sites in the Neotoma dataset (which may contain multiple datasets).\cr
     \code{\link{get_table}} \tab return matrices corresponding to one of the Neotoma database tables. tables\cr
     \code{\link{get_taxa}} \tab Get taxon information from Neotoma.\cr
     \code{\link{get_chroncontrol}} \tab Get chronological information used to build the age-depth model for the record.\cr

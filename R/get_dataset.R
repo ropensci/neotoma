@@ -154,9 +154,82 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
       
       new.output$access.date = Sys.time()
       
-      new.output})
+      new.output[[1]]})
     
   }
+  
+  class(new.output) <- c('dataset')
+  
+  new.output
+  
+}
+
+#' @export
+get_dataset.site <- function(site){
+  # The issue here is that these objects
+  # have multiple tables of multiple lengths.
+  
+  siteIDs <- site$siteid
+  
+  pull_site <- function(siteid){
+    
+    base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
+    aa <- try(fromJSON(paste0(base.uri, siteid), nullValue = NA))
+    
+    if (aa[[1]] == 0){
+      stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
+    }
+    if (aa[[1]] == 1){
+      output <- aa[[2]]
+    }
+    
+    if (class(output) == 'try-error') {
+      new.output <- neotoma.form
+    } else {
+      new.output <- lapply(output, function(x) {
+        new.output <- list()
+        new.output$site.data <- data.frame(siteid = x$Site$SiteID,
+                                           sitename = x$Site$SiteName,
+                                           long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                                       na.rm = TRUE),
+                                           lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                                      na.rm = TRUE),
+                                           elev = x$Site$Altitude,
+                                           description = x$Site$SiteDescription,
+                                           long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                           lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                           row.names = x$Site$SiteName,
+                                           stringsAsFactors = FALSE)
+        new.output$dataset <- data.frame(dataset.id = x$DatasetID,
+                                         dataset.name = x$DatasetName,
+                                         collection.type = x$CollUnitType,
+                                         collection.handle = x$CollUnitHandle,
+                                         dataset.type = x$DatasetType,
+                                         stringsAsFactors = FALSE)
+        new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+        rownames(new.output$pi.data) <- NULL
+        
+        sub.test <- try(do.call(rbind.data.frame, x$SubDates)) 
+        
+        if(length(sub.test) > 0){
+          colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
+        }
+        
+        new.output$submission <- sub.test
+        
+        
+        new.output$access.date = Sys.time()
+        
+        new.output})
+      
+    }
+    
+    class(new.output) <- c('dataset')
+    
+    new.output[[1]]
+  }
+  
+  new.output <- llply(site$siteid, pull_site)
   
   class(new.output) <- c('dataset')
   
