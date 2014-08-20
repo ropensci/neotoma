@@ -116,7 +116,9 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
                      full.counts = x$counts,
                      lab.data = x$lab.data,
                      chronologies = x$chronologies)
+      class(output) <- c('download', 'list')
       output
+      
     }
     
     if('download' %in% class(object[[1]])) {
