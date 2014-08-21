@@ -1,8 +1,8 @@
 #  Tests for the neotoma package.  Mostly validating that changes to the functions
 #  do not break the requirements for data formatting.
 
-require(testthat)
-require(neotoma)
+library("testthat")
+library("neotoma")
 
 context('get_contact work as expected')
 
