@@ -4,7 +4,6 @@
 #' From the assemblage data for the core return assemblage data with the assemblage taxa
 #' Currently implemented only for pollen data.
 #'
-#' @import RJSONIO RCurl plyr reshape2
 #' @param object A pollen object returned by \code{get_download}.
 #' @param alt.table A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
