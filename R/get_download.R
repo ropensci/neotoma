@@ -18,7 +18,7 @@
 #'  \item{ \code{lab.data} }{A data frame of laboratory data, such as exotic pollen spike, amount of sample counted, charcoal counts, etc.}
 #'  \item{ \code{chronologies} }{A list of existing chronologies.  If only a single chronology exists for a record then this is the same as the age-model in \code{sample.meta}.}
 #'
-#' @section Note
+#' @section Note:
 #' The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified seperately as crumpled and torn in the same sample and sums these values within a sample.
 #'
 #' @examples \dontrun{
