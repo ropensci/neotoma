@@ -10,7 +10,7 @@ compile_taxa(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE)
 
 \item{alt.table}{A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.}
 
-\item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in the Description.}
+\item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in section Details.}
 
 \item{cf}{Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?}
 

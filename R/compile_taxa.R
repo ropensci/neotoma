@@ -14,7 +14,7 @@
 #'
 #' @param object A pollen object returned by \code{\link{get_download}}.
 #' @param alt.table A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.
-#' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in the Description.
+#' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in section Details.
 #' @param cf Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?
 #' @param type Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
