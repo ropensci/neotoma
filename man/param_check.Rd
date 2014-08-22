@@ -12,13 +12,11 @@ Contact table's numerical Contact ID.}
 \value{
 A list with two components:
 
-\itemize{
  \item{flag}{Returns a 0 if everything's fine, a 1 if there's a problem.}
  \item{message}{A list of error messages.}
 }
-}
 \description{
-Functions \code{get_site}, \code{get_dataset} and others pass parameters to \code{param_check}, \code{param_check} tells them if there's a problem.
+Functions \code{\link{get_site}}, \code{\link{get_dataset}} and others pass parameters to \code{param_check}, which tells them if there's a problem.
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
