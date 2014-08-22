@@ -35,7 +35,7 @@ write_agefile <- function(download, chronology = 1, path,
                 'objects with valid chronologies'))
   }
   
-  if ('download' %in% class(download) & c('chronologies') %in% names(download)){
+  if ('download' %in% class(download) & (c('chronologies') %in% names(download) | c('chronologies') %in% names(download[[1]]))){
     
     if(!'download' %in% class(download[[1]])){download <- download[[1]]}
     
