@@ -28,4 +28,3 @@ Imports:
 Suggests:
     testthat,
     knitr
-
