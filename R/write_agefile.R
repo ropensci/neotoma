@@ -76,7 +76,7 @@ write_agefile <- function(download, chronology = 1, path,
                           thickness = chron.controls$chron.control$Thickness)
       chron$cal_BP [ chron.controls$chron.control$ControlType %in% uncal] <- NA
       chron$C14_age[!chron.controls$chron.control$ControlType %in% uncal] <- NA
-      
+
     }
       
     depths <- download$sample.meta$depths
@@ -91,7 +91,7 @@ write_agefile <- function(download, chronology = 1, path,
     
     write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
               row.names = FALSE, quote = TRUE)
-    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
+    write.csv(depths, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
               row.names = FALSE, quote = TRUE)
   }
 }
