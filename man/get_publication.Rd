@@ -6,29 +6,25 @@
 get_publication(pubid, contactid, datasetid, author, pubtype, year, search)
 }
 \arguments{
-\item{pubid}{Numeric Publication ID value, either from \code{get.datasets} or known.}
+\item{pubid}{Numeric Publication ID value, either from \code{\link{get_dataset}} or known.}
 
-\item{contactid}{Numeric Contact ID value, either from \code{get.datasets} or \code{get.contacts}}
+\item{contactid}{Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}}
 
-\item{datasetid}{Numeric Dataset ID, known or from \code{get.datasets}}
+\item{datasetid}{Numeric Dataset ID, known or from \code{\link{get_dataset}}}
 
 \item{author}{Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.}
 
-\item{pubtype}{Character string, one of eleven allowable types, see \code{get.table('PublicationTypes')}}
+\item{pubtype}{Character string, one of eleven allowable types, see \code{\link{get_table}}. For a list of allowed types run \code{get_table("PublicationTypes")}.}
 
 \item{year}{Numeric publication year.}
 
 \item{search}{A character string to search for within the article citation.}
 }
 \value{
-A list is returned with two \code{data.frame} elements:
+A list is returned with two data frame components:
 
-\describe{
-\tabular{rll}{
- \tab \code{meta}\tab A single row with Publication ID, type, year of publication and full citation.\cr
- \tab \code{Authors}\tab \code{data.frame} of author names, order and IDs, can be of variable length.\cr
-}
-}
+ \item{ \code{meta} }{A single row with Publication ID, type, year of publication and full citation.}
+ \item{ \code{Authors} }{\code{data.frame} of author names, order and IDs, can be of variable length.}
 }
 \description{
 The function takes the parameters, defined by the user, and returns a table with

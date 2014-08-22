@@ -13,28 +13,27 @@
 #' @param dataset An optional list object returned by \code{get_dataset}.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return A table:
+#' @return A data frame:
 #'
-#' \describe{
-#'  \item{siteid}{Unique database record identifier for the site.}
-#'  \item{sitename}{Name of the site.}
-#'  \item{long}{Mean longitude, in decimal degrees, for a site (-180 to 180).}
-#'  \item{lat}{Mean latitude, in decimal degrees, for a site (-90 to 90).}
-#'  \item{elev}{Elevation in meters.}
-#'  \item{description}{Free form description of a site, including such information as physiography and vegetation around the site.}
-#'  \item{long_acc}{If the site is described by a bounding box this is the box width.}
-#'  \item{lat_acc}{If the site is described by a bounding box this is the box height.}
-#' }
+#'  \item{\code{siteid}}{Unique database record identifier for the site.}
+#'  \item{\code{sitename}}{Name of the site.}
+#'  \item{\code{long}}{Mean longitude, in decimal degrees, for a site (-180 to 180).}
+#'  \item{\code{lat}}{Mean latitude, in decimal degrees, for a site (-90 to 90).}
+#'  \item{\code{elev}}{Elevation in meters.}
+#'  \item{\code{description}}{Free form description of a site, including such information as physiography and vegetation around the site.}
+#'  \item{\code{long_acc}}{If the site is described by a bounding box this is the box width.}
+#'  \item{\code{lat_acc}}{If the site is described by a bounding box this is the box height.}
+#'
 #' @examples \dontrun{
 #' #  What is the distribution of site elevations in Neotoma?
 #' all.sites <- get_site()  #takes a bit of time.
 #'
 #' plot(density(all.sites$elev, from = 0, na.rm=TRUE),
 #' main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')
-#' 
+#'
 #' #  Get site information from a dataset:
 #' nw.datasets <- get_dataset(loc = c(-140, 50, -110, 65), datasettype='pollen',taxonname='Pinus*')
-#' nw.sites <- get_site(nw.datasets) 
+#' nw.sites <- get_site(nw.datasets)
 #'
 #' }
 #' @references
@@ -60,7 +59,7 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
   if(error_test$flag == 1){
     stop(paste0(unlist(error_test$message), collapse='\n  '))
   }
-  
+
   if ('loc' %in% names(cl)){
     cl$loc <- eval(cl$loc)
     if (all(findInterval(cl$loc[c(2,4)], c(-90, 90)) == 1) &
@@ -68,7 +67,7 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
       cl$loc <- paste(cl$loc, collapse = ',')
     }
   }
-  
+
   neotoma.form <- getForm(base.uri, .params = cl)
   aa <- try(fromJSON(neotoma.form, nullValue = NA))
 
@@ -91,7 +90,7 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
     # but we need to fix-up some characters that R changed to factors
     output$SiteName <- as.character(output$SiteName)
     output$SiteDescription <- as.character(output$SiteDescription)
-    
+
     output <- data.frame(siteid = output$SiteID,
                 sitename = output$SiteName,
                 long = rowMeans(output[, c('LongitudeWest', 'LongitudeEast')],
@@ -111,7 +110,7 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
 
 #' @export
 get_site.download <- function(download){
-  
+
   site <- ldply(download, .fun=function(x)x$metadata$site.data)
   class(site) <- c('site', 'data.frame')
   site
