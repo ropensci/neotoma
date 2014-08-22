@@ -30,14 +30,14 @@ write_agefile <- function(download, chronology = 1, path,
                 'There is no directory at ', path, '/Cores'))
   }
 
-  if (!class(download) == 'list' | !c('chronologies') %in% names(download)){
+  if (!'download' %in% class(download) | !c('chronologies') %in% names(download)){
     stop(paste0('write_agefile can only operate on valid download ',
                 'objects with valid chronologies'))
   }
   
-  if (class(download) == 'list' & c('chronologies') %in% names(download)){
+  if ('download' %in% class(download) & c('chronologies') %in% names(download)){
     
-    
+    if(!'download' %in% class(download[[1]])){download <- download[[1]]}
     
     chron.controls <- get_chroncontrol(chronologyid = download$chronologies[[chronology]]$ChronologyID[1],
                                        verbose = FALSE)
