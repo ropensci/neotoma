@@ -25,3 +25,7 @@ Imports:
     RCurl (>= 1.6),
     plyr,
     reshape2
+Suggests:
+    testthat,
+    knitr
+

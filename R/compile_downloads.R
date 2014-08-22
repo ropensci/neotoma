@@ -4,7 +4,6 @@
 #' From the assemblage data for multiple cores, return a single \code{data.frame} with columns for site
 #' metadata and assemblage data.
 #'
-#' @import reshape2
 #' @param downloads A list of downloads as returned by \code{get_download}, or mutliple sites joined in a list.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a \code{data.frame}
