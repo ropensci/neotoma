@@ -34,27 +34,27 @@
 #' geochron.records <- sapply(dataset.ids, function(x)try(get_geochron(x)))
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
-#' 
+#'
 #' get_ages <- function(x){
 #'   any.ages <- try(x$age[x$age.type.id == 4])
 #'   if(class(any.ages) == 'try-error') output <- NA
 #'   if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
 #'   output
 #' }
-#' 
+#'
 #' radio_chron <- unlist(sapply(geochron.records, get_ages))
-#' 
-#' hist(radio_chron, breaks=seq(0, 40000, by = 500), 
+#'
+#' hist(radio_chron, breaks=seq(0, 40000, by = 500),
 #'      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
 #'      xlab = 'Radiocarbon date (14C years before 1950)')
 #' }
-#' 
+#'
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-#' 
+#'
 get_geochron <- function(datasetid, verbose = TRUE){
 
     # Updated the processing here. There is no need to be fiddling with
@@ -74,29 +74,29 @@ get_geochron <- function(datasetid, verbose = TRUE){
     get_sample <- function(x){
       # query Neotoma for data set
       aa <- try(fromJSON(paste0(base.uri, '?datasetid=', x), nullValue = NA))
-  
+
       # Might as well check here for error and bail
       if (inherits(aa, "try-error"))
           return(aa)
-  
+
       # if no error continue processing
       if (isTRUE(all.equal(aa[[1]], 0))) {
         # The API did not return a record, or returned an error.
           stop(paste('Server returned an error message:\n', aa[[2]]),
                call. = FALSE)
       }
-  
+
       if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
         # The API returned a record, but the record did not
         # have associated geochronology information.
         stop('No geochronological record is associated with this sample',
              call. = FALSE)
       }
-      
+
       if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) > 0)) {
         # The API returned a record with geochron data.
         aa <- aa[[2]]
-      
+
         if (verbose) {
             message(strwrap(paste0("API call was successful. ",
                                    "Returned record for",
@@ -108,13 +108,13 @@ get_geochron <- function(datasetid, verbose = TRUE){
 
         ageid <- get_table("AgeTypes")
         geoid <- get_table("GeochronTypes")
-        
+
         pull.rec <- function(x){
-          
+
           age.type <- ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)]
           geo.chron.type <- geoid$GeochronType[match(x$GeochronTypeID,
                                                      geoid$GeochronTypeID)]
-          
+
           data.frame(sample.id = x$SampleID,
                      geochron.id = x$GeochronID,
                    age.type.id = x$AgeTypeID,
@@ -131,15 +131,15 @@ get_geochron <- function(datasetid, verbose = TRUE){
                    infinite = x$Infinite,
                    stringsAsFactors = FALSE)
         }
-        
+
       out <- t(sapply(aa, pull.rec))
-          
+
       }
-      
-      
+
+
       as.data.frame(out)
     }
-    
+
     lapply(datasetid, try(get_sample))
 
 }
