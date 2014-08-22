@@ -9,7 +9,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-print.site <- function(x){
+print.site <- function(x, ...){
   class(x) <- 'data.frame'
 
   print(x)

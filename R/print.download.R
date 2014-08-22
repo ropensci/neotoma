@@ -9,7 +9,7 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 
-print.download <- function(x){
+print.download <- function(x, ...){
   class(x) <- 'list'
 
   if(length(x) == 1) {
