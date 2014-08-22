@@ -61,7 +61,8 @@ write_agefile <- function(download, chronology = 1, path,
                                         chron.controls$chron.control$AgeYoungest),
                           depth = chron.controls$chron.control$Depth,
                           cc = ifelse(chron.controls$chron.control$ControlType %in% uncal,
-                                      1, 0))
+                                      1, 0), stringsAsFactors=FALSE)
+      chron$labid[regexpr(',', chron$labid)>0] <- gsub(',', replacement='_', chron$labid[regexpr(',', chron$labid)>0])
     }
     if (cal.prog == 'Clam'){
       chron <- data.frame(ID = paste0(chron.controls$chron.control$ControlType, 
@@ -73,10 +74,12 @@ write_agefile <- function(download, chronology = 1, path,
                                         chron.controls$chron.control$AgeYoungest),
                           offset = NA,
                           depth = chron.controls$chron.control$Depth,
-                          thickness = chron.controls$chron.control$Thickness)
+                          thickness = chron.controls$chron.control$Thickness,
+                          stringsAsFactors=FALSE)
       chron$cal_BP [ chron.controls$chron.control$ControlType %in% uncal] <- NA
       chron$C14_age[!chron.controls$chron.control$ControlType %in% uncal] <- NA
-
+      
+      chron$ID[regexpr(',', chron$labid)>0] <- gsub(',', replacement='_', chron$labid[regexpr(',', chron$labid)>0])
     }
       
     depths <- download$sample.meta$depths
@@ -88,6 +91,8 @@ write_agefile <- function(download, chronology = 1, path,
                     'Check the path, corename and your permissions.'))
       }
     }
+    
+    
     
     write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
               row.names = FALSE, quote = TRUE)
