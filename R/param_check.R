@@ -1,7 +1,6 @@
 #' @title Internal function to check passed parameters.
 #'
 #' @description Functions \code{\link{get_site}}, \code{\link{get_dataset}} and others pass parameters to \code{param_check}, which tells them if there's a problem.
-#' @importFrom reshape2 dcast melt
 #' @param cl Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
