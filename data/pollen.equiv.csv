@@ -318,8 +318,8 @@ Altingiaceae,9512,NA,NA,NA,NA,NA,NA
 Alyssoides-type,5403,NA,Brassicaceae,BRASSICACEAE,BRASSICACEAE,NA,NA
 Amanoa,3220,NA,Minor Forbs,NA,NA,NA,NA
 Amaranthaceae,391,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
-Amaranthaceae (<20 µm),2820,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
-Amaranthaceae (>20 µm),2821,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
+Amaranthaceae (<20 Âµm),2820,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
+Amaranthaceae (>20 Âµm),2821,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Amaranthaceae (small),3002,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Amaranthaceae (type A),3558,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Amaranthaceae (type B),3559,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
@@ -983,10 +983,10 @@ Beta,5319,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Beta vulgaris-type,2547,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Beta-type,5320,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Betula,29,Betula,Betula,BETULA,BETULA,NA,NA
-Betula (<20 µm),1432,Betula,Betula,BETULA,BETULA,NA,NA
-Betula (>20 µm),1431,Betula,Betula,BETULA,BETULA,NA,NA
-Betula (>25 µm),5739,Betula,Betula,BETULA,BETULA,NA,NA
-Betula (20-25 µm),5740,Betula,Betula,BETULA,BETULA,NA,NA
+Betula (<20 Âµm),1432,Betula,Betula,BETULA,BETULA,NA,NA
+Betula (>20 Âµm),1431,Betula,Betula,BETULA,BETULA,NA,NA
+Betula (>25 Âµm),5739,Betula,Betula,BETULA,BETULA,NA,NA
+Betula (20-25 Âµm),5740,Betula,Betula,BETULA,BETULA,NA,NA
 Betula (large),5735,Betula,Betula,BETULA,BETULA,NA,NA
 Betula (shrub),574,Betula,Betula,BETULA,BETULA,NA,NA
 Betula (small),5736,Betula,Betula,BETULA,BETULA,NA,NA
@@ -1563,9 +1563,9 @@ Castoroides leiseyorum,5931,NA,NA,NA,NA,NA,NA
 Castoroides ohioensis,5932,NA,NA,NA,NA,NA,NA
 Castoroides sp.,7091,NA,NA,NA,NA,NA,NA
 Casuarina,2704,NA,NA,NA,NA,NA,NA
-Casuarina (<23 µm),2702,NA,NA,NA,NA,NA,NA
-Casuarina (<25 µm),2751,NA,NA,NA,NA,NA,NA
-Casuarina (>23 µm),2703,NA,NA,NA,NA,NA,NA
+Casuarina (<23 Âµm),2702,NA,NA,NA,NA,NA,NA
+Casuarina (<25 Âµm),2751,NA,NA,NA,NA,NA,NA
+Casuarina (>23 Âµm),2703,NA,NA,NA,NA,NA,NA
 Casuarina litorea,3516,NA,NA,NA,NA,NA,NA
 Casuarina undiff.,2752,NA,NA,NA,NA,NA,NA
 Casuarinaceae,2865,NA,NA,NA,NA,NA,NA
@@ -1928,7 +1928,7 @@ cf. Huperzia selago,5162,NA,NA,NA,NA,NA,NA
 cf. Hydrochoerus holmesi,7198,NA,NA,NA,NA,NA,NA
 cf. Hypericum,647,NA,NA,NA,NA,NA,NA
 cf. Ilex,2576,NA,NA,NA,NA,NA,NA
-cf. Isoëtes,5009,NA,NA,NA,NA,NA,NA
+cf. IsoÃ«tes,5009,NA,NA,NA,NA,NA,NA
 cf. Juglans,3613,NA,NA,JUGLANSX,JUGLANSX,NA,TRUE
 cf. Juncus,3712,NA,NA,NA,NA,NA,NA
 cf. Juniperus,1920,NA,NA,NA,NA,NA,NA
@@ -2892,8 +2892,8 @@ Cyanocitta cristata,8543,NA,NA,NA,NA,NA,NA
 Cyanocitta sp.,8542,NA,NA,NA,NA,NA,NA
 Cyanocitta stelleri,8544,NA,NA,NA,NA,NA,NA
 Cyathea,1725,NA,NA,POLYPOD,POLYPOD,NA,NA
-Cyathea (25 µm),3351,NA,NA,POLYPOD,POLYPOD,NA,NA
-Cyathea (35 µm),3352,NA,NA,POLYPOD,POLYPOD,NA,NA
+Cyathea (25 Âµm),3351,NA,NA,POLYPOD,POLYPOD,NA,NA
+Cyathea (35 Âµm),3352,NA,NA,POLYPOD,POLYPOD,NA,NA
 Cyathea (type I),3096,NA,NA,POLYPOD,POLYPOD,NA,NA
 Cyathea (type II),3097,NA,NA,POLYPOD,POLYPOD,NA,NA
 Cyathea cf. C. delgadii,3128,NA,NA,POLYPOD,POLYPOD,NA,NA
@@ -2930,12 +2930,12 @@ Cynomys niobrarius,7433,NA,NA,NA,NA,NA,NA
 Cynomys parvidens,5964,NA,NA,NA,NA,NA,NA
 Cynomys sp.,5963,NA,NA,NA,NA,NA,NA
 Cyperaceae,74,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
-Cyperaceae (<50 µm),3019,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
-Cyperaceae (>50 µm),3020,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
-Cyperaceae (20 µm),3354,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
-Cyperaceae (27 µm),3355,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
-Cyperaceae (29 µm),3356,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
-Cyperaceae (31 µm),3357,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
+Cyperaceae (<50 Âµm),3019,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
+Cyperaceae (>50 Âµm),3020,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
+Cyperaceae (20 Âµm),3354,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
+Cyperaceae (27 Âµm),3355,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
+Cyperaceae (29 Âµm),3356,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
+Cyperaceae (31 Âµm),3357,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
 Cyperaceae (inaperturate),3358,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
 Cyperaceae (type 1),2884,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
 Cyperaceae (type 2),2885,Cyperaceae,Cyperaceae,CYPERACE,CYPERACE,NA,NA
@@ -4407,16 +4407,16 @@ Iris pseudacorus,4411,NA,NA,NA,NA,NA,NA
 Iris pseudacorus-type,4409,NA,NA,LILIACEAE,LILIACEAE,NA,NA
 Iris-type,4410,NA,NA,LILIACEAE,LILIACEAE,NA,NA
 Ischyrosmilus sp.,6132,NA,NA,NA,NA,NA,NA
-Isoëtes,139,NA,NA,NA,NA,NA,NA
-Isoëtes (<20 µm),1929,NA,NA,NA,NA,NA,NA
-Isoëtes (>20 µm),1930,NA,NA,NA,NA,NA,NA
-Isoëtes (type A),2926,NA,NA,NA,NA,NA,NA
-Isoëtes echinospora,2197,NA,NA,NA,NA,NA,NA
-Isoëtes lacustris,2613,NA,NA,NA,NA,NA,NA
-Isoëtes savatieri,1061,NA,NA,NA,NA,NA,NA
-Isoëtes setacea,3706,NA,NA,NA,NA,NA,NA
-Isoëtes undiff.,2942,NA,NA,NA,NA,NA,NA
-Isoëtopsida,9537,NA,NA,NA,NA,NA,NA
+IsoÃ«tes,139,NA,NA,NA,NA,NA,NA
+IsoÃ«tes (<20 Âµm),1929,NA,NA,NA,NA,NA,NA
+IsoÃ«tes (>20 Âµm),1930,NA,NA,NA,NA,NA,NA
+IsoÃ«tes (type A),2926,NA,NA,NA,NA,NA,NA
+IsoÃ«tes echinospora,2197,NA,NA,NA,NA,NA,NA
+IsoÃ«tes lacustris,2613,NA,NA,NA,NA,NA,NA
+IsoÃ«tes savatieri,1061,NA,NA,NA,NA,NA,NA
+IsoÃ«tes setacea,3706,NA,NA,NA,NA,NA,NA
+IsoÃ«tes undiff.,2942,NA,NA,NA,NA,NA,NA
+IsoÃ«topsida,9537,NA,NA,NA,NA,NA,NA
 Isoglossa,2442,NA,NA,NA,NA,NA,NA
 Isopsetta,9034,NA,NA,NA,NA,NA,NA
 Isopsetta isolepis,9035,NA,NA,NA,NA,NA,NA
@@ -4543,7 +4543,7 @@ Lamiastrum-type,5354,NA,NA,LAMIACEAE,LAMIACEAE,NA,NA
 Lamium,4427,NA,NA,LAMIACEAE,LAMIACEAE,NA,NA
 Lamium-type,3450,NA,NA,LAMIACEAE,LAMIACEAE,NA,NA
 Lamna,8647,NA,NA,NA,NA,NA,NA
-Lamna ditropis,8648,NA,NA,NA,NA,NA,NA
+LamnaÂ ditropis,8648,NA,NA,NA,NA,NA,NA
 Lamnidae,8646,NA,NA,NA,NA,NA,NA
 Lamniformes,8645,NA,NA,NA,NA,NA,NA
 Laniidae,8532,NA,NA,NA,NA,NA,NA
@@ -5672,7 +5672,7 @@ Nitraria,5247,NA,NA,NA,NA,NA,NA
 Noaea-type,3587,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Nonea,4566,NA,NA,BORAGINACEAE,BORAGINACEAE,NA,NA
 Nothofagus,1015,NA,NA,NA,NA,NA,NA
-Nothofagus × alpina-type,2162,NA,NA,NA,NA,NA,NA
+Nothofagus Ã— alpina-type,2162,NA,NA,NA,NA,NA,NA
 Nothofagus antarctica,1683,NA,NA,NA,NA,NA,NA
 Nothofagus antarctica-type,2102,NA,NA,NA,NA,NA,NA
 Nothofagus betuloides,3393,NA,NA,NA,NA,NA,NA
@@ -6633,19 +6633,19 @@ Pluvialis fulva,8100,NA,NA,NA,NA,NA,NA
 Pluvialis sp.,8098,NA,NA,NA,NA,NA,NA
 Pluvialis squatarola,7586,NA,NA,NA,NA,NA,NA
 Poaceae,417,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (<20 µm),2855,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (<40 µm),2112,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (>35 µm),2853,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (>40 µm),2113,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (20-25 µm),2850,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (25-30 µm),2851,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-Poaceae (30-35 µm),2852,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-"Poaceae (aspidate pore, >30 µm)",3540,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-"Poaceae (aspidate pore, 10-15 µm)",3538,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-"Poaceae (aspidate pore, 20-25 µm)",3539,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-"Poaceae (flat pore, >30 µm)",3537,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-"Poaceae (flat pore, 10-15 µm)",3535,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
-"Poaceae (flat pore, 20-25 µm)",3536,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (<20 Âµm),2855,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (<40 Âµm),2112,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (>35 Âµm),2853,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (>40 Âµm),2113,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (20-25 Âµm),2850,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (25-30 Âµm),2851,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+Poaceae (30-35 Âµm),2852,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+"Poaceae (aspidate pore, >30 Âµm)",3540,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+"Poaceae (aspidate pore, 10-15 Âµm)",3538,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+"Poaceae (aspidate pore, 20-25 Âµm)",3539,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+"Poaceae (flat pore, >30 Âµm)",3537,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+"Poaceae (flat pore, 10-15 Âµm)",3535,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
+"Poaceae (flat pore, 20-25 Âµm)",3536,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
 Poaceae (type 1),3370,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
 Poaceae (type 2),3371,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
 Poaceae (type 3),3372,Poaceae,Poaceae,POACEAE,POACEAE,NA,NA
@@ -6939,7 +6939,7 @@ Pteridophyta (monolete),3114,NA,NA,NA,NA,NA,NA
 Pteridophyta (monolete) undiff.,5030,NA,NA,NA,NA,NA,NA
 "Pteridophyta (monolete, echinate)",1805,NA,NA,NA,NA,NA,NA
 "Pteridophyta (monolete, psilate)",1806,NA,NA,NA,NA,NA,NA
-"Pteridophyta (monolete, psilate, <50 µm)",2175,NA,NA,NA,NA,NA,NA
+"Pteridophyta (monolete, psilate, <50 Âµm)",2175,NA,NA,NA,NA,NA,NA
 "Pteridophyta (monolete, psilate, large)",3070,NA,NA,NA,NA,NA,NA
 "Pteridophyta (monolete, psilate, small)",3071,NA,NA,NA,NA,NA,NA
 "Pteridophyta (monolete, verrucate)",1807,NA,NA,NA,NA,NA,NA
@@ -7250,8 +7250,8 @@ Rorippa amphibia,5471,NA,Brassicaceae,BRASSICACEAE,BRASSICACEAE,NA,NA
 Rosa,843,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Rosa cf. R. woodsii,7493,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Rosaceae,483,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
-Rosaceae (<20 µm),3133,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
-Rosaceae (>20 µm),3132,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
+Rosaceae (<20 Âµm),3133,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
+Rosaceae (>20 Âµm),3132,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Rosaceae (type A),4762,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Rosaceae (type B),4763,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
 Rosaceae cf. Adenostoma,1251,NA,Rosaceae,ROSACEAX,ROSACEAX,NA,NA
@@ -8350,7 +8350,7 @@ Tidestromia lanuginosa,2649,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA
 Tidestromia-type,493,NA,Chenopodiaceae/Amaranthaceae,CHENOAMX,CHENOAMX,NA,NA
 Tieghemopanax,2793,NA,NA,NA,NA,NA,NA
 Tilia,302,Tilia,Tilia,TILIA,TILIA,NA,NA
-Tilia × vulgaris,4881,Tilia,Tilia,TILIA,TILIA,NA,NA
+Tilia Ã— vulgaris,4881,Tilia,Tilia,TILIA,TILIA,NA,NA
 Tilia americana,758,Tilia,Tilia,TILIA,TILIA,NA,NA
 Tilia amurensis,5716,Tilia,Tilia,TILIA,TILIA,NA,NA
 Tilia cordata,3472,Tilia,Tilia,TILIA,TILIA,NA,NA
@@ -8599,10 +8599,10 @@ Unknown (large sphere/oval),3552,NA,NA,NA,NA,NA,NA
 Unknown (monocolpate),1973,NA,NA,NA,NA,NA,NA
 Unknown (monolete),348,NA,NA,NA,NA,NA,NA
 Unknown (monolete) undiff.,184,NA,NA,NA,NA,NA,NA
-"Unknown (monolete, 25 µm)",3364,NA,NA,NA,NA,NA,NA
-"Unknown (monolete, 35 µm)",3365,NA,NA,NA,NA,NA,NA
-"Unknown (monolete, 45 µm)",3366,NA,NA,NA,NA,NA,NA
-"Unknown (monolete, 55 µm)",3363,NA,NA,NA,NA,NA,NA
+"Unknown (monolete, 25 Âµm)",3364,NA,NA,NA,NA,NA,NA
+"Unknown (monolete, 35 Âµm)",3365,NA,NA,NA,NA,NA,NA
+"Unknown (monolete, 45 Âµm)",3366,NA,NA,NA,NA,NA,NA
+"Unknown (monolete, 55 Âµm)",3363,NA,NA,NA,NA,NA,NA
 "Unknown (monolete, foveolate)",1934,NA,NA,NA,NA,NA,NA
 "Unknown (monolete, psilate)",2343,NA,NA,NA,NA,NA,NA
 "Unknown (monolete, reticulate)",2139,NA,NA,NA,NA,NA,NA
