@@ -6,32 +6,31 @@
 compile_taxa(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE)
 }
 \arguments{
-\item{object}{A pollen object returned by \code{get_download}.}
+\item{object}{A pollen object returned by \code{\link{get_download}}.}
 
 \item{alt.table}{A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.}
 
-\item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.}
+\item{list.name}{The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in the Description.}
 
 \item{cf}{Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?}
 
 \item{type}{Should taxa listed as types (*e.g.*, *Iva annua*-type) be considered highly resolved?}
 }
 \value{
-This command returns a list object with the same structure as the parent pollen object returned by \code{get_download}, or a \code{matrix} (or \code{data.frame}) depending on whether \code{object} is one or the other.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
-
-   The data object uses the smaller pollen subset.  As this package develops we will add the
-   capacity to summarize data output from the translation.
-   Currently we can return only subsets that have been defined in the literature.  These lists include:
- \itemize{
-  \item{P25}{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
-  \item{WS64}{  This list is derived from Williams and Shuman (2008).}
-  \item{WhitmoreFull}{  This is the full list associated with the Whitmore et al., (2005) North American Modern Pollen Database.}
-  \item{WhitmoreSmall}{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
- }
+This command returns a list object with the same structure as the parent pollen object returned by \code{\link{get_download}}, or a matrix (or data frame) depending on whether \code{object} is one or the other.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
 }
 \description{
 From the assemblage data for the core return assemblage data with the assemblage taxa
 Currently implemented only for pollen data.
+}
+\details{
+The data object uses the smaller pollen subset.  As this package develops we will add the capacity to summarize data output from the translation. Currently we can return only subsets that have been defined in the literature.  These lists include:
+\itemize{
+  \item{\code{"P25"} }{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
+  \item{\code{"WS64"} }{  This list is derived from Williams and Shuman (2008).}
+  \item{\code{"WhitmoreFull"} }{  This is the full list associated with the Whitmore et al., (2005) North American Modern Pollen Database.}
+  \item{\code{"WhitmoreSmall"} }{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
+}
 }
 \examples{
 \dontrun{
