@@ -154,11 +154,11 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
       
       new.output$access.date = Sys.time()
       
-      new.output[[1]]})
+      new.output})
     
   }
   
-  class(new.output) <- c('dataset')
+  class(new.output) <- c('dataset', 'list')
   
   new.output
   
@@ -224,14 +224,14 @@ get_dataset.site <- function(site){
       
     }
     
-    class(new.output) <- c('dataset')
+    class(new.output) <- c('dataset', 'list')
     
     new.output[[1]]
   }
   
   new.output <- llply(site$siteid, pull_site)
   
-  class(new.output) <- c('dataset')
+  class(new.output) <- c('dataset', 'list')
   
   new.output
   
@@ -242,6 +242,6 @@ get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
   output <- llply(download, .fun=function(x){
     x$metadata })
-  class(output) <- c('dataset')
+  class(output) <- c('dataset', 'list')
   return(output)  
 }

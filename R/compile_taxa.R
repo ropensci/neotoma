@@ -107,6 +107,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
       new.list$compressed <- as.character(pollen.equiv[match(new.list$TaxonName, pollen.equiv$taxon), use.list + 2])
       
       new.list$compressed[is.na(new.list$compressed) & new.list$TaxonName %in% colnames(x$counts)] <- 'Other'
+      new.list <- new.list[match(new.list$TaxonName, x$taxon.list$TaxonName),]
     
       # Returns a data.frame with taxa in the columns and samples in the rows.
       output <- list(metadata = x$metadata,
