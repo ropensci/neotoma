@@ -11,7 +11,7 @@ The Neotoma database.
 taxon.list
 }
 \description{
-The taxonomy table for datasets in neotoma, as would be returned by \code{get_table}
+The taxonomy table for datasets in neotoma, as would be returned by \code{\link{get_table}}
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

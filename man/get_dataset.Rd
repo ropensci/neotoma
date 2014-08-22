@@ -8,31 +8,31 @@ get_dataset(x, ...)
 \arguments{
 \item{siteid}{A numeric value corresponding to the site ID.}
 
-\item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: 'geochronologic', 'loss-on-ignition', 'pollen', 'plant macrofossils', 'vertebrate fauna', 'mollusks', and 'pollen surface sample'.}
+\item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.}
 
 \item{piid}{Numeric value for the Principle Investigator's ID number.}
 
-\item{altmin}{Numeric value indicating the minimum altitude for the site (can be used alone or with altmax).}
+\item{altmin}{Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).}
 
-\item{altmax}{Numeric value indicating the maximum altitude for the site (can be used alone or with altmin).}
+\item{altmax}{Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).}
 
-\item{loc}{A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator}
+\item{loc}{A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator}
 
-\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
+\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}}
 
-\item{taxonids}{A numeric identifier for the taxon.  Use \code{get.tables('Taxa')} for a list of acceptable values.}
+\item{taxonids}{A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.}
 
-\item{taxonname}{A character string corresponding to a valid taxon identity in the Neotoma Database.  Use \code{get.tables('Taxa')} for a list of acceptable values.}
+\item{taxonname}{A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.}
 
 \item{ageold}{The oldest date acceptable for the search (in years before present).}
 
 \item{ageyoung}{The youngest date acceptable for the search.}
 
-\item{ageof}{If a taxon ID or taxon name is defined this parameter must be set to "taxon", otherwise it may refer to "sample", in which case the age bounds are for any samples within datasets or "dataset" if you want only datasets that are within the bounds of ageold and ageyoung.}
+\item{ageof}{If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.}
 
 \item{subdate}{Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.}
 
-\item{download}{An object of class \code{download} obtained using the command \code{get_download}.}
+\item{download}{An object of class \code{download} obtained using the command \code{\link{get_download}}.}
 }
 \value{
 More details on the use of these parameters can be obtained from
@@ -41,21 +41,17 @@ More details on the use of these parameters can be obtained from
    A list, with each item corresponding to an individual record.  Each list item
    (each dataset record) includes the following components:
 
-\describe{
-\tabular{rll}{
- \tab \code{DatasetID}\tab Unique database record identifier for the dataset.\cr
- \tab \code{DatasetName} \tab Name of the dataset; not commonly used.\cr
- \tab \code{CollUnitHandle} \tab Code name of the Collection Unit with which the dataset is associated. This code may be up to 10 characters. Data are frequently distributed by Collection Unit, and the Handle is used for file names.\cr
- \tab \code{CollUnitID} \tab Unique database record identifier for the collection unit.\cr
- \tab \code{CollType} \tab The collection type. Types include cores, sections, excavations, and animal middens.\cr
- \tab \code{DatasetType} \tab The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.\cr
- \tab \code{AgeOldest} \tab The oldest of all sample ages (in calendar years before present) in the dataset.\cr
- \tab \code{AgeYoungest} \tab The youngest of all sample ages (in calendar years before present) in the dataset.\cr
- \tab \code{SubDates} \tab An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.\cr
- \tab \code{DatasetPIs} \tab An array of objects that describe Principal Investigators associated with a dataset.\cr
- \tab \code{Site} \tab An object describing the site where the dataset samples were taken.\cr
-}
-}
+ \item{ \code{DatasetID} }{Unique database record identifier for the dataset.}
+ \item{ \code{DatasetName}  }{Name of the dataset; not commonly used.}
+ \item{ \code{CollUnitHandle}  }{Code name of the Collection Unit with which the dataset is associated. This code may be up to 10 characters. Data are frequently distributed by Collection Unit, and the Handle is used for file names.}
+ \item{ \code{CollUnitID}  }{Unique database record identifier for the collection unit.}
+ \item{ \code{CollType}  }{The collection type. Types include cores, sections, excavations, and animal middens.}
+ \item{ \code{DatasetType}  }{The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.}
+ \item{ \code{AgeOldest}  }{The oldest of all sample ages (in calendar years before present) in the dataset.}
+ \item{ \code{AgeYoungest}  }{The youngest of all sample ages (in calendar years before present) in the dataset.}
+ \item{ \code{SubDates}  }{An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.}
+ \item{ \code{DatasetPIs}  }{An array of objects that describe Principal Investigators associated with a dataset.}
+ \item{ \code{Site}  }{An object describing the site where the dataset samples were taken.}
 }
 \description{
 A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.

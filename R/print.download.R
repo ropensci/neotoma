@@ -1,7 +1,7 @@
-#' Print function for the `download` class.
+#' Print function for the \code{download} class.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return Returns a very brief discription of the `download` object including site name and access date.
+#' @return Returns a very brief discription of the \code{download} object including site name and access date.
 #'
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
@@ -11,9 +11,9 @@
 
 print.download <- function(x){
   class(x) <- 'list'
-  
+
   if(length(x) == 1) {
-    cat(paste0('A single download object for site ', 
+    cat(paste0('A single download object for site ',
              x[[1]]$metadata$site.data$SiteName, '\n',
              'Accessed ', format(x[[1]]$metadata$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
   }
@@ -32,7 +32,7 @@ print.download <- function(x){
                  'Accessed from ',date.ranges[1],'h to ', date.ranges[2],'h.\n'))
     }
   }
-  
+
   return(NULL)
-  
+
 }

@@ -16,19 +16,16 @@ compile_list(object, list.name, cf = TRUE, type = TRUE)
 }
 \value{
 This command returns a list object with the same structure as the parent pollen object returned by \code{get_download}, or a \code{matrix} (or \code{data.frame}) depending on whether \code{object} is one or the other.  Any pollen taxon not included in the major taxa defined in the pollen gets returned as 'Other'.
-
-   The data object uses the smaller pollen subset.  As this package develops we will add the
-   capacity to summarize data output from the translation.
-   Currently we can return only subsets that have been defined in the literature.  These lists include:
- \itemize{
-  \item{P25}{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
-  \item{WS64}{  This list is derived from Williams and Shuman (2008).}
-  \item{WhitmoreFull}{  This is the full list associated with the Whitmore et al., (2005) North American Modern Pollen Database.}
-  \item{WhitmoreSmall}{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
- }
 }
 \description{
 See the new function `compile_taxa`.
+The data object uses the smaller pollen subset.  As this package develops we will add the capacity to summarize data output from the translation. Currently we can return only subsets that have been defined in the literature.  These lists include:
+\itemize{
+  \item{\code{"P25"} }{ This list is derived from Gavin et al., (2003), and includes 25 pollen taxa.}
+  \item{\code{"WS64"} }{  This list is derived from Williams and Shuman (2008).}
+  \item{\code{"WhitmoreFull"} }{  This is the full list associated with the Whitmore et al., (2005) North American Modern Pollen Database.}
+  \item{\code{"WhitmoreSmall"} }{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
+}
 }
 \examples{
 \dontrun{

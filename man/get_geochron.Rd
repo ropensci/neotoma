@@ -6,28 +6,26 @@
 get_geochron(datasetid, verbose = TRUE)
 }
 \arguments{
-\item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.}
+\item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\code{get_dataset}}.}
 
 \item{verbose}{logical; should messages on API call be printed?}
 }
 \value{
-This command returns either a 'try-error' definined by the error returned
-   from the Neotoma API call, or geochronology table:
+This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
+   from the Neotoma API call, or a geochronology table, a data frame with the following components:
 
-\itemize{
- \item{sample.id}{A unique identifier for the geochronological unit.}
- \item{age.type.id}{Numeric. One of five possible age types.}
- \item{age.type}{String.  The age type, one of calendar years, radiocarbon years, etc.}
- \item{age}{Dated age of the material.}
- \item{e.older}{The older error limit of the age value.  Commonly 1 standard deviation.}
- \item{e.young}{The younger error limit of the age value.}
- \item{delta13C}{The measured or assumed delta13C value for radiocarbon dates, if provided.}
- \item{material.dated}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
- \item{geo.chron.type.id}{Numeric identification for the type of geochronological analysis.}
- \item{geo.chron.type}{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
- \item{notes}{Text string}
- \item{infinite}{Boolean, does the dated material return an "infinte" date?}
-}
+ \item{ \code{sample.id} }{A unique identifier for the geochronological unit.}
+ \item{ \code{age.type.id} }{Numeric. One of five possible age types.}
+ \item{ \code{age.type} }{String.  The age type, one of calendar years, radiocarbon years, etc.}
+ \item{ \code{age} }{Dated age of the material.}
+ \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
+ \item{ \code{e.young} }{The younger error limit of the age value.}
+ \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
+ \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
+ \item{ \code{geo.chron.type.id} }{Numeric identification for the type of geochronological analysis.}
+ \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
+ \item{ \code{notes} }{Text string}
+ \item{ \code{infinite} }{Boolean, does the dated material return an "infinte" date?}
 
  A full data object containing all the relevant geochronological data available for a dataset.
 }
