@@ -1,12 +1,3 @@
-#' Print function for the \code{download} class.
-#'
-#' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return Returns a very brief discription of the \code{download} object including site name and access date.
-#'
-#' @references
-#' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
 #' @export
 
 print.download <- function(x, ...){
