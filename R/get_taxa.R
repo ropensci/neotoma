@@ -14,7 +14,7 @@
 #'  \item{ \code{TaxonID} }{Unique database record identifier for a taxon}
 #'  \item{ \code{TaxonCode} }{Shorthand notation for a taxon identification}
 #'  \item{ \code{TaxonName} }{Name of the taxon}
-#'  \item{ \code{Author} }{Author(s) of the name} Used almost exclusively with beetle taxa}
+#'  \item{ \code{Author} }{Author(s) of the name. Used almost exclusively with beetle taxa}
 #'  \item{ \code{Extinct} }{True if extinct; false if extant}
 #'  \item{ \code{TaxaGroup} }{Code for taxa group to which taxon belongs}
 #'  \item{ \code{EcolGroups} }{Array of ecological group codes to which the taxon belongs}
