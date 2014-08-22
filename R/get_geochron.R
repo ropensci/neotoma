@@ -4,7 +4,7 @@
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
 #' @import RJSONIO RCurl
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\code{get_dataset}}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
@@ -17,7 +17,7 @@
 #'  \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
 #'  \item{ \code{e.young} }{The younger error limit of the age value.}
 #'  \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
-#'  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
+#'  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
 #'  \item{ \code{geo.chron.type.id} }{Numeric identification for the type of geochronological analysis.}
 #'  \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
 #'  \item{ \code{notes} }{Text string}
