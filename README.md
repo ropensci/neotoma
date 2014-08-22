@@ -1,5 +1,10 @@
 neotoma
 ========
+
+[![Build Status](https://api.travis-ci.org/ropensci/neotoma.png)](https://travis-ci.org/ropensci/neotoma)
+[![Build status](https://ci.appveyor.com/api/projects/status/t2xyqbs0d8h998cb/branch/master)](https://ci.appveyor.com/project/sckott/neotoma/branch/master)
+
+
 *PLEASE NOTE*: The most recent change has standardized all function names to singular.    This may break functionality.
 
 The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](http://www.neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
@@ -34,11 +39,11 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 ### Coming soon
 + A broader set of taxonomies for use with datasets, including geography based taxonomies.
 
-### Install `neotoma` 
+### Install `neotoma`
 
 + Development version from GitHub:
 
-```coffee 
+```coffee
 install.packages("devtools")
 require(devtools)
 install_github("neotoma", "ropensci")
@@ -61,16 +66,16 @@ The API call was successful, you have returned  3273 records.
 site.locs <- get_site(dataset = test)
 
 # A crude way of making the oceans blue.
-plot(1, type = 'n', 
-     xlim=range(site.locs$long)+c(-10, 10), 
+plot(1, type = 'n',
+     xlim=range(site.locs$long)+c(-10, 10),
      ylim=range(site.locs$lat)+c(-10, 10),
      xlab='Longitude', ylab = 'Latitude')
 rect(par("usr")[1],par("usr")[3],par("usr")[2],par("usr")[4],col = "lightblue")
-map('world', 
+map('world',
     interior=TRUE,
     fill=TRUE,
     col='gray',
-    xlim=range(site.locs$long)+c(-10, 10), 
+    xlim=range(site.locs$long)+c(-10, 10),
     ylim=range(site.locs$lat)+c(-10, 10),
     add=TRUE)
 
