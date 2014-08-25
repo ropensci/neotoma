@@ -119,14 +119,13 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
 
     }
 
-    if('download' %in% class(object[[1]])) {
+    if ('download' %in% class(object[[1]])) {
       output <- llply(object, aggregate.counts)
     } else {
       output <- aggregate.counts(object)
     }
 
-
-    missed.samples <- ldply(output, function(x)x$taxon.list[,c('TaxonName', 'compressed')])
+    missed.samples <- output$taxon.list[,c('TaxonName', 'compressed')]
 
     if (any(missed.samples$compressed == 'Other')) {
       missed <- as.character(unique(missed.samples$TaxonName[which(missed.samples$compressed == 'Other')]))
