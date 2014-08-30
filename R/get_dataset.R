@@ -1,7 +1,7 @@
 #' @title Obtain dataset information from the Neotoma Paleoecological Database.
 #' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 #'
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @param siteid A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -150,13 +150,13 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 
 
       new.output$access.date = Sys.time()
-      
+
       new.output})
-    
+
   }
-  
+
   class(new.output) <- c('dataset', 'list')
-  
+
   new.output
 
 }
@@ -220,14 +220,14 @@ get_dataset.site <- function(site){
         new.output})
 
     }
-    
+
     class(new.output) <- c('dataset', 'list')
 
     new.output[[1]]
   }
 
-  new.output <- llply(site$siteid, pull_site)
-  
+  new.output <- lapply(site$siteid, pull_site)
+
   class(new.output) <- c('dataset', 'list')
 
   new.output
@@ -237,8 +237,7 @@ get_dataset.site <- function(site){
 #' @export
 get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
-  output <- llply(download, .fun=function(x){
-    x$metadata })
+  output <- lapply(download, `[[`, "metadata")
   class(output) <- c('dataset', 'list')
-  return(output)  
+  output
 }
