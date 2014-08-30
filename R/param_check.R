@@ -101,7 +101,7 @@ param_check <- function(cl){
 
   #  Test the geographic identification against the Geopolitical name table.
   if ('gpid' %in% names(cl)){
-    if (is.character(gpid)){
+    if (is.character(cl$gpid)){
       data(gp.table)
       gprow <- match(x=gpid, table=gp.table$GeoPoliticalName)
       if (is.na(gprow)){
@@ -110,7 +110,7 @@ param_check <- function(cl){
       }
       gpid <- gp.table$GeoPoliticalID[gprow]
     } else {
-      if (!is.numeric(gpid)){
+      if (!is.numeric(cl$gpid)){
         error$flag <- 1
         error$message[[length(error$message) + 1]] <- 'The gpid must be either a character string or an integer.'
       }
