@@ -12,7 +12,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords internal misc
 #' @export
 param_check <- function(cl){
   #  A long list of proper parameter formatting so that it's not stuck in all
@@ -165,7 +165,6 @@ param_check <- function(cl){
       error$message[[length(error$message) + 1]] <- 'The taxonname must be a character.'
     }
   }
-
 
   error
 
