@@ -9,7 +9,7 @@ print.download <- function(x, ...){
              'Accessed ', format(x[[1]]$metadata$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
   }
   if(length(x)>1){
-    if(!'download' %in% sapply(x, class)){
+    if(!'download' %in% unlist(sapply(x, class))){
       date <- format(as.POSIXct(x$metadata$access.date, origin="1970-01-01"),
                      "%Y-%m-%d %H:%M")
       cat(paste0('Download from ', x$metadata$site.data$sitename,'.\n',
