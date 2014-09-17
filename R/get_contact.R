@@ -2,7 +2,8 @@
 #' @title Get contact information.
 #'
 #' @description A function to obtain contact information for data contributors from the Neotoma Paleoecological Database.
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #' @importFrom reshape2 dcast melt
 #' @param contactid Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
@@ -49,7 +50,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_contact <- function(contactid, contactname, contactstatus, familyname){
 

@@ -41,7 +41,9 @@
 #' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687.
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords utilities
+#' @importFrom plyr llply
+#' @importFrom plyr ldply
 #' @export
 
 compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE){

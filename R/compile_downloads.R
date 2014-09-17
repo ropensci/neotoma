@@ -37,6 +37,7 @@
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords utilities
+#' @importFrom plyr ldply
 #' @export
 
 compile_downloads <-function(downloads){

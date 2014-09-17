@@ -27,7 +27,7 @@ test_that('get_download accepts numeric values and returns values as expected',
             expect_error(get_download(factor('a')))
             expect_error(get_download(c('a', 'b')))
             expect_message(get_download(1), 'API call was successful')
-            expect_that(length(get_download(1)) == 6, is_true())
+            expect_that(length(get_download(1)) == 1, is_true())
             expect_that(length(get_download(c(1,2))) == 2, is_true())
             expect_is(get_download(1, verbose=FALSE), 'list')
           })
@@ -80,7 +80,7 @@ test_that('Compiling',
 
 #-----------------------------------------------------
 #  Tests that use the API:
-#contect('Using the get_dataset methods across data classes:')
+#context('Using the get_dataset methods across data classes:')
 #test_that('get_datasets',
 #{
 #  expect_is(get_dataset(taxonname='Tsuga*'), 'dataset')

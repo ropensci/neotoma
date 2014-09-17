@@ -56,7 +56,5 @@ Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconst
 
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
-\keyword{API}
-\keyword{Neotoma}
-\keyword{Palaeoecology}
+\keyword{utilities}
 

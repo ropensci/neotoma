@@ -3,7 +3,8 @@
 #' Using the dataset ID, return all records associated with the data.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom plyr ldply
 #' @param chronologyid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
 #' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -19,7 +20,8 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
+
 #' @export
 get_chroncontrol <- function(chronologyid, verbose = TRUE){
 
