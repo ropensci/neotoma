@@ -347,7 +347,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
   }
 
   if (length(datasetid) == 1) {
-    aa <- get.sample(datasetid)
+    aa <- list(get.sample(datasetid))
     class(aa) <- c('download', 'list')
   } else {
     aa <- lapply(datasetid, get.sample)
