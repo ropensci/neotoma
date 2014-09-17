@@ -80,10 +80,10 @@ test_that('Compiling',
 
 #-----------------------------------------------------
 #  Tests that use the API:
-contect('Using the get_dataset methods across data classes:')
-test_that('get_datasets',
-{
-  expect_is(get_dataset(taxonname='Tsuga*'), 'dataset')
-  expect_is(get_dataset(get_download(7203)), 'dataset')
-  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset')
-}
+#contect('Using the get_dataset methods across data classes:')
+#test_that('get_datasets',
+#{
+#  expect_is(get_dataset(taxonname='Tsuga*'), 'dataset')
+#  expect_is(get_dataset(get_download(7203)), 'dataset')
+#  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset')
+#}

@@ -65,6 +65,7 @@ get_download <- function(x, ...){
 }
 
 #' @export
+#' @import RJSONIO RCurl
 get_download.default <- function(datasetid, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
@@ -346,7 +347,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
   }
 
   if (length(datasetid) == 1) {
-    aa <- list(get.sample(datasetid))
+    aa <- get.sample(datasetid)
     class(aa) <- c('download', 'list')
   } else {
     aa <- lapply(datasetid, get.sample)
@@ -356,6 +357,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
 }
 
 #' @export
+#' @import RJSONIO RCurl plyr
 get_download.dataset <- function(dataset, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
