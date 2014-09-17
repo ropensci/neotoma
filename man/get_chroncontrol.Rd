@@ -6,20 +6,16 @@
 get_chroncontrol(chronologyid, verbose = TRUE)
 }
 \arguments{
-\item{chronologyid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.}
+\item{chronologyid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.}
 
 \item{verbose}{logical, should messages on API call be printed?}
 }
 \value{
-This command returns either a 'try-error' definined by the error returned
-   from the Neotoma API call, or a list comprising the following items:
+This command returns either an object of class  \code{"try-error"} containing the error returned
+   from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core. This is a list comprising the following items:
 
-\itemize{
- \item{chron.control}{A table describing the collection, including dataset information, PI data compatable with \code{get_contacts} and site data compatable with \code{get_sites}.}
- \item{meta}{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
-}
-
-   A full data object containing all the relevant information required to build either the default or prior chronology for a core.
+ \item{ \code{chron.control} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
+ \item{ \code{meta} }{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
 }
 \description{
 Using the dataset ID, return all records associated with the data.  At present,

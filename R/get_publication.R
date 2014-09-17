@@ -5,21 +5,20 @@
 #'    publication information from the Neotoma Paleoecological Database.
 #'
 #' @import RJSONIO RCurl plyr
-#' @param pubid Numeric Publication ID value, either from \code{get.datasets} or known.
-#' @param contactid Numeric Contact ID value, either from \code{get.datasets} or \code{get.contacts}
-#' @param datasetid Numeric Dataset ID, known or from \code{get.datasets}
+#' @param pubid Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
+#' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
+#' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
 #' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
-#' @param pubtype Character string, one of eleven allowable types, see \code{get.table('PublicationTypes')}
+#' @param pubtype Character string, one of eleven allowable types, see \code{\link{get_table}}. For a list of allowed types run \code{get_table("PublicationTypes")}.
 #' @param year Numeric publication year.
 #' @param search A character string to search for within the article citation.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return A list is returned with two data.frame elements:
+#' @return A list is returned with two data frame components:
 #'
-#' \itemize{
-#'  \item{meta}{A single row with Publication ID, type, year of publication and full citation.}
-#'  \item{Authors}{data.frame of author names, order and IDs, can be of variable length.}
-#' }
+#'  \item{ \code{meta} }{A single row with Publication ID, type, year of publication and full citation.}
+#'  \item{ \code{Authors} }{\code{data.frame} of author names, order and IDs, can be of variable length.}
+#'
 #' @examples \dontrun{
 #' #  To find all publications from 1998:
 #' year.cont <- get_publication(year = 1998)
@@ -30,7 +29,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_publication <- function(pubid, contactid, datasetid, author,
                             pubtype, year, search){
@@ -101,7 +100,7 @@ get_publication <- function(pubid, contactid, datasetid, author,
         length(aa), 'records.\n')
   }
 
-  if (class(aa) == 'try-error' | length(aa) == 0){ 
+  if (class(aa) == 'try-error' | length(aa) == 0){
     output <- NA
   } else {
       # This line doesn't do anything
@@ -122,11 +121,11 @@ get_publication <- function(pubid, contactid, datasetid, author,
                                 Citation = x$Citation,
                                 stringsAsFactors=FALSE))
       output$Authors <- ldply(x$Authors, .fun=function(y){
-        data.frame(ContactID = y$ContactID, 
-                   Order = y$Order, 
+        data.frame(ContactID = y$ContactID,
+                   Order = y$Order,
                    ContactName = as.character(y$ContactName),
                    stringsAsFactors=FALSE)})
-      
+
       output
     }
 

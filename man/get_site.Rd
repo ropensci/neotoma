@@ -3,7 +3,7 @@
 \alias{get_site}
 \title{Return Site Information.}
 \usage{
-get_site(sitename, altmin, altmax, loc, gpid, dataset = NULL)
+get_site(x, ...)
 }
 \arguments{
 \item{sitename}{A character string representing the full or partial site name.}
@@ -19,18 +19,16 @@ get_site(sitename, altmin, altmax, loc, gpid, dataset = NULL)
 \item{dataset}{An optional list object returned by \code{get_dataset}.}
 }
 \value{
-A table:
+A data frame:
 
-\describe{
- \item{siteid}{Unique database record identifier for the site.}
- \item{sitename}{Name of the site.}
- \item{long}{Mean longitude, in decimal degrees, for a site (-180 to 180).}
- \item{lat}{Mean latitude, in decimal degrees, for a site (-90 to 90).}
- \item{elev}{Elevation in meters.}
- \item{description}{Free form description of a site, including such information as physiography and vegetation around the site.}
- \item{long_acc}{If the site is described by a bounding box this is the box width.}
- \item{lat_acc}{If the site is described by a bounding box this is the box height.}
-}
+ \item{\code{siteid}}{Unique database record identifier for the site.}
+ \item{\code{sitename}}{Name of the site.}
+ \item{\code{long}}{Mean longitude, in decimal degrees, for a site (-180 to 180).}
+ \item{\code{lat}}{Mean latitude, in decimal degrees, for a site (-90 to 90).}
+ \item{\code{elev}}{Elevation in meters.}
+ \item{\code{description}}{Free form description of a site, including such information as physiography and vegetation around the site.}
+ \item{\code{long_acc}}{If the site is described by a bounding box this is the box width.}
+ \item{\code{lat_acc}}{If the site is described by a bounding box this is the box height.}
 }
 \description{
 Return site information from the Neotoma Paleoecological Database.

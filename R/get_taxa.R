@@ -9,21 +9,19 @@
 #' @param ecolgroup The ecological group of the taxa. More detailed than \code{taxagroup}, can be obtained using \code{get_table("EcolGroupTypes")}.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return Returns a table.
+#' @return Returns a data frame with the following components:
 #'
-#' \itemize{
-#'  \item{TaxonID}{Unique database record identifier for a taxon.}
-#'  \item{TaxonCode}{Shorthand notation for a taxon identification.}
-#'  \item{TaxonName}{Name of the taxon.}
-#'  \item{Author}{Author(s) of the name. Used almost exclusively with beetle taxa.}
-#'  \item{Extinct}{True if extinct; false if extant.}
-#'  \item{TaxaGroup}{Code for taxa group to which taxon belongs.}
-#'  \item{EcolGroups}{Array of ecological group codes to which the taxon belongs.}
-#'  \item{HigherTaxonID}{TaxonID of the next higher taxonomic rank.}
-#'  \item{PublicationID}{Publication identification number.}
-#'  \item{Notes}{Free-form notes or comments about the taxon.}
-#' }
-#'
+#'  \item{ \code{TaxonID} }{Unique database record identifier for a taxon}
+#'  \item{ \code{TaxonCode} }{Shorthand notation for a taxon identification}
+#'  \item{ \code{TaxonName} }{Name of the taxon}
+#'  \item{ \code{Author} }{Author(s) of the name. Used almost exclusively with beetle taxa}
+#'  \item{ \code{Extinct} }{True if extinct; false if extant}
+#'  \item{ \code{TaxaGroup} }{Code for taxa group to which taxon belongs}
+#'  \item{ \code{EcolGroups} }{Array of ecological group codes to which the taxon belongs}
+#'  \item{ \code{HigherTaxonID} }{TaxonID of the next higher taxonomic rank}
+#'  \item{ \code{PublicationID} }{Publication identification number}
+#'  \item{ \code{Notes} }{Free-form notes or comments about the taxon}
+
 #' @examples
 #' \dontrun{
 #' ## Return all species taxa with "Abies" in name - note wildcard
@@ -56,7 +54,7 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
     }
   }
 
-  # Parameter check on taxonname and taxonids, I'm allowing 
+  # Parameter check on taxonname and taxonids, I'm allowing
   # only one, but I think it can accept two.
   if (any(c('taxonids', 'taxonname') %in% names(cl))){
 

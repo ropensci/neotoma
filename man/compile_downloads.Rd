@@ -6,19 +6,20 @@
 compile_downloads(downloads)
 }
 \arguments{
-\item{downloads}{A list of downloads as returned by \code{get_download}, or mutliple sites joined in a list.}
+\item{downloads}{A list of downloads as returned by \code{\link{get_download}}, or mutliple sites joined in a list.}
 }
 \value{
-This command returns a \code{data.frame}
-
- To support further synthesis and analysis \code{compile_download} works to transform a list
- returned by \code{get_download} into a large \code{data.frame} with columns for site and sample attributes
- and also with the associated assemblage data at each sample depth.  This function also does the same for
- single sites.
+This command returns a data frame.
 }
 \description{
-From the assemblage data for multiple cores, return a single \code{data.frame} with columns for site
+From the assemblage data for multiple cores, return a single data.frame with columns for site
 metadata and assemblage data.
+}
+\details{
+To support further synthesis and analysis \code{compile_download} works to transform a list
+returned by \code{\link{get_download}} into a large data frame with columns for site and sample attributes
+and also with the associated assemblage data at each sample depth.  This function also does the same for
+single sites.
 }
 \examples{
 \dontrun{

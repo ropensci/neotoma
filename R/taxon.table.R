@@ -1,6 +1,6 @@
 #' @name taxon.list
 #' @title Neotoma taxon list
-#' @description The taxonomy table for datasets in neotoma, as would be returned by \code{get_table}
+#' @description The taxonomy table for datasets in neotoma, as would be returned by \code{\link{get_table}}
 #' @docType data
 #' @usage taxon.list
 #' @format a \code{data.frame} object

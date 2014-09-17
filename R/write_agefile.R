@@ -30,14 +30,14 @@ write_agefile <- function(download, chronology = 1, path,
                 'There is no directory at ', path, '/Cores'))
   }
 
-  if (!class(download) == 'list' | !c('chronologies') %in% names(download)){
+  if (!'download' %in% class(download) | !(c('chronologies') %in% names(download) | c('chronologies') %in% names(download[[1]]))){
     stop(paste0('write_agefile can only operate on valid download ',
                 'objects with valid chronologies'))
   }
   
-  if (class(download) == 'list' & c('chronologies') %in% names(download)){
+  if ('download' %in% class(download) & (c('chronologies') %in% names(download) | c('chronologies') %in% names(download[[1]]))){
     
-    
+    if('download' %in% class(download[[1]])){download <- download[[1]]}
     
     chron.controls <- get_chroncontrol(chronologyid = download$chronologies[[chronology]]$ChronologyID[1],
                                        verbose = FALSE)
@@ -61,7 +61,8 @@ write_agefile <- function(download, chronology = 1, path,
                                         chron.controls$chron.control$AgeYoungest),
                           depth = chron.controls$chron.control$Depth,
                           cc = ifelse(chron.controls$chron.control$ControlType %in% uncal,
-                                      1, 0))
+                                      1, 0), stringsAsFactors=FALSE)
+      chron$labid[regexpr(',', chron$labid)>0] <- gsub(',', replacement='_', chron$labid[regexpr(',', chron$labid)>0])
     }
     if (cal.prog == 'Clam'){
       chron <- data.frame(ID = paste0(chron.controls$chron.control$ControlType, 
@@ -73,10 +74,12 @@ write_agefile <- function(download, chronology = 1, path,
                                         chron.controls$chron.control$AgeYoungest),
                           offset = NA,
                           depth = chron.controls$chron.control$Depth,
-                          thickness = chron.controls$chron.control$Thickness)
+                          thickness = chron.controls$chron.control$Thickness,
+                          stringsAsFactors=FALSE)
       chron$cal_BP [ chron.controls$chron.control$ControlType %in% uncal] <- NA
       chron$C14_age[!chron.controls$chron.control$ControlType %in% uncal] <- NA
       
+      chron$ID[regexpr(',', chron$labid)>0] <- gsub(',', replacement='_', chron$labid[regexpr(',', chron$labid)>0])
     }
       
     depths <- download$sample.meta$depths
@@ -89,9 +92,11 @@ write_agefile <- function(download, chronology = 1, path,
       }
     }
     
+    
+    
     write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
-              row.names = FALSE)
-    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
-              row.names = FALSE)
+              row.names = FALSE, quote = TRUE)
+    write.table(depths, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
+              row.names = FALSE, quote = TRUE,col.names=FALSE)
   }
 }

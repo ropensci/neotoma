@@ -17,20 +17,18 @@ get_taxa(taxonid, taxonname, status, taxagroup, ecolgroup)
 \item{ecolgroup}{The ecological group of the taxa. More detailed than \code{taxagroup}, can be obtained using \code{get_table("EcolGroupTypes")}.}
 }
 \value{
-Returns a table.
+Returns a data frame with the following components:
 
-\itemize{
- \item{TaxonID}{Unique database record identifier for a taxon.}
- \item{TaxonCode}{Shorthand notation for a taxon identification.}
- \item{TaxonName}{Name of the taxon.}
- \item{Author}{Author(s) of the name. Used almost exclusively with beetle taxa.}
- \item{Extinct}{True if extinct; false if extant.}
- \item{TaxaGroup}{Code for taxa group to which taxon belongs.}
- \item{EcolGroups}{Array of ecological group codes to which the taxon belongs.}
- \item{HigherTaxonID}{TaxonID of the next higher taxonomic rank.}
- \item{PublicationID}{Publication identification number.}
- \item{Notes}{Free-form notes or comments about the taxon.}
-}
+ \item{ \code{TaxonID} }{Unique database record identifier for a taxon}
+ \item{ \code{TaxonCode} }{Shorthand notation for a taxon identification}
+ \item{ \code{TaxonName} }{Name of the taxon}
+ \item{ \code{Author} }{Author(s) of the name. Used almost exclusively with beetle taxa}
+ \item{ \code{Extinct} }{True if extinct; false if extant}
+ \item{ \code{TaxaGroup} }{Code for taxa group to which taxon belongs}
+ \item{ \code{EcolGroups} }{Array of ecological group codes to which the taxon belongs}
+ \item{ \code{HigherTaxonID} }{TaxonID of the next higher taxonomic rank}
+ \item{ \code{PublicationID} }{Publication identification number}
+ \item{ \code{Notes} }{Free-form notes or comments about the taxon}
 }
 \description{
 Get taxon information from Neotoma.
