@@ -59,6 +59,7 @@ get_dataset <- function(x, ...){
 }
 
 #' @export
+#' @import RJSONIO RCurl plyr
 get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
                         taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
@@ -162,6 +163,7 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 }
 
 #' @export
+#' @import RJSONIO RCurl plyr
 get_dataset.site <- function(site){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
@@ -235,6 +237,7 @@ get_dataset.site <- function(site){
 }
 
 #' @export
+#' @importFrom plyr llply
 get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
   output <- llply(download, .fun=function(x){
