@@ -77,3 +77,13 @@ test_that('Compiling',
   expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
   expect_is(compile_taxa(get_download(100), 'P25'), 'download')
 })
+
+#-----------------------------------------------------
+#  Tests that use the API:
+contect('Using the get_dataset methods across data classes:')
+test_that('get_datasets',
+{
+  expect_is(get_dataset(taxonname='Tsuga*'), 'dataset')
+  expect_is(get_dataset(get_download(7203)), 'dataset')
+  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset')
+}
