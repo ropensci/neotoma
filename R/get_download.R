@@ -1,15 +1,14 @@
 #' Function to return full download records using either a \code{dataset} or dataset ID.
 #'
-#' Using the dataset ID, return all records associated with the data.  At present,
-#'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
+#' Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
 #'
 #' @import RJSONIO RCurl
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param dataset An optional list object returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned by the Neotoma API call, or an object of class \code{download}, a full data object containing all the relevant assemblage information and metadata neccessary to understand a site.
-#' The data object is a list of lists and data frames that describe an assemblage, the constituent taxa, the chronology, site and PIs who contributed the data. The following are important components:
+#' @return This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned from the Neotoma API call, or an object of class \code{download_list}, containing a set of \code{download} objects, each with relevant assemblage information and metadata:
+#' The \code{download} object is a list of lists and data frames that describe an assemblage, the constituent taxa, the chronology, site and PIs who contributed the data. The following are important components:
 #'
 #'  \item{ \code{metadata} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
 #'  \item{ \code{sample.meta} }{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
@@ -348,10 +347,10 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
   if (length(datasetid) == 1) {
     aa <- list(get.sample(datasetid))
-    class(aa) <- c('download', 'list')
+    class(aa) <- c('download_list', 'list')
   } else {
     aa <- lapply(datasetid, get.sample)
-    class(aa) <- c('download', 'list')
+    class(aa) <- c('download_list', 'list')
   }
   aa
 }
