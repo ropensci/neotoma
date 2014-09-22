@@ -1,10 +1,10 @@
 ##' @title A class for download objects.
 ##'
-##' @description \pkg{coenocliner} provides a simple, easy interface for simulating species abundance (counts) or occurrence along gradients.
+##' @description A \code{download} is an object with the full record for a single dataset.
 ##'
 ##' @details One of the key ways quantitative ecologists attempt to understand the properties and behaviour of the methods they use or dream up is through the use of simulated data. \pkg{coenocliner} is an R package that provides a simple interface to coenocline simulation.
 ##'
-##' @author Gavin L. Simpson
+##' @author Simon Goring
 ##' @docType package
 ##' @name coenocliner
 ##' @aliases coenocliner-package
