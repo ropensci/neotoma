@@ -4,7 +4,6 @@
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @importFrom plyr ldply
 #' @param chronologyid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
 #' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -60,19 +59,23 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
 
         # Here the goal is to reduce this list of lists to as
         # simple a set of matrices as possible.
-        control.table <- ldply(aa[[1]]$controls,
-                               function(x)data.frame(x, stringsAsFactors = FALSE))
+        control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
+        
         control.table <- control.table[, c('Depth', 'Thickness',
                                           'Age', 'AgeYoungest', 'AgeOldest',
                                           'ControlType', 'ChronControlID')]
+        
+        colnames(control.table) <- c('depth', 'thickness', 'age', 
+                                     'age.young', 'age.old', 'control.type',
+                                     'chron.control.id')
 
         meta.table <- data.frame(default    = aa[[1]]$Default,
                                  name       = aa[[1]]$ChronologyName,
-                                 agetype    = aa[[1]]$AgeType,
-                                 agemodel   = aa[[1]]$AgeModel,
-                                 ageolder   = aa[[1]]$AgeOlder,
-                                 ageyounger = aa[[1]]$AgeYounger,
-                                 chronid    = aa[[1]]$ChronologyID,
+                                 age.type    = aa[[1]]$AgeType,
+                                 age.model   = aa[[1]]$AgeModel,
+                                 age.older   = aa[[1]]$AgeOlder,
+                                 age.younger = aa[[1]]$AgeYounger,
+                                 chron.id    = aa[[1]]$ChronologyID,
                                  date       = aa[[1]]$DatePrepared)
     }
 

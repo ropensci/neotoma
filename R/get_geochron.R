@@ -3,8 +3,8 @@
 #' Using the dataset ID, return all geochronological data associated with the dataID.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
-#' @import RJSONIO RCurl
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\code{get_dataset}}.
+#' @importFrom RJSONIO fromJSON
+#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
@@ -52,7 +52,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 #'
 get_geochron <- function(datasetid, verbose = TRUE){
@@ -117,25 +117,24 @@ get_geochron <- function(datasetid, verbose = TRUE){
 
           data.frame(sample.id = x$SampleID,
                      geochron.id = x$GeochronID,
-                   age.type.id = x$AgeTypeID,
-                   age.type = age.type,
-                   age = x$Age,
-                   e.older = x$ErrorOlder,
-                   e.young = x$ErrorYounger,
-                   delta13C = x$Delta13C,
-                   lab.no = x$LabNumber,
-                   material.dated = x$MaterialDated,
-                   geo.chron.type.id = x$GeochronTypeID,
-                   geo.chron.type = geo.chron.type,
-                   notes = x$Notes,
-                   infinite = x$Infinite,
-                   stringsAsFactors = FALSE)
+                     age.type.id = x$AgeTypeID,
+                     age.type = age.type,
+                     age = x$Age,
+                     e.older = x$ErrorOlder,
+                     e.young = x$ErrorYounger,
+                     delta13C = x$Delta13C,
+                     lab.no = x$LabNumber,
+                     material.dated = x$MaterialDated,
+                     geo.chron.type.id = x$GeochronTypeID,
+                     geo.chron.type = geo.chron.type,
+                     notes = x$Notes,
+                     infinite = x$Infinite,
+                     stringsAsFactors = FALSE)
         }
 
-      out <- t(sapply(aa, pull.rec))
+        out <- t(sapply(aa, pull.rec))
 
       }
-
 
       as.data.frame(out)
     }

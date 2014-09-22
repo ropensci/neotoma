@@ -1,7 +1,8 @@
 #' @title Get contact information.
 #' @description Deprecated - see \code{get_contact}.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #' @importFrom reshape2 dcast melt
 #'
 #' @references

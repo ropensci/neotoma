@@ -1,7 +1,8 @@
 #' @title Obtain dataset information from the Neotoma Paleoecological Database.
 #' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 #'
-#' @import RJSONIO RCurl plyr
+#' @importFrom RCurl getForm
+#' @importFrom RJSONIO fromJSON
 #' @param siteid A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -59,7 +60,6 @@ get_dataset <- function(x, ...){
 }
 
 #' @export
-#' @import RJSONIO RCurl plyr
 get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
                         taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
@@ -120,16 +120,16 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   } else {
     new.output <- lapply(output, function(x) {
       new.output <- list()
-      new.output$site.data <- data.frame(siteid = x$Site$SiteID,
-                                         sitename = x$Site$SiteName,
+      new.output$site.data <- data.frame(site.id = x$Site$SiteID,
+                                         site.name = x$Site$SiteName,
                                          long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
                                                          na.rm = TRUE),
                                          lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
                                                         na.rm = TRUE),
                                          elev = x$Site$Altitude,
                                          description = x$Site$SiteDescription,
-                                         long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                         lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                         long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                         lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
       new.output$dataset <- data.frame(dataset.id = x$DatasetID,
@@ -163,7 +163,6 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 }
 
 #' @export
-#' @import RJSONIO RCurl plyr
 get_dataset.site <- function(site){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
@@ -187,16 +186,16 @@ get_dataset.site <- function(site){
     } else {
       new.output <- lapply(output, function(x) {
         new.output <- list()
-        new.output$site.data <- data.frame(siteid = x$Site$SiteID,
-                                           sitename = x$Site$SiteName,
+        new.output$site.data <- data.frame(site.id = x$Site$SiteID,
+                                           site.name = x$Site$SiteName,
                                            long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
                                                        na.rm = TRUE),
                                            lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
                                                       na.rm = TRUE),
                                            elev = x$Site$Altitude,
                                            description = x$Site$SiteDescription,
-                                           long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                           lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                           long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                           lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                            row.names = x$Site$SiteName,
                                            stringsAsFactors = FALSE)
         new.output$dataset <- data.frame(dataset.id = x$DatasetID,
@@ -228,7 +227,7 @@ get_dataset.site <- function(site){
     new.output[[1]]
   }
 
-  new.output <- llply(site$siteid, pull_site)
+  new.output <- lapply(site$siteid, pull_site)
   
   class(new.output) <- c('dataset', 'list')
 
@@ -237,10 +236,9 @@ get_dataset.site <- function(site){
 }
 
 #' @export
-#' @importFrom plyr llply
 get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
-  output <- llply(download, .fun=function(x){
+  output <- lapply(download, FUN=function(x){
     x$metadata })
   class(output) <- c('dataset', 'list')
   return(output)  

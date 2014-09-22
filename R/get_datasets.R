@@ -1,7 +1,8 @@
 #' @title Obtain dataset information from the Neotoma Paleoecological Database.
 #' @description Deprecated - see \code{get_dataset}.
 #'
-#' @import RJSONIO RCurl
+#' @import RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 
