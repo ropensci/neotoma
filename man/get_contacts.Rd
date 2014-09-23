@@ -12,7 +12,6 @@ Deprecated - see \code{get_contact}.
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
-\keyword{API}
-\keyword{Neotoma}
-\keyword{Palaeoecology}
+\keyword{IO}
+\keyword{connection}
 

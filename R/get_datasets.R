@@ -1,7 +1,7 @@
 #' @title Obtain dataset information from the Neotoma Paleoecological Database.
 #' @description Deprecated - see \code{get_dataset}.
 #'
-#' @import RJSONIO fromJSON
+#' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -9,7 +9,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 #'
 get_datasets <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){

@@ -243,3 +243,12 @@ get_dataset.download <- function(download){
   class(output) <- c('dataset', 'list')
   return(output)  
 }
+
+#' @export
+get_dataset.download_list <- function(download){
+  # Just pull the dataset out of the download.
+  output <- lapply(download, FUN=function(x){
+    x$metadata })
+  class(output) <- c('dataset', 'list')
+  return(output)  
+}

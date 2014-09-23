@@ -3,6 +3,7 @@
 #' Using the dataset ID, return all records associated with the data.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
+#' @importFrom RJSONIO fromJSON
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param dataset An optional list object returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
@@ -56,7 +57,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 
 get_download <- function(x, ...){
@@ -355,6 +356,8 @@ get_download.default <- function(datasetid, verbose = TRUE){
   }
 
   aa <- lapply(datasetid, get.sample)
+  
+  names(aa) <- sapply(lapply(lapply(aa, '[[', 'metadata'), '[[', 'dataset'), '[[', 'dataset.id')
   
   class(aa) <- c('download_list', 'list')
   

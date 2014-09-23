@@ -42,8 +42,6 @@
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords utilities
-#' @importFrom plyr llply
-#' @importFrom plyr ldply
 #' @export
 
 compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE){
@@ -122,9 +120,15 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
     }
 
     if ('download' %in% class(object[[1]])) {
-      output <- llply(object, aggregate.counts)
-      missed.samples <- ldply(output, function(x)x$taxon.list[,c('TaxonName', 'compressed')])
-    } else {
+    
+      output <- lapply(object, FUN = aggregate.counts)
+      
+      missed.samples <- do.call(rbind.data.frame,
+                                lapply(output, 
+                                       FUN=function(x)x$taxon.list[,c('taxon.name', 'compressed')]))
+    
+    } 
+    else {
       output <- aggregate.counts(object)
       missed.samples <- output$taxon.list[,c('TaxonName', 'compressed')]
     }  

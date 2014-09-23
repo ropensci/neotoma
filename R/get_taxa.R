@@ -31,7 +31,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
 

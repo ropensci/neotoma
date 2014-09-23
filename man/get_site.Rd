@@ -57,7 +57,6 @@ Simon J. Goring \email{simon.j.goring@gmail.com}
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/sites
 }
-\keyword{API}
-\keyword{Neotoma}
-\keyword{Palaeoecology}
+\keyword{IO}
+\keyword{connection}
 

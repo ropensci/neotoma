@@ -37,13 +37,9 @@
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords utilities
-#' @importFrom plyr ldply
 #' @export
 
 compile_downloads <-function(downloads){
-
-  #  We're going to ldply the list to make a data.frame from key metadata, but
-  #  first we need a function to turn a single download into a data.frame:
 
   if(!'download' %in% class(downloads)){
     stop('compile_datasets can only operate on lists as returned from get_download')
