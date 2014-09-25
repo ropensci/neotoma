@@ -112,32 +112,37 @@ get_download.default <- function(datasetid, verbose = TRUE){
         if ('Samples' %in% nams  & length(aa1$Samples) > 0) {
 
           # Build the metadata for the dataset.
-            meta.data <- list(
-              site.data = data.frame(site.id = aa1$Site$SiteID,
-                                     site.name = aa1$Site$SiteName,
-                                     long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                                 na.rm = TRUE),
-                                     lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                                na.rm = TRUE),
-                                     elev = aa1$Site$Altitude,
-                                     description = aa1$Site$SiteDescription,
-                                     long.acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
-                                     lat.acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
-                                     row.names = aa1$Site$SiteName,
-                                     stringsAsFactors = FALSE),
-              dataset = data.frame(dataset.id = aa1$DatasetID,
-                                     dataset.name = aa1$DatasetName,
-                                     collection.type = aa1$CollUnitType,
-                                     collection.handle = aa1$CollUnitHandle,
-                                     dataset.type =  aa1$DatasetType,
-                                     stringsAsFactors = FALSE),
+            dataset <- list(
+              site = data.frame(site.id = aa1$Site$SiteID,
+                                site.name = aa1$Site$SiteName,
+                                long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                            na.rm = TRUE),
+                                lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                           na.rm = TRUE),
+                                elev = aa1$Site$Altitude,
+                                description = aa1$Site$SiteDescription,
+                                long.acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
+                                lat.acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
+                                row.names = aa1$Site$SiteName,
+                                stringsAsFactors = FALSE),
+              dataset.meta = data.frame(dataset.id = aa1$DatasetID,
+                                        dataset.name = aa1$DatasetName,
+                                        collection.type = aa1$CollUnitType,
+                                        collection.handle = aa1$CollUnitHandle,
+                                        dataset.type =  aa1$DatasetType,
+                                        stringsAsFactors = FALSE),
 
               pi.data = do.call(rbind.data.frame,
                                   aa1$DatasetPIs),
-              submission = data.frame(submission.date = aa1$NeotomaLastSub,
-                                      submission.type = 'Last submission to Neotoma'),
+              submission = data.frame(submission.date = strptime(aa1$NeotomaLastSub,
+                                                                 '%m/%d/%Y'),
+                                      submission.type = 'Last submission to Neotoma',
+                                      stringsAsFactors=FALSE),
               access.date = Sys.time())
 
+            class(dataset) <- c('dataset', 'list')
+            class(dataset$site) <- c('site', 'data.frame')
+            
             # copy to make indexing below easier?
             samples <- aa1$Samples
 
@@ -252,7 +257,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
             mod.dups <- duplicated(count.data[, c('taxon.name', 'sample.id')])
 
             if (sum(mod.dups) > 0){
-              tax.dups <- unique(count.data$taxon.name[duplicated(count.data[, c('taxon.name', 'sample')])])
+              tax.dups <- unique(count.data$taxon.name[duplicated(count.data[, c('taxon.name', 'sample.id')])])
               if (length(tax.dups) == 1){
                 message <- paste0('\nModifiers seem absent from the taxon ',
                                   tax.dups,
@@ -335,7 +340,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
             }
 
             # stick all this together
-            aa <- list(metadata = meta.data,
+            aa <- list(dataset = dataset,
                        sample.meta = sample.meta,
                        taxon.list = taxon.list,
                        counts = counts,
@@ -352,11 +357,12 @@ get_download.default <- function(datasetid, verbose = TRUE){
     class(aa) <- c('download', 'list')
   
     aa
+    
   }
 
   aa <- lapply(datasetid, get.sample)
   
-  names(aa) <- sapply(lapply(lapply(aa, '[[', 'metadata'), '[[', 'dataset'), '[[', 'dataset.id')
+  names(aa) <- sapply(lapply(lapply(aa, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   class(aa) <- c('download_list', 'list')
 
@@ -371,10 +377,25 @@ get_download.dataset <- function(dataset, verbose = TRUE){
   # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
 
-  datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
+  datasetid <- dataset$dataset$dataset.id
 
   aa <- get_download(datasetid)
 
+  aa
+}
+
+#' @export
+get_download.dataset_list <- function(dataset, verbose = TRUE){
+  
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
+  
+  datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
+  
+  aa <- get_download(datasetid)
+  
   aa
 }
 
