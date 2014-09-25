@@ -54,7 +54,10 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
                 'get_download or a matrix or data.frame'))
   }
 
-  data(pollen.equiv)
+  pollen.equiv <- NULL
+  
+  data(pollen.equiv, envir=environment())
+  
   avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
 
   if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
