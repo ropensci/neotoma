@@ -1,6 +1,10 @@
 #' @title Get contact information.
 #' @description Deprecated - see \code{get_contact}.
 #'
+#' @param contactid <what param does>
+#' @param  contactname <what param does>
+#' @param  contactstatus <what param does>
+#' @param  familyname <what param does>
 #' @import RJSONIO RCurl
 #' @importFrom reshape2 dcast melt
 #'

@@ -4,9 +4,8 @@
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
 #' @import RJSONIO RCurl
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
-#' @param dataset An optional list object returned by \code{get_dataset}.
-#' @param verbose logical; should messages on API call be printed?
+#' @param x <what param does>
+#' @param  ... Optional additional arugments
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned by the Neotoma API call, or an object of class \code{download}, a full data object containing all the relevant assemblage information and metadata neccessary to understand a site.
 #' The data object is a list of lists and data frames that describe an assemblage, the constituent taxa, the chronology, site and PIs who contributed the data. The following are important components:
@@ -59,13 +58,16 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
-
 get_download <- function(x, ...){
   UseMethod('get_download')
 }
 
-#' @export
+#' foo
+#'
 #' @import RJSONIO RCurl
+#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param verbose logical; should messages on API call be printed?
+#' @export
 get_download.default <- function(datasetid, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
@@ -356,6 +358,12 @@ get_download.default <- function(datasetid, verbose = TRUE){
   aa
 }
 
+
+#'<brief desc>
+#'
+#'<full description>
+#' @param dataset <what param does>
+#' @param  verbose = TRUE <what param does>
 #' @export
 #' @import RJSONIO RCurl plyr
 get_download.dataset <- function(dataset, verbose = TRUE){

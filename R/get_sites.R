@@ -6,6 +6,13 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
+#' @param siteid <what param does>
+#' @param  sitename <what param does>
+#' @param  altmin <what param does>
+#' @param  altmax <what param does>
+#' @param  loc <what param does>
+#' @param  gpid <what param does>
+
 get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
 
   .Deprecated('get_site')

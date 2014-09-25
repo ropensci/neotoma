@@ -11,7 +11,7 @@
 #'   \item{\code{"WhitmoreSmall"} }{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #' }
 #'
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @param object A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param cf Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?
@@ -54,7 +54,7 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
     stop(paste0('Data object must be a pollen object returned by function ',
                 'get_download or a matrix or data.frame'))
   }
-
+  pollen.equiv <- NULL
   data(pollen.equiv)
   avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
 

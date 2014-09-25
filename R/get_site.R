@@ -5,12 +5,9 @@
 #'    based on parameters defined by the user.
 #'
 #' @import RJSONIO RCurl
-#' @param sitename A character string representing the full or partial site name.
-#' @param altmin Minimum site altitude  (in m).
-#' @param altmax Maximum site altitude (in m).
-#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
-#' @param dataset An optional list object returned by \code{get_dataset}.
+#' @param x <what param does>
+#' @param  ... Optional additional arugments
+#valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return A data frame:
@@ -45,6 +42,14 @@ get_site <- function(x, ...){
   UseMethod('get_site')
 }
 
+#' title
+#'
+#' @param sitename A character string representing the full or partial site name.
+#' @param altmin Minimum site altitude  (in m).
+#' @param altmax Maximum site altitude (in m).
+#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
+#' @param gpid A character string or numeric value, must correspond to a 
+#' @param  download = NULL <what param does>
 #' @export
 get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NULL){
 

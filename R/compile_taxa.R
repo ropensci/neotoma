@@ -120,7 +120,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
     }
 
     if ('download' %in% class(object[[1]])) {
-      output <- llply(object, aggregate.counts)
+      output <- plyr::llply(object, aggregate.counts)
       missed.samples <- ldply(output, function(x)x$taxon.list[,c('TaxonName', 'compressed')])
     } else {
       output <- aggregate.counts(object)

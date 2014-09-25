@@ -2,20 +2,9 @@
 #' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 #'
 #' @import RJSONIO RCurl
-#' @param siteid A numeric value corresponding to the site ID.
-#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
-#' @param piid Numeric value for the Principle Investigator's ID number.
-#' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
-#' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
-#' @param loc A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
-#' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.
-#' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
-#' @param ageold The oldest date acceptable for the search (in years before present).
-#' @param ageyoung The youngest date acceptable for the search.
-#' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
-#' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
-#' @param download An object of class \code{download} obtained using the command \code{\link{get_download}}.
+#' @param x <what param does>
+#' @param  ... Optional additional arugments
+
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return More details on the use of these parameters can be obtained from
@@ -53,15 +42,29 @@
 #' @keywords Neotoma Palaeoecology API
 #' @export
 #'
-
 get_dataset <- function(x, ...){
   UseMethod('get_dataset')
 }
 
-#' @export
+#' title
+#' 
+#' Description
 #' @import RJSONIO RCurl plyr
-get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
-                        taxonids, taxonname, ageold, ageyoung, ageof, subdate){
+#' @param siteid A numeric value corresponding to the site ID.
+#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
+#' @param piid Numeric value for the Principle Investigator's ID number.
+#' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
+#' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
+#' @param loc A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
+#' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.
+#' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
+#' @param ageold The oldest date acceptable for the search (in years before present).
+#' @param ageyoung The youngest date acceptable for the search.
+#' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
+#' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
+#' @export
+get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
 
@@ -237,7 +240,6 @@ get_dataset.site <- function(site){
 }
 
 #' @export
-#' @importFrom plyr llply
 get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
   output <- lapply(download, `[[`, "metadata")

@@ -2,6 +2,19 @@
 #' @description Deprecated - see \code{get_dataset}.
 #'
 #' @import RJSONIO RCurl
+#' @param siteid <what param does>
+#' @param  datasettype <what param does>
+#' @param  piid <what param does>
+#' @param  altmin <what param does>
+#' @param  altmax <what param does>
+#' @param  loc <what param does>
+#' @param  gpid <what param does>
+#' @param  taxonids <what param does>
+#' @param  taxonname <what param does>
+#' @param  ageold <what param does>
+#' @param  ageyoung <what param does>
+#' @param  ageof <what param does>
+#' @param  subdate <what param does>
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 

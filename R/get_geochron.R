@@ -4,7 +4,7 @@
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
 #' @import RJSONIO RCurl
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\code{get_dataset}}.
+#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
