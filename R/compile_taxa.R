@@ -67,10 +67,9 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
     }
   } else {
     pollen.equiv <- NULL
-    data(pollen.equiv)
+    data(pollen.equiv, envir = environment())
     avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
   }
-
 
   if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
   if (type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
@@ -88,7 +87,9 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
 
       used.taxa <- pollen.equiv[taxon.matches, ]
       agg.list <- as.vector(used.taxa[, use.list + 2])
+      
       agg.list[is.na(agg.list)] <- 'Other'
+      
 
       compressed.list <- aggregate(t(x$counts), by = list(agg.list),
                                    sum, na.rm = TRUE)
@@ -131,16 +132,20 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
     } 
     else {
       output <- aggregate.counts(object)
+      
       missed.samples <- output$taxon.list[,c('taxon.name', 'compressed')]
+      
+      class(output) <- c('download_list', 'list')
     }  
 
     if (any(missed.samples$compressed == 'Other')) {
       missed <- as.character(unique(missed.samples$taxon.name[which(missed.samples$compressed == 'Other')]))
+      
       warning(paste0('\nThe following taxa could not be found in the existing ',
                      'conversion table:\n', paste(missed, sep = '\n')))
+      
+      class(output) <- c('download', 'list')
     }
-    
-    class(output) <- c('download_list', 'list')
 
   }
 
