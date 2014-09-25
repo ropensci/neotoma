@@ -45,9 +45,9 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 
 ```r
 install.packages("devtools")
-require(devtools)
-install_github("neotoma", "ropensci")
-require(neotoma)
+library(devtools)
+install_github("ropensci/neotoma")
+library(neotoma)
 ```
 
 ### A few examples
