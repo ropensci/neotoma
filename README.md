@@ -17,20 +17,20 @@ The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecologi
 ### Contributors
 + [Gavin Simpson](http://www.fromthebottomoftheheap.net/) - University of Regina, Department of Biology
 + [Jeremiah Marsicek](http://geoweb.uwyo.edu/ggstudent/jmarsice/Site/Home.html) - University of Wyoming, Department of Geology and Geophysics
-+ [Karthik Ram](http://nature.berkeley.edu/~kram/) - University of California - Berkely, College of Natural Resources
++ [Karthik Ram](http://nature.berkeley.edu/~kram/) - University of California - Berkely, Berkeley Institue for Data Science.
 
 Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](http://api.neotomadb.org/doc/resources/home).
 
 ### Currently implemented in `neotoma`
-+ compile_list - using established pollen-related taxonomies from the literature, take the published taxon list and standardize it to allow cross site analysis.
-+ get_contact - find contact information for data contributors to Neotoma. [API](http://api.neotomadb.org/doc/resources/contacts)
-+ get_dataset - obtain dataset metadata from Neotoma. [API](http://api.neotomadb.org/doc/resources/datasets)
-+ get_download - obtain full datasets (pollen or mammal) from Neotoma. [API](http://api.neotomadb.org/doc/resources/downloads)
-+ get_publication - obtain publication information from Neotoma. [API](http://api.neotomadb.org/doc/resources/publications)
-+ get_site - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
-+ get_table - return matrices corresponding to one of the Neotoma database tables. [tables](http://api.neotomadb.org/doc/resources/dbtables)
-+ get_taxa - Get taxon information from Neotoma. [API](http://api.neotomadb.org/doc/resources/taxa)
-+ get_chroncontrol - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
++ `compile_list` - using established pollen-related taxonomies from the literature, take the published taxon list and standardize it to allow cross site analysis.
++ `get_contact` - find contact information for data contributors to Neotoma. [API](http://api.neotomadb.org/doc/resources/contacts)
++ `get_dataset` - obtain dataset metadata from Neotoma. [API](http://api.neotomadb.org/doc/resources/datasets)
++ `get_download` - obtain full datasets (pollen or mammal) from Neotoma. [API](http://api.neotomadb.org/doc/resources/downloads)
++ `get_publication` - obtain publication information from Neotoma. [API](http://api.neotomadb.org/doc/resources/publications)
++ `get_site` - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
++ `get_table` - return matrices corresponding to one of the Neotoma database tables. [tables](http://api.neotomadb.org/doc/resources/dbtables)
++ `get_taxa` - Get taxon information from Neotoma. [API](http://api.neotomadb.org/doc/resources/taxa)
++ `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
 + Major changes to `dataset` and `site` objects, as well as the `metadata` for `downloads`.  This involved cleaning up the column names.
@@ -43,18 +43,18 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 
 + Development version from GitHub:
 
-```coffee
+```r
 install.packages("devtools")
-require(devtools)
-install_github("neotoma", "ropensci")
-require(neotoma)
+library(devtools)
+install_github("ropensci/neotoma")
+library(neotoma)
 ```
 
 ### A few examples
 
 #### Find the distribution of sites with Mammoth fossils in Neotoma
 
-```coffee
+```r
 #  Example requires the mapdata package:
 library('mapdata')
 
