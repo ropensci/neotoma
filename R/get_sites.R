@@ -8,7 +8,13 @@
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
 #' @export
-get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
+#' @param sitename A character string representing the full or partial site name.
+#' @param altmin Minimum site altitude  (in m).
+#' @param altmax Maximum site altitude (in m).
+#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
+
+get_sites <- function(sitename, altmin, altmax, loc, gpid){
 
   .Deprecated('get_site')
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
@@ -16,11 +22,6 @@ get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
   cl <- as.list(match.call())
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir=parent.frame())
-
-  #  Parameter check on siteid:
-  if('siteid' %in% names(cl)){
-    if(!is.numeric(siteid)) stop('siteid must be numeric.')
-  }
 
   #  Parameter check on altitudes.  This gets reused, we could turn it into a
   #  higher level function to save reading lame code:
