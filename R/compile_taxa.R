@@ -129,8 +129,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
                                 lapply(output, 
                                        FUN=function(x)x$taxon.list[,c('taxon.name', 'compressed')]))
     
-    } 
-    else {
+    } else {
       output <- aggregate.counts(object)
       
       missed.samples <- output$taxon.list[,c('taxon.name', 'compressed')]

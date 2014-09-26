@@ -6,12 +6,13 @@
 #'
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
+#' @param x Optional object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
 #' @param sitename A character string representing the full or partial site name.
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
 #' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
-#' @param dataset An optional list object returned by \code{get_dataset}.
+#' @param  ... Optional additional arugments
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return A data frame:
@@ -46,8 +47,16 @@ get_site <- function(x, ...){
   UseMethod('get_site')
 }
 
+#' @title Return Site Information.
+#' @description Return site information from the Neotoma Paleoecological Database.
+#'
+#' @param sitename A character string representing the full or partial site name.
+#' @param altmin Minimum site altitude  (in m).
+#' @param altmax Maximum site altitude (in m).
+#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
 #' @export
-get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NULL){
+get_site.default <- function(sitename, altmin, altmax, loc, gpid){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
@@ -111,32 +120,32 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
 
 
 #' @export
-get_site.dataset <- function(dataset){
-  site <- dataset$site
+get_site.dataset <- function(x){
+  site <- x$site
   class(site) <- c('site', 'data.frame')
   site
 }
 
 #' @export
-get_site.dataset_list <- function(dataset){
-  site <- do.call(rbind.data.frame,lapply(dataset, '[[', 'site'))
+get_site.dataset_list <- function(x){
+  site <- do.call(rbind.data.frame,lapply(x, '[[', 'site'))
   class(site) <- c('site', 'data.frame')
   site
 }
 
 #' @export
-get_site.download <- function(download){
+get_site.download <- function(x){
 
-  site <- download$dataset$site
+  site <- x$dataset$site
   
   class(site) <- c('site', 'data.frame')
   site
 }
 
 #' @export
-get_site.download_list <- function(download){
+get_site.download_list <- function(x){
   
-  site <- do.call(rbind.data.frame,lapply(lapply(download, '[[', 'dataset'), '[[', 'site'))
+  site <- do.call(rbind.data.frame,lapply(lapply(x, '[[', 'dataset'), '[[', 'site'))
   
   class(site) <- c('site', 'data.frame')
   site
