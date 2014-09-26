@@ -30,8 +30,8 @@
 #' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 74 records (as of 01/08/2014), get the dataset IDs for all records:
-#' dataset.ids <- sapply(t8kyr.datasets, function(x) x$DatasetID)
-#' geochron.records <- sapply(dataset.ids, function(x)try(get_geochron(x)))
+#' dataset.ids <- sapply(t8kyr.datasets, function(x) x$dataset.meta$dataset.id)
+#' geochron.records <- get_geochron(dataset.ids)
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
 #'
@@ -42,9 +42,9 @@
 #'   output
 #' }
 #'
-#' radio_chron <- unlist(sapply(geochron.records, get_ages))
+#' radio.chron <- unlist(sapply(geochron.records, get_ages))
 #'
-#' hist(radio_chron, breaks=seq(0, 40000, by = 500),
+#' hist(radio.chron, breaks=seq(0, 40000, by = 500),
 #'      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
 #'      xlab = 'Radiocarbon date (14C years before 1950)')
 #' }
@@ -60,8 +60,6 @@ get_geochron <- function(datasetid, verbose = TRUE){
     # Updated the processing here. There is no need to be fiddling with
     # call. Use missing() to check for presence of argument
     # and then process as per usual
-    base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
-
     if (missing(datasetid)) {
         stop(paste(sQuote("datasetid"), "must be provided."))
     } else {
@@ -72,6 +70,9 @@ get_geochron <- function(datasetid, verbose = TRUE){
     # Get sample is a function because we can now get
     # one or more geochronologies at a time.
     get_sample <- function(x){
+      
+      base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
+      
       # query Neotoma for data set
       aa <- try(fromJSON(paste0(base.uri, '?datasetid=', x), nullValue = NA))
 
@@ -98,9 +99,7 @@ get_geochron <- function(datasetid, verbose = TRUE){
         aa <- aa[[2]]
 
         if (verbose) {
-            message(strwrap(paste0("API call was successful. ",
-                                   "Returned record for",
-                                     aa[[1]]$Site$SiteName)))
+            message(strwrap(paste0("API call was successful.")))
         }
 
         # If there are actual stratigraphic samples
@@ -139,6 +138,6 @@ get_geochron <- function(datasetid, verbose = TRUE){
       as.data.frame(out)
     }
 
-    lapply(datasetid, try(get_sample))
+    lapply(datasetid, function(x)try(get_sample(x)))
 
 }

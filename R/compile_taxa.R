@@ -26,7 +26,7 @@
 #' t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
-#' GOLDKBG <- get_download(t8kyr.datasets[[1]]$DatasetID)
+#' GOLDKBG <- get_download(t8kyr.datasets[[1]])
 #'
 #' gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 #'
@@ -116,7 +116,14 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
                      full.counts = x$counts,
                      lab.data = x$lab.data,
                      chronologies = x$chronologies)
+      
+      missed <- as.character(unique(new.list$taxon.name[which(new.list$compressed == 'Other')]))
+      
+      warning(paste0('\nThe following taxa could not be found in the existing ',
+                     'conversion table:\n', paste(missed, sep = '\n')))
+            
       class(output) <- c('download', 'list')
+      
       output
 
     }
@@ -125,26 +132,13 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
     
       output <- lapply(object, FUN = aggregate.counts)
       
-      missed.samples <- do.call(rbind.data.frame,
-                                lapply(output, 
-                                       FUN=function(x)x$taxon.list[,c('taxon.name', 'compressed')]))
+      class(output) <- c('download_list', 'list')
     
     } else {
       output <- aggregate.counts(object)
       
-      missed.samples <- output$taxon.list[,c('taxon.name', 'compressed')]
-      
-      class(output) <- c('download_list', 'list')
-    }  
-
-    if (any(missed.samples$compressed == 'Other')) {
-      missed <- as.character(unique(missed.samples$taxon.name[which(missed.samples$compressed == 'Other')]))
-      
-      warning(paste0('\nThe following taxa could not be found in the existing ',
-                     'conversion table:\n', paste(missed, sep = '\n')))
-      
       class(output) <- c('download', 'list')
-    }
+    }  
 
   }
 
