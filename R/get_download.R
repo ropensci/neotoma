@@ -28,11 +28,11 @@
 #' pollen.records <- get_download(dataset = t8kyr.datasets)
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
-#' compiled.sites <- lapply(pollen.records, function(x) compile_list(x, list.name='WS64'))
+#' compiled.sites <- lapply(pollen.records, function(x) compile_taxa(x, list.name='WS64'))
 #'
 #' #  Extract the Pseudotsuga curves for the sites:
 #' get.curve <- function(x, taxa) {
-#'                data.frame(site = x$metadata$site.data$SiteName,
+#'                data.frame(site = x$dataset$site.data$SiteName,
 #'                age = x$sample.meta$Age,
 #'                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
 #'              }

@@ -20,11 +20,18 @@
 #' t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 #'
 #' #  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
-#' thuja.sites <- get_download(sapply(t8kyr.datasets, function(x)x$DatasetID))
+#' thuja.sites <- get_download(t8kyr.datasets)
 #'
-#' gold.p25 <- lapply(thuja.sites, compile_taxa, 'P25')
+#' gold.p25 <- compile_taxa(thuja.sites, 'P25')
 #'
 #' all.gold <- compile_downloads(gold.p25)
+#' 
+#' pollen.sums <- rowSums(all.gold[,11:ncol(all.gold)], na.rm=TRUE)
+#' 
+#' plot(x = all.gold$age, 
+#'      y = all.gold$Cupressaceae.Taxaceae / pollen.sums, 
+#'      col = all.gold$site.name,
+#'      pch = 19)
 #'
 #' }
 #' @references
