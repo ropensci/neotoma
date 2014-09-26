@@ -4,7 +4,9 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #' @export
 get_sites <- function(siteid, sitename, altmin, altmax, loc, gpid){
 

@@ -1,13 +1,14 @@
 #' @title Get contact information.
 #' @description Deprecated - see \code{get_contact}.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #' @importFrom reshape2 dcast melt
 #'
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_contacts <- function(contactid, contactname, contactstatus, familyname){
 

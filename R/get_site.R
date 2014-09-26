@@ -4,7 +4,8 @@
 #' \code{get_site} returns site information from the Neotoma Paleoecological Database
 #'    based on parameters defined by the user.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #' @param sitename A character string representing the full or partial site name.
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
@@ -39,7 +40,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_site <- function(x, ...){
   UseMethod('get_site')
@@ -92,15 +93,15 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
     output$SiteDescription <- as.character(output$SiteDescription)
 
     output <- data.frame(siteid = output$SiteID,
-                sitename = output$SiteName,
+                site.name = output$SiteName,
                 long = rowMeans(output[, c('LongitudeWest', 'LongitudeEast')],
                                 na.rm = TRUE),
                 lat = rowMeans(output[,c('LatitudeNorth', 'LatitudeSouth')],
                                na.rm = TRUE),
                 elev = output$Altitude,
                 description = output$SiteDescription,
-                long_acc = abs(output$LongitudeWest - output$LongitudeEast),
-                lat_acc = abs(output$LatitudeNorth - output$LatitudeSouth))
+                long.acc = abs(output$LongitudeWest - output$LongitudeEast),
+                lat.acc = abs(output$LatitudeNorth - output$LatitudeSouth))
   }
 
   class(output) <- c('site', 'data.frame')
@@ -108,17 +109,35 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid, download = NUL
 
 }
 
-#' @export
-get_site.download <- function(download){
 
-  site <- ldply(download, .fun=function(x)x$metadata$site.data)
+#' @export
+get_site.dataset <- function(dataset){
+  site <- dataset$site
   class(site) <- c('site', 'data.frame')
   site
 }
 
 #' @export
-get_site.dataset <- function(dataset){
-  site <- ldply(dataset, .fun='[[', 'site.data')
+get_site.dataset_list <- function(dataset){
+  site <- do.call(rbind.data.frame,lapply(dataset, '[[', 'site'))
+  class(site) <- c('site', 'data.frame')
+  site
+}
+
+#' @export
+get_site.download <- function(download){
+
+  site <- download$dataset$site
+  
+  class(site) <- c('site', 'data.frame')
+  site
+}
+
+#' @export
+get_site.download_list <- function(download){
+  
+  site <- do.call(rbind.data.frame,lapply(lapply(download, '[[', 'dataset'), '[[', 'site'))
+  
   class(site) <- c('site', 'data.frame')
   site
 }

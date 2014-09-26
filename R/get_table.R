@@ -1,7 +1,8 @@
 
 #' Get Neotoma value tables.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getURLContent
 #' @param table.name Call one of the available tables in the Neotoma Database.
 #'    A full listing of tables can be found here: \url{http://api.neotomadb.org/doc/resources/dbtables}.
 #'    By default it returns all objects in the table.
@@ -18,7 +19,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_table <- function(table.name = NULL){
 

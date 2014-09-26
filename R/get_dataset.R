@@ -1,7 +1,8 @@
 #' @title Obtain dataset information from the Neotoma Paleoecological Database.
 #' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RCurl getForm
+#' @importFrom RJSONIO fromJSON
 #' @param siteid A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -59,7 +60,6 @@ get_dataset <- function(x, ...){
 }
 
 #' @export
-#' @import RJSONIO RCurl plyr
 get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid,
                         taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
@@ -120,16 +120,85 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   } else {
     new.output <- lapply(output, function(x) {
       new.output <- list()
-      new.output$site.data <- data.frame(siteid = x$Site$SiteID,
-                                         sitename = x$Site$SiteName,
+      new.output$site <- data.frame(site.id = x$Site$SiteID,
+                                    site.name = x$Site$SiteName,
+                                    long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                                na.rm = TRUE),
+                                    lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                                na.rm = TRUE),
+                                    elev = x$Site$Altitude,
+                                    description = x$Site$SiteDescription,
+                                    long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                    lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                    row.names = x$Site$SiteName,
+                                    stringsAsFactors = FALSE)
+      
+      class(new.output$site) <- c('site', 'data.frame')
+      
+      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
+                                            dataset.name = x$DatasetName,
+                                            collection.type = x$CollUnitType,
+                                            collection.handle = x$CollUnitHandle,
+                                            dataset.type = x$DatasetType,
+                                            stringsAsFactors = FALSE)
+      
+      new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+      rownames(new.output$pi.data) <- NULL
+
+      sub.test <- try(do.call(rbind.data.frame, x$SubDates))
+
+      if(length(sub.test) > 0){
+        colnames(sub.test) <- c("submission.date",  "submission.type")
+        sub.test$submission.date <- as.character(sub.test$submission.date)
+        sub.test$submission.type <- as.character(sub.test$submission.type)
+      }
+
+      new.output$submission <- sub.test
+      
+      new.output$access.date = Sys.time()
+
+      class(new.output) <- c('dataset', 'list')
+      new.output})
+
+  }
+
+  class(new.output) <- c('dataset_list', 'list')
+
+  new.output
+
+}
+
+#' @export
+get_dataset.site <- function(site){
+  # The issue here is that these objects
+  # have multiple tables of multiple lengths.
+
+  siteIDs <- site$siteid
+
+  pull_site <- function(siteid){
+
+    base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
+    aa <- try(fromJSON(paste0(base.uri, siteid), nullValue = NA))
+
+    if (aa[[1]] == 0){
+      stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
+    }
+    if (aa[[1]] == 1){
+      output <- aa[[2]]
+    }
+
+    new.output <- lapply(output, function(x) {
+      new.output <- list()
+      new.output$site.data <- data.frame(site.id = x$Site$SiteID,
+                                         site.name = x$Site$SiteName,
                                          long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                                         na.rm = TRUE),
+                                                     na.rm = TRUE),
                                          lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                                        na.rm = TRUE),
+                                                    na.rm = TRUE),
                                          elev = x$Site$Altitude,
                                          description = x$Site$SiteDescription,
-                                         long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                         lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                         long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                         lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
       new.output$dataset <- data.frame(dataset.id = x$DatasetID,
@@ -154,75 +223,6 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 
       new.output})
 
-  }
-
-  class(new.output) <- c('dataset', 'list')
-
-  new.output
-
-}
-
-#' @export
-#' @import RJSONIO RCurl plyr
-get_dataset.site <- function(site){
-  # The issue here is that these objects
-  # have multiple tables of multiple lengths.
-
-  siteIDs <- site$siteid
-
-  pull_site <- function(siteid){
-
-    base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
-    aa <- try(fromJSON(paste0(base.uri, siteid), nullValue = NA))
-
-    if (aa[[1]] == 0){
-      stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
-    }
-    if (aa[[1]] == 1){
-      output <- aa[[2]]
-    }
-
-    if (class(output) == 'try-error') {
-      new.output <- neotoma.form
-    } else {
-      new.output <- lapply(output, function(x) {
-        new.output <- list()
-        new.output$site.data <- data.frame(siteid = x$Site$SiteID,
-                                           sitename = x$Site$SiteName,
-                                           long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                                       na.rm = TRUE),
-                                           lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                                      na.rm = TRUE),
-                                           elev = x$Site$Altitude,
-                                           description = x$Site$SiteDescription,
-                                           long_acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                           lat_acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
-                                           row.names = x$Site$SiteName,
-                                           stringsAsFactors = FALSE)
-        new.output$dataset <- data.frame(dataset.id = x$DatasetID,
-                                         dataset.name = x$DatasetName,
-                                         collection.type = x$CollUnitType,
-                                         collection.handle = x$CollUnitHandle,
-                                         dataset.type = x$DatasetType,
-                                         stringsAsFactors = FALSE)
-        new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
-        rownames(new.output$pi.data) <- NULL
-
-        sub.test <- try(do.call(rbind.data.frame, x$SubDates))
-
-        if(length(sub.test) > 0){
-          colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
-        }
-
-        new.output$submission <- sub.test
-
-
-        new.output$access.date = Sys.time()
-
-        new.output})
-
-    }
-
     class(new.output) <- c('dataset', 'list')
 
     new.output[[1]]
@@ -230,17 +230,35 @@ get_dataset.site <- function(site){
 
   new.output <- lapply(site$siteid, pull_site)
 
-  class(new.output) <- c('dataset', 'list')
+  class(new.output) <- c('dataset_list', 'list')
 
   new.output
 
 }
 
 #' @export
-#' @importFrom plyr llply
 get_dataset.download <- function(download){
   # Just pull the dataset out of the download.
-  output <- lapply(download, `[[`, "metadata")
-  class(output) <- c('dataset', 'list')
+  output <- list(download$dataset)
+  
+  names(output) <- output[[1]]$dataset.meta$dataset.id
+  
+  class(output[[1]]) <- c('dataset', 'list')
+  
+  class(output) <- c('dataset_list', 'list')
+  return(output)  
+}
+
+#' @export
+get_dataset.download_list <- function(download){
+  
+  # Just pull the dataset out of the download and reassign classes:
+  output <- lapply(download, FUN=function(x){
+    dataset <- x$dataset
+    class(dataset) <- c('dataset', 'list')
+    dataset })
+  
+  class(output) <- c('dataset_list', 'list')
+  
   output
 }

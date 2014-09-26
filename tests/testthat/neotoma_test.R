@@ -27,9 +27,9 @@ test_that('get_download accepts numeric values and returns values as expected',
             expect_error(get_download(factor('a')))
             expect_error(get_download(c('a', 'b')))
             expect_message(get_download(1), 'API call was successful')
-            expect_that(length(get_download(1)) == 6, is_true())
+            expect_that(length(get_download(1)) == 1, is_true())
             expect_that(length(get_download(c(1,2))) == 2, is_true())
-            expect_is(get_download(1, verbose=FALSE), 'list')
+            expect_is(get_download(1, verbose=FALSE), 'download_list')
           })
 
 
@@ -55,7 +55,8 @@ test_that('is get_dataset working?',
             expect_error(get_dataset(ageof=10))
             expect_error(get_dataset(ageof='taxon'))
             expect_error(get_dataset(subdate=10))
-            expect_is(get_dataset(siteid=1), 'dataset')
+            expect_is(get_dataset(siteid=1), 'dataset_list')
+            expect_is(get_dataset(siteid=1)[[1]], 'dataset')
 })
 
 #-----------------------------------------------------
@@ -63,10 +64,13 @@ test_that('is get_dataset working?',
 context('Crossing sites, datasets and downloads, using the API:')
 test_that('Crossing APIs',
 {
-  expect_is(get_dataset(get_download(100)), 'dataset')
-  expect_is(get_site(get_download(100)), 'data.frame')
-  expect_is(get_site(get_dataset(siteid=100)), 'data.frame')
-  expect_is(get_download(get_dataset(siteid=100)), 'download')
+  expect_is(get_dataset(get_download(100)), 'dataset_list')            # test download_list
+  expect_is(get_dataset(get_download(100)[[1]]), 'dataset_list')       # test download
+  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset_list') # test site
+  expect_is(get_site(get_download(100)), 'site')                       # test download_list
+  expect_is(get_site(get_download(100)[[1]]), 'site')                  # test download
+  expect_is(get_site(get_dataset(siteid=100)), 'site')                 # test dataset_list
+  expect_is(get_site(get_dataset(siteid=100)[[1]]), 'site')            # test dataset
 })
 #-----------------------------------------------------
 
@@ -75,15 +79,6 @@ test_that('Compiling',
 {
   expect_is(compile_downloads(get_download(100:103)), 'data.frame')
   expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
-  expect_is(compile_taxa(get_download(100), 'P25'), 'download')
+  expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
+  expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
 })
-
-#-----------------------------------------------------
-#  Tests that use the API:
-#contect('Using the get_dataset methods across data classes:')
-#test_that('get_datasets',
-#{
-#  expect_is(get_dataset(taxonname='Tsuga*'), 'dataset')
-#  expect_is(get_dataset(get_download(7203)), 'dataset')
-#  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset')
-#}

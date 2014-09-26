@@ -9,7 +9,8 @@
 #' and also with the associated assemblage data at each sample depth.  This function also does the same for
 #' single sites.
 #'
-#' @param downloads A list of downloads as returned by \code{\link{get_download}}, or mutliple sites joined in a list.
+#' @importFrom plyr ldply
+#' @param downloads A download_list as returned by \code{\link{get_download}}, or mutliple downloads joined in a list.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a data frame.
 #'
@@ -41,56 +42,54 @@
 
 compile_downloads <-function(downloads){
 
-  #  We're going to ldply the list to make a data.frame from key metadata, but
-  #  first we need a function to turn a single download into a data.frame:
-
-  if(!'download' %in% class(downloads)){
-    stop('compile_datasets can only operate on lists as returned from get_download')
+  if(!('download_list' %in% class(downloads) | all(sapply(downloads, class) == 'download') |
+       'download' %in% class(downloads))){
+    stop('compile_datasets can only operate on lists as returned from get_download, or a list of download objects.')
   }
 
   down.to.df <- function(x){
     if('download' %in% class(x)){
       #  There can be NULL values in the download object.  We'll turn them to NA values:
-      if(is.null(x$metadata$site.data$sitename)) x$metadata$site.data$sitename <- paste('NoName_ID')
+      if(is.null(x$dataset$site$site.name)) x$dataset$site$site.name <- paste('NoName_ID')
       if(is.null(x$sample.meta$depths)) x$sample.meta$depths <- NA
-      if(is.null(x$sample.meta$Age)) x$sample.meta$Age <- NA
-      if(is.null(x$sample.meta$AgeOlder)) x$sample.meta$AgeOlder <- NA
-      if(is.null(x$sample.meta$AgeYounger)) x$sample.meta$AgeYounger <- NA
-      if(is.null(x$metadata$site.data$lat)) x$metadata$site.data$lat <- NA
-      if(is.null(x$metadata$site.data$long)) x$metadata$site.data$long <- NA
+      if(is.null(x$sample.meta$age)) x$sample.meta$age <- NA
+      if(is.null(x$sample.meta$age.older)) x$sample.meta$age.older <- NA
+      if(is.null(x$sample.meta$age.younger)) x$sample.meta$age.younger <- NA
+      if(is.null(x$dataset$site$lat)) x$dataset$site$lat <- NA
+      if(is.null(x$dataset$site$long)) x$dataset$site$long <- NA
 
-      site.info <- data.frame(sitename = x$metadata$site.data$sitename,
-                              depth = x$sample.meta$depths,
-                              age = x$sample.meta$Age,
-                              ageold = x$sample.meta$AgeOlder,
-                              ageyoung = x$sample.meta$AgeYounger,
-                              date.type = x$sample.meta$AgeType,
-                              lat = x$metadata$site.data$lat,
-                              long = x$metadata$site.data$long,
-                              dataset = x$metadata$dataset$dataset.id,
+      site.info <- data.frame(site.name = x$dataset$site$site.name,
+                              depth = x$sample.meta$depth,
+                              age = x$sample.meta$age,
+                              age.old = x$sample.meta$age.older,
+                              age.young = x$sample.meta$age.younger,
+                              date.type = x$sample.meta$age.type,
+                              lat = x$dataset$site$lat,
+                              long = x$dataset$site$long,
+                              dataset = x$dataset$dataset.meta$dataset.id,
                               x$counts)
     }
     else{
       #  Dummy data for empty sites.
-      site.info <- data.frame(sitename = NA,
+      site.info <- data.frame(site.name = NA,
                               depth = NA,
                               age = NA,
-                              ageold = NA,
+                              age.old = NA,
                               ageyoung = NA,
                               date.type = NA,
                               lat = NA,
                               long = NA,
                               dataset = NA,
-                              Unknown = NA)
+                              unknown = NA)
     }
     site.info
   }
 
 
-  if('download' %in% class(downloads) & !'metadata'%in%names(downloads)){
+  if('download_list' %in% class(downloads)){
     site.info <- ldply(downloads, down.to.df)
   }
-  if('download' %in% class(downloads) & 'metadata'%in%names(downloads)){
+  if('download' %in% class(downloads)){
     site.info <- down.to.df(downloads)
   }
 

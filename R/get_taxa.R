@@ -1,7 +1,8 @@
 
 #' Get taxon information from Neotoma.
 #'
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
 #' @param taxonid Numeric taxon identifier used in Neotoma
 #' @param taxonname A character string representing the full or partial name of taxa of interest.
 #' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.
@@ -30,7 +31,7 @@
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords IO connection
 #' @export
 get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
 

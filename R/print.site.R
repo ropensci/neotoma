@@ -3,5 +3,5 @@
 print.site <- function(x, ...){
   class(x) <- 'data.frame'
 
-  print(x, ...)
+  print(x[ ,!colnames(x)%in%'site.name'], ...)
 }

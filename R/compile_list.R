@@ -11,7 +11,6 @@
 #'   \item{\code{"WhitmoreSmall"} }{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #' }
 #'
-#' @import RJSONIO RCurl plyr
 #' @param object A pollen object returned by \code{get_download}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., P25, Whitmore).  More detail in the Description.
 #' @param cf Should taxa listed as *cf*s (*e.g.*, *cf*. *Gilia*) be considered highly resolved?
@@ -42,7 +41,7 @@
 #' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687.
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
-#' @keywords Neotoma Palaeoecology API
+#' @keywords utilities
 #' @export
 
 compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
@@ -55,7 +54,10 @@ compile_list <- function(object, list.name, cf = TRUE, type = TRUE){
                 'get_download or a matrix or data.frame'))
   }
 
-  data(pollen.equiv)
+  pollen.equiv <- NULL
+  
+  data(pollen.equiv, envir=environment())
+  
   avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
 
   if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
