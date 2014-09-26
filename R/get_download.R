@@ -1,16 +1,15 @@
-#' Function to return full download records using either a \code{dataset} or dataset ID.
-#'
-#' Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
+#' @title Function to return full download records using \code{site}s, \code{dataset}s, or dataset IDs.
+#' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
 #'
 #' @importFrom RJSONIO fromJSON
+#' @param x Optional parameter for a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
-#' @param dataset An optional list object returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned from the Neotoma API call, or an object of class \code{download_list}, containing a set of \code{download} objects, each with relevant assemblage information and metadata:
 #' The \code{download} object is a list of lists and data frames that describe an assemblage, the constituent taxa, the chronology, site and PIs who contributed the data. The following are important components:
 #'
-#'  \item{ \code{metadata} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
+#'  \item{ \code{dataset} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
 #'  \item{ \code{sample.meta} }{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
 #'  \item{ \code{taxon.list} }{The list of taxa contained within the dataset, unordered, including information that can be used in \code{\link{get_taxa}}}
 #'  \item{ \code{counts} }{The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
@@ -58,11 +57,16 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-
 get_download <- function(x, ...){
   UseMethod('get_download')
 }
 
+#' @title Function to return full download records using \code{site}s, \code{dataset}s, or dataset IDs.
+#' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
 get_download.default <- function(datasetid, verbose = TRUE){
 
@@ -369,15 +373,16 @@ get_download.default <- function(datasetid, verbose = TRUE){
   aa
 }
 
+
 #' @export
-get_download.dataset <- function(dataset, verbose = TRUE){
+get_download.dataset <- function(x, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
 
-  datasetid <- dataset$dataset$dataset.id
+  datasetid <- x$dataset$dataset.id
 
   aa <- get_download(datasetid)
 
@@ -385,14 +390,14 @@ get_download.dataset <- function(dataset, verbose = TRUE){
 }
 
 #' @export
-get_download.dataset_list <- function(dataset, verbose = TRUE){
+get_download.dataset_list <- function(x, verbose = TRUE){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
   
-  datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
+  datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
   
   aa <- get_download(datasetid)
   
@@ -400,9 +405,9 @@ get_download.dataset_list <- function(dataset, verbose = TRUE){
 }
 
 #' @export
-get_download.site <- function(site, verbose = TRUE){
+get_download.site <- function(x, verbose = TRUE){
   
-  dataset <- get_dataset(site)
+  dataset <- get_dataset(x)
   
   datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
   
