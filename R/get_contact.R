@@ -24,21 +24,21 @@
 #'    or a table of contacts, with rows corresponding to the number of individual
 #'    contacts returned by the Neotoma API.  Each row entry includes the following parameters:
 #'
-#'  \item{ \code{ContactID} }{Unique database record identifier for the contact.}
-#'  \item{ \code{AliasID} }{The ContactID of a person's current name. If the AliasID is different from the ContactID, the ContactID refers to the person's former name.}
-#'  \item{ \code{ContactName} }{Full name of the person, last name first (e.g. \code{"Simpson, George Gaylord"}) or name of organization or project (e.g. \code{"Great Plains Flora Association"}).}
-#'  \item{ \code{ContactStatus} }{Current status of the person, organization, or project. Field links to the ContactStatuses lookup table.}
-#'  \item{ \code{FamilyName} }{Family or surname name of a person.}
-#'  \item{ \code{LeadingInitials} }{Leading initials for given or forenames without spaces (e.g. \code{"G.G."}).}
-#'  \item{ \code{GivenNames} }{Given or forenames of a person (e.g. \code{"George Gaylord"}). Initials with spaces are used if full given names are not known (e.g. \code{"G. G")}.}
-#'  \item{ \code{Suffix} }{Suffix of a person's name (e.g. \code{"Jr."}, \code{"III"}).}
-#'  \item{ \code{Title} }{A person's title (e.g. \code{"Dr."}, \code{"Prof."}, \code{"Prof. Dr"}).}
-#'  \item{ \code{Phone} }{Telephone number.}
-#'  \item{ \code{Fax} }{Fax number.}
-#'  \item{ \code{Email} }{Email address.}
-#'  \item{ \code{URL} }{Universal Resource Locator, an Internet World Wide Web address.}
-#'  \item{ \code{Address} }{Full mailing address.}
-#'  \item{ \code{Notes} }{Free form notes or comments about the person, organization, or project.}
+#'  \item{ \code{contact.name} }{Full name of the person, last name first (e.g. \code{"Simpson, George Gaylord"}) or name of organization or project (e.g. \code{"Great Plains Flora Association"}).}
+#'  \item{ \code{contact.status} }{Current status of the person, organization, or project. Field links to the ContactStatuses lookup table.}
+#'  \item{ \code{family.name} }{Family or surname name of a person.}
+#'  \item{ \code{leading.initials} }{Leading initials for given or forenames without spaces (e.g. \code{"G.G."}).}
+#'  \item{ \code{given.names} }{Given or forenames of a person (e.g. \code{"George Gaylord"}). Initials with spaces are used if full given names are not known (e.g. \code{"G. G")}.}
+#'  \item{ \code{suffix} }{Suffix of a person's name (e.g. \code{"Jr."}, \code{"III"}).}
+#'  \item{ \code{title} }{A person's title (e.g. \code{"Dr."}, \code{"Prof."}, \code{"Prof. Dr"}).}
+#'  \item{ \code{phone} }{Telephone number.}
+#'  \item{ \code{fax} }{Fax number.}
+#'  \item{ \code{email} }{Email address.}
+#'  \item{ \code{url} }{Universal Resource Locator, an Internet World Wide Web address.}
+#'  \item{ \code{address} }{Full mailing address.}
+#'  \item{ \code{notes} }{Free form notes or comments about the person, organization, or project.}
+#'  \item{ \code{contact.id} }{Unique database record identifier for the contact.}
+#'  \item{ \code{alias.id} }{The ContactID of a person's current name. If the AliasID is different from the ContactID, the ContactID refers to the person's former name.}
 #'
 #' @examples \dontrun{
 #' #  To find all data contributors who are active:
@@ -92,6 +92,10 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
                     LeadingInitials + GivenNames + Suffix + Title + Phone +
                     Fax + Email + URL + Address + Notes ~ variable,
                     fun.aggregate = length) ##[, -2]
+    colnames(output) <- c('contact.name', 'contact.status', 'family.name',
+                          'leading.initials', 'given.names',
+                          'suffix', 'title', 'phone', 'fax', 'email', 'url',
+                          'address', 'notes', 'alias.id', 'contact.id')
   }
 
   output

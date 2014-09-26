@@ -3,6 +3,15 @@
 #'
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
+#' @param contactid Contact ID is a numerical value associated with the Neotoma
+#'    Contact table's numerical Contact ID.
+#' @param contactname A character string indicating the data contributors' project,
+#'    organization or personal name.  May be a partial string and can include wildcards.
+#' @param contactstatus The current status of the contact.  Possible values include:
+#'    active, deceased, defunct, extant, inactive, retired, unknown.
+#' @param familyname A character string.  Full or partial string indicating the
+#'    contact's last name.
+#' @import RJSONIO RCurl
 #' @importFrom reshape2 dcast melt
 #'
 #' @references
