@@ -5,7 +5,6 @@
 ##' @details TO DO
 ##'
 ##' @author Simon Goring
-##' @docType package
 ##' @name download
 ##' @keywords methods
 NULL
