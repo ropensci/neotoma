@@ -6,6 +6,10 @@
 get_site(x, ...)
 }
 \arguments{
+\item{x}{Optional object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}}
+
+\item{...}{Optional additional arugments}
+
 \item{sitename}{A character string representing the full or partial site name.}
 
 \item{altmin}{Minimum site altitude  (in m).}
@@ -15,8 +19,6 @@ get_site(x, ...)
 \item{loc}{A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.}
 
 \item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
-
-\item{dataset}{An optional list object returned by \code{get_dataset}.}
 }
 \value{
 A data frame:

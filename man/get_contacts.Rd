@@ -5,6 +5,19 @@
 \usage{
 get_contacts(contactid, contactname, contactstatus, familyname)
 }
+\arguments{
+\item{contactid}{Contact ID is a numerical value associated with the Neotoma
+Contact table's numerical Contact ID.}
+
+\item{contactname}{A character string indicating the data contributors' project,
+organization or personal name.  May be a partial string and can include wildcards.}
+
+\item{contactstatus}{The current status of the contact.  Possible values include:
+active, deceased, defunct, extant, inactive, retired, unknown.}
+
+\item{familyname}{A character string.  Full or partial string indicating the
+   contact's last name.}
+}
 \description{
 Deprecated - see \code{get_contact}.
 }
