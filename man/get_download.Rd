@@ -37,15 +37,15 @@ The function returns a warning in cases where single taxa are defined by multipl
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
-pollen.records <- get_download(dataset = t8kyr.datasets)
+pollen.records <- get_download(t8kyr.datasets)
 
 #  Standardize the taxonomies for the different records using the WS64 taxonomy.
-compiled.sites <- lapply(pollen.records, function(x) compile_taxa(x, list.name='WS64'))
+compiled.sites <- compile_taxa(pollen.records, list.name='WS64')
 
 #  Extract the Pseudotsuga curves for the sites:
 get.curve <- function(x, taxa) {
-               data.frame(site = x$dataset$site.data$SiteName,
-               age = x$sample.meta$Age,
+               data.frame(site = x$dataset$site$site.name,
+               age = x$sample.meta$age,
                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
              }
 

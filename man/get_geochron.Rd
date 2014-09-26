@@ -40,8 +40,8 @@ Using the dataset ID, return all geochronological data associated with the dataI
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 #  Returns 74 records (as of 01/08/2014), get the dataset IDs for all records:
-dataset.ids <- sapply(t8kyr.datasets, function(x) x$DatasetID)
-geochron.records <- sapply(dataset.ids, function(x)try(get_geochron(x)))
+dataset.ids <- sapply(t8kyr.datasets, function(x) x$dataset.meta$dataset.id)
+geochron.records <- get_geochron(dataset.ids)
 
 #  Standardize the taxonomies for the different records using the WS64 taxonomy.
 
@@ -52,9 +52,9 @@ get_ages <- function(x){
   output
 }
 
-radio_chron <- unlist(sapply(geochron.records, get_ages))
+radio.chron <- unlist(sapply(geochron.records, get_ages))
 
-hist(radio_chron, breaks=seq(0, 40000, by = 500),
+hist(radio.chron, breaks=seq(0, 40000, by = 500),
      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
      xlab = 'Radiocarbon date (14C years before 1950)')
 }

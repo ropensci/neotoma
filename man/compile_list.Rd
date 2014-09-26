@@ -34,11 +34,9 @@ The data object uses the smaller pollen subset.  As this package develops we wil
 t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 #  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
-GOLDKBG <- get_download(t8kyr.datasets[[1]]$DatasetID)
+GOLDKBG <- get_download(t8kyr.datasets[[1]])
 
 gold.p25 <- compile_taxa(GOLDKBG, 'P25')
-
-
 
 }
 }
