@@ -93,12 +93,12 @@ compile_downloads <-function(downloads){
   }
 
 
-  if('download_list' %in% class(downloads)){
-    site.info <- ldply(downloads, down.to.df)
+  if (inherits(downloads, 'download_list')) {
+      site.info <- ldply(downloads, down.to.df)
   }
-  if('download' %in% class(downloads)){
-    site.info <- down.to.df(downloads)
+  if (inherits(downloads, 'download')) {
+      site.info <- down.to.df(downloads)
   }
 
-  return(site.info)
+  site.info
 }
