@@ -26,7 +26,8 @@ test_that("Examples run without error", {
         egout <- try(example(topic = egs[i], package = "neotoma", ask = FALSE,
                              character.only = TRUE, run.dontrun = TRUE,
                              echo = TRUE))
-        expect_that(inherits(egout, "try-error"), is_false())
+        expect_that(inherits(egout, "try-error"), is_false(),
+                    label = paste("Error raised in example:", egs[i]))
         ## expect_that(egout, equals_reference(refnames[i]))
     }
 })
