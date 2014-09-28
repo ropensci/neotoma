@@ -55,7 +55,8 @@ curves <- do.call(rbind.data.frame,
 #  For illustration, remove the sites with no Pseudotsuga occurance:
 curves <- curves[curves$count > 0, ]
 
-smooth.curve <- predict(loess(sqrt(count)~age, data=curves), data.frame(age=seq(20000, 0, by = -100)))
+smooth.curve <- predict(loess(sqrt(count)~age, data=curves),
+                        data.frame(age=seq(20000, 0, by = -100)))
 plot(sqrt(count) ~ age, data = curves,
      ylab = '\% Pseudotsuga/Larix', xlab='Calibrated Years BP', pch=19,
      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
