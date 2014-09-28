@@ -8,6 +8,8 @@ print.download <- function(x, ...){
   
   locs <- as.numeric(get_site(x)[,c('long', 'lat')])
   
+  types <- get_dataset(x)[[1]]$dataset.meta$dataset.type
+  
   cat(paste0('A download object for ',
            x$dataset$site$site.name, '\n',
            'Accessed ', format(x$dataset$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
@@ -17,7 +19,8 @@ print.download <- function(x, ...){
                           long = locs[1],
                           lat = locs[2],
                           age.young = age.set[1],
-                          age.old = age.set[2]), 
+                          age.old = age.set[2],
+                          type = types), 
                justify='left'), row.names=FALSE)
   
   NULL
