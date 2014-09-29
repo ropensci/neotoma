@@ -24,7 +24,7 @@
 #' @return More details on the use of these parameters can be obtained from
 #'    \url{http://api.neotomadb.org/doc/resources/datasets}.
 #'
-#'    A list of class `dataset_list`, with each item corresponding to an individual record.  
+#'    A list of class `dataset_list`, with each item corresponding to an individual record.
 #'    Each list item (each dataset record) includes the following components:
 #'
 #'  \item{ \code{dataset.id} }{Unique database record identifier for the dataset.}
@@ -133,50 +133,50 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   }
 
 
-  if (class(output) == 'try-error') {
-    new.output <- neotoma.form
+  if (inherits(output, "try-error")) {
+      new.output <- neotoma.form
   } else {
-    new.output <- lapply(output, function(x) {
-      new.output <- list()
-      new.output$site <- data.frame(site.id = x$Site$SiteID,
-                                    site.name = x$Site$SiteName,
-                                    long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                                na.rm = TRUE),
-                                    lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                                na.rm = TRUE),
-                                    elev = x$Site$Altitude,
-                                    description = x$Site$SiteDescription,
-                                    long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                    lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
-                                    row.names = x$Site$SiteName,
-                                    stringsAsFactors = FALSE)
-      
-      class(new.output$site) <- c('site', 'data.frame')
-      
-      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
-                                            dataset.name = x$DatasetName,
-                                            collection.type = x$CollUnitType,
-                                            collection.handle = x$CollUnitHandle,
-                                            dataset.type = x$DatasetType,
-                                            stringsAsFactors = FALSE)
-      
-      new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
-      rownames(new.output$pi.data) <- NULL
+      new.output <- lapply(output, function(x) {
+          new.output <- list()
+          new.output$site <- data.frame(site.id = x$Site$SiteID,
+                                        site.name = x$Site$SiteName,
+                                        long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                        na.rm = TRUE),
+                                        lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                        na.rm = TRUE),
+                                        elev = x$Site$Altitude,
+                                        description = x$Site$SiteDescription,
+                                        long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                        lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                        row.names = x$Site$SiteName,
+                                        stringsAsFactors = FALSE)
 
-      sub.test <- try(do.call(rbind.data.frame, x$SubDates))
+          class(new.output$site) <- c('site', 'data.frame')
 
-      if(length(sub.test) > 0){
-        colnames(sub.test) <- c("submission.date",  "submission.type")
-        sub.test$submission.date <- as.character(sub.test$submission.date)
-        sub.test$submission.type <- as.character(sub.test$submission.type)
-      }
+          new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
+                                                dataset.name = x$DatasetName,
+                                                collection.type = x$CollUnitType,
+                                                collection.handle = x$CollUnitHandle,
+                                                dataset.type = x$DatasetType,
+                                                stringsAsFactors = FALSE)
 
-      new.output$submission <- sub.test
-      
-      new.output$access.date = Sys.time()
+          new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+          rownames(new.output$pi.data) <- NULL
 
-      class(new.output) <- c('dataset', 'list')
-      new.output})
+          sub.test <- try(do.call(rbind.data.frame, x$SubDates))
+
+          if(length(sub.test) > 0){
+              colnames(sub.test) <- c("submission.date",  "submission.type")
+              sub.test$submission.date <- as.character(sub.test$submission.date)
+              sub.test$submission.type <- as.character(sub.test$submission.type)
+          }
+
+          new.output$submission <- sub.test
+
+          new.output$access.date = Sys.time()
+
+          class(new.output) <- c('dataset', 'list')
+          new.output})
 
   }
   
@@ -262,27 +262,27 @@ get_dataset.site <- function(x){
 get_dataset.download <- function(x){
   # Just pull the dataset out of the download.
   output <- list(x$dataset)
-  
+
   names(output) <- output[[1]]$dataset.meta$dataset.id
-  
+
   class(output[[1]]) <- c('dataset', 'list')
-  
+
   class(output) <- c('dataset_list', 'list')
-  return(output)  
+  return(output)
 }
 
 #' @export
 get_dataset.download_list <- function(x){
-  
+
   # Just pull the dataset out of the download and reassign classes:
   output <- lapply(x, FUN=function(y){
     dataset <- y$dataset
     class(dataset) <- c('dataset', 'list')
     dataset })
-  
+
   names(output) <- sapply(lapply(output, '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   class(output) <- c('dataset_list', 'list')
-  
+
   output
 }
