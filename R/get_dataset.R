@@ -179,7 +179,10 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
       new.output})
 
   }
-
+  
+  names(new.output) <- sapply(lapply(new.output, '[[', 'dataset.meta'), 
+                              '[[', 'dataset.id')
+  
   class(new.output) <- c('dataset_list', 'list')
 
   new.output
@@ -246,6 +249,9 @@ get_dataset.site <- function(x){
 
   new.output <- lapply(x$siteid, pull_site)
 
+  names(new.output) <- sapply(lapply(new.output, '[[', 'dataset.meta'), 
+                              '[[', 'dataset.id')
+  
   class(new.output) <- c('dataset_list', 'list')
 
   new.output
@@ -273,6 +279,8 @@ get_dataset.download_list <- function(x){
     dataset <- y$dataset
     class(dataset) <- c('dataset', 'list')
     dataset })
+  
+  names(output) <- sapply(lapply(output, '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   class(output) <- c('dataset_list', 'list')
   
