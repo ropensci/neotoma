@@ -46,7 +46,7 @@
 
 compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE){
 
-    if (!iherits(object, c('matrix', 'data.frame', 'download', 'download_list'))) {
+    if (!inherits(object, c('matrix', 'data.frame', 'download', 'download_list'))) {
         stop(paste('Data object must be a pollen object returned by',
                    'function get_download or a matrix or data frame'))
     }
