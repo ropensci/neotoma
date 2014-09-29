@@ -300,7 +300,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
               for (i in 1:no.missing){
                 counts <- rbind(counts, rep(NA, ncol(counts)))
               }
-              rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$IDs %in% rownames(counts)]
+              rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$sample.id %in% rownames(counts)]
 
               counts <- counts[as.character(sample.meta$sample.id), ]
             }
