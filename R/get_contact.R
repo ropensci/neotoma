@@ -78,25 +78,24 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
                    length(aa), ' records.\n'))
   }
 
-  if (class(aa) == 'try-error') {
-    output <- neotoma.form
+  if (inherits(aa, "try-error")) {
+      output <- neotoma.form
   } else {
-    names(aa) <- sapply(aa, function(x)x$ContactID)
-    output <- melt(lapply(aa, data.frame),
-                   id.vars = c("Address", "URL", "GivenNames",
-                   "LeadingInitials", "Fax", "Title", "Email",
-                   "FamilyName", "Phone", "ContactName", "ContactStatus",
-                   "Notes", "Suffix"))
-    output <- dcast(output,
-                    formula = ContactName + ContactStatus + FamilyName +
-                    LeadingInitials + GivenNames + Suffix + Title + Phone +
-                    Fax + Email + URL + Address + Notes ~ variable,
-                    fun.aggregate = length) ##[, -2]
-    colnames(output) <- c('contact.name', 'contact.status', 'family.name',
-                          'leading.initials', 'given.names',
-                          'suffix', 'title', 'phone', 'fax', 'email', 'url',
-                          'address', 'notes', 'alias.id', 'contact.id')
+      names(aa) <- sapply(aa, '[[', "ContactID")
+      output <- melt(lapply(aa, data.frame),
+                     id.vars = c("Address", "URL", "GivenNames",
+                     "LeadingInitials", "Fax", "Title", "Email",
+                     "FamilyName", "Phone", "ContactName", "ContactStatus",
+                     "Notes", "Suffix"))
+      output <- dcast(output,
+                      formula = ContactName + ContactStatus + FamilyName +
+                      LeadingInitials + GivenNames + Suffix + Title + Phone +
+                      Fax + Email + URL + Address + Notes ~ variable,
+                      fun.aggregate = length) ##[, -2]
+      colnames(output) <- c('contact.name', 'contact.status', 'family.name',
+                            'leading.initials', 'given.names',
+                            'suffix', 'title', 'phone', 'fax', 'email', 'url',
+                            'address', 'notes', 'alias.id', 'contact.id')
   }
-
   output
 }
