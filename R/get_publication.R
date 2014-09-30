@@ -105,7 +105,7 @@ get_publication <- function(pubid, contactid, datasetid, author,
     }
   }
 
-  if (class(aa) == 'try-error' | length(aa) == 0){
+  if (class(aa) == 'try-error'){
     output <- NA
   } else {
       # This line doesn't do anything
@@ -120,23 +120,43 @@ get_publication <- function(pubid, contactid, datasetid, author,
       # 2 components, the first everything but the Authors array, the
       # second the authors array *with* a link to PublicationID??
     get_results <- function(x){
-      output <- list(meta = data.frame(id = as.numeric(x$PublicationID),
-                                       pub.type = x$PubType,
-                                       year = as.numeric(x$Year),
-                                       citation = x$Citation,
-                                       stringsAsFactors=FALSE))
       
-      output$authors <- do.call(rbind.data.frame,
-        lapply(x$Authors, FUN=function(y){
-        data.frame(ContactID = y$ContactID,
-                   Order = y$Order,
-                   ContactName = as.character(y$ContactName),
-                   stringsAsFactors=FALSE)}))
-
+      if(length(x) == 0){
+        output <- list(meta = data.frame(id = NA,
+                                         pub.type = NA,
+                                         year = NA,
+                                         citation = NA,
+                                         stringsAsFactors=FALSE))
+        
+        output$authors <- data.frame(contact.id = NA,
+                                     order = NA,
+                                     contact.name = NA,
+                                               stringsAsFactors=FALSE)
+        
+      } else {
+        
+        output <- list(meta = data.frame(id = as.numeric(x$PublicationID),
+                                         pub.type = x$PubType,
+                                         year = as.numeric(x$Year),
+                                         citation = x$Citation,
+                                         stringsAsFactors=FALSE))
+        
+        output$authors <- do.call(rbind.data.frame,
+          lapply(x$Authors, FUN=function(y){
+          data.frame(ContactID = y$ContactID,
+                     Order = y$Order,
+                     ContactName = as.character(y$ContactName),
+                     stringsAsFactors=FALSE)}))
+      }
+      
       output
     }
 
-    output <- lapply(aa, get_results)
+    if(length(aa) < 1) {
+      output <- get_results(aa)
+    } else{
+      output <- lapply(aa, get_results)
+    }
   }
   output
 }
