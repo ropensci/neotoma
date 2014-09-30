@@ -180,12 +180,17 @@ get_publication.default <- function(pubid, contactid, datasetid, author,
       output <- lapply(aa, get_results)
     }
   }
+  
+  if('meta' %in% names(output)) output <- list(output)
+  
   output
 }
 
 #' @export
 get_publication.dataset <- function(x, ... ){
-  get_publication(datasetid = x$dataset.meta$dataset.id)
+  pubs <- get_publication(datasetid = x$dataset.meta$dataset.id)
+  if('meta' %in% names(pubs)) pubs <- list(pubs)
+  pubs
 }
 
 #' @export
@@ -198,7 +203,9 @@ get_publication.dataset_list <- function(x, ... ){
 #' @export
 get_publication.download <- function(x, ... ){
   
-  get_publication(datasetid = x$dataset$dataset.meta$dataset.id)
+  pubs <- get_publication(datasetid = x$dataset$dataset.meta$dataset.id)
+  if('meta' %in% names(pubs)) pubs <- list(pubs)
+  pubs
   
 }
 
