@@ -2,7 +2,7 @@
 print.download_list <- function(x, ...){
   
   dates <- range(sapply(lapply(x, '[[', 'dataset'), '[[', 'access.date'))
-  sites <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'site'), '[[', 'site.name')
+  sites <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'site.data'), '[[', 'site.name')
   dataset.id <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   types <- sapply(lapply(get_dataset(x), '[[', 'dataset.meta'), '[[', 'dataset.type')

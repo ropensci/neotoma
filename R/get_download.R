@@ -32,7 +32,7 @@
 #'
 #' #  Extract the Pseudotsuga curves for the sites:
 #' get.curve <- function(x, taxa) {
-#'                data.frame(site = x$dataset$site$site.name,
+#'                data.frame(site = x$dataset$site.data$site.name,
 #'                age = x$sample.meta$age,
 #'                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
 #'              }
@@ -118,18 +118,18 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
           # Build the metadata for the dataset.
             dataset <- list(
-              site = data.frame(site.id = aa1$Site$SiteID,
-                                site.name = aa1$Site$SiteName,
-                                long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                            na.rm = TRUE),
-                                lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                           na.rm = TRUE),
-                                elev = aa1$Site$Altitude,
-                                description = aa1$Site$SiteDescription,
-                                long.acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
-                                lat.acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
-                                row.names = aa1$Site$SiteName,
-                                stringsAsFactors = FALSE),
+              site.data = data.frame(site.id = aa1$Site$SiteID,
+                                     site.name = aa1$Site$SiteName,
+                                     long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                                 na.rm = TRUE),
+                                     lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                                na.rm = TRUE),
+                                     elev = aa1$Site$Altitude,
+                                     description = aa1$Site$SiteDescription,
+                                     long.acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
+                                     lat.acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
+                                     row.names = aa1$Site$SiteName,
+                                     stringsAsFactors = FALSE),
               dataset.meta = data.frame(dataset.id = aa1$DatasetID,
                                         dataset.name = aa1$DatasetName,
                                         collection.type = aa1$CollUnitType,
