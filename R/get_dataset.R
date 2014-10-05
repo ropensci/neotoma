@@ -242,7 +242,7 @@ get_dataset.site <- function(x){
 
       new.output})
 
-    class(new.output) <- c('dataset', 'list')
+    class(new.output[[1]]) <- c('dataset', 'list')
 
     new.output[[1]]
   }
