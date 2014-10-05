@@ -9,7 +9,7 @@ print.download_list <- function(x, ...){
   
   #  Get minimum and maximum ages for a site:
   age.set <- suppressWarnings(t(sapply(lapply(x, '[[', 'sample.meta'), 
-                    FUN=function(x)range(as.numeric(x[,c('age.older', 'age', 'age.younger')]), 
+                    FUN=function(x)range(unlist(x[,c('age.older', 'age', 'age.younger')]), 
                                                     na.rm=TRUE))))
   age.set[!is.finite(age.set)] <- NA
   colnames(age.set) <- c('age.younger', 'age.older')

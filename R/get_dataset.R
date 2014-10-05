@@ -220,7 +220,7 @@ get_dataset.site <- function(x){
                                          lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
-      new.output$dataset <- data.frame(dataset.id = x$DatasetID,
+      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
                                        dataset.name = x$DatasetName,
                                        collection.type = x$CollUnitType,
                                        collection.handle = x$CollUnitHandle,
