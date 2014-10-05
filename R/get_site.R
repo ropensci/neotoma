@@ -121,14 +121,14 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid){
 
 #' @export
 get_site.dataset <- function(x){
-  site <- x$site
+  site <- x$site.data
   class(site) <- c('site', 'data.frame')
   site
 }
 
 #' @export
 get_site.dataset_list <- function(x){
-  site <- do.call(rbind.data.frame,lapply(x, '[[', 'site'))
+  site <- do.call(rbind.data.frame,lapply(x, '[[', 'site.data'))
   class(site) <- c('site', 'data.frame')
   site
 }
@@ -136,7 +136,7 @@ get_site.dataset_list <- function(x){
 #' @export
 get_site.download <- function(x){
 
-  site <- x$dataset$site
+  site <- x$dataset$site.data
   
   class(site) <- c('site', 'data.frame')
   site
@@ -145,7 +145,7 @@ get_site.download <- function(x){
 #' @export
 get_site.download_list <- function(x){
   
-  site <- do.call(rbind.data.frame,lapply(lapply(x, '[[', 'dataset'), '[[', 'site'))
+  site <- do.call(rbind.data.frame,lapply(lapply(x, '[[', 'dataset'), '[[', 'site.data'))
   
   class(site) <- c('site', 'data.frame')
   site
