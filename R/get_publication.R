@@ -1,5 +1,5 @@
 
-#' A file to get publications for sites or datasets in the Neotoma Database using the API.
+#' A function to get publications for sites or datasets in the Neotoma Database using the API.
 #'
 #' The function takes the parameters, defined by the user, and returns a table with
 #'    publication information from the Neotoma Paleoecological Database.
@@ -32,7 +32,29 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_publication <- function(pubid, contactid, datasetid, author,
+#' 
+get_publication<- function(x, ...) {
+  UseMethod('get_publication')
+}
+
+
+#' A function to get publications for sites or datasets in the Neotoma Database using the API.
+#'
+#' The function takes the parameters, defined by the user, and returns a table with
+#'    publication information from the Neotoma Paleoecological Database.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
+#' @param pubid Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
+#' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
+#' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
+#' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
+#' @param pubtype Character string, one of eleven allowable types, see \code{\link{get_table}}. For a list of allowed types run \code{get_table("PublicationTypes")}.
+#' @param year Numeric publication year.
+#' @param search A character string to search for within the article citation.
+#' @export
+#' 
+get_publication.default <- function(pubid, contactid, datasetid, author,
                             pubtype, year, search){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/publications'
@@ -105,7 +127,7 @@ get_publication <- function(pubid, contactid, datasetid, author,
     }
   }
 
-  if (class(aa) == 'try-error' | length(aa) == 0){
+  if (class(aa) == 'try-error'){
     output <- NA
   } else {
       # This line doesn't do anything
@@ -120,23 +142,78 @@ get_publication <- function(pubid, contactid, datasetid, author,
       # 2 components, the first everything but the Authors array, the
       # second the authors array *with* a link to PublicationID??
     get_results <- function(x){
-      output <- list(meta = data.frame(id = as.numeric(x$PublicationID),
-                                       pub.type = x$PubType,
-                                       year = as.numeric(x$Year),
-                                       citation = x$Citation,
-                                       stringsAsFactors=FALSE))
       
-      output$authors <- do.call(rbind.data.frame,
-        lapply(x$Authors, FUN=function(y){
-        data.frame(ContactID = y$ContactID,
-                   Order = y$Order,
-                   ContactName = as.character(y$ContactName),
-                   stringsAsFactors=FALSE)}))
-
+      if(length(x) == 0){
+        output <- list(meta = data.frame(id = NA,
+                                         pub.type = NA,
+                                         year = NA,
+                                         citation = NA,
+                                         stringsAsFactors=FALSE))
+        
+        output$authors <- data.frame(contact.id = NA,
+                                     order = NA,
+                                     contact.name = NA,
+                                               stringsAsFactors=FALSE)
+        
+      } else {
+        
+        output <- list(meta = data.frame(id = as.numeric(x$PublicationID),
+                                         pub.type = x$PubType,
+                                         year = as.numeric(x$Year),
+                                         citation = x$Citation,
+                                         stringsAsFactors=FALSE))
+        
+        output$authors <- do.call(rbind.data.frame,
+          lapply(x$Authors, FUN=function(y){
+          data.frame(ContactID = y$ContactID,
+                     Order = y$Order,
+                     ContactName = as.character(y$ContactName),
+                     stringsAsFactors=FALSE)}))
+      }
+      
       output
     }
 
-    output <- lapply(aa, get_results)
+    if(length(aa) < 1) {
+      output <- get_results(aa)
+    } else{
+      output <- lapply(aa, get_results)
+    }
   }
+  
+  if('meta' %in% names(output)) output <- list(output)
+  
   output
+}
+
+#' @export
+get_publication.dataset <- function(x, ... ){
+  pubs <- get_publication(datasetid = x$dataset.meta$dataset.id)
+  if('meta' %in% names(pubs)) pubs <- list(pubs)
+  pubs
+}
+
+#' @export
+get_publication.dataset_list <- function(x, ... ){
+  ids <- sapply(x, function(y)y$dataset.meta$dataset.id)
+  
+  lapply(ids, function(x)get_publication(datasetid = x))
+}
+
+#' @export
+get_publication.download <- function(x, ... ){
+  
+  pubs <- get_publication(datasetid = x$dataset$dataset.meta$dataset.id)
+  if('meta' %in% names(pubs)) pubs <- list(pubs)
+  pubs
+  
+}
+
+#' @export
+get_publication.download_list <- function(x, ... ){
+  
+  ids <- sapply(x, function(y)y$dataset$dataset.meta$dataset.id)
+  
+  lapply(ids, function(x)get_publication(datasetid = x))
+  
 }
