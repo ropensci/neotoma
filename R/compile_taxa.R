@@ -65,16 +65,16 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         if(!'taxon' %in% (avail.lists)){
             stop('The alt.table must contain a column titled taxon.')
         }
+        use.list <- which(avail.lists %in% list.name)
     } else {
         pollen.equiv <- NULL
         data(pollen.equiv, envir = environment())
         avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
+        use.list <- which(avail.lists %in% list.name) + 2
     }
 
     if (cf == FALSE)   list.name <- list.name[is.na(pollen.equiv$cf)]
     if (type == FALSE) list.name <- list.name[is.na(pollen.equiv$type)]
-
-    use.list <- which(avail.lists %in% list.name)
 
     if (inherits(object, c("download","download_list"))) {
 
@@ -86,7 +86,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
             }
 
             used.taxa <- pollen.equiv[taxon.matches, ]
-            agg.list <- as.vector(used.taxa[, use.list + 2])
+            agg.list <- as.vector(used.taxa[, use.list])
 
             agg.list[is.na(agg.list)] <- 'Other'
 
@@ -104,7 +104,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
             new.list$compressed <- NA
 
             new.list$compressed <- as.character(pollen.equiv[match(new.list$taxon.name, pollen.equiv$taxon),
-                                                             use.list + 2])
+                                                             use.list])
 
             new.list$compressed[is.na(new.list$compressed) & new.list$taxon.name %in% colnames(x$counts)] <- 'Other'
             new.list <- new.list[match(new.list$taxon.name, x$taxon.list$taxon.name),]
@@ -120,8 +120,10 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
 
             missed <- as.character(unique(new.list$taxon.name[which(new.list$compressed == 'Other')]))
 
-            warning(paste0('\nThe following taxa could not be found in the existing ',
-                           'conversion table:\n', paste(missed, sep = '\n')))
+            if (length(missed)>0){
+              warning(paste0('\nThe following taxa could not be found in the existing ',
+                             'conversion table:\n', paste(missed, sep = '\n')))
+            }
 
             class(output) <- c('download', 'list')
 
@@ -147,7 +149,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         }
 
         used.taxa <- pollen.equiv[taxon.matches, ]
-        agg.list <- as.vector(used.taxa[, use.list + 2])
+        agg.list <- as.vector(used.taxa[, use.list])
         agg.list[is.na(agg.list)] <- 'Other'
 
         compressed.list <- aggregate(t(object), by = list(agg.list),
