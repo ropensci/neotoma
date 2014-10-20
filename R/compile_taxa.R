@@ -141,9 +141,9 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
     }
 
     if (inherits(object, c("matrix", "data.frame"))) {
-        taxon.matches <- match(colnames(object$counts), pollen.equiv$taxon)
+        taxon.matches <- match(colnames(object), pollen.equiv$taxon)
         if (any(is.na(taxon.matches))){
-            missed.samples <- colnames(object$counts)[is.na(taxon.matches)]
+            missed.samples <- colnames(object)[is.na(taxon.matches)]
             warning(paste0('\nThe following taxa could not be found in the existing ',
                            'conversion table:\n', paste(missed.samples, sep = '\n')))
         }
