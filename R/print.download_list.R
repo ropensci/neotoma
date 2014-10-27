@@ -5,6 +5,8 @@ print.download_list <- function(x, ...){
   sites <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'site'), '[[', 'site.name')
   dataset.id <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
+  types <- sapply(lapply(get_dataset(x), '[[', 'dataset.meta'), '[[', 'dataset.type')
+  
   #  Get minimum and maximum ages for a site:
   age.set <- suppressWarnings(t(sapply(lapply(x, '[[', 'sample.meta'), 
                     FUN=function(x)range(as.numeric(x[,c('age.older', 'age', 'age.younger')]), 
@@ -15,15 +17,19 @@ print.download_list <- function(x, ...){
   #  Get site locations:
   locs <- get_site(x)[,c('long', 'lat')]
   
-  cat(paste0('A download_list containing ', length(x), ' objects:',
-           x$dataset$site$site.name, '\n',
+  cat(paste0('A download_list containing ', length(x), ' objects:\n',
            'Accessed from ', 
            format(as.POSIXct(dates[1], origin=Sys.time()-as.numeric(Sys.time())), "%Y-%m-%d %H:%M"),
            'h to ',
            format(as.POSIXct(dates[2], origin=Sys.time()-as.numeric(Sys.time())), "%Y-%m-%d %H:%M"),
            'h. \n',
            'Datasets:\n'))
-  print(format(data.frame(dataset.id, site.name = sites, locs, age.set), justify='left'), row.names=FALSE)
+  print(format(data.frame(dataset.id, 
+                          site.name = sites, 
+                          locs, 
+                          age.set,
+                          type = types), 
+               justify='left'), row.names=FALSE)
   
   NULL
 }
