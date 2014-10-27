@@ -138,20 +138,20 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   } else {
       new.output <- lapply(output, function(x) {
           new.output <- list()
-          new.output$site <- data.frame(site.id = x$Site$SiteID,
-                                        site.name = x$Site$SiteName,
-                                        long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                        na.rm = TRUE),
-                                        lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                        na.rm = TRUE),
-                                        elev = x$Site$Altitude,
-                                        description = x$Site$SiteDescription,
-                                        long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                        lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
-                                        row.names = x$Site$SiteName,
-                                        stringsAsFactors = FALSE)
+          new.output$site.data <- data.frame(site.id = x$Site$SiteID,
+                                             site.name = x$Site$SiteName,
+                                             long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                             na.rm = TRUE),
+                                             lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                             na.rm = TRUE),
+                                             elev = x$Site$Altitude,
+                                             description = x$Site$SiteDescription,
+                                             long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                             lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                             row.names = x$Site$SiteName,
+                                             stringsAsFactors = FALSE)
 
-          class(new.output$site) <- c('site', 'data.frame')
+          class(new.output$site.data) <- c('site', 'data.frame')
 
           new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
                                                 dataset.name = x$DatasetName,
@@ -220,7 +220,7 @@ get_dataset.site <- function(x){
                                          lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
-      new.output$dataset <- data.frame(dataset.id = x$DatasetID,
+      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
                                        dataset.name = x$DatasetName,
                                        collection.type = x$CollUnitType,
                                        collection.handle = x$CollUnitHandle,
@@ -242,7 +242,7 @@ get_dataset.site <- function(x){
 
       new.output})
 
-    class(new.output) <- c('dataset', 'list')
+    class(new.output[[1]]) <- c('dataset', 'list')
 
     new.output[[1]]
   }

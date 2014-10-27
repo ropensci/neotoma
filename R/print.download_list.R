@@ -2,14 +2,14 @@
 print.download_list <- function(x, ...){
   
   dates <- range(sapply(lapply(x, '[[', 'dataset'), '[[', 'access.date'))
-  sites <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'site'), '[[', 'site.name')
+  sites <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'site.data'), '[[', 'site.name')
   dataset.id <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   types <- sapply(lapply(get_dataset(x), '[[', 'dataset.meta'), '[[', 'dataset.type')
   
   #  Get minimum and maximum ages for a site:
   age.set <- suppressWarnings(t(sapply(lapply(x, '[[', 'sample.meta'), 
-                    FUN=function(x)range(as.numeric(x[,c('age.older', 'age', 'age.younger')]), 
+                    FUN=function(x)range(unlist(x[,c('age.older', 'age', 'age.younger')]), 
                                                     na.rm=TRUE))))
   age.set[!is.finite(age.set)] <- NA
   colnames(age.set) <- c('age.younger', 'age.older')

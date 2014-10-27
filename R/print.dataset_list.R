@@ -2,7 +2,7 @@
 print.dataset_list <- function(x, ...){
   
   dates <- range(sapply(x, '[[', 'access.date'))
-  sites <- sapply(lapply(x, '[[', 'site'), '[[', 'site.name')
+  sites <- sapply(lapply(x, '[[', 'site.data'), '[[', 'site.name')
   dataset.id <- sapply(lapply(x, '[[', 'dataset.meta'), '[[', 'dataset.id')
   types <- sapply(lapply(x, '[[', 'dataset.meta'), '[[', 'dataset.type')
   
