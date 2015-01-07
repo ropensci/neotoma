@@ -39,7 +39,7 @@ write_agefile <- function(download, chronology = 1, path,
     
     if('download' %in% class(download[[1]])){download <- download[[1]]}
     
-    chron.controls <- get_chroncontrol(chronologyid = download$chronologies[[chronology]]$ChronologyID[1],
+    chron.controls <- get_chroncontrol(chronologyid = download$chronologies[[chronology]]$chronology.id[1],
                                        verbose = FALSE)
   
     if (nrow(chron.controls$chron.control) < 2){
@@ -53,31 +53,31 @@ write_agefile <- function(download, chronology = 1, path,
       stop('You must define either Bacon or Clam as your model output.')
     }
     if (cal.prog == 'Bacon'){
-      chron <- data.frame(labid = paste0(chron.controls$chron.control$ControlType, 
+      chron <- data.frame(labid = paste0(chron.controls$chron.control$control.type, 
                                          "_",
-                                         chron.controls$chron.control$ChronControlID),
-                          age = chron.controls$chron.control$Age,
-                          error = abs(chron.controls$chron.control$Age - 
-                                        chron.controls$chron.control$AgeYoungest),
-                          depth = chron.controls$chron.control$Depth,
-                          cc = ifelse(chron.controls$chron.control$ControlType %in% uncal,
+                                         chron.controls$chron.control$chron.control.id),
+                          age = chron.controls$chron.control$age,
+                          error = abs(chron.controls$chron.control$age - 
+                                        chron.controls$chron.control$age.young),
+                          depth = chron.controls$chron.control$depth,
+                          cc = ifelse(chron.controls$chron.control$control.type %in% uncal,
                                       1, 0), stringsAsFactors=FALSE)
       chron$labid[regexpr(',', chron$labid)>0] <- gsub(',', replacement='_', chron$labid[regexpr(',', chron$labid)>0])
     }
     if (cal.prog == 'Clam'){
-      chron <- data.frame(ID = paste0(chron.controls$chron.control$ControlType, 
+      chron <- data.frame(ID = paste0(chron.controls$chron.control$control.type, 
                                       "_",
-                                     chron.controls$chron.control$ChronControlID),
-                          C14_age = chron.controls$chron.control$Age,
-                          cal_BP = chron.controls$chron.control$Age,
-                          error = abs(chron.controls$chron.control$Age - 
-                                        chron.controls$chron.control$AgeYoungest),
+                                     chron.controls$chron.control$chron.control.id),
+                          C14_age = chron.controls$chron.control$age,
+                          cal_BP = chron.controls$chron.control$age,
+                          error = abs(chron.controls$chron.control$age - 
+                                        chron.controls$chron.control$age.young),
                           offset = NA,
-                          depth = chron.controls$chron.control$Depth,
-                          thickness = chron.controls$chron.control$Thickness,
+                          depth = chron.controls$chron.control$depth,
+                          thickness = chron.controls$chron.control$thickness,
                           stringsAsFactors=FALSE)
-      chron$cal_BP [ chron.controls$chron.control$ControlType %in% uncal] <- NA
-      chron$C14_age[!chron.controls$chron.control$ControlType %in% uncal] <- NA
+      chron$cal_BP [ chron.controls$chron.control$control.type %in% uncal] <- NA
+      chron$C14_age[!chron.controls$chron.control$control.type %in% uncal] <- NA
       
       chron$ID[regexpr(',', chron$labid)>0] <- gsub(',', replacement='_', chron$labid[regexpr(',', chron$labid)>0])
     }
@@ -91,8 +91,6 @@ write_agefile <- function(download, chronology = 1, path,
                     'Check the path, corename and your permissions.'))
       }
     }
-    
-    
     
     write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
               row.names = FALSE, quote = TRUE)
