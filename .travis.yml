@@ -5,6 +5,7 @@ before_install:
 - "./travis-tool.sh bootstrap"
 install:
 - "./travis-tool.sh install_deps"
+- travis_wait mvn install
 script: "./travis-tool.sh run_tests"
 on_failure:
 - "./travis-tool.sh dump_logs"
