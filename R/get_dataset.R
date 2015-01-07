@@ -240,18 +240,15 @@ get_dataset.site <- function(x){
 
       new.output$access.date = Sys.time()
 
+      class(new.output) <- c('dataset', 'list')
+      
       new.output})
 
-    class(new.output[[1]]) <- c('dataset', 'list')
-
-    new.output[[1]]
+    new.output
   }
 
-  new.output <- lapply(x$siteid, pull_site)
+  new.output <- unlist(lapply(x$siteid,pull_site), recursive=FALSE)
 
-  names(new.output) <- sapply(lapply(new.output, '[[', 'dataset.meta'), 
-                              '[[', 'dataset.id')
-  
   class(new.output) <- c('dataset_list', 'list')
 
   new.output
