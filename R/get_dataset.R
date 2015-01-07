@@ -189,6 +189,8 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 
 }
 
+#' @importFrom RCurl getForm
+#' @importFrom RJSONIO fromJSON
 #' @export
 get_dataset.site <- function(x){
 
