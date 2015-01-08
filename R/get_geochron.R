@@ -73,6 +73,8 @@ get_geochron <- function(datasetid, verbose = TRUE){
     # one or more geochronologies at a time.
     get_sample <- function(x){
       
+      dataset <- get_dataset(datasetid = x)
+      
       base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
       
       # query Neotoma for data set
@@ -107,37 +109,29 @@ get_geochron <- function(datasetid, verbose = TRUE){
         # If there are actual stratigraphic samples
         # with data in the dataset returned.
 
-        ageid <- get_table("AgeTypes")
-        geoid <- get_table("GeochronTypes")
-
         pull.rec <- function(x){
 
-          age.type <- ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)]
-          geo.chron.type <- geoid$GeochronType[match(x$GeochronTypeID,
-                                                     geoid$GeochronTypeID)]
-
           data.frame(sample.id = x$SampleID,
-                     geochron.id = x$GeochronID,
-                     age.type.id = x$AgeTypeID,
-                     age.type = age.type,
+                     depth   = x$Depth,
+                     thickness = x$Thickness,
+                     age.type = x$AgeType,
                      age = x$Age,
                      e.older = x$ErrorOlder,
                      e.young = x$ErrorYounger,
                      delta13C = x$Delta13C,
                      lab.no = x$LabNumber,
                      material.dated = x$MaterialDated,
-                     geo.chron.type.id = x$GeochronTypeID,
-                     geo.chron.type = geo.chron.type,
+                     geo.chron.type = x$GeochronType,
                      notes = x$Notes,
                      infinite = x$Infinite,
                      stringsAsFactors = FALSE)
         }
 
-        out <- t(sapply(aa, pull.rec))
-
+        out <- do.call(rbind.data.frame, lapply(aa, pull.rec))
+        class(out) <- c('geochronologic', 'data.frame')
       }
 
-      as.data.frame(out)
+      out
     }
 
     lapply(datasetid, function(x)try(get_sample(x)))
