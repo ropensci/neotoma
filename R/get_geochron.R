@@ -56,8 +56,13 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-#'
-get_geochron <- function(datasetid, verbose = TRUE){
+get_geochron <- function(x, ...){
+  UseMethod('get_geochron')
+}
+
+#' @importFrom RJSONIO fromJSON
+#' @export
+get_geochron.default <- function(datasetid, verbose = TRUE){
 
     # Updated the processing here. There is no need to be fiddling with
     # call. Use missing() to check for presence of argument
@@ -127,7 +132,8 @@ get_geochron <- function(datasetid, verbose = TRUE){
                      stringsAsFactors = FALSE)
         }
 
-        out <- do.call(rbind.data.frame, lapply(aa, pull.rec))
+        out <- list(x, do.call(rbind.data.frame, lapply(aa, pull.rec)))
+        
         class(out) <- c('geochronologic', 'data.frame')
       }
 
@@ -137,3 +143,74 @@ get_geochron <- function(datasetid, verbose = TRUE){
     lapply(datasetid, function(x)try(get_sample(x)))
 
 }
+
+#' @export
+get_geochron.dataset <- function(x, verbose = TRUE){
+  
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  
+  datasetid <- x$dataset.meta$dataset.id
+  
+  if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
+    stop(paste0('The dataset ID ', dataset$dataset.meta$dataset.id,
+                   ' is not associated with a geochronology object, not count data.'))
+  } else {
+    geochron <- get_geochron(datasetid)
+    
+  }
+  
+  geochron
+  
+}
+
+#' @export
+get_geochron.dataset_list <- function(x, verbose = TRUE){
+  
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  
+  datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
+  
+  dataset.types <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.type))
+  
+  if(any(!dataset.types%in%'geochronologic')){
+    if(all(!dataset.types%in%'geochronologic')){
+      stop('This set contains no geochronological datasets.  Use get_download instead.')
+    } else {
+      message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
+      datasetid <- datasetid[dataset.types %in% 'geochronologic']
+    }
+  }
+  
+  aa <- get_geochron(datasetid)
+  
+  aa
+}
+
+#' @export
+get_geochron.site <- function(x, verbose = TRUE){
+  
+  dataset <- get_dataset(x)
+  
+  datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
+  
+  dataset.types <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.type))
+  
+  if(any(!dataset.types%in%'geochronologic')){
+    if(all(!dataset.types%in%'geochronologic')){
+      stop('This set contains no geochronological datasets.  Use get_download instead.')
+    } else {
+      message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
+      datasetid <- datasetid[dataset.types %in% 'geochronologic']
+    }
+  }
+  
+  aa <- get_geochron(datasetid)
+  
+  aa
+
+}
+
