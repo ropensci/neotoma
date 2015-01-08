@@ -2,7 +2,13 @@
 print.download <- function(x, ...){
 
   site <- x$dataset$site.data$site.name
-  age.set <- suppressWarnings(range(as.vector(x$sample.meta[,c('age.older', 'age', 'age.younger')]), na.rm=TRUE))
+  
+  if(all(is.na(x$sample.meta[,c('age.older', 'age', 'age.younger')]))){
+    age.set <- c(NA, NA)
+  } else{
+    age.set <- suppressWarnings(range(as.vector(x$sample.meta[,c('age.older', 'age', 'age.younger')]), na.rm=TRUE))
+  }
+  
   age.set[!is.finite(age.set)] <- NA
   names(age.set) <- c('age.younger', 'age.older')
   

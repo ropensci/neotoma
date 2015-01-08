@@ -18,6 +18,7 @@
 #'
 #' @section Note:
 #' The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified seperately as crumpled and torn in the same sample and sums these values within a sample.
+#' In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excized).  Use \code{get_geochron} for these objects.
 #'
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
@@ -152,11 +153,15 @@ get_download.default <- function(datasetid, verbose = TRUE){
             #  It's frustrating.  This is the only way we can figure it out in a
             #  general way.
             if(dataset$dataset.meta$dataset.type == 'geochronologic'){
-              geochron <- get_geochron(dataset$dataset.meta$dataset.id)
               
-              aa <- list(dataset, geochron = geochron)
-              class(aa) <- 'geochron'
-              return(aa)
+              message(paste0('The dataset ID ', dataset$dataset.meta$dataset.id,
+                             ' is associated with a geochronology object, not count data.'))
+              return(NULL)
+              #geochron <- get_geochron(dataset$dataset.meta$dataset.id)
+              
+              #aa <- list(dataset, geochron = geochron)
+              #class(aa) <- 'geochron'
+              #return(aa)
             }
               
             if(!dataset$dataset.meta$dataset.type == 'geochronologic'){
@@ -199,9 +204,13 @@ get_download.default <- function(datasetid, verbose = TRUE){
   
                 for (i in 1:length(samples)){
                   for (j in 1:length(samples[[i]]$SampleAges)){
-                    chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
-                      data.frame(samples[[i]]$SampleAges[[j]],
-                                 stringsAsFactors = FALSE)
+                    # Some of the new datasets are passing data without any chronology information.
+                    if(!is.na(samples[[i]]$SampleAges[[j]]['ChronologyName'])) {
+                    
+                      chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
+                        data.frame(samples[[i]]$SampleAges[[j]],
+                                   stringsAsFactors = FALSE)
+                    }
                   }
                 }
               }
@@ -293,30 +302,36 @@ get_download.default <- function(datasetid, verbose = TRUE){
   
               # reshape long sample.data into a sample by taxon data frame
               # take here *only* counts - but needs work FIXME
-              counts <- dcast(count.data,
-                              formula = sample.id ~ taxon.name,
-                              value.var = "value",
-                              fun.aggregate = sum, na.rm = TRUE)
-  
-              # add Sample col as the rownames
-              rownames(counts) <- counts$sample.id
-              ## remove the Sample col, but robustly
-              counts <- counts[, -which(names(counts) == "sample.id"), drop = F]
-  
-              # It is possible that some depths have no count data,
-              # but that they were sampled. This will be
-              # reflected as a row with '0' counts for all taxa.
-              if (any(!sample.meta$sample.id %in% rownames(counts))){
-                no.missing <- sum(!sample.meta$sample.id %in% rownames(counts))
-  
-                for (i in 1:no.missing){
-                  counts <- rbind(counts, rep(NA, ncol(counts)))
+              
+              if(nrow(count.data) > 0){
+                counts <- dcast(count.data,
+                                formula = sample.id ~ taxon.name,
+                                value.var = "value",
+                                fun.aggregate = sum, na.rm = TRUE)
+    
+                # add Sample col as the rownames
+                rownames(counts) <- counts$sample.id
+                ## remove the Sample col, but robustly
+                counts <- counts[, -which(names(counts) == "sample.id"), drop = F]
+    
+                # It is possible that some depths have no count data,
+                # but that they were sampled. This will be
+                # reflected as a row with '0' counts for all taxa.
+                if (any(!sample.meta$sample.id %in% rownames(counts))){
+                  no.missing <- sum(!sample.meta$sample.id %in% rownames(counts))
+    
+                  for (i in 1:no.missing){
+                    counts <- rbind(counts, rep(NA, ncol(counts)))
+                  }
+                  rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$sample.id %in% rownames(counts)]
+    
+                  counts <- counts[as.character(sample.meta$sample.id), ]
                 }
-                rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$sample.id %in% rownames(counts)]
-  
-                counts <- counts[as.character(sample.meta$sample.id), ]
+                
+              } else {
+                counts <- NULL
               }
-  
+    
               # Pull out the lab data and treat it in
               # the same way as the previous:
               take <- sample.data$taxon.group == "Laboratory analyses" |
@@ -353,7 +368,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
                                     formula = sample.id ~ lab.name.units,
                                     value.var = "value")
               } else {
-                  lab.data <- NA
+                  lab.data <- NULL
               }
   
               # stick all this together
@@ -380,6 +395,8 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
   aa <- lapply(datasetid, get.sample)
   
+  aa <- aa[-(which(sapply(aa,is.null),arr.ind=TRUE))]
+  
   names(aa) <- sapply(lapply(lapply(aa, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   class(aa) <- c('download_list', 'list')
@@ -394,8 +411,6 @@ get_download.dataset <- function(x, verbose = TRUE){
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
-  
-  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
   
   datasetid <- x$dataset.meta$dataset.id
   
@@ -417,7 +432,6 @@ get_download.dataset_list <- function(x, verbose = TRUE){
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
-  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
   
   datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
   
