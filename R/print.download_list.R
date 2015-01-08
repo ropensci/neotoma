@@ -8,9 +8,20 @@ print.download_list <- function(x, ...){
   types <- sapply(lapply(get_dataset(x), '[[', 'dataset.meta'), '[[', 'dataset.type')
   
   #  Get minimum and maximum ages for a site:
+  site_ages <- function(x){
+    if(all(is.na(x$sample.meta[,c('age.older', 'age', 'age.younger')]))){
+      age.set <- c(NA, NA)
+    } else{
+      age.set <- suppressWarnings(range(as.vector(x$sample.meta[,c('age.older', 'age', 'age.younger')]), na.rm=TRUE))
+    }
+    
+    age.set
+    
+  }
+  
   age.set <- suppressWarnings(t(sapply(lapply(x, '[[', 'sample.meta'), 
-                    FUN=function(x)range(unlist(x[,c('age.older', 'age', 'age.younger')]), 
-                                                    na.rm=TRUE))))
+                    FUN=function(x)site_ages)))
+  
   age.set[!is.finite(age.set)] <- NA
   colnames(age.set) <- c('age.younger', 'age.older')
   

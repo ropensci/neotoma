@@ -395,7 +395,11 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
   aa <- lapply(datasetid, get.sample)
   
-  aa <- aa[-(which(sapply(aa,is.null),arr.ind=TRUE))]
+  drop.any <- which(sapply(aa,is.null),arr.ind=TRUE)
+  
+  if(length(drop.any > 0)){
+    aa <- aa[-(which(sapply(aa,is.null),arr.ind=TRUE))]
+  }
   
   names(aa) <- sapply(lapply(lapply(aa, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
@@ -443,10 +447,12 @@ get_download.dataset_list <- function(x, verbose = TRUE){
 #' @export
 get_download.site <- function(x, verbose = TRUE){
   
+  message('Fetching datasets for the site(s)')
   dataset <- get_dataset(x)
   
   datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
   
+  message('Getting downloads:')
   aa <- get_download(datasetid)
   
   aa
