@@ -249,7 +249,7 @@ get_dataset.site <- function(x){
     new.output
   }
 
-  new.output <- unlist(lapply(x$siteid,pull_site), recursive=FALSE)
+  new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
 
   class(new.output) <- c('dataset_list', 'list')
 
