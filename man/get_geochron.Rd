@@ -3,7 +3,7 @@
 \alias{get_geochron}
 \title{Function to return geochronological data from records.}
 \usage{
-get_geochron(datasetid, verbose = TRUE)
+get_geochron(x, ...)
 }
 \arguments{
 \item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.}
