@@ -8,17 +8,15 @@
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
-#'    from the Neotoma API call, or a geochronology table, a data frame with the following components:
+#'    from the Neotoma API call, or a \code{geochronologic} object, which is a list with two components, a \code{dataset} and a geochronology table, a \code{data.frame} with the following components:
 #'
 #'  \item{ \code{sample.id} }{A unique identifier for the geochronological unit.}
-#'  \item{ \code{age.type.id} }{Numeric. One of five possible age types.}
 #'  \item{ \code{age.type} }{String.  The age type, one of calendar years, radiocarbon years, etc.}
 #'  \item{ \code{age} }{Dated age of the material.}
 #'  \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
 #'  \item{ \code{e.young} }{The younger error limit of the age value.}
 #'  \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
 #'  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
-#'  \item{ \code{geo.chron.type.id} }{Numeric identification for the type of geochronological analysis.}
 #'  \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
 #'  \item{ \code{notes} }{Text string}
 #'  \item{ \code{infinite} }{Boolean, does the dated material return an "infinte" date?}
@@ -31,8 +29,8 @@
 #' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
 #'                               ageyoung = 8000)
 #'
-#' #  Returns 85 records (as of 01/08/2015).  These are the records though, and we want the sites:
-#' # geochron.records <- get_geochron(get_site(t8kyr.datasets))
+#' #  Returns 85 records (as of 01/08/2015).  These are the pollen records though, we want the sites:
+#' geochron.records <- get_geochron(get_site(t8kyr.datasets))
 #'
 #' #  We want to extract all the radiocarbon ages from the records:
 #'
@@ -153,12 +151,15 @@ get_geochron.dataset <- function(x, verbose = TRUE){
   datasetid <- x$dataset.meta$dataset.id
   
   if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
-    stop(paste0('The dataset ID ', dataset$dataset.meta$dataset.id,
-                   ' is not associated with a geochronology object, not count data.'))
+    stop(paste0('The dataset ID ', x$dataset.meta$dataset.id,
+                   ' is not associated with a geochronology object.'))
   } else {
-    geochron <- get_geochron(datasetid)
-    
+    geochron <- get_geochron(datasetid)[[1]]
   }
+  
+  geochron[[1]] <- x
+  
+  class(geochron) <- c('geochronologic', 'list')
   
   geochron
   
@@ -180,11 +181,24 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
       stop('This set contains no geochronological datasets.  Use get_download instead.')
     } else {
       message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
-      datasetid <- datasetid[dataset.types %in% 'geochronologic']
+      x <- x[dataset.types %in% 'geochronologic']
+      
+      if(length(x) > 1){
+        class(x) <- c('dataset_list', 'list')
+        
+        aa <- lapply(x, function(y){
+          out <- get_geochron(y)
+          out
+        })
+        
+        class(aa) <- c('geochronologic_list', 'list')
+        
+      } else {
+        x <- x[[1]]
+        aa <- get_geochron(x)
+      }
     }
   }
-  
-  aa <- get_geochron(datasetid)
   
   aa
 }
@@ -208,7 +222,12 @@ get_geochron.site <- function(x, verbose = TRUE){
     }
   }
   
-  aa <- get_geochron(dataset)
+  aa <- lapply(dataset, function(y){
+    out <- get_geochron(y)
+    out
+  })
+  
+  class(aa) <- c('geochronologic_list', 'list')
   
   aa
 
