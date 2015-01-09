@@ -285,3 +285,15 @@ get_dataset.download_list <- function(x){
 
   output
 }
+
+#' @export
+get_dataset.geochronologic <- function(x){
+  x[[1]]
+}
+
+#' @export
+get_dataset.geochronologic_list <- function(x){
+  out <- lapply(x, function(y)y[[1]])
+  class(out) <- c('dataset_list', 'list')
+  out
+}
