@@ -29,6 +29,7 @@ Using the dataset ID, site object or dataset object, return all records associat
 \section{Note}{
 
 The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified seperately as crumpled and torn in the same sample and sums these values within a sample.
+In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excized).  Use \code{get_geochron} for these objects.
 }
 \examples{
 \dontrun{
@@ -44,7 +45,7 @@ compiled.sites <- compile_taxa(pollen.records, list.name='WS64')
 
 #  Extract the Pseudotsuga curves for the sites:
 get.curve <- function(x, taxa) {
-               data.frame(site = x$dataset$site$site.name,
+               data.frame(site = x$dataset$site.data$site.name,
                age = x$sample.meta$age,
                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
              }

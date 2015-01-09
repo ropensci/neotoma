@@ -8,17 +8,15 @@
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
-#'    from the Neotoma API call, or a geochronology table, a data frame with the following components:
+#'    from the Neotoma API call, or a \code{geochronologic} object, which is a list with two components, a \code{dataset} and a geochronology table, a \code{data.frame} with the following components:
 #'
 #'  \item{ \code{sample.id} }{A unique identifier for the geochronological unit.}
-#'  \item{ \code{age.type.id} }{Numeric. One of five possible age types.}
 #'  \item{ \code{age.type} }{String.  The age type, one of calendar years, radiocarbon years, etc.}
 #'  \item{ \code{age} }{Dated age of the material.}
 #'  \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
 #'  \item{ \code{e.young} }{The younger error limit of the age value.}
 #'  \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
 #'  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
-#'  \item{ \code{geo.chron.type.id} }{Numeric identification for the type of geochronological analysis.}
 #'  \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
 #'  \item{ \code{notes} }{Text string}
 #'  \item{ \code{infinite} }{Boolean, does the dated material return an "infinte" date?}
@@ -26,19 +24,18 @@
 #'  A full data object containing all the relevant geochronological data available for a dataset.
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
-#' #  find the relevant geochronological data associated with the samples.
+#' #  find the relevant radiocarbon ages associated with the cores.
 #' #  Are some time periods better dated than others?
 #' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
 #'                               ageyoung = 8000)
 #'
-#' #  Returns 74 records (as of 01/08/2014), get the dataset IDs for all records:
-#' dataset.ids <- sapply(t8kyr.datasets, function(x) x$dataset.meta$dataset.id)
-#' geochron.records <- get_geochron(dataset.ids)
+#' #  Returns 85 records (as of 01/08/2015).  These are the pollen records though, we want the sites:
+#' geochron.records <- get_geochron(get_site(t8kyr.datasets))
 #'
-#' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
+#' #  We want to extract all the radiocarbon ages from the records:
 #'
 #' get_ages <- function(x){
-#'   any.ages <- try(x$age[x$age.type.id == 4])
+#'   any.ages <- try(x[[2]]$age[x[[2]]$age.type == 'Radiocarbon years BP'])
 #'   if(class(any.ages) == 'try-error') output <- NA
 #'   if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
 #'   output
@@ -56,90 +53,183 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-#'
-get_geochron <- function(datasetid, verbose = TRUE){
+get_geochron <- function(x, ...){
+  UseMethod('get_geochron')
+}
 
-    # Updated the processing here. There is no need to be fiddling with
-    # call. Use missing() to check for presence of argument
-    # and then process as per usual
-    if (missing(datasetid)) {
-        stop(paste(sQuote("datasetid"), "must be provided."))
-    } else {
-        if (!is.numeric(datasetid))
-            stop('datasetid must be numeric.')
-    }
+#' @importFrom RJSONIO fromJSON
+#' @export
+get_geochron.default <- function(datasetid, verbose = TRUE){
 
-    # Get sample is a function because we can now get
-    # one or more geochronologies at a time.
-    get_sample <- function(x){
-      
-      base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
-      
-      # query Neotoma for data set
-      aa <- try(fromJSON(paste0(base.uri, '?datasetid=', x), nullValue = NA))
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  if (missing(datasetid)) {
+      stop(paste(sQuote("datasetid"), "must be provided."))
+  } else {
+      if (!is.numeric(datasetid))
+          stop('datasetid must be numeric.')
+  }
 
-      # Might as well check here for error and bail
-      if (inherits(aa, "try-error"))
-          return(aa)
+  # Get sample is a function because we can now get
+  # one or more geochronologies at a time.
+  get_sample <- function(x){
+    
+    #dataset <- get_dataset(x)  #### This is the problem here!!
+    
+    base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
+    
+    # query Neotoma for data set
+    aa <- try(fromJSON(paste0(base.uri, '?datasetid=', x), nullValue = NA))
 
-      # if no error continue processing
-      if (isTRUE(all.equal(aa[[1]], 0))) {
-        # The API did not return a record, or returned an error.
-          stop(paste('Server returned an error message:\n', aa[[2]]),
-               call. = FALSE)
-      }
+    # Might as well check here for error and bail
+    if (inherits(aa, "try-error"))
+        return(aa)
 
-      if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
-        # The API returned a record, but the record did not
-        # have associated geochronology information.
-        stop('No geochronological record is associated with this sample',
+    # if no error continue processing
+    if (isTRUE(all.equal(aa[[1]], 0))) {
+      # The API did not return a record, or returned an error.
+        stop(paste('Server returned an error message:\n', aa[[2]]),
              call. = FALSE)
-      }
-
-      if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) > 0)) {
-        # The API returned a record with geochron data.
-        aa <- aa[[2]]
-
-        if (verbose) {
-            message(strwrap(paste0("API call was successful.")))
-        }
-
-        # If there are actual stratigraphic samples
-        # with data in the dataset returned.
-
-        ageid <- get_table("AgeTypes")
-        geoid <- get_table("GeochronTypes")
-
-        pull.rec <- function(x){
-
-          age.type <- ageid$AgeType[match(x$AgeTypeID, ageid$AgeTypeID)]
-          geo.chron.type <- geoid$GeochronType[match(x$GeochronTypeID,
-                                                     geoid$GeochronTypeID)]
-
-          data.frame(sample.id = x$SampleID,
-                     geochron.id = x$GeochronID,
-                     age.type.id = x$AgeTypeID,
-                     age.type = age.type,
-                     age = x$Age,
-                     e.older = x$ErrorOlder,
-                     e.young = x$ErrorYounger,
-                     delta13C = x$Delta13C,
-                     lab.no = x$LabNumber,
-                     material.dated = x$MaterialDated,
-                     geo.chron.type.id = x$GeochronTypeID,
-                     geo.chron.type = geo.chron.type,
-                     notes = x$Notes,
-                     infinite = x$Infinite,
-                     stringsAsFactors = FALSE)
-        }
-
-        out <- t(sapply(aa, pull.rec))
-
-      }
-
-      as.data.frame(out)
     }
 
-    lapply(datasetid, function(x)try(get_sample(x)))
+    if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
+      # The API returned a record, but the record did not
+      # have associated geochronology information.
+      stop('No geochronological record is associated with this sample',
+           call. = FALSE)
+    }
+
+    if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) > 0)) {
+      # The API returned a record with geochron data.
+      aa <- aa[[2]]
+
+      if (verbose) {
+          message(strwrap(paste0("API call was successful.")))
+      }
+
+      # If there are actual stratigraphic samples
+      # with data in the dataset returned.
+
+      pull.rec <- function(x){
+
+        data.frame(sample.id = x$SampleID,
+                   depth   = x$Depth,
+                   thickness = x$Thickness,
+                   age.type = x$AgeType,
+                   age = x$Age,
+                   e.older = x$ErrorOlder,
+                   e.young = x$ErrorYounger,
+                   delta13C = x$Delta13C,
+                   lab.no = x$LabNumber,
+                   material.dated = x$MaterialDated,
+                   geo.chron.type = x$GeochronType,
+                   notes = x$Notes,
+                   infinite = x$Infinite,
+                   stringsAsFactors = FALSE)
+      }
+
+      out <- list(x, do.call(rbind.data.frame, lapply(aa, pull.rec)))
+      
+      class(out) <- c('geochronologic', 'list')
+    }
+
+    out
+  }
+
+  lapply(datasetid, function(x)try(get_sample(x)))
 
 }
+
+#' @export
+get_geochron.dataset <- function(x, verbose = TRUE){
+  
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  
+  datasetid <- x$dataset.meta$dataset.id
+  
+  if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
+    stop(paste0('The dataset ID ', x$dataset.meta$dataset.id,
+                   ' is not associated with a geochronology object.'))
+  } else {
+    geochron <- get_geochron(datasetid)[[1]]
+  }
+  
+  geochron[[1]] <- x
+  
+  class(geochron) <- c('geochronologic', 'list')
+  
+  geochron
+  
+}
+
+#' @export
+get_geochron.dataset_list <- function(x, verbose = TRUE){
+  
+  # Updated the processing here. There is no need to be fiddling with
+  # call. Use missing() to check for presence of argument
+  # and then process as per usual
+  
+  datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
+  
+  dataset.types <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.type))
+  
+  if(any(!dataset.types%in%'geochronologic')){
+    if(all(!dataset.types%in%'geochronologic')){
+      stop('This set contains no geochronological datasets.  Use get_download instead.')
+    } else {
+      message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
+      x <- x[dataset.types %in% 'geochronologic']
+      
+      if(length(x) > 1){
+        class(x) <- c('dataset_list', 'list')
+        
+        aa <- lapply(x, function(y){
+          out <- get_geochron(y)
+          out
+        })
+        
+        class(aa) <- c('geochronologic_list', 'list')
+        
+      } else {
+        x <- x[[1]]
+        aa <- get_geochron(x)
+      }
+    }
+  }
+  
+  aa
+}
+
+#' @export
+get_geochron.site <- function(x, verbose = TRUE){
+  
+  dataset <- get_dataset(x)
+  
+  datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset.meta$dataset.id))
+  
+  dataset.types <- unlist(lapply(dataset, FUN=function(x)x$dataset.meta$dataset.type))
+  
+  if(any(!dataset.types%in%'geochronologic')){
+    if(all(!dataset.types%in%'geochronologic')){
+      stop('This set contains no geochronological datasets.  Use get_download instead.')
+    } else {
+      message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
+      dataset <- dataset[dataset.types %in% 'geochronologic']
+      class(dataset) <- c('dataset_list', 'list')
+    }
+  }
+  
+  aa <- lapply(dataset, function(y){
+    out <- get_geochron(y)
+    out
+  })
+  
+  class(aa) <- c('geochronologic_list', 'list')
+  
+  aa
+
+}
+

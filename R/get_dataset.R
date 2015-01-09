@@ -189,6 +189,8 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 
 }
 
+#' @importFrom RCurl getForm
+#' @importFrom RJSONIO fromJSON
 #' @export
 get_dataset.site <- function(x){
 
@@ -282,4 +284,16 @@ get_dataset.download_list <- function(x){
   class(output) <- c('dataset_list', 'list')
 
   output
+}
+
+#' @export
+get_dataset.geochronologic <- function(x){
+  x[[1]]
+}
+
+#' @export
+get_dataset.geochronologic_list <- function(x){
+  out <- lapply(x, function(y)y[[1]])
+  class(out) <- c('dataset_list', 'list')
+  out
 }

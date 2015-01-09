@@ -150,3 +150,21 @@ get_site.download_list <- function(x){
   class(site) <- c('site', 'data.frame')
   site
 }
+
+#' @export
+get_site.geochronologic <- function(x){
+  
+  site <- x[[1]]$site.data
+  
+  class(site) <- c('site', 'data.frame')
+  site
+}
+
+#' @export
+get_site.geochronologic_list <- function(x){
+  
+  site <- do.call(rbind.data.frame,lapply(x, function(y)y[[1]]$site.data))
+  
+  class(site) <- c('site', 'data.frame')
+  site
+}
