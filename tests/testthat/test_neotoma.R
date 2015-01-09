@@ -32,7 +32,6 @@ test_that('get_download accepts numeric values and returns values as expected',
   expect_is(get_download(1, verbose=FALSE), 'download_list')
 })
 
-
 #-----------------------------------------------------
 
 context('get_dataset works as expected')
@@ -72,6 +71,7 @@ test_that('Crossing APIs',
   expect_is(get_site(get_dataset(siteid=100)), 'site')                 # test dataset_list
   expect_is(get_site(get_dataset(siteid=100)[[1]]), 'site')            # test dataset
 })
+
 #-----------------------------------------------------
 
 context('Compiling objects and returning what is expected:')
@@ -82,3 +82,4 @@ test_that('Compiling',
   expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
 })
+
