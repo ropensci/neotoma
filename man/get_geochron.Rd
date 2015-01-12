@@ -14,17 +14,15 @@ get_geochron(x, ...)
 }
 \value{
 This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
-   from the Neotoma API call, or a geochronology table, a data frame with the following components:
+   from the Neotoma API call, or a \code{geochronologic} object, which is a list with two components, a \code{dataset} and a geochronology table, a \code{data.frame} with the following components:
 
  \item{ \code{sample.id} }{A unique identifier for the geochronological unit.}
- \item{ \code{age.type.id} }{Numeric. One of five possible age types.}
  \item{ \code{age.type} }{String.  The age type, one of calendar years, radiocarbon years, etc.}
  \item{ \code{age} }{Dated age of the material.}
  \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
  \item{ \code{e.young} }{The younger error limit of the age value.}
  \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
- \item{ \code{geo.chron.type.id} }{Numeric identification for the type of geochronological analysis.}
  \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
  \item{ \code{notes} }{Text string}
  \item{ \code{infinite} }{Boolean, does the dated material return an "infinte" date?}
@@ -43,7 +41,7 @@ Using the dataset ID, return all geochronological data associated with the dataI
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
                               ageyoung = 8000)
 
-#  Returns 85 records (as of 01/08/2015).  These are the records though, and we want the sites:
+#  Returns 85 records (as of 01/08/2015).  These are the pollen records though, we want the sites:
 geochron.records <- get_geochron(get_site(t8kyr.datasets))
 
 #  We want to extract all the radiocarbon ages from the records:

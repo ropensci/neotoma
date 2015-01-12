@@ -248,7 +248,7 @@ get_dataset.site <- function(x, ...){
     new.output
   }
 
-  new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
+  new.output <- unlist(lapply(x$siteid,pull_site), recursive=FALSE)
 
   class(new.output) <- c('dataset_list', 'list')
 
@@ -283,4 +283,16 @@ get_dataset.download_list <- function(x, ...){
   class(output) <- c('dataset_list', 'list')
 
   output
+}
+
+#' @export
+get_dataset.geochronologic <- function(x){
+  x[[1]]
+}
+
+#' @export
+get_dataset.geochronologic_list <- function(x){
+  out <- lapply(x, function(y)y[[1]])
+  class(out) <- c('dataset_list', 'list')
+  out
 }
