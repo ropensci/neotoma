@@ -70,7 +70,7 @@ get_download <- function(x, ...){
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.default <- function(datasetid, verbose = TRUE){
+get_download.default <- function(datasetid, verbose = TRUE, ...){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -410,7 +410,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
 }
 
 #' @export
-get_download.dataset <- function(x, verbose = TRUE){
+get_download.dataset <- function(x, verbose = TRUE, ...){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -431,7 +431,7 @@ get_download.dataset <- function(x, verbose = TRUE){
 }
 
 #' @export
-get_download.dataset_list <- function(x, verbose = TRUE){
+get_download.dataset_list <- function(x, verbose = TRUE, ...){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -445,7 +445,7 @@ get_download.dataset_list <- function(x, verbose = TRUE){
 }
 
 #' @export
-get_download.site <- function(x, verbose = TRUE){
+get_download.site <- function(x, verbose = TRUE, ...){
   
   message('Fetching datasets for the site(s)')
   dataset <- get_dataset(x)

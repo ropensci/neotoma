@@ -6,6 +6,8 @@
 get_geochron(x, ...)
 }
 \arguments{
+\item{...}{An object of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.}
+
 \item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.}
 
 \item{verbose}{logical; should messages on API call be printed?}
@@ -36,19 +38,18 @@ Using the dataset ID, return all geochronological data associated with the dataI
 \examples{
 \dontrun{
 #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
-#  find the relevant geochronological data associated with the samples.
+#  find the relevant radiocarbon ages associated with the cores.
 #  Are some time periods better dated than others?
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
                               ageyoung = 8000)
 
-#  Returns 74 records (as of 01/08/2014), get the dataset IDs for all records:
-dataset.ids <- sapply(t8kyr.datasets, function(x) x$dataset.meta$dataset.id)
-geochron.records <- get_geochron(dataset.ids)
+#  Returns 85 records (as of 01/08/2015).  These are the records though, and we want the sites:
+geochron.records <- get_geochron(get_site(t8kyr.datasets))
 
-#  Standardize the taxonomies for the different records using the WS64 taxonomy.
+#  We want to extract all the radiocarbon ages from the records:
 
 get_ages <- function(x){
-  any.ages <- try(x$age[x$age.type.id == 4])
+  any.ages <- try(x[[2]]$age[x[[2]]$age.type == 'Radiocarbon years BP'])
   if(class(any.ages) == 'try-error') output <- NA
   if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
   output

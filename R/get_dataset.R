@@ -18,7 +18,6 @@
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #' @param download An object of class \code{download} obtained using the command \code{\link{get_download}}.
-#' @param  ... Optional additional arugments
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return More details on the use of these parameters can be obtained from
@@ -79,7 +78,7 @@ get_dataset <- function(x, ...){
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #' @export
-get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
+get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate, ...){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
 
@@ -192,7 +191,7 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 #' @importFrom RCurl getForm
 #' @importFrom RJSONIO fromJSON
 #' @export
-get_dataset.site <- function(x){
+get_dataset.site <- function(x, ...){
 
   siteIDs <- x$siteid
 
@@ -258,7 +257,7 @@ get_dataset.site <- function(x){
 }
 
 #' @export
-get_dataset.download <- function(x){
+get_dataset.download <- function(x, ...){
   # Just pull the dataset out of the download.
   output <- list(x$dataset)
 
@@ -271,7 +270,7 @@ get_dataset.download <- function(x){
 }
 
 #' @export
-get_dataset.download_list <- function(x){
+get_dataset.download_list <- function(x, ...){
 
   # Just pull the dataset out of the download and reassign classes:
   output <- lapply(x, FUN=function(y){

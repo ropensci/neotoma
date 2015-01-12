@@ -8,7 +8,8 @@
 #' and also with the associated assemblage data at each sample depth.  This function also does the same for
 #' single sites.
 #'
-#' @param x A n object returned by one of the \code{get_*} commands for download, site or dataset.
+#' @param x An object returned by one of the \code{get_*} commands for download, site or dataset.
+#' @param  ... other objects of the same class.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a larger list.
 #'
@@ -27,7 +28,7 @@
 #' @keywords utilities
 #' @export
 
-bind <-function(...){
+bind <-function(x, ...){
   
   inputs <- list(...)
   
@@ -70,7 +71,7 @@ bind <-function(...){
     
   }
   
-  if(!all(classes[1,] == 'download_list') & all(classes[1,] %in% c('download_list', 'download'))){
+  if(!all(classes[1,] == 'dataset_list') & all(classes[1,] %in% c('dataset_list', 'dataset'))){
     #  Turn them into dataset_lists first.
     x <- lapply(inputs, function(x){
       if(class(x)[1] == 'dataset'){
