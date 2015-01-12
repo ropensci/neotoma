@@ -419,7 +419,7 @@ get_download.dataset <- function(x, verbose = TRUE, ...){
   datasetid <- x$dataset.meta$dataset.id
   
   if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
-    aa <- get_download(datasetid)
+    aa <- get_download(datasetid, verbose = verbose)
   } else {
     cat('Dataset is a geochronological data object.  Defaulting to get_geochron.\n')
     geochron <- get_geochron(datasetid)
@@ -439,7 +439,7 @@ get_download.dataset_list <- function(x, verbose = TRUE, ...){
   
   datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
   
-  aa <- get_download(datasetid)
+  aa <- get_download(datasetid, verbose = verbose)
   
   aa
 }
@@ -453,7 +453,7 @@ get_download.site <- function(x, verbose = TRUE, ...){
   datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
   
   message('Getting downloads:')
-  aa <- get_download(datasetid)
+  aa <- get_download(datasetid, verbose = verbose)
   
   aa
 }
