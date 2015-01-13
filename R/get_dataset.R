@@ -193,8 +193,6 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 #' @export
 get_dataset.site <- function(x, ...){
 
-  siteIDs <- x$siteid
-
   pull_site <- function(siteid){
 
     base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
@@ -248,7 +246,7 @@ get_dataset.site <- function(x, ...){
     new.output
   }
 
-  new.output <- unlist(lapply(x$siteid,pull_site), recursive=FALSE)
+  new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
 
   class(new.output) <- c('dataset_list', 'list')
 
