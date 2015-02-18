@@ -6,6 +6,8 @@
 #' @importFrom RJSONIO fromJSON
 #' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.
 #' @param verbose logical; should messages on API call be printed?
+#' @param ... An object of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.
+#' 
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
 #'    from the Neotoma API call, or a \code{geochronologic} object, which is a list with two components, a \code{dataset} and a geochronology table, a \code{data.frame} with the following components:
@@ -59,7 +61,7 @@ get_geochron <- function(x, ...){
 
 #' @importFrom RJSONIO fromJSON
 #' @export
-get_geochron.default <- function(datasetid, verbose = TRUE){
+get_geochron.default <- function(datasetid, verbose = TRUE, ...){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -142,7 +144,7 @@ get_geochron.default <- function(datasetid, verbose = TRUE){
 }
 
 #' @export
-get_geochron.dataset <- function(x, verbose = TRUE){
+get_geochron.dataset <- function(x, verbose = TRUE, ...){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -166,7 +168,7 @@ get_geochron.dataset <- function(x, verbose = TRUE){
 }
 
 #' @export
-get_geochron.dataset_list <- function(x, verbose = TRUE){
+get_geochron.dataset_list <- function(x, verbose = TRUE, ...){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -204,7 +206,7 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
 }
 
 #' @export
-get_geochron.site <- function(x, verbose = TRUE){
+get_geochron.site <- function(x, verbose = TRUE, ...){
   
   dataset <- get_dataset(x)
   

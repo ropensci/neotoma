@@ -101,7 +101,7 @@ get_site.default <- function(sitename, altmin, altmax, loc, gpid){
     output$SiteName <- as.character(output$SiteName)
     output$SiteDescription <- as.character(output$SiteDescription)
 
-    output <- data.frame(siteid = output$SiteID,
+    output <- data.frame(site.id = output$SiteID,
                 site.name = output$SiteName,
                 long = rowMeans(output[, c('LongitudeWest', 'LongitudeEast')],
                                 na.rm = TRUE),

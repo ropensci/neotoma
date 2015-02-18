@@ -6,6 +6,8 @@
 get_geochron(x, ...)
 }
 \arguments{
+\item{...}{An object of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.}
+
 \item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.}
 
 \item{verbose}{logical; should messages on API call be printed?}

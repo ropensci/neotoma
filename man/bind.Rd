@@ -3,10 +3,12 @@
 \alias{bind}
 \title{Function to bind objects together into a longer object.}
 \usage{
-bind(...)
+bind(x, ...)
 }
 \arguments{
-\item{x}{A n object returned by one of the \code{get_*} commands for download, site or dataset.}
+\item{x}{An object returned by one of the \code{get_*} commands for download, site or dataset.}
+
+\item{...}{other objects of the same class.}
 }
 \value{
 This command returns a larger list.

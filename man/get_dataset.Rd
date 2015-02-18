@@ -8,8 +8,6 @@ get_dataset(x, ...)
 \arguments{
 \item{x}{An optional value of class \code{download}, \code{download_list} or \code{site}.}
 
-\item{...}{Optional additional arugments}
-
 \item{siteid}{A numeric value corresponding to the site ID.}
 
 \item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.}

@@ -81,10 +81,6 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         aggregate.counts <- function(x){
             taxon.matches <- match(colnames(x$counts), pollen.equiv$taxon)
 
-            if (any(is.na(taxon.matches))){
-                missed.samples <- colnames(x$counts)[is.na(taxon.matches)]
-            }
-
             used.taxa <- pollen.equiv[taxon.matches, ]
             agg.list <- as.vector(used.taxa[, use.list])
 
@@ -118,11 +114,11 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
                            lab.data = x$lab.data,
                            chronologies = x$chronologies)
 
-            missed <- as.character(unique(new.list$taxon.name[which(new.list$compressed == 'Other')]))
+            missed.samples <- as.character(unique(new.list$taxon.name[which(new.list$compressed == 'Other')]))
 
-            if (length(missed)>0){
+            if (length(missed.samples)>0){
               warning(paste0('\nThe following taxa could not be found in the existing ',
-                             'conversion table:\n', paste(missed, sep = '\n')))
+                             'conversion table:\n', paste(missed.samples, sep = '\n')))
             }
 
             class(output) <- c('download', 'list')
