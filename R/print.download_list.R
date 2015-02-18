@@ -1,5 +1,17 @@
 #' @export
 print.download_list <- function(x, ...){
+    
+  if(any(sapply(x, is.null))){
+    if(all(sapply(x, is.null))){
+      stop('All returned datasets are empty.\n')
+    } else{
+      x <- x[!sapply(x, is.null)]
+      empty <- sum(sapply(x, is.null))
+    }
+  } else {
+    empty <- 0
+  }
+  
   
   dates <- range(sapply(lapply(x, '[[', 'dataset'), '[[', 'access.date'))
   sites <- sapply(lapply(lapply(x, '[[', 'dataset'), '[[', 'site.data'), '[[', 'site.name')
@@ -26,7 +38,7 @@ print.download_list <- function(x, ...){
   
   #  Get site locations:
   locs <- get_site(x)[,c('long', 'lat')]
-  
+
   cat(paste0('A download_list containing ', length(x), ' objects:\n',
            'Accessed from ', 
            format(as.POSIXct(dates[1], origin=Sys.time()-as.numeric(Sys.time())), "%Y-%m-%d %H:%M"),
@@ -40,6 +52,9 @@ print.download_list <- function(x, ...){
                           age.set,
                           type = types), 
                justify='left'), row.names=FALSE)
+  
+  if(empty == 1){ cat('There is one empty download associated with this download_list\n')}
+  if(empty > 1){ cat(paste0('There are ',empty, ' downloads associated with this download_list\n'))}
   
   NULL
 }
