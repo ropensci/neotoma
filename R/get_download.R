@@ -22,10 +22,10 @@
 #'
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
-#' #  that are on the west coast of North America:
-#' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' #  that are roughly within western British Columbia:
+#' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 40, -120, 60), ageold = 20000, ageyoung=10000)
 #'
-#' #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
+#' #  Returns 20 records (as of 04/04/2013), get the dataset for all records:
 #' pollen.records <- get_download(t8kyr.datasets)
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
@@ -51,7 +51,7 @@
 #'      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
 #' lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 #'
-#' #  This map shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
+#' #  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
 #' #  lends support to a warmer, drier early-Holocene in western North America.
 #' }
 #' @references

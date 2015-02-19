@@ -4,9 +4,8 @@
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_dataset}.
+#' @param x A numeric dataset ID or a vector of numeric dataset IDs, or an object of class of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.
 #' @param verbose logical; should messages on API call be printed?
-#' @param ... An object of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.
 #' 
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
@@ -31,7 +30,7 @@
 #' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
 #'                               ageyoung = 8000)
 #'
-#' #  Returns 85 records (as of 01/08/2015).  These are the pollen records though, we want the sites:
+#' #  Returns 87 records (as of 01/08/2015).  These are the pollen records though, we want the sites:
 #' geochron.records <- get_geochron(get_site(t8kyr.datasets))
 #'
 #' #  We want to extract all the radiocarbon ages from the records:
@@ -55,22 +54,17 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_geochron <- function(x, ...){
+get_geochron <- function(x, verbose = TRUE){
   UseMethod('get_geochron')
 }
 
 #' @importFrom RJSONIO fromJSON
 #' @export
-get_geochron.default <- function(datasetid, verbose = TRUE, ...){
+get_geochron.default <- function(x, verbose = TRUE){
 
-  # Updated the processing here. There is no need to be fiddling with
-  # call. Use missing() to check for presence of argument
-  # and then process as per usual
-  if (missing(datasetid)) {
-      stop(paste(sQuote("datasetid"), "must be provided."))
-  } else {
-      if (!is.numeric(datasetid))
-          stop('datasetid must be numeric.')
+  #  If it doesn't get passed through the other methods x needs to be numeric.
+  if (!is.numeric(x)){
+    stop('datasetid must be numeric.')
   }
 
   # Get sample is a function because we can now get
@@ -139,12 +133,12 @@ get_geochron.default <- function(datasetid, verbose = TRUE, ...){
     out
   }
 
-  lapply(datasetid, function(x)try(get_sample(x)))
+  lapply(x, function(x)try(get_sample(x)))
 
 }
 
 #' @export
-get_geochron.dataset <- function(x, verbose = TRUE, ...){
+get_geochron.dataset <- function(x, verbose = TRUE){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -168,7 +162,7 @@ get_geochron.dataset <- function(x, verbose = TRUE, ...){
 }
 
 #' @export
-get_geochron.dataset_list <- function(x, verbose = TRUE, ...){
+get_geochron.dataset_list <- function(x, verbose = TRUE){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -206,7 +200,7 @@ get_geochron.dataset_list <- function(x, verbose = TRUE, ...){
 }
 
 #' @export
-get_geochron.site <- function(x, verbose = TRUE, ...){
+get_geochron.site <- function(x, verbose = TRUE){
   
   dataset <- get_dataset(x)
   
