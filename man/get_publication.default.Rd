@@ -4,11 +4,11 @@
 \alias{get_publication.default}
 \title{A function to get publications for sites or datasets in the Neotoma Database using the API.}
 \usage{
-\method{get_publication}{default}(pubid, contactid, datasetid, author, pubtype,
+\method{get_publication}{default}(x, contactid, datasetid, author, pubtype,
   year, search)
 }
 \arguments{
-\item{pubid}{Numeric Publication ID value, either from \code{\link{get_dataset}} or known.}
+\item{x}{Numeric Publication ID value, either from \code{\link{get_dataset}} or known.}
 
 \item{contactid}{Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}}
 

@@ -1,12 +1,10 @@
-
-#' A function to get publications for sites or datasets in the Neotoma Database using the API.
+#' @title A function to get publications for sites or datasets in the Neotoma Database using the API.
 #'
-#' The function takes the parameters, defined by the user, and returns a table with
-#'    publication information from the Neotoma Paleoecological Database.
+#' @description The function takes the parameters, defined by the user, and returns a table with publication information from the Neotoma Paleoecological Database.
 #'
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
-#' @param pubid Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
+#' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
 #' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
@@ -33,8 +31,11 @@
 #' @keywords IO connection
 #' @export
 #' 
-get_publication<- function(x, ...) {
+get_publication<- function(x, contactid, datasetid, author,
+                           pubtype, year, search){
+  
   UseMethod('get_publication')
+
 }
 
 
@@ -45,7 +46,7 @@ get_publication<- function(x, ...) {
 #'
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
-#' @param pubid Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
+#' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
 #' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
@@ -54,7 +55,7 @@ get_publication<- function(x, ...) {
 #' @param search A character string to search for within the article citation.
 #' @export
 #' 
-get_publication.default <- function(pubid, contactid, datasetid, author,
+get_publication.default <- function(x, contactid, datasetid, author,
                             pubtype, year, search){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/publications'
@@ -186,6 +187,11 @@ get_publication.default <- function(pubid, contactid, datasetid, author,
   output
 }
 
+#' @title A function to get publications for datasets in the Neotoma Database using the API.
+#' @description The function takes a \code{dataset} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{dataset}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_publication.dataset <- function(x, ... ){
   pubs <- get_publication(datasetid = x$dataset.meta$dataset.id)
@@ -193,6 +199,11 @@ get_publication.dataset <- function(x, ... ){
   pubs
 }
 
+#' @title A function to get publications for dataset_lists in the Neotoma Database using the API.
+#' @description The function takes a \code{dataset_list} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{dataset_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_publication.dataset_list <- function(x, ... ){
   ids <- sapply(x, function(y)y$dataset.meta$dataset.id)
@@ -200,6 +211,11 @@ get_publication.dataset_list <- function(x, ... ){
   lapply(ids, function(x)get_publication(datasetid = x))
 }
 
+#' @title A function to get publications for downloads in the Neotoma Database using the API.
+#' @description The function takes a \code{download} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{download}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_publication.download <- function(x, ... ){
   
@@ -209,6 +225,11 @@ get_publication.download <- function(x, ... ){
   
 }
 
+#' @title A function to get publications for datasets in the Neotoma Database using the API.
+#' @description The function takes a \code{download_list} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{download_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_publication.download_list <- function(x, ... ){
   

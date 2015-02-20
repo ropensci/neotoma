@@ -2,8 +2,7 @@
 #' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @param x Optional parameter for a \code{site}, \code{dataset}, or \code{dataset_list}.
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned from the Neotoma API call, or an object of class \code{download_list}, containing a set of \code{download} objects, each with relevant assemblage information and metadata:
@@ -59,28 +58,28 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_download <- function(x, ...){
+get_download <- function(x, verbose = TRUE){
   UseMethod('get_download')
 }
 
-#' @title Function to return full download records using \code{site}s, \code{dataset}s, or dataset IDs.
-#' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
+#' @title Function to return full download records using \code{numeric} dataset IDs.
+#' @description Using the dataset ID, return all records associated with the data as a \code{download_list}.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.default <- function(datasetid, verbose = TRUE, ...){
+get_download.default <- function(x, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
 
-  if (missing(datasetid)) {
-      stop(paste0("Either a ",sQuote("datasetid"), " or a dataset object must be provided."))
+  if (missing(x)) {
+      stop(paste0("Either a ",sQuote("dataset id"), " (x) or a dataset object must be provided."))
   }
-  if (!missing(datasetid) & !is.numeric(datasetid)) {
-          stop('datasetid must be numeric.')
+  if (!missing(x) & !is.numeric(x)) {
+          stop('The dataset id (x) must be numeric.')
   }
 
   get.sample <- function(x){
@@ -393,7 +392,7 @@ get_download.default <- function(datasetid, verbose = TRUE, ...){
     
   }
 
-  aa <- lapply(datasetid, get.sample)
+  aa <- lapply(x, get.sample)
 
   drop.any <- sapply(aa,is.null)
 
@@ -414,8 +413,14 @@ get_download.default <- function(datasetid, verbose = TRUE, ...){
   
 }
 
+#' @title Function to return full download records using a \code{dataset}.
+#' @description Using a \code{dataset}, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x An object of class \code{dataset}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.dataset <- function(x, verbose = TRUE, ...){
+get_download.dataset <- function(x, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -435,8 +440,14 @@ get_download.dataset <- function(x, verbose = TRUE, ...){
   aa
 }
 
+#' @title Function to return full download records using a \code{dataset_list}.
+#' @description Using a \code{dataset_list}, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x An object of class \code{dataset_list}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.dataset_list <- function(x, verbose = TRUE, ...){
+get_download.dataset_list <- function(x, verbose = TRUE){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -449,8 +460,14 @@ get_download.dataset_list <- function(x, verbose = TRUE, ...){
   aa
 }
 
+#' @title Function to return full download records using a \code{site}.
+#' @description Using a \code{site}, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x An object of class \code{site}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.site <- function(x, verbose = TRUE, ...){
+get_download.site <- function(x, verbose = TRUE){
   
   message('Fetching datasets for the site(s)')
   dataset <- get_dataset(x)

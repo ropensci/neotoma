@@ -38,7 +38,7 @@ context('get_dataset works as expected')
 
 test_that('is get_dataset working?', 
 {
-  expect_error(get_dataset(siteid='a'))
+  expect_error(get_dataset(x='a'))
   expect_error(get_dataset(datasettype=10))
   expect_error(get_dataset(datasettype='banana'))
   expect_error(get_dataset(piid='a'))
@@ -54,8 +54,8 @@ test_that('is get_dataset working?',
   expect_error(get_dataset(ageof=10))
   expect_error(get_dataset(ageof='taxon'))
   expect_error(get_dataset(subdate=10))
-  expect_is(get_dataset(siteid=1), 'dataset_list')
-  expect_is(get_dataset(siteid=1)[[1]], 'dataset')
+  expect_is(get_dataset(x = 1), 'dataset_list')
+  expect_is(get_dataset(x = 1)[[1]], 'dataset')
 })
 
 #-----------------------------------------------------
@@ -65,11 +65,11 @@ test_that('Crossing APIs',
 {
   expect_is(get_dataset(get_download(100)), 'dataset_list')            # test download_list
   expect_is(get_dataset(get_download(100)[[1]]), 'dataset_list')       # test download
-  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset_list') # test site
+  expect_is(get_dataset(get_site(x='Marion%')), 'dataset_list') # test site
   expect_is(get_site(get_download(100)), 'site')                       # test download_list
   expect_is(get_site(get_download(100)[[1]]), 'site')                  # test download
-  expect_is(get_site(get_dataset(siteid=100)), 'site')                 # test dataset_list
-  expect_is(get_site(get_dataset(siteid=100)[[1]]), 'site')            # test dataset
+  expect_is(get_site(get_dataset(x=100)), 'site')                      # test dataset_list
+  expect_is(get_site(get_dataset(x=100)[[1]]), 'site')                 # test dataset
 })
 
 #-----------------------------------------------------

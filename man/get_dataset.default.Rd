@@ -8,7 +8,7 @@
   taxonids, taxonname, ageold, ageyoung, ageof, subdate)
 }
 \arguments{
-\item{x}{A numeric value corresponding to the site ID, or a \code{site}, \code{download}, \code{download_list}, \code{geochronologic}, or \code{geochronologic_list}}
+\item{x}{A numeric value corresponding to the site ID.}
 
 \item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.}
 

@@ -4,12 +4,11 @@
 \alias{get_dataset}
 \title{Obtain dataset information from the Neotoma Paleoecological Database or an existing object.}
 \usage{
-get_dataset(x, ...)
+get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
+  taxonname, ageold, ageyoung, ageof, subdate)
 }
 \arguments{
-\item{x}{An optional value of class \code{download}, \code{download_list} or \code{site}.}
-
-\item{siteid}{A numeric value corresponding to the site ID.}
+\item{x}{An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.}
 
 \item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.}
 

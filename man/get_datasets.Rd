@@ -33,8 +33,6 @@ get_datasets(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 \item{ageof}{If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.}
 
 \item{subdate}{Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.}
-
-\item{download}{An object of class \code{download} obtained using the command \code{\link{get_download}}.}
 }
 \description{
 Deprecated - see \code{get_dataset}.

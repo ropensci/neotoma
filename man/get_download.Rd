@@ -4,12 +4,10 @@
 \alias{get_download}
 \title{Function to return full download records using \code{site}s, \code{dataset}s, or dataset IDs.}
 \usage{
-get_download(x, ...)
+get_download(x, verbose = TRUE)
 }
 \arguments{
-\item{x}{Optional parameter for a \code{site}, \code{dataset}, or \code{dataset_list}.}
-
-\item{datasetid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.}
+\item{x}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.}
 
 \item{verbose}{logical; should messages on API call be printed?}
 }

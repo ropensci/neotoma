@@ -4,10 +4,10 @@
 \alias{get_publication}
 \title{A function to get publications for sites or datasets in the Neotoma Database using the API.}
 \usage{
-get_publication(x, ...)
+get_publication(x, contactid, datasetid, author, pubtype, year, search)
 }
 \arguments{
-\item{pubid}{Numeric Publication ID value, either from \code{\link{get_dataset}} or known.}
+\item{x}{Numeric Publication ID value, either from \code{\link{get_dataset}} or known.}
 
 \item{contactid}{Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}}
 
@@ -28,8 +28,7 @@ A list is returned with two data frame components:
  \item{ \code{Authors} }{\code{data.frame} of author names, order and IDs, can be of variable length.}
 }
 \description{
-The function takes the parameters, defined by the user, and returns a table with
-   publication information from the Neotoma Paleoecological Database.
+The function takes the parameters, defined by the user, and returns a table with publication information from the Neotoma Paleoecological Database.
 }
 \examples{
 \dontrun{
