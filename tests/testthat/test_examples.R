@@ -12,7 +12,7 @@ test_that("Examples run without error", {
              'get_chroncontrol',
              'get_contact',
              'get_dataset',
-             'get_download',
+             #'get_download',
              'get_geochron',
              'get_publication',
              'get_site',
