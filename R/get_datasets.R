@@ -16,7 +16,6 @@
 #' @param ageyoung The youngest date acceptable for the search.
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
-#' @param download An object of class \code{download} obtained using the command \code{\link{get_download}}.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 

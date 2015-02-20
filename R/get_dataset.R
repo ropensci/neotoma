@@ -3,8 +3,7 @@
 #'
 #' @importFrom RCurl getForm
 #' @importFrom RJSONIO fromJSON
-#' @param x An optional value of class \code{download}, \code{download_list} or \code{site}.
-#' @param siteid A numeric value corresponding to the site ID.
+#' @param x An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
@@ -17,7 +16,6 @@
 #' @param ageyoung The youngest date acceptable for the search.
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
-#' @param download An object of class \code{download} obtained using the command \code{\link{get_download}}.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return More details on the use of these parameters can be obtained from
@@ -55,7 +53,7 @@
 #' @keywords IO connection
 #' @export
 #'
-get_dataset <- function(x, ...){
+get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   UseMethod('get_dataset')
 }
 
@@ -64,7 +62,7 @@ get_dataset <- function(x, ...){
 #'
 #' @importFrom RCurl getForm
 #' @importFrom RJSONIO fromJSON
-#' @param siteid A numeric value corresponding to the site ID.
+#' @param x A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
@@ -78,7 +76,7 @@ get_dataset <- function(x, ...){
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #' @export
-get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate, ...){
+get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
 
@@ -87,6 +85,10 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
+  
+  if('x' %in% names(cl)){
+    names(cl)[which(names(cl) == 'x')] <- 'siteid'
+  }
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
@@ -188,6 +190,11 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
 
 }
 
+#' @title Obtain dataset information from an existing \code{site} object.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x An object of class \code{site}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @importFrom RCurl getForm
 #' @importFrom RJSONIO fromJSON
 #' @export
@@ -254,6 +261,11 @@ get_dataset.site <- function(x, ...){
 
 }
 
+#' @title Obtain dataset information from an existing \code{download} object.
+#' @description A function to access a \code{dataset} within a \code{download} object.
+#'
+#' @param x An object of class \code{download}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_dataset.download <- function(x, ...){
   # Just pull the dataset out of the download.
@@ -267,6 +279,11 @@ get_dataset.download <- function(x, ...){
   return(output)
 }
 
+#' @title Obtain dataset information from a \code{download_list}.
+#' @description A function to return datasets corresponding to the objects within a \code{download_list}.
+#'
+#' @param x An object of class \code{download_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_dataset.download_list <- function(x, ...){
 
@@ -283,13 +300,23 @@ get_dataset.download_list <- function(x, ...){
   output
 }
 
+#' @title Obtain dataset information from an object of class \code{geochronologic}.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x An object of class \code{geochronologic}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.geochronologic <- function(x){
+get_dataset.geochronologic <- function(x, ...){
   x[[1]]
 }
 
+#' @title Obtain dataset information from an object of class \code{geochronologic_list}.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x An object of class \code{geochronologic_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.geochronologic_list <- function(x){
+get_dataset.geochronologic_list <- function(x, ...){
   out <- lapply(x, function(y)y[[1]])
   class(out) <- c('dataset_list', 'list')
   out
