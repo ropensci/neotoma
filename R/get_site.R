@@ -60,6 +60,9 @@ get_site.default <- function(x, altmin, altmax, loc, gpid){
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
   cl <- as.list(match.call())
+  
+  names(cl)[names(cl) %in% 'x'] <- 'sitename'
+  
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
 
