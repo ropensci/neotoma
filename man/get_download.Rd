@@ -36,6 +36,7 @@ In the case that a geochronology dataset is passed to \code{get_download} the fu
 #  that are roughly within western British Columbia:
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 40, -120, 60), ageold = 20000, ageyoung=10000)
 
+t8kyr.datasets[[9]] <- NULL
 #  Returns 20 records (as of 04/04/2013), get the dataset for all records:
 pollen.records <- get_download(t8kyr.datasets)
 
