@@ -62,6 +62,10 @@ get_publication.default <- function(x, contactid, datasetid, author,
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
+  
+  if('x' %in% names(cl)){
+    names(cl)[which(names(cl) == 'x')] <- 'pubid'
+  }
   cl <- lapply(cl, eval, envir = parent.frame())
 
   # Parameter check on pubid:
