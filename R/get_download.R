@@ -22,7 +22,7 @@
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #' #  that are roughly within western British Columbia:
-#' t8kyr.datasets <- get_dataset(taxonname='*Picea*', loc=c(-120, 55, -110, 60), 
+#' t8kyr.datasets <- get_dataset(taxonname='*Picea*', loc=c(-120, 50, -110, 60), 
 #'                               ageold = 20000, ageyoung=10000)
 #'
 #' #  Returns 20 records (as of 04/04/2013), get the dataset for all records:
@@ -39,7 +39,7 @@
 #'              }
 #'
 #' curves <- do.call(rbind.data.frame,
-#'                   lapply(compiled.sites, get.curve, taxa = 'Larix/Pseudotsuga'))
+#'                   lapply(compiled.sites, get.curve, taxa = 'Picea'))
 #'
 #' #  For illustration, remove the sites with no Pseudotsuga occurance:
 #' curves <- curves[curves$count > 0, ]
