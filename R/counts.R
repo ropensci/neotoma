@@ -12,6 +12,20 @@
 ##'
 ##' @export
 ##' @rdname counts
+##'
+##' @examples
+##' \dontrun{
+##' marion <- get_site('Marion Lake%')
+##' louise <- get_site('Louise Pond%')
+##' western.sites <- rbind(marion, louise)
+##' western.data  <- get_dataset(western.sites)
+##'
+##' western.dl <- get_download(western.data)
+##' western.cnt <- counts(western.dl)
+##' sapply(western.cnt, dim)
+##' marion.cnt<- counts(western.dl[[1]])
+##' dim(marion.cnt)
+##' }
 `counts` <- function(obj, ...) {
     UseMethod("counts")
 }

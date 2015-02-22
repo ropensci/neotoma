@@ -26,6 +26,20 @@ Extract pollen or other proxy counts from data objects and returns them in a use
 \details{
 Methods are available for "download" and "download_list" objects.
 }
+\examples{
+\dontrun{
+marion <- get_site('Marion Lake\%')
+louise <- get_site('Louise Pond\%')
+western.sites <- rbind(marion, louise)
+western.data  <- get_dataset(western.sites)
+
+western.dl <- get_download(western.data)
+western.cnt <- counts(western.dl)
+sapply(western.cnt, dim)
+marion.cnt<- counts(western.dl[[1]])
+dim(marion.cnt)
+}
+}
 \author{
 Gavin Simpson
 }
