@@ -9,6 +9,7 @@ test_that("Examples run without error", {
     egs <- c('compile_downloads',
              'compile_list',
              'compile_taxa',
+             'counts',
              'get_chroncontrol',
              'get_contact',
              'get_dataset',
