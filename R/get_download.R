@@ -2,8 +2,7 @@
 #' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @param x Optional parameter for a \code{site}, \code{dataset}, or \code{dataset_list}.
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned from the Neotoma API call, or an object of class \code{download_list}, containing a set of \code{download} objects, each with relevant assemblage information and metadata:
@@ -18,13 +17,15 @@
 #'
 #' @section Note:
 #' The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified seperately as crumpled and torn in the same sample and sums these values within a sample.
+#' In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excized).  Use \code{get_geochron} for these objects.
 #'
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
-#' #  that are on the west coast of North America:
-#' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' #  that are roughly within western British Columbia:
+#' t8kyr.datasets <- get_dataset(taxonname='*Picea*', loc=c(-90, 42, -89, 44), 
+#'                               ageold = 20000, ageyoung=10000)
 #'
-#' #  Returns 3 records (as of 04/04/2013), get the dataset for all records:
+#' #  Returns 20 records (as of 04/04/2013), get the dataset for all records:
 #' pollen.records <- get_download(t8kyr.datasets)
 #'
 #' #  Standardize the taxonomies for the different records using the WS64 taxonomy.
@@ -32,13 +33,13 @@
 #'
 #' #  Extract the Pseudotsuga curves for the sites:
 #' get.curve <- function(x, taxa) {
-#'                data.frame(site = x$dataset$site$site.name,
+#'                data.frame(site = x$dataset$site.data$site.name,
 #'                age = x$sample.meta$age,
 #'                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
 #'              }
 #'
 #' curves <- do.call(rbind.data.frame,
-#'                   lapply(compiled.sites, get.curve, taxa = 'Larix/Pseudotsuga'))
+#'                   lapply(compiled.sites, get.curve, taxa = 'Picea'))
 #'
 #' #  For illustration, remove the sites with no Pseudotsuga occurance:
 #' curves <- curves[curves$count > 0, ]
@@ -50,7 +51,7 @@
 #'      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
 #' lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 #'
-#' #  This map shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
+#' #  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
 #' #  lends support to a warmer, drier early-Holocene in western North America.
 #' }
 #' @references
@@ -58,28 +59,28 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_download <- function(x, ...){
+get_download <- function(x, verbose = TRUE){
   UseMethod('get_download')
 }
 
-#' @title Function to return full download records using \code{site}s, \code{dataset}s, or dataset IDs.
-#' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
+#' @title Function to return full download records using \code{numeric} dataset IDs.
+#' @description Using the dataset ID, return all records associated with the data as a \code{download_list}.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @param datasetid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
+#' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.default <- function(datasetid, verbose = TRUE){
+get_download.default <- function(x, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
 
-  if (missing(datasetid)) {
-      stop(paste0("Either a ",sQuote("datasetid"), " or a dataset object must be provided."))
+  if (missing(x)) {
+      stop(paste0("Either a ",sQuote("dataset id"), " (x) or a dataset object must be provided."))
   }
-  if (!missing(datasetid) & !is.numeric(datasetid)) {
-          stop('datasetid must be numeric.')
+  if (!missing(x) & !is.numeric(x)) {
+          stop('The dataset id (x) must be numeric.')
   }
 
   get.sample <- function(x){
@@ -114,40 +115,56 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
         # If there are actual stratigraphic samples with data
         # in the dataset returned.
+
         if ('Samples' %in% nams  & length(aa1$Samples) > 0) {
 
           # Build the metadata for the dataset.
-            dataset <- list(
-              site = data.frame(site.id = aa1$Site$SiteID,
-                                site.name = aa1$Site$SiteName,
-                                long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                            na.rm = TRUE),
-                                lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                           na.rm = TRUE),
-                                elev = aa1$Site$Altitude,
-                                description = aa1$Site$SiteDescription,
-                                long.acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
-                                lat.acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
-                                row.names = aa1$Site$SiteName,
-                                stringsAsFactors = FALSE),
-              dataset.meta = data.frame(dataset.id = aa1$DatasetID,
-                                        dataset.name = aa1$DatasetName,
-                                        collection.type = aa1$CollUnitType,
-                                        collection.handle = aa1$CollUnitHandle,
-                                        dataset.type =  aa1$DatasetType,
-                                        stringsAsFactors = FALSE),
+          dataset <- list(
+            site.data = data.frame(site.id = aa1$Site$SiteID,
+                                   site.name = aa1$Site$SiteName,
+                                   long = mean(unlist(aa1$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                               na.rm = TRUE),
+                                   lat = mean(unlist(aa1$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                              na.rm = TRUE),
+                                   elev = aa1$Site$Altitude,
+                                   description = aa1$Site$SiteDescription,
+                                   long.acc = abs(aa1$Site$LongitudeWest - aa1$Site$LongitudeEast),
+                                   lat.acc = abs(aa1$Site$LatitudeNorth - aa1$Site$LatitudeSouth),
+                                   row.names = aa1$Site$SiteName,
+                                   stringsAsFactors = FALSE),
+            dataset.meta = data.frame(dataset.id = aa1$DatasetID,
+                                      dataset.name = aa1$DatasetName,
+                                      collection.type = aa1$CollUnitType,
+                                      collection.handle = aa1$CollUnitHandle,
+                                      dataset.type =  aa1$DatasetType,
+                                      stringsAsFactors = FALSE),
+            pi.data = do.call(rbind.data.frame,
+                                aa1$DatasetPIs),
+            submission = data.frame(submission.date = strptime(aa1$NeotomaLastSub,
+                                                               '%m/%d/%Y'),
+                                    submission.type = 'Last submission to Neotoma',
+                                    stringsAsFactors=FALSE),
+            access.date = Sys.time())
 
-              pi.data = do.call(rbind.data.frame,
-                                  aa1$DatasetPIs),
-              submission = data.frame(submission.date = strptime(aa1$NeotomaLastSub,
-                                                                 '%m/%d/%Y'),
-                                      submission.type = 'Last submission to Neotoma',
-                                      stringsAsFactors=FALSE),
-              access.date = Sys.time())
-
-            class(dataset) <- c('dataset', 'list')
-            class(dataset$site) <- c('site', 'data.frame')
+          class(dataset) <- c('dataset', 'list')
+          class(dataset$site) <- c('site', 'data.frame')
+          
+          #  Geochronological datasets behave differently than any other dataset.
+          #  It's frustrating.  This is the only way we can figure it out in a
+          #  general way.
+          if(dataset$dataset.meta$dataset.type == 'geochronologic'){
             
+            message(paste0('The dataset ID ', dataset$dataset.meta$dataset.id,
+                           ' is associated with a geochronology object, not count data.'))
+            return(NULL)
+            #geochron <- get_geochron(dataset$dataset.meta$dataset.id)
+            
+            #aa <- list(dataset, geochron = geochron)
+            #class(aa) <- 'geochron'
+            #return(aa)
+          }
+            
+          if(!dataset$dataset.meta$dataset.type == 'geochronologic'){
             # copy to make indexing below easier?
             samples <- aa1$Samples
 
@@ -187,9 +204,13 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
               for (i in 1:length(samples)){
                 for (j in 1:length(samples[[i]]$SampleAges)){
-                  chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
-                    data.frame(samples[[i]]$SampleAges[[j]],
-                               stringsAsFactors = FALSE)
+                  # Some of the new datasets are passing data without any chronology information.
+                  if(!is.na(samples[[i]]$SampleAges[[j]]['ChronologyName'])) {
+                  
+                    chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
+                      data.frame(samples[[i]]$SampleAges[[j]],
+                                 stringsAsFactors = FALSE)
+                  }
                 }
               }
             }
@@ -281,30 +302,36 @@ get_download.default <- function(datasetid, verbose = TRUE){
 
             # reshape long sample.data into a sample by taxon data frame
             # take here *only* counts - but needs work FIXME
-            counts <- dcast(count.data,
-                            formula = sample.id ~ taxon.name,
-                            value.var = "value",
-                            fun.aggregate = sum, na.rm = TRUE)
-
-            # add Sample col as the rownames
-            rownames(counts) <- counts$sample.id
-            ## remove the Sample col, but robustly
-            counts <- counts[, -which(names(counts) == "sample.id"), drop = F]
-
-            # It is possible that some depths have no count data,
-            # but that they were sampled. This will be
-            # reflected as a row with '0' counts for all taxa.
-            if (any(!sample.meta$sample.id %in% rownames(counts))){
-              no.missing <- sum(!sample.meta$sample.id %in% rownames(counts))
-
-              for (i in 1:no.missing){
-                counts <- rbind(counts, rep(NA, ncol(counts)))
+            
+            if(nrow(count.data) > 0){
+              counts <- dcast(count.data,
+                              formula = sample.id ~ taxon.name,
+                              value.var = "value",
+                              fun.aggregate = sum, na.rm = TRUE)
+  
+              # add Sample col as the rownames
+              rownames(counts) <- counts$sample.id
+              ## remove the Sample col, but robustly
+              counts <- counts[, -which(names(counts) == "sample.id"), drop = F]
+  
+              # It is possible that some depths have no count data,
+              # but that they were sampled. This will be
+              # reflected as a row with '0' counts for all taxa.
+              if (any(!sample.meta$sample.id %in% rownames(counts))){
+                no.missing <- sum(!sample.meta$sample.id %in% rownames(counts))
+  
+                for (i in 1:no.missing){
+                  counts <- rbind(counts, rep(NA, ncol(counts)))
+                }
+                rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$sample.id %in% rownames(counts)]
+  
+                counts <- counts[as.character(sample.meta$sample.id), ]
               }
-              rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$IDs %in% rownames(counts)]
-
-              counts <- counts[as.character(sample.meta$sample.id), ]
+              
+            } else {
+              counts <- NULL
             }
-
+  
             # Pull out the lab data and treat it in
             # the same way as the previous:
             take <- sample.data$taxon.group == "Laboratory analyses" |
@@ -341,7 +368,7 @@ get_download.default <- function(datasetid, verbose = TRUE){
                                   formula = sample.id ~ lab.name.units,
                                   value.var = "value")
             } else {
-                lab.data <- NA
+                lab.data <- NULL
             }
 
             # stick all this together
@@ -351,6 +378,9 @@ get_download.default <- function(datasetid, verbose = TRUE){
                        counts = counts,
                        lab.data = lab.data,
                        chronologies = chron.list)
+          
+            class(aa) <- c('download', 'list')
+          }
         }
         if ((!'Samples' %in% nams) | length(aa1$Samples) == 0) {
           message('Dataset contains no sample data.')
@@ -359,60 +389,94 @@ get_download.default <- function(datasetid, verbose = TRUE){
     
     }
     
-    class(aa) <- c('download', 'list')
-  
     aa
     
   }
 
-  aa <- lapply(datasetid, get.sample)
+  aa <- lapply(x, get.sample)
+
+  drop.any <- sapply(aa,is.null)
+
+  if(any(drop.any > 0)){
+    if(all(drop.any > 0)){
+      stop('All datasets return non-download objects\n')
+    } else {
+      warning('Some datasetids returned empty downloads, be aware that length(datasetid) is longer than the download_list.\n')
+      aa <- aa[-(which(sapply(aa,is.null),arr.ind=TRUE))]
+    }
+  }
   
   names(aa) <- sapply(lapply(lapply(aa, '[[', 'dataset'), '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   class(aa) <- c('download_list', 'list')
 
   aa
+  
 }
 
-
+#' @title Function to return full download records using a \code{dataset}.
+#' @description Using a \code{dataset}, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x An object of class \code{dataset}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
 get_download.dataset <- function(x, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
-  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
-
-  datasetid <- x$dataset$dataset.id
-
-  aa <- get_download(datasetid)
+  
+  datasetid <- x$dataset.meta$dataset.id
+  
+  if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
+    aa <- get_download(datasetid, verbose = verbose)
+  } else {
+    cat('Dataset is a geochronological data object.  Defaulting to get_geochron.\n')
+    geochron <- get_geochron(datasetid)
+    aa <- list(dataset = x,
+               geochronology = geochron)
+  }
 
   aa
 }
 
+#' @title Function to return full download records using a \code{dataset_list}.
+#' @description Using a \code{dataset_list}, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x An object of class \code{dataset_list}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
 get_download.dataset_list <- function(x, verbose = TRUE){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
-  base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
   
-  datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
+  datasetid <- sapply(x, FUN=function(x)x$dataset$dataset.id)
   
-  aa <- get_download(datasetid)
+  aa <- get_download(datasetid, verbose = verbose)
   
   aa
 }
 
+#' @title Function to return full download records using a \code{site}.
+#' @description Using a \code{site}, return all records associated with the data as a \code{download_list}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x An object of class \code{site}.
+#' @param verbose logical; should messages on API call be printed?
 #' @export
 get_download.site <- function(x, verbose = TRUE){
   
+  message('Fetching datasets for the site(s)')
   dataset <- get_dataset(x)
   
   datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
   
-  aa <- get_download(datasetid)
+  message('Getting downloads:')
+  aa <- get_download(datasetid, verbose = verbose)
   
   aa
 }

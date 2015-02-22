@@ -3,8 +3,7 @@
 #'
 #' @importFrom RCurl getForm
 #' @importFrom RJSONIO fromJSON
-#' @param x An optional value of class \code{download}, \code{download_list} or \code{site}.
-#' @param siteid A numeric value corresponding to the site ID.
+#' @param x An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
@@ -17,14 +16,12 @@
 #' @param ageyoung The youngest date acceptable for the search.
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
-#' @param download An object of class \code{download} obtained using the command \code{\link{get_download}}.
-#' @param  ... Optional additional arugments
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return More details on the use of these parameters can be obtained from
 #'    \url{http://api.neotomadb.org/doc/resources/datasets}.
 #'
-#'    A list of class `dataset_list`, with each item corresponding to an individual record.  
+#'    A list of class `dataset_list`, with each item corresponding to an individual record.
 #'    Each list item (each dataset record) includes the following components:
 #'
 #'  \item{ \code{dataset.id} }{Unique database record identifier for the dataset.}
@@ -56,7 +53,7 @@
 #' @keywords IO connection
 #' @export
 #'
-get_dataset <- function(x, ...){
+get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   UseMethod('get_dataset')
 }
 
@@ -65,7 +62,7 @@ get_dataset <- function(x, ...){
 #'
 #' @importFrom RCurl getForm
 #' @importFrom RJSONIO fromJSON
-#' @param siteid A numeric value corresponding to the site ID.
+#' @param x A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
@@ -79,7 +76,7 @@ get_dataset <- function(x, ...){
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #' @export
-get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
+get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
 
@@ -88,6 +85,10 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
+  
+  if('x' %in% names(cl)){
+    names(cl)[which(names(cl) == 'x')] <- 'siteid'
+  }
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
@@ -133,63 +134,71 @@ get_dataset.default <- function(siteid, datasettype, piid, altmin, altmax, loc, 
   }
 
 
-  if (class(output) == 'try-error') {
-    new.output <- neotoma.form
+  if (inherits(output, "try-error")) {
+      new.output <- neotoma.form
   } else {
-    new.output <- lapply(output, function(x) {
-      new.output <- list()
-      new.output$site <- data.frame(site.id = x$Site$SiteID,
-                                    site.name = x$Site$SiteName,
-                                    long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
-                                                na.rm = TRUE),
-                                    lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
-                                                na.rm = TRUE),
-                                    elev = x$Site$Altitude,
-                                    description = x$Site$SiteDescription,
-                                    long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
-                                    lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
-                                    row.names = x$Site$SiteName,
-                                    stringsAsFactors = FALSE)
-      
-      class(new.output$site) <- c('site', 'data.frame')
-      
-      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
-                                            dataset.name = x$DatasetName,
-                                            collection.type = x$CollUnitType,
-                                            collection.handle = x$CollUnitHandle,
-                                            dataset.type = x$DatasetType,
-                                            stringsAsFactors = FALSE)
-      
-      new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
-      rownames(new.output$pi.data) <- NULL
+      new.output <- lapply(output, function(x) {
+          new.output <- list()
+          new.output$site.data <- data.frame(site.id = x$Site$SiteID,
+                                             site.name = x$Site$SiteName,
+                                             long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                             na.rm = TRUE),
+                                             lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                             na.rm = TRUE),
+                                             elev = x$Site$Altitude,
+                                             description = x$Site$SiteDescription,
+                                             long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                             lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                             row.names = x$Site$SiteName,
+                                             stringsAsFactors = FALSE)
 
-      sub.test <- try(do.call(rbind.data.frame, x$SubDates))
+          class(new.output$site.data) <- c('site', 'data.frame')
 
-      if(length(sub.test) > 0){
-        colnames(sub.test) <- c("submission.date",  "submission.type")
-        sub.test$submission.date <- as.character(sub.test$submission.date)
-        sub.test$submission.type <- as.character(sub.test$submission.type)
-      }
+          new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
+                                                dataset.name = x$DatasetName,
+                                                collection.type = x$CollUnitType,
+                                                collection.handle = x$CollUnitHandle,
+                                                dataset.type = x$DatasetType,
+                                                stringsAsFactors = FALSE)
 
-      new.output$submission <- sub.test
-      
-      new.output$access.date = Sys.time()
+          new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+          rownames(new.output$pi.data) <- NULL
 
-      class(new.output) <- c('dataset', 'list')
-      new.output})
+          sub.test <- try(do.call(rbind.data.frame, x$SubDates))
+
+          if(length(sub.test) > 0){
+              colnames(sub.test) <- c("submission.date",  "submission.type")
+              sub.test$submission.date <- as.character(sub.test$submission.date)
+              sub.test$submission.type <- as.character(sub.test$submission.type)
+          }
+
+          new.output$submission <- sub.test
+
+          new.output$access.date = Sys.time()
+
+          class(new.output) <- c('dataset', 'list')
+          new.output})
 
   }
-
+  
+  names(new.output) <- sapply(lapply(new.output, '[[', 'dataset.meta'), 
+                              '[[', 'dataset.id')
+  
   class(new.output) <- c('dataset_list', 'list')
 
   new.output
 
 }
 
+#' @title Obtain dataset information from an existing \code{site} object.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x An object of class \code{site}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @importFrom RCurl getForm
+#' @importFrom RJSONIO fromJSON
 #' @export
-get_dataset.site <- function(x){
-
-  siteIDs <- x$siteid
+get_dataset.site <- function(x, ...){
 
   pull_site <- function(siteid){
 
@@ -217,7 +226,7 @@ get_dataset.site <- function(x){
                                          lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
-      new.output$dataset <- data.frame(dataset.id = x$DatasetID,
+      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
                                        dataset.name = x$DatasetName,
                                        collection.type = x$CollUnitType,
                                        collection.handle = x$CollUnitHandle,
@@ -237,14 +246,14 @@ get_dataset.site <- function(x){
 
       new.output$access.date = Sys.time()
 
+      class(new.output) <- c('dataset', 'list')
+      
       new.output})
 
-    class(new.output) <- c('dataset', 'list')
-
-    new.output[[1]]
+    new.output
   }
 
-  new.output <- lapply(x$siteid, pull_site)
+  new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
 
   class(new.output) <- c('dataset_list', 'list')
 
@@ -252,29 +261,63 @@ get_dataset.site <- function(x){
 
 }
 
+#' @title Obtain dataset information from an existing \code{download} object.
+#' @description A function to access a \code{dataset} within a \code{download} object.
+#'
+#' @param x An object of class \code{download}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.download <- function(x){
+get_dataset.download <- function(x, ...){
   # Just pull the dataset out of the download.
   output <- list(x$dataset)
-  
+
   names(output) <- output[[1]]$dataset.meta$dataset.id
-  
+
   class(output[[1]]) <- c('dataset', 'list')
-  
+
   class(output) <- c('dataset_list', 'list')
-  return(output)  
+  return(output)
 }
 
+#' @title Obtain dataset information from a \code{download_list}.
+#' @description A function to return datasets corresponding to the objects within a \code{download_list}.
+#'
+#' @param x An object of class \code{download_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.download_list <- function(x){
-  
+get_dataset.download_list <- function(x, ...){
+
   # Just pull the dataset out of the download and reassign classes:
   output <- lapply(x, FUN=function(y){
     dataset <- y$dataset
     class(dataset) <- c('dataset', 'list')
     dataset })
+
+  names(output) <- sapply(lapply(output, '[[', 'dataset.meta'), '[[', 'dataset.id')
   
   class(output) <- c('dataset_list', 'list')
-  
+
   output
+}
+
+#' @title Obtain dataset information from an object of class \code{geochronologic}.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x An object of class \code{geochronologic}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_dataset.geochronologic <- function(x, ...){
+  x[[1]]
+}
+
+#' @title Obtain dataset information from an object of class \code{geochronologic_list}.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x An object of class \code{geochronologic_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_dataset.geochronologic_list <- function(x, ...){
+  out <- lapply(x, function(y)y[[1]])
+  class(out) <- c('dataset_list', 'list')
+  out
 }

@@ -18,7 +18,8 @@ The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecologi
 + [Gavin Simpson](http://www.fromthebottomoftheheap.net/) - University of Regina, Department of Biology
 + [Jeremiah Marsicek](http://geoweb.uwyo.edu/ggstudent/jmarsice/Site/Home.html) - University of Wyoming, Department of Geology and Geophysics
 + [Karthik Ram](http://nature.berkeley.edu/~kram/) - University of California - Berkely, Berkeley Institue for Data Science.
-
++ [Luke Sosalla](https://github.com/sosalla) - University of Wisconsin, Department of Geography
++ 
 Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](http://api.neotomadb.org/doc/resources/home).
 
 ### Currently implemented in `neotoma`

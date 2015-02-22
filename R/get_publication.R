@@ -1,12 +1,10 @@
-
-#' A file to get publications for sites or datasets in the Neotoma Database using the API.
+#' @title A function to get publications for sites or datasets in the Neotoma Database using the API.
 #'
-#' The function takes the parameters, defined by the user, and returns a table with
-#'    publication information from the Neotoma Paleoecological Database.
+#' @description The function takes the parameters, defined by the user, and returns a table with publication information from the Neotoma Paleoecological Database.
 #'
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
-#' @param pubid Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
+#' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
 #' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
@@ -32,13 +30,42 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_publication <- function(pubid, contactid, datasetid, author,
+#' 
+get_publication<- function(x, contactid, datasetid, author,
+                           pubtype, year, search){
+  
+  UseMethod('get_publication')
+
+}
+
+
+#' A function to get publications for sites or datasets in the Neotoma Database using the API.
+#'
+#' The function takes the parameters, defined by the user, and returns a table with
+#'    publication information from the Neotoma Paleoecological Database.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm
+#' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
+#' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
+#' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
+#' @param author Character string for full or partial author's name.  Can include wildcards such as 'Smit*' for all names beginning with 'Smit'.
+#' @param pubtype Character string, one of eleven allowable types, see \code{\link{get_table}}. For a list of allowed types run \code{get_table("PublicationTypes")}.
+#' @param year Numeric publication year.
+#' @param search A character string to search for within the article citation.
+#' @export
+#' 
+get_publication.default <- function(x, contactid, datasetid, author,
                             pubtype, year, search){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/publications'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
+  
+  if('x' %in% names(cl)){
+    names(cl)[which(names(cl) == 'x')] <- 'pubid'
+  }
   cl <- lapply(cl, eval, envir = parent.frame())
 
   # Parameter check on pubid:
@@ -105,7 +132,7 @@ get_publication <- function(pubid, contactid, datasetid, author,
     }
   }
 
-  if (class(aa) == 'try-error' | length(aa) == 0){
+  if (class(aa) == 'try-error'){
     output <- NA
   } else {
       # This line doesn't do anything
@@ -120,23 +147,98 @@ get_publication <- function(pubid, contactid, datasetid, author,
       # 2 components, the first everything but the Authors array, the
       # second the authors array *with* a link to PublicationID??
     get_results <- function(x){
-      output <- list(meta = data.frame(id = as.numeric(x$PublicationID),
-                                       pub.type = x$PubType,
-                                       year = as.numeric(x$Year),
-                                       citation = x$Citation,
-                                       stringsAsFactors=FALSE))
       
-      output$authors <- do.call(rbind.data.frame,
-        lapply(x$Authors, FUN=function(y){
-        data.frame(ContactID = y$ContactID,
-                   Order = y$Order,
-                   ContactName = as.character(y$ContactName),
-                   stringsAsFactors=FALSE)}))
-
+      if(length(x) == 0){
+        output <- list(meta = data.frame(id = NA,
+                                         pub.type = NA,
+                                         year = NA,
+                                         citation = NA,
+                                         stringsAsFactors=FALSE))
+        
+        output$authors <- data.frame(contact.id = NA,
+                                     order = NA,
+                                     contact.name = NA,
+                                               stringsAsFactors=FALSE)
+        
+      } else {
+        
+        output <- list(meta = data.frame(id = as.numeric(x$PublicationID),
+                                         pub.type = x$PubType,
+                                         year = as.numeric(x$Year),
+                                         citation = x$Citation,
+                                         stringsAsFactors=FALSE))
+        
+        output$authors <- do.call(rbind.data.frame,
+          lapply(x$Authors, FUN=function(y){
+          data.frame(ContactID = y$ContactID,
+                     Order = y$Order,
+                     ContactName = as.character(y$ContactName),
+                     stringsAsFactors=FALSE)}))
+      }
+      
       output
     }
 
-    output <- lapply(aa, get_results)
+    if(length(aa) < 1) {
+      output <- get_results(aa)
+    } else{
+      output <- lapply(aa, get_results)
+    }
   }
+  
+  if('meta' %in% names(output)) output <- list(output)
+  
   output
+}
+
+#' @title A function to get publications for datasets in the Neotoma Database using the API.
+#' @description The function takes a \code{dataset} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{dataset}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_publication.dataset <- function(x, ... ){
+  pubs <- get_publication(datasetid = x$dataset.meta$dataset.id)
+  if('meta' %in% names(pubs)) pubs <- list(pubs)
+  pubs
+}
+
+#' @title A function to get publications for dataset_lists in the Neotoma Database using the API.
+#' @description The function takes a \code{dataset_list} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{dataset_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_publication.dataset_list <- function(x, ... ){
+  ids <- sapply(x, function(y)y$dataset.meta$dataset.id)
+  
+  lapply(ids, function(x)get_publication(datasetid = x))
+}
+
+#' @title A function to get publications for downloads in the Neotoma Database using the API.
+#' @description The function takes a \code{download} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{download}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_publication.download <- function(x, ... ){
+  
+  pubs <- get_publication(datasetid = x$dataset$dataset.meta$dataset.id)
+  if('meta' %in% names(pubs)) pubs <- list(pubs)
+  pubs
+  
+}
+
+#' @title A function to get publications for datasets in the Neotoma Database using the API.
+#' @description The function takes a \code{download_list} and returns a table with publication information from the Neotoma Paleoecological Database.
+#'
+#' @param x an object of class \code{download_list}.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_publication.download_list <- function(x, ... ){
+  
+  ids <- sapply(x, function(y)y$dataset$dataset.meta$dataset.id)
+  
+  lapply(ids, function(x)get_publication(datasetid = x))
+  
 }
