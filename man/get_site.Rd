@@ -4,7 +4,7 @@
 \alias{get_site}
 \title{Return Site Information.}
 \usage{
-get_site(x, altmin, altmax, loc, gpid)
+get_site(x = NA, sitename, altmin, altmax, loc, gpid)
 }
 \arguments{
 \item{x}{A character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}}

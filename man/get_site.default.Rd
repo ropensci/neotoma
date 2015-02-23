@@ -4,7 +4,7 @@
 \alias{get_site.default}
 \title{Return Site Information.}
 \usage{
-\method{get_site}{default}(x, altmin, altmax, loc, gpid)
+\method{get_site}{default}(x = NA, sitename, altmin, altmax, loc, gpid)
 }
 \arguments{
 \item{x}{A character string representing the full or partial site name.}

@@ -42,8 +42,20 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
-get_site <- function(x, altmin, altmax, loc, gpid){
-  UseMethod('get_site')
+get_site <- function(x = NA, sitename, altmin, altmax, loc, gpid){
+  if(('logical' %in% class(x)) & exists('sitename')){
+    UseMethod('get_site', sitename)  
+  } else {
+    if(exists('sitename') & any(class(x) %in% c('site', 'dataset', 'dataset_list', 
+                                            'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
+      warning(paste0('When a ',class(x)[1],' object is supplied, get_site will ignore the sitename.\n'))
+      UseMethod('get_site', x)
+    } else{
+      warning(paste0('get_site does not acept objects of ',class(x),' using sitename.\n'))
+      UseMethod('get_site', sitename)  
+    }
+    
+  }
 }
 
 #' @title Return Site Information.
@@ -55,13 +67,19 @@ get_site <- function(x, altmin, altmax, loc, gpid){
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
 #' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
 #' @export
-get_site.default <- function(x, altmin, altmax, loc, gpid){
+get_site.default <- function(x = NA, sitename, altmin, altmax, loc, gpid){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
   cl <- as.list(match.call())
   
-  names(cl)[names(cl) %in% 'x'] <- 'sitename'
+  #  To get the package to work as written in the OpenQuaternary paper we need to add
+  #  'sitename' back into the set of variables:
+  if(exists('sitename')){
+    cl <- cl[-which(names(cl) %in% 'x')]
+  } else {
+    names(cl)[names(cl) %in% 'x'] <- 'sitename'
+  }
   
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
