@@ -4,6 +4,15 @@
 library("testthat")
 library("neotoma")
 
+context('get_site works as expected')
+
+test_that('\'get_site\' accepts and returns the right data types', 
+{
+  expect_that('site' %in% class(get_site()), is_true())
+  expect_that('site' %in% class(get_site()), gives_warning())
+  expect_that('site' %in% class(get_site(get_download(1))), shows_message('API call was'))
+}  
+
 context('get_contact work as expected')
 
 test_that('get_contact accepts and returns the right data types', 

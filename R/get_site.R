@@ -43,19 +43,25 @@
 #' @keywords IO connection
 #' @export
 get_site <- function(x = NA, sitename, altmin, altmax, loc, gpid){
-  if(('logical' %in% class(x)) & exists('sitename')){
+  if('logical' %in% class(x) & !missing(sitename)){
     UseMethod('get_site', sitename)  
-  } else {
-    if(exists('sitename') & any(class(x) %in% c('site', 'dataset', 'dataset_list', 
-                                            'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
-      warning(paste0('When a ',class(x)[1],' object is supplied, get_site will ignore the sitename.\n'))
-      UseMethod('get_site', x)
-    } else{
-      warning(paste0('get_site does not acept objects of ',class(x),' using sitename.\n'))
-      UseMethod('get_site', sitename)  
-    }
-    
   }
+  
+  if(missing(sitename) & 'logical' %in% class(x)){
+    sitename <- ''
+    UseMethod('get_site', sitename)
+  }
+  
+  if(!missing(sitename) & any(class(x) %in% c('site', 'dataset', 'dataset_list', 
+                                              'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
+    warning(paste0('When a ',class(x)[1],' object is supplied, get_site will ignore the sitename.\n'))
+    UseMethod('get_site', x)
+  }
+  if(missing(sitename) & any(class(x) %in% c('site', 'dataset', 'dataset_list', 
+                                              'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
+    UseMethod('get_site', x)  
+  }
+  
 }
 
 #' @title Return Site Information.
@@ -71,12 +77,12 @@ get_site.default <- function(x = NA, sitename, altmin, altmax, loc, gpid){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
+  cl <- as.list(match.call())
+
   if(missing(sitename) & is.na(x)){
     cl$sitename <- ''
   }
-  
-  cl <- as.list(match.call())
-  
+    
   #  To get the package to work as written in the OpenQuaternary paper we need to add
   #  'sitename' back into the set of variables:
   if(exists('sitename')){
