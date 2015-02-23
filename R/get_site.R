@@ -71,6 +71,10 @@ get_site.default <- function(x = NA, sitename, altmin, altmax, loc, gpid){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
+  if(missing(sitename) & is.na(x)){
+    cl$sitename <- ''
+  }
+  
   cl <- as.list(match.call())
   
   #  To get the package to work as written in the OpenQuaternary paper we need to add
