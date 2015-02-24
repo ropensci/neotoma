@@ -4,10 +4,10 @@
 \alias{get_site.dataset}
 \title{Return Site Information from a \code{dataset}}
 \usage{
-\method{get_site}{dataset}(x, ...)
+\method{get_site}{dataset}(sitename, ...)
 }
 \arguments{
-\item{x}{An object of class \code{dataset}.}
+\item{sitename}{An object of class \code{dataset}.}
 
 \item{...}{Arguments passed from the generic method, not used.}
 }

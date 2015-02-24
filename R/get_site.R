@@ -6,8 +6,7 @@
 #'
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
-#' @param x A character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
-#' @param sitename A character string for compatability with earlier versions.  To be replaced by 'x'
+#' @param sitename character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
@@ -43,58 +42,25 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
-get_site <- function(x = NA, sitename, altmin, altmax, loc, gpid){
-  if('logical' %in% class(x) & !missing(sitename)){
-    UseMethod('get_site', sitename)  
-  }
-  
-  if(missing(sitename) & 'logical' %in% class(x)){
-    sitename <- ''
-    UseMethod('get_site', sitename)
-  }
-  
-  if(!missing(sitename) & any(class(x) %in% c('site', 'dataset', 'dataset_list', 
-                                              'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
-    warning(paste0('When a ',class(x)[1],' object is supplied, get_site will ignore the sitename.\n'))
-    UseMethod('get_site', x)
-  }
-  if(missing(sitename) & any(class(x) %in% c('site', 'dataset', 'dataset_list', 
-                                              'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
-    UseMethod('get_site', x)  
-  }
-  if(missing(sitename) & class(x) == 'character'){
-    UseMethod('get_site', x)
-  }
+get_site <- function(sitename, ...){
+  UseMethod('get_site')
   
 }
 
 #' @title Return Site Information.
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x A character string representing the full or partial site name.
-#' @param sitename A character string for compatability with earlier versions.  To be replaced by 'x'
+#' @param sitename A character string representing the full or partial site name.
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
 #' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
 #' @export
-get_site.default <- function(x = NA, sitename, altmin, altmax, loc, gpid){
+get_site.default <- function(sitename, altmin, altmax, loc, gpid){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
   cl <- as.list(match.call())
-
-  if(missing(sitename) & is.na(x)){
-    cl$sitename <- ''
-  }
-    
-  #  To get the package to work as written in the OpenQuaternary paper we need to add
-  #  'sitename' back into the set of variables:
-  if(!missing(sitename) & !missing(x)){
-    cl <- cl[-which(names(cl) %in% 'x')]
-  } else {
-    names(cl)[names(cl) %in% 'x'] <- 'sitename'
-  }
   
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
@@ -157,11 +123,11 @@ get_site.default <- function(x = NA, sitename, altmin, altmax, loc, gpid){
 #' @title Return Site Information from a \code{dataset}
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x An object of class \code{dataset}.
+#' @param sitename An object of class \code{dataset}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.dataset <- function(x, ...){
-  site <- x$site.data
+get_site.dataset <- function(sitename, ...){
+  site <- sitename$site.data
   class(site) <- c('site', 'data.frame')
   site
 }
@@ -169,11 +135,11 @@ get_site.dataset <- function(x, ...){
 #' @title Return Site Information from a \code{dataset_list}
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x An object of class \code{dataset_list}.
+#' @param sitename An object of class \code{dataset_list}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.dataset_list <- function(x, ...){
-  site <- do.call(rbind.data.frame,lapply(x, '[[', 'site.data'))
+get_site.dataset_list <- function(sitename, ...){
+  site <- do.call(rbind.data.frame,lapply(sitename, '[[', 'site.data'))
   class(site) <- c('site', 'data.frame')
   site
 }
@@ -181,12 +147,12 @@ get_site.dataset_list <- function(x, ...){
 #' @title Return Site Information from a \code{download}
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x An object of class \code{download}.
+#' @param sitename An object of class \code{download}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.download <- function(x, ...){
+get_site.download <- function(sitename, ...){
 
-  site <- x$dataset$site.data
+  site <- sitename$dataset$site.data
   
   class(site) <- c('site', 'data.frame')
   site
@@ -195,12 +161,12 @@ get_site.download <- function(x, ...){
 #' @title Return Site Information from a \code{download_list}
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x An object of class \code{download_list}.
+#' @param sitename An object of class \code{download_list}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.download_list <- function(x, ...){
+get_site.download_list <- function(sitename, ...){
   
-  site <- do.call(rbind.data.frame,lapply(lapply(x, '[[', 'dataset'), '[[', 'site.data'))
+  site <- do.call(rbind.data.frame,lapply(lapply(sitename, '[[', 'dataset'), '[[', 'site.data'))
   
   class(site) <- c('site', 'data.frame')
   site
@@ -209,10 +175,10 @@ get_site.download_list <- function(x, ...){
 #' @title Return Site Information from a \code{geochronologic}
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x An object of class \code{geochronologic}.
+#' @param sitename An object of class \code{geochronologic}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.geochronologic <- function(x, ...){
+get_site.geochronologic <- function(sitename, ...){
   
   site <- x[[1]]$site.data
   
@@ -223,12 +189,12 @@ get_site.geochronologic <- function(x, ...){
 #' @title Return Site Information from a \code{geochronologic_list}
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
-#' @param x An object of class \code{geochronologic_list}.
+#' @param sitename An object of class \code{geochronologic_list}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.geochronologic_list <- function(x, ...){
+get_site.geochronologic_list <- function(sitename, ...){
   
-  site <- do.call(rbind.data.frame,lapply(x, function(y)y[[1]]$site.data))
+  site <- do.call(rbind.data.frame,lapply(sitename, function(y)y[[1]]$site.data))
   
   class(site) <- c('site', 'data.frame')
   site

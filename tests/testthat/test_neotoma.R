@@ -73,7 +73,7 @@ test_that('Crossing APIs',
 {
   expect_is(get_dataset(get_download(100)), 'dataset_list')            # test download_list
   expect_is(get_dataset(get_download(100)[[1]]), 'dataset_list')       # test download
-  expect_is(get_dataset(get_site(x='Marion%')), 'dataset_list') # test site
+  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset_list') # test site
   expect_is(get_download(x=c(1642, 1705, 1772)), 'download_list') # test site
   expect_is(get_site(get_download(100)), 'site')                       # test download_list
   expect_is(get_site(get_download(100)[[1]]), 'site')                  # test download

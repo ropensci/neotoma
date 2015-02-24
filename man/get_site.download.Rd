@@ -4,10 +4,10 @@
 \alias{get_site.download}
 \title{Return Site Information from a \code{download}}
 \usage{
-\method{get_site}{download}(x, ...)
+\method{get_site}{download}(sitename, ...)
 }
 \arguments{
-\item{x}{An object of class \code{download}.}
+\item{sitename}{An object of class \code{download}.}
 
 \item{...}{Arguments passed from the generic method, not used.}
 }

@@ -4,10 +4,10 @@
 \alias{get_site.geochronologic}
 \title{Return Site Information from a \code{geochronologic}}
 \usage{
-\method{get_site}{geochronologic}(x, ...)
+\method{get_site}{geochronologic}(sitename, ...)
 }
 \arguments{
-\item{x}{An object of class \code{geochronologic}.}
+\item{sitename}{An object of class \code{geochronologic}.}
 
 \item{...}{Arguments passed from the generic method, not used.}
 }
