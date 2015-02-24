@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{A character string representing the full or partial site name.}
 
+\item{sitename}{A character string for compatability with earlier versions.  To be replaced by 'x'}
+
 \item{altmin}{Minimum site altitude  (in m).}
 
 \item{altmax}{Maximum site altitude (in m).}

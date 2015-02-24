@@ -7,6 +7,7 @@
 #' @importFrom RJSONIO fromJSON
 #' @importFrom RCurl getForm
 #' @param x A character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
+#' @param sitename A character string for compatability with earlier versions.  To be replaced by 'x'
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
@@ -61,6 +62,9 @@ get_site <- function(x = NA, sitename, altmin, altmax, loc, gpid){
                                               'download', 'download_list', 'geochronologic', 'geochronologic_list'))){
     UseMethod('get_site', x)  
   }
+  if(missing(sitename) & class(x) == 'character'){
+    UseMethod('get_site', x)
+  }
   
 }
 
@@ -68,6 +72,7 @@ get_site <- function(x = NA, sitename, altmin, altmax, loc, gpid){
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
 #' @param x A character string representing the full or partial site name.
+#' @param sitename A character string for compatability with earlier versions.  To be replaced by 'x'
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
@@ -85,7 +90,7 @@ get_site.default <- function(x = NA, sitename, altmin, altmax, loc, gpid){
     
   #  To get the package to work as written in the OpenQuaternary paper we need to add
   #  'sitename' back into the set of variables:
-  if(exists('sitename')){
+  if(!missing(sitename) & !missing(x)){
     cl <- cl[-which(names(cl) %in% 'x')]
   } else {
     names(cl)[names(cl) %in% 'x'] <- 'sitename'
