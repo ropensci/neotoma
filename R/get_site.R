@@ -42,7 +42,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
-get_site <- function(sitename, ...){
+get_site <- function(sitename, altmin, altmax, loc, gpid, ...){
   UseMethod('get_site')
   
 }
