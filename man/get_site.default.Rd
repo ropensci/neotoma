@@ -4,18 +4,12 @@
 \alias{get_site.default}
 \title{Return Site Information.}
 \usage{
-\method{get_site}{default}(sitename, altmin, altmax, loc, gpid)
+\method{get_site}{default}(sitename, ...)
 }
 \arguments{
 \item{sitename}{A character string representing the full or partial site name.}
 
-\item{altmin}{Minimum site altitude  (in m).}
-
-\item{altmax}{Maximum site altitude (in m).}
-
-\item{loc}{A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.}
-
-\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
+\item{...}{Arguments passed from the generic method, not used.}
 }
 \description{
 Return site information from the Neotoma Paleoecological Database.

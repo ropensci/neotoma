@@ -51,12 +51,10 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...){
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
 #' @param sitename A character string representing the full or partial site name.
-#' @param altmin Minimum site altitude  (in m).
-#' @param altmax Maximum site altitude (in m).
-#' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
+#' @param ... Arguments passed from the generic method, not used.
+#' 
 #' @export
-get_site.default <- function(sitename, altmin, altmax, loc, gpid){
+get_site.default <- function(sitename, ...){
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
@@ -180,7 +178,7 @@ get_site.download_list <- function(sitename, ...){
 #' @export
 get_site.geochronologic <- function(sitename, ...){
   
-  site <- x[[1]]$site.data
+  site <- sitename[[1]]$site.data
   
   class(site) <- c('site', 'data.frame')
   site
