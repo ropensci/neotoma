@@ -102,7 +102,6 @@ param_check <- function(cl){
   #  Test the geographic identification against the Geopolitical name table.
   if ('gpid' %in% names(cl)){
     if (is.character(cl$gpid)){
-      data(gp.table)
       gprow <- match(x=gpid, table=gp.table$GeoPoliticalName)
       if (is.na(gprow)){
         error$flag <- 1
