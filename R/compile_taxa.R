@@ -67,8 +67,8 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         }
         use.list <- which(avail.lists %in% list.name)
     } else {
-        pollen.equiv <- NULL
-        data(pollen.equiv, envir = environment())
+        #pollen.equiv <- NULL
+        #data(pollen.equiv, envir = environment())
         avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
         use.list <- which(avail.lists %in% list.name) + 2
     }
