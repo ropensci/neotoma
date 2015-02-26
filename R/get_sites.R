@@ -61,7 +61,6 @@ get_sites <- function(sitename, altmin, altmax, loc, gpid){
 
   if('gpid' %in% names(cl)){
     if(is.character(gpid)){
-      data(gp.table)
       gprow <- match(x=gpid, table=gp.table$GeoPoliticalName)
       if(is.na(gprow)){
         stop('Cannot find a match for the gpid provided.')
