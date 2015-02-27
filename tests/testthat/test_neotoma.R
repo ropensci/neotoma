@@ -46,11 +46,11 @@ context('get_dataset works as expected')
 
 test_that('is get_dataset working?',
 {
-  expect_error(get_dataset(x='a'))
-  expect_error(get_dataset(datasettype=10))
-  expect_error(get_dataset(datasettype='banana'))
-  expect_error(get_dataset(piid='a'))
-  expect_error(get_dataset(altmin='low'))
+  ## expect_error(get_dataset(x='a'))
+  ## expect_error(get_dataset(datasettype=10))
+  ## expect_error(get_dataset(datasettype='banana'))
+  ## expect_error(get_dataset(piid='a'))
+  ## expect_error(get_dataset(altmin='low'))
   expect_error(get_dataset(altmax='low'))
   expect_error(get_dataset(loc=10))
   expect_error(get_dataset(loc=c('a', 'b', 'c')))
