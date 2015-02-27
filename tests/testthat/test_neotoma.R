@@ -68,27 +68,27 @@ test_that('get_download accepts numeric values and returns values as expected',
 
 #-----------------------------------------------------
 
-context('Crossing sites, datasets and downloads, using the API:')
-test_that('Crossing APIs',
-{
-  expect_is(get_dataset(get_download(100)), 'dataset_list')            # test download_list
-  expect_is(get_dataset(get_download(100)[[1]]), 'dataset_list')       # test download
-  expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset_list') # test site
-  expect_is(get_download(x=c(1642, 1705, 1772)), 'download_list') # test site
-  expect_is(get_site(get_download(100)), 'site')                       # test download_list
-  expect_is(get_site(get_download(100)[[1]]), 'site')                  # test download
-  expect_is(get_site(get_dataset(x=100)), 'site')                      # test dataset_list
-  expect_is(get_site(get_dataset(x=100)[[1]]), 'site')                 # test dataset
-})
+## context('Crossing sites, datasets and downloads, using the API:')
+## test_that('Crossing APIs',
+## {
+##   expect_is(get_dataset(get_download(100)), 'dataset_list')            # test download_list
+##   expect_is(get_dataset(get_download(100)[[1]]), 'dataset_list')       # test download
+##   expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset_list') # test site
+##   expect_is(get_download(x=c(1642, 1705, 1772)), 'download_list') # test site
+##   expect_is(get_site(get_download(100)), 'site')                       # test download_list
+##   expect_is(get_site(get_download(100)[[1]]), 'site')                  # test download
+##   expect_is(get_site(get_dataset(x=100)), 'site')                      # test dataset_list
+##   expect_is(get_site(get_dataset(x=100)[[1]]), 'site')                 # test dataset
+## })
 
 #-----------------------------------------------------
 
-## context('Compiling objects and returning what is expected:')
-## test_that('Compiling',
-## {
-##   expect_is(compile_downloads(get_download(100:103)), 'data.frame')
-##   expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
-##   expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
-##   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
-## })
+context('Compiling objects and returning what is expected:')
+test_that('Compiling',
+{
+  expect_is(compile_downloads(get_download(100:103)), 'data.frame')
+  expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
+  expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
+  expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
+})
 
