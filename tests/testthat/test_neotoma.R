@@ -83,12 +83,12 @@ test_that('get_contact accepts and returns the right data types',
 
 #-----------------------------------------------------
 
-## context('Compiling objects and returning what is expected:')
-## test_that('Compiling',
-## {
-##   expect_is(compile_downloads(get_download(100:103)), 'data.frame')
-##   expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
-##   expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
-##   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
-## })
+context('Compiling objects and returning what is expected:')
+test_that('Compiling',
+{
+  expect_is(compile_downloads(get_download(100:103)), 'data.frame')
+  expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
+  expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
+  expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
+})
 
