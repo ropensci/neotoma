@@ -42,31 +42,31 @@ test_that('get_download accepts numeric values and returns values as expected',
 
 #-----------------------------------------------------
 
-context('get_dataset works as expected')
+## context('get_dataset works as expected')
 
-test_that('is get_dataset working?',
-{
-  expect_error(get_dataset(x='a'))
-  expect_error(get_dataset(datasettype=10))
-  expect_error(get_dataset(datasettype='banana'))
-  expect_error(get_dataset(piid='a'))
-  expect_error(get_dataset(altmin='low'))
-  expect_error(get_dataset(altmax='low'))
-  expect_error(get_dataset(loc=10))
-  expect_error(get_dataset(loc=c('a', 'b', 'c')))
-  expect_error(get_dataset(gpid=10))
-  expect_error(get_dataset(taxonids='Pine'))
-  expect_error(get_dataset(taxonname=10))
-  expect_error(get_dataset(ageold='min'))
-  expect_error(get_dataset(ageyoung='max'))
-  expect_error(get_dataset(ageof=10))
-  expect_error(get_dataset(ageof='taxon'))
-  expect_error(get_dataset(subdate=10))
-  expect_is(get_dataset(x = 1), 'dataset_list')
-  expect_is(get_dataset(x = 1)[[1]], 'dataset')
-})
+## test_that('is get_dataset working?',
+## {
+##   expect_error(get_dataset(x='a'))
+##   expect_error(get_dataset(datasettype=10))
+##   expect_error(get_dataset(datasettype='banana'))
+##   expect_error(get_dataset(piid='a'))
+##   expect_error(get_dataset(altmin='low'))
+##   expect_error(get_dataset(altmax='low'))
+##   expect_error(get_dataset(loc=10))
+##   expect_error(get_dataset(loc=c('a', 'b', 'c')))
+##   expect_error(get_dataset(gpid=10))
+##   expect_error(get_dataset(taxonids='Pine'))
+##   expect_error(get_dataset(taxonname=10))
+##   expect_error(get_dataset(ageold='min'))
+##   expect_error(get_dataset(ageyoung='max'))
+##   expect_error(get_dataset(ageof=10))
+##   expect_error(get_dataset(ageof='taxon'))
+##   expect_error(get_dataset(subdate=10))
+##   expect_is(get_dataset(x = 1), 'dataset_list')
+##   expect_is(get_dataset(x = 1)[[1]], 'dataset')
+## })
 
-#-----------------------------------------------------
+## #-----------------------------------------------------
 
 ## context('Crossing sites, datasets and downloads, using the API:')
 ## test_that('Crossing APIs',
