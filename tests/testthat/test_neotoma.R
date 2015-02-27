@@ -7,23 +7,24 @@ library("neotoma")
 context('get_site works as expected')
 
 test_that('get_site accepts and returns the right data types',
-{
-  expect_that('site' %in% class(get_site()), is_true())
-  expect_that('site' %in% class(get_site(get_download(1))), shows_message('API call was'))
-})
+      {
+          expect_that('site' %in% class(get_site()), is_true())
+          expect_that('site' %in% class(get_site(get_download(1))),
+                      shows_message('API call was'))
+      })
 
-context('get_contact work as expected')
+## context('get_contact work as expected')
 
-test_that('get_contact accepts and returns the right data types',
-{
-  expect_error(get_contact(contactid='aaa'))
-  expect_error(get_contact(contactname=12))
-  expect_error(get_contact(contactstatus=1))
-  expect_error(get_contact(familyname=12))
-  expect_message(get_contact(contactid=1), 'The API call')
-  expect_message(get_contact(familyname='Smith'), 'The API call')
-  expect_message(get_contact(contactname='*Smith*'), 'The API call')
-})
+## test_that('get_contact accepts and returns the right data types',
+## {
+##   expect_error(get_contact(contactid='aaa'))
+##   expect_error(get_contact(contactname=12))
+##   expect_error(get_contact(contactstatus=1))
+##   expect_error(get_contact(familyname=12))
+##   expect_message(get_contact(contactid=1), 'The API call')
+##   expect_message(get_contact(familyname='Smith'), 'The API call')
+##   expect_message(get_contact(contactname='*Smith*'), 'The API call')
+## })
 
 #-----------------------------------------------------
 
