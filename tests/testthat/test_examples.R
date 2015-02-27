@@ -5,6 +5,7 @@ library("neotoma")
 context("Run Neotoma examples only when not on CRAN")
 
 test_that("Examples run without error", {
+    skip_on_cran()
     ## List of example topics we want to check
     egs <- c('compile_downloads',
              'compile_list',
