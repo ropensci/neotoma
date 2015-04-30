@@ -62,8 +62,10 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
-  if(error_test$flag == 1){
-    stop(paste0(unlist(error_test$message), collapse='\n  '))
+  if(error_test[[2]]$flag == 1){
+    stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
+  } else{
+    cl <- error_test[[1]]
   }
 
   neotoma.form <- getForm(base.uri, .params = cl)
