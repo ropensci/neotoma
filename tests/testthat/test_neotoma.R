@@ -12,6 +12,7 @@ test_that('get_site accepts and returns the right data types',
                       shows_message('API call was'))
       })
 
+
 ## Turning just this and only the first expect_error is enough to throw
 ## an error on Travis:
 ## context('get_contact work as expected')
@@ -28,6 +29,17 @@ test_that('get_site accepts and returns the right data types',
 
 #-----------------------------------------------------
 
+## context('get_site works as expected')
+## test_that('get_site accepts and returns the right data types',
+## {
+##   expect_that('site' %in% class(get_site()), is_true())
+##   expect_that('site' %in% class(get_site(get_download(1))),
+##   expect_is(get_site(gpid='Canada'), 'site')
+##               shows_message('API call was'))
+## })
+
+#-----------------------------------------------------
+##
 ## context('get_downloads works as expected')
 
 ## test_that('get_download accepts numeric values and returns values as expected',
