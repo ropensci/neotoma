@@ -91,6 +91,23 @@ param_check <- function(cl){
     }
   }
 
+  # Parameter check for the datasettype, make sure
+  # it's one of the accepted types:
+  if ('datasettype' %in% names(cl)){
+    settypes <- c("geochronologic", "loss-on-ignition", "pollen", "plant macrofossil", 
+                  "vertebrate fauna", "macroinvertebrate", "pollen surface sample",                      
+                  "insect", "ostracode", "water chemistry", "diatom", 
+                  "ostracode surface sample", "diatom surface sample", "geochemistry", 
+                  "physical sedimentology", "charcoal", "testate amoebae", 
+                  "X-ray fluorescence (XRF)", "X-ray diffraction (XRD)", 
+                  "Energy dispersive X-ray spectroscopy (EDS/EDX)")
+    
+    set <- pmatch(cl$datasettype, settypes, nomatch = NA)
+    if (is.na(set)) {
+      stop(paste0('datasettype must be one of: ',settypes))
+    }
+  }
+  
   # Parameter check on familyname:
   if ('familyname' %in% names(cl)){
     if (!is.character(cl$familyname)){
@@ -102,12 +119,12 @@ param_check <- function(cl){
   #  Test the geographic identification against the Geopolitical name table.
   if ('gpid' %in% names(cl)){
     if (is.character(cl$gpid)){
-      gprow <- match(x=gpid, table=gp.table$GeoPoliticalName)
+      gprow <- match(x=cl$gpid, table=gp.table$GeoPoliticalName)
       if (is.na(gprow)){
         error$flag <- 1
         error$message[[length(error$message) + 1]] <- 'Cannot find a match for the gpid provided.'
       }
-      gpid <- gp.table$GeoPoliticalID[gprow]
+      cl$gpid <- gp.table$GeoPoliticalID[gprow]
     } else {
       if (!is.numeric(cl$gpid)){
         error$flag <- 1
@@ -165,6 +182,6 @@ param_check <- function(cl){
     }
   }
 
-  error
+  list(cl,error)
 
 }

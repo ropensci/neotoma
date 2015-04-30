@@ -1,7 +1,7 @@
 Package: neotoma
 Type: Package
 Title: A Package to access the Neotoma Paleoecological Database using an API.
-Version: 1.1-0
+Version: 1.2-0
 Date: 2013-04-04
 Author: Simon J. Goring, Gavin L. Simpson  with contributions from Jeremiah P.
     Marsicek, Karthik Ram and Luke Sosalla
@@ -19,13 +19,14 @@ Description: The package accesses the Neotoma Paleoecological Database using
 License: MIT + file LICENSE
 URL: https://github.com/ropensci/neotoma
 BugReports: https://github.com/ropensci/neotoma/issues
-Depends:
+Depends: 
     R (>= 2.10)
-Imports:
+Imports: 
     RJSONIO,
     RCurl (>= 1.6),
     plyr,
     reshape2
-Suggests:
+Suggests: 
     testthat,
     knitr
+VignetteBuilder: knitr

@@ -65,16 +65,10 @@ get_site.default <- function(sitename, ...){
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
-  if(error_test$flag == 1){
-    stop(paste0(unlist(error_test$message), collapse='\n  '))
-  }
-
-  if ('loc' %in% names(cl)){
-    cl$loc <- eval(cl$loc)
-    if (all(findInterval(cl$loc[c(2,4)], c(-90, 90)) == 1) &
-          all(findInterval(cl$loc[c(1,3)], c(-180, 180)) == 1)){
-      cl$loc <- paste(cl$loc, collapse = ',')
-    }
+  if(error_test[[2]]$flag == 1){
+    stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
+  } else{
+    cl <- error_test[[1]]
   }
 
   neotoma.form <- getForm(base.uri, .params = cl)

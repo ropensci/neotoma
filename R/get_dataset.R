@@ -92,27 +92,11 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
-  if(error_test$flag == 1){
-    stop(paste0(unlist(error_test$message), collapse='\n  '))
+  if(error_test[[2]]$flag == 1){
+    stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
+  } else {
+    cl <- error_test[[1]]
   }
-
-  # Parameter check for the datasettype, make sure
-  # it's one of the accepted types:
-
-  if ('datasettype' %in% names(cl)){
-    settypes <- c('geochronologic', 'loss-on-ignition', 'pollen',
-                  'plant macrofossils', 'vertebrate fauna', 'mollusks',
-                  'pollen surface sample')
-
-    set <- pmatch(cl$datasettype, settypes, nomatch = NA)
-    if (is.na(set)) {
-      stop(paste0('datasettype must be one of: geochronologic, ',
-                                'loss-on-ignition, pollen, \n',
-                                'plant macrofossils, vertebrate fauna, ',
-                                'mollusks, pollen surface sample'))
-    }
-  }
-
 
   neotoma.form <- getForm(base.uri, .params = cl, binary = FALSE,
                           .encoding = 'utf-16')

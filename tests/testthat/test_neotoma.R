@@ -65,6 +65,7 @@ test_that('get_site accepts and returns the right data types',
 ##   expect_error(get_dataset(subdate=10))
 ##   expect_is(get_dataset(x = 1), 'dataset_list')
 ##   expect_is(get_dataset(x = 1)[[1]], 'dataset')
+##   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
 ## })
 
 #-----------------------------------------------------
