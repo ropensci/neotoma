@@ -138,6 +138,8 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
           class(new.output$site.data) <- c('site', 'data.frame')
 
+          if('CollType' %in% names(x)){x$CollUnitType <- x$CollType} # This is a fix for a very specific issue we were having.
+          
           new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
                                                 dataset.name = x$DatasetName,
                                                 collection.type = x$CollUnitType,
