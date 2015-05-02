@@ -3,3 +3,4 @@
 ^.*\.yml
 README\.html
 ^revdep$
+^cran-comments.md$
