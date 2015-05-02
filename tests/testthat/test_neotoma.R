@@ -3,6 +3,22 @@
 
 library("testthat")
 library("neotoma")
+library("RJSONIO")
+
+context('The API itself is working properly')
+test_that('The API is returning data as expected from its documentation',
+      {
+          aa <- fromJSON('http://api.neotomadb.org/v1/data/datasets?siteid=1')
+          bb <- fromJSON('http://api.neotomadb.org/v1/data/datasets?gpid=756')
+          expect_is(aa, 'list')
+          expect_is(bb, 'list')
+          expect_equal(length(aa), 2)
+          expect_equal(aa[[1]], 1)
+          expect_more_than(length(aa[[2]]), 0)
+          expect_equal(fromJSON('http://api.neotomadb.org/v1/data/datasets?banana')[[1]], 0)
+          expect_equal(bb[[1]], 1)
+          expect_more_than(length(bb[[2]]), 0)
+      })
 
 context('get_site works as expected')
 test_that('get_site accepts and returns the right data types',
