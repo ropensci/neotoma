@@ -13,10 +13,14 @@ get_chroncontrol(chronologyid, verbose = TRUE)
 }
 \value{
 This command returns either an object of class  \code{"try-error"} containing the error returned
-   from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core. This is a list comprising the following items:
+   from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core.
+
+   This is a list comprising the following items:
 
  \item{ \code{chron.control} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
  \item{ \code{meta} }{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
+
+ If Neotoma returns empty content, either the control table or the associated metadata (which happens in approximately 25% of cases) then the data.frames are returned with NA content.
 }
 \description{
 Using the dataset ID, return all records associated with the data.  At present,

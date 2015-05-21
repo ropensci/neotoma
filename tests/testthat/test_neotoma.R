@@ -122,3 +122,17 @@ library("RJSONIO")
 #   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
 # })
 # 
+# #-----------------------------------------------------
+# 
+# context('get_chroncontrol has some strange behaviour.  Testing:')
+# test_that('Chronology controls',
+# {
+#   expect_is(get_chroncontrol(1392), 'list')                          # test empty table
+#   expect_named(get_chroncontrol(1392), c('chron.control', 'meta))    # test empty table
+#   expect_is(get_chroncontrol(1376), 'list')                          # test partial table
+#   expect_named(get_chroncontrol(1376), c('chron.control', 'meta))    # test partial table
+#   expect_is(get_chroncontrol(1000), 'list')                          # test full table
+#   expect_named(get_chroncontrol(1000), c('chron.control', 'meta))    # test full table
+#
+# })
+# 

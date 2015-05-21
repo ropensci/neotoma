@@ -66,6 +66,12 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
         # simple a set of matrices as possible.
         #  Some of the records do not contain a 'controls' table, so they only contain
         #  'meta':
+        
+        if(length(aa) == 0){
+          # This removes the need to make a more deeply nested if statement. . . 
+          aa <- list(empty = 0) 
+        }
+        
         if('controls' %in% names(aa[[1]])){
           control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
           
