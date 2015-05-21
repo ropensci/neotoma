@@ -8,10 +8,15 @@
 #' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class  \code{"try-error"} containing the error returned
-#'    from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core. This is a list comprising the following items:
+#'    from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core. 
+#'    
+#'    This is a list comprising the following items:
 #'
 #'  \item{ \code{chron.control} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
 #'  \item{ \code{meta} }{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
+#'  
+#'  If Neotoma returns empty content, either the control table or the associated metadata (which happens in approximately 25% of cases) then the data.frames are returned with NA content.
+#'  
 #' @examples \dontrun{
 #' #  The point of pulling chronology tables is to re-build or examine the chronological
 #' #  information that was used to build the age-depth model for the core.
@@ -59,24 +64,49 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
 
         # Here the goal is to reduce this list of lists to as
         # simple a set of matrices as possible.
-        control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
+        #  Some of the records do not contain a 'controls' table, so they only contain
+        #  'meta':
+        if('controls' %in% names(aa[[1]])){
+          control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
+          
+          control.table <- control.table[, c('Depth', 'Thickness',
+                                            'Age', 'AgeYoungest', 'AgeOldest',
+                                            'ControlType', 'ChronControlID')]
+          
+          colnames(control.table) <- c('depth', 'thickness', 'age', 
+                                       'age.young', 'age.old', 'control.type',
+                                       'chron.control.id')
+        } else {
+          #  If there is no chron-control table, return an empty control.table element.
+          control.table <- data.frame(depth = NA,
+                                      thickness = NA,
+                                      age = NA, 
+                                      age.young = NA,
+                                      age.old = NA, 
+                                      control.type = NA,
+                                      chron.control.id = NA)
+        }
         
-        control.table <- control.table[, c('Depth', 'Thickness',
-                                          'Age', 'AgeYoungest', 'AgeOldest',
-                                          'ControlType', 'ChronControlID')]
-        
-        colnames(control.table) <- c('depth', 'thickness', 'age', 
-                                     'age.young', 'age.old', 'control.type',
-                                     'chron.control.id')
-
-        meta.table <- data.frame(default    = aa[[1]]$Default,
-                                 name       = aa[[1]]$ChronologyName,
-                                 age.type    = aa[[1]]$AgeType,
-                                 age.model   = aa[[1]]$AgeModel,
-                                 age.older   = aa[[1]]$AgeOlder,
-                                 age.younger = aa[[1]]$AgeYounger,
-                                 chron.id    = aa[[1]]$ChronologyID,
-                                 date       = aa[[1]]$DatePrepared)
+        if('Default' %in% names(aa[[1]])){
+          meta.table <- data.frame(default     = aa[[1]]$Default,
+                                   name        = aa[[1]]$ChronologyName,
+                                   age.type    = aa[[1]]$AgeType,
+                                   age.model   = aa[[1]]$AgeModel,
+                                   age.older   = aa[[1]]$AgeOlder,
+                                   age.younger = aa[[1]]$AgeYounger,
+                                   chron.id    = aa[[1]]$ChronologyID,
+                                   date        = aa[[1]]$DatePrepared)
+        } else {
+          # Return an empty data.frame.
+          meta.table <- data.frame(default     = NA,
+                                   name        = NA,
+                                   age.type    = NA,
+                                   age.model   = NA,
+                                   age.older   = NA,
+                                   age.younger = NA,
+                                   chron.id    = NA,
+                                   date        = NA)
+        }
     }
 
   list(chron.control = control.table,

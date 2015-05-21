@@ -19,3 +19,5 @@ file.notes.csv
 Diagram1.dia
 Diagram1.dia.autosave
 .RData
+neotoma_ropensci.Rproj
+inst/doc
