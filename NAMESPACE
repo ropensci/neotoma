@@ -2,6 +2,9 @@
 
 S3method(counts,download)
 S3method(counts,download_list)
+S3method(get_chroncontrol,default)
+S3method(get_chroncontrol,download)
+S3method(get_chroncontrol,download_list)
 S3method(get_dataset,default)
 S3method(get_dataset,download)
 S3method(get_dataset,download_list)

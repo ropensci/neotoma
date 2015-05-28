@@ -39,7 +39,7 @@ write_agefile <- function(download, chronology = 1, path,
     
     if('download' %in% class(download[[1]])){download <- download[[1]]}
     
-    chron.controls <- get_chroncontrol(chronologyid = download$chronologies[[chronology]]$chronology.id[1],
+    chron.controls <- get_chroncontrol(download,
                                        verbose = FALSE)
   
     if (nrow(chron.controls$chron.control) < 2){

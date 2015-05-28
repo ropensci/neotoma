@@ -4,7 +4,7 @@
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
 #' @importFrom RJSONIO fromJSON
-#' @param chronologyid A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
+#' @param x A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
 #' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class  \code{"try-error"} containing the error returned
@@ -20,24 +20,34 @@
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
-
 #' @export
-get_chroncontrol <- function(chronologyid, verbose = TRUE){
+get_chroncontrol <- function(x, verbose = TRUE){
+  UseMethod('get_chroncontrol')
+}
+
+#' @title Function to return chronological control tables from a chronologic ID.
+#' @description Using the chronology ID, return the chron control table as a \code{data.frame}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.
+#' @param verbose logical; should messages on API call be printed?
+#' @export
+get_chroncontrol.default <- function(x, verbose = TRUE){
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/chronologies'
 
-  if (missing(chronologyid)) {
-      stop(paste(sQuote("chronologyid"), "must be provided."))
+  if (missing(x)) {
+      stop(paste(sQuote("chronologyid"), "(x) must be provided."))
   } else {
-      if (!is.numeric(chronologyid))
-          stop('chronologyid must be numeric.')
+      if (!is.numeric(x))
+          stop('chronology ID (x) must be numeric.')
   }
 
   # query Neotoma for data set
-  aa <- try(fromJSON(paste0(base.uri, '/', chronologyid), nullValue = NA))
+  aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
 
   # Might as well check here for error and bail
   if (inherits(aa, "try-error"))
@@ -82,4 +92,26 @@ get_chroncontrol <- function(chronologyid, verbose = TRUE){
   list(chron.control = control.table,
        meta = meta.table)
 
+}
+
+#' @title Function to return chronological control tables from a \code{download} object.
+#' @description Using a \code{download}, return the default chron-control table as a \code{data.frame}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x A single \code{download} object.
+#' @param verbose logical; should messages on API call be printed?
+#' @export
+get_chroncontrol.download <- function(x, verbose = TRUE){
+  get_chroncontrol(x$sample.meta$chronology.id[1], verbose)
+}
+
+#' @title Function to return chronological control tables from a \code{download_list} object.
+#' @description Using a \code{download_list}, return the default chron-control table as a \code{data.frame}.
+#'
+#' @importFrom RJSONIO fromJSON
+#' @param x A \code{download_list} object.
+#' @param verbose logical; should messages on API call be printed?
+#' @export
+get_chroncontrol.download_list <- function(x, verbose = TRUE){
+  lapply(x, function(y)get_chroncontrol(y$sample.meta$chronology.id[1], verbose))
 }

@@ -122,3 +122,11 @@ library("RJSONIO")
 #   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
 # })
 # 
+# #-----------------------------------------------------
+# 
+# context('Test new chroncontrol methods')
+# test_that('Compiling',
+# {
+#   expect_is(get_chroncontrol(get_download(get_dataset(datasettype='pollen', ageold = 12000,ageyoung=-100,altmin = 101, altmax = 103))), 'data.frame')
+# })
+# 

@@ -4,10 +4,10 @@
 \alias{get_chroncontrol}
 \title{Function to return chronological control tables used to build age models.}
 \usage{
-get_chroncontrol(chronologyid, verbose = TRUE)
+get_chroncontrol(x, verbose = TRUE)
 }
 \arguments{
-\item{chronologyid}{A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.}
+\item{x}{A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.}
 
 \item{verbose}{logical, should messages on API call be printed?}
 }
