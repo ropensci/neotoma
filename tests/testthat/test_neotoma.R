@@ -124,9 +124,16 @@ library("RJSONIO")
 # 
 # #-----------------------------------------------------
 # 
-# context('Test new chroncontrol methods')
+# context('Test new chroncontrol methods and fixes')
 # test_that('Compiling',
 # {
 #   expect_is(get_chroncontrol(get_download(get_dataset(datasettype='pollen', ageold = 12000,ageyoung=-100,altmin = 101, altmax = 103))), 'data.frame')
+#   expect_is(get_chroncontrol(1392), 'list')                          # test empty table
+#   expect_named(get_chroncontrol(1392), c('chron.control', 'meta))    # test empty table
+#   expect_is(get_chroncontrol(1376), 'list')                          # test partial table
+#   expect_named(get_chroncontrol(1376), c('chron.control', 'meta))    # test partial table
+#   expect_is(get_chroncontrol(1000), 'list')                          # test full table
+#   expect_named(get_chroncontrol(1000), c('chron.control', 'meta))    # test full table
+#
 # })
 # 
