@@ -4,7 +4,6 @@ print.geochronologic <- function(x, ...){
   site <- as.character(x[[1]]$site$site.name)
   
   locs <- as.numeric(get_site(x[[1]])[,c('long', 'lat')])
-  types <- x[[1]]$dataset.meta$dataset.type
   
   cat(paste0('Geochronological data for ',
            x[[1]]$site$site.name, '\n',

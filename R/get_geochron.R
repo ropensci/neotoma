@@ -168,8 +168,6 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   
-  datasetid <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.id))
-  
   dataset.types <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.type))
   
   if(any(!dataset.types%in%'geochronologic')){
@@ -203,8 +201,6 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
 get_geochron.site <- function(x, verbose = TRUE){
   
   dataset <- get_dataset(x)
-  
-  datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset.meta$dataset.id))
   
   dataset.types <- unlist(lapply(dataset, FUN=function(x)x$dataset.meta$dataset.type))
   

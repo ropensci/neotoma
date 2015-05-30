@@ -4,11 +4,9 @@
 
 ## R CMD check results:
 + There were no ERRORs or WARNINGs
-+ There was one note - `Non-standard file/directory found at top level:  'cran-comments.md'`
 + Travis gives two notes:
   +  Cyclic repository
   +  License file
   
-
 ## Downstream Dependencies:
 NA

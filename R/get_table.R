@@ -68,7 +68,6 @@ get_table <- function(table.name = NULL){
                 silent = TRUE)
 
       if (aa[[1]] == 1){
-        allnames <- unique(unlist(lapply(aa[[2]], names), use.names = FALSE))
 
         # This is slightly quicker, but advantage is that it maintains
         # logical variable Extinct in correct mode
