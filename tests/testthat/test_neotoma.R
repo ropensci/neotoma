@@ -129,7 +129,7 @@
 # {
 #   expect_is(get_chroncontrol(get_download(get_dataset(datasettype='pollen', ageold = 12000,ageyoung=-100,altmin = 101, altmax = 103))), 'list')
 #   expect_is(get_chroncontrol(get_download(1176)), 'list')      # test missing chronID table.
-#   expect_named(get_chroncontrol(get_download(1176)), c('chron.control', 'meta'))    # test empty table
+#   expect_named(get_chroncontrol(get_download(1176))[[1]], c('chron.control', 'meta'))    # test empty table
 #   expect_named(get_chroncontrol(1392), c('chron.control', 'meta'))    # test empty table
 #   expect_is(get_chroncontrol(1376), 'list')                          # test partial table
 #   expect_named(get_chroncontrol(1376), c('chron.control', 'meta'))    # test partial table
