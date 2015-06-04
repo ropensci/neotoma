@@ -138,7 +138,22 @@ get_chroncontrol.default <- function(x, verbose = TRUE){
 #' @param verbose logical; should messages on API call be printed?
 #' @export
 get_chroncontrol.download <- function(x, verbose = TRUE){
-  get_chroncontrol(x$sample.meta$chronology.id[1], verbose)
+  chron_id <- x$sample.meta$chronology.id[1]
+  
+  if(is.na(chron_id)){
+    meta.table <- data.frame(default     = NA,
+                             name        = NA,
+                             age.type    = NA,
+                             age.model   = NA,
+                             age.older   = NA,
+                             age.younger = NA,
+                             chron.id    = NA,
+                             date        = NA)
+    warning('The download has no assigned chronology id.  Returning an empty data.frame')
+  } else {  
+    meta.table <- get_chroncontrol(x$sample.meta$chronology.id[1], verbose)
+  }
+  return(meta.table)
 }
 
 #' @title Function to return chronological control tables from a \code{download_list} object.
@@ -149,5 +164,5 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
 #' @param verbose logical; should messages on API call be printed?
 #' @export
 get_chroncontrol.download_list <- function(x, verbose = TRUE){
-  lapply(x, function(y)get_chroncontrol(y$sample.meta$chronology.id[1], verbose))
+  lapply(x, function(y)get_chroncontrol(y, verbose))
 }
