@@ -141,17 +141,24 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
   chron_id <- x$sample.meta$chronology.id[1]
   
   if(is.na(chron_id)){
-    meta.table <- data.frame(default     = NA,
-                             name        = NA,
-                             age.type    = NA,
-                             age.model   = NA,
-                             age.older   = NA,
-                             age.younger = NA,
-                             chron.id    = NA,
-                             date        = NA)
+    return(list(control.table = data.frame(depth = NA,
+                                           thickness = NA,
+                                           age = NA, 
+                                           age.young = NA,
+                                           age.old = NA, 
+                                           control.type = NA,
+                                           chron.control.id = NA),
+                meta.table = data.frame(default     = NA,
+                                        name        = NA,
+                                        age.type    = NA,
+                                        age.model   = NA,
+                                        age.older   = NA,
+                                        age.younger = NA,
+                                        chron.id    = NA,
+                                        date        = NA)))
     warning('The download has no assigned chronology id.  Returning an empty data.frame')
   } else {  
-    meta.table <- get_chroncontrol(x$sample.meta$chronology.id[1], verbose)
+    return(get_chroncontrol(x$sample.meta$chronology.id[1], verbose))
   }
   return(meta.table)
 }
