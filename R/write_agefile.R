@@ -94,7 +94,7 @@ write_agefile <- function(download, chronology = 1, path,
     #  There are a couple checks we need:
     if(any(regexpr('Core top', chron[,1])>0)){
       # Core tops need to have error added:
-      if(is.na(any(chron$error[which(regexpr('Core top', chron[,1])>0)]))){
+      if(any(is.na(chron$error[which(regexpr('Core top', chron[,1])>0)]))){
         warning('Core tops have no error.  By default we are setting the error to 2 yrs.')
         chron$error[which(regexpr('Core top', chron[,1])>0) & is.na(chron$error)] <- 2
       }

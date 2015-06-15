@@ -150,14 +150,14 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
   chron_id <- x$sample.meta$chronology.id[1]
   
   if(is.na(chron_id)){
-    return(list(control.table = data.frame(depth = NA,
+    return(list(chron.control = data.frame(depth = NA,
                                            thickness = NA,
                                            age = NA, 
                                            age.young = NA,
                                            age.old = NA, 
                                            control.type = NA,
                                            chron.control.id = NA),
-                meta.table = data.frame(default     = NA,
+                meta = data.frame(default     = NA,
                                         name        = NA,
                                         age.type    = NA,
                                         age.model   = NA,
