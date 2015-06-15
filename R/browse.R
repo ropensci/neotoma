@@ -1,7 +1,7 @@
 #' @title Open a browser window to display a Neotoma dataset within the Neotoma Explorer
 #' @description Using a \code{download} or \code{dataset} object, open up a browser window in the users default browser. Passing a \code{download_list} or \code{dataset_list} will open Neotoma Explorer with the first object and return a warning.
 #'
-#' @param x A \code{dataset} or \code{download} object.
+#' @param x A \code{numeric} value for the dataset ID, a \code{dataset} or \code{download} object.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return Returns a NULL value, opens a browser.
@@ -18,9 +18,8 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
-get_site <- function(sitename, altmin, altmax, loc, gpid, ...){
-  UseMethod('get_site')
-  
+browse <- function(x){
+  UseMethod('browse', object = x)
 }
 
 #' @title Open a browser window to display a Neotoma dataset within the Neotoma Explorer
@@ -82,7 +81,7 @@ browse.download <- function(x){
 #' @param x A \code{download_list} object.
 #' 
 #' @export
-get_site.download_list <- function(sitename, ...){
+browse.download_list <- function(x){
   if(length(x) > 1){
     warning(paste0('This download_list has more than one site.  Currently the API only supports \n',
                    'displaying a single record at a time.  Displaying the first download in the list.'))

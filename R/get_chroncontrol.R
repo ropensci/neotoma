@@ -157,7 +157,7 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
                                            age.old = NA, 
                                            control.type = NA,
                                            chron.control.id = NA),
-                meta = data.frame(default     = NA,
+                meta   = data.frame(default     = NA,
                                         name        = NA,
                                         age.type    = NA,
                                         age.model   = NA,
@@ -165,13 +165,13 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
                                         age.younger = NA,
                                         chron.id    = NA,
                                         date        = NA),
-                parent <- data.frame(dataset.type = NA,
+                parent = data.frame(dataset.type = NA,
                                      dataset.id = NA)))
     warning('The download has no assigned chronology id.  Returning an empty data.frame')
   } else {  
     return(get_chroncontrol(x$sample.meta$chronology.id[1], verbose))
   }
-  return(meta.table)
+
 }
 
 #' @title Function to return chronological control tables from a \code{download_list} object.
