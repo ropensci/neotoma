@@ -190,10 +190,10 @@ get_download.default <- function(x, verbose = TRUE){
             chrons <- try(unique(as.vector(unlist(sapply(samples,
                                                          function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent = TRUE)
 
-            base.frame <- as.data.frame(matrix(ncol = 6,
+            base.frame <- as.data.frame(matrix(ncol = 7,
                                                nrow = nrow(sample.meta)))
             colnames(base.frame) <- c('age.older', 'age',
-                                      'age.younger', 'chronology.name',
+                                      'age.younger', 'dataset.id', 'chronology.name',
                                       'age.type', 'chronology.id')
 
             if (!class(chrons) == 'try-error'){
