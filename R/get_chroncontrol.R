@@ -38,98 +38,107 @@ get_chroncontrol <- function(x, verbose = TRUE){
 #' @param verbose logical; should messages on API call be printed?
 #' @export
 get_chroncontrol.default <- function(x, verbose = TRUE){
-
+  
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   base.uri <- 'http://api.neotomadb.org/v1/data/chronologies'
-
+  
   if (missing(x)) {
-      stop(paste(sQuote("chronologyid"), "(x) must be provided."))
+    stop(paste(sQuote("chronologyid"), "(x) must be provided."))
   } else {
-      if (!is.numeric(x))
-          stop('chronology ID (x) must be numeric.')
+    if (!is.numeric(x))
+      stop('chronology ID (x) must be numeric.')
   }
-
+  
   # query Neotoma for data set
   aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
-
+  
   # Might as well check here for error and bail
   if (inherits(aa, "try-error"))
-      return(aa)
-
+    return(aa)
+  
   # if no error continue processing
   if (isTRUE(all.equal(aa[[1]], 0))) {
-      stop(paste('Server returned an error message:\n', aa[[2]]),
-           call. = FALSE)
+    stop(paste('Server returned an error message:\n', aa[[2]]),
+         call. = FALSE)
   }
-
+  
   if (isTRUE(all.equal(aa[[1]], 1))) {
-        aa <- aa[[2]]
-
-        if (verbose) {
-            writeLines(strwrap(paste0("API call was successful.",
-                                      " Returned chronology.")))
-        }
-
-        # Here the goal is to reduce this list of lists to as
-        # simple a set of matrices as possible.
-        #  Some of the records do not contain a 'controls' table, so they only contain
-        #  'meta':
-        
-        if(length(aa) == 0){
-          # This removes the need to make a more deeply nested if statement. . . 
-          aa <- list(empty = 0) 
-        }
-        
-        if('controls' %in% names(aa[[1]])){
-          control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
-          
-          control.table <- control.table[, c('Depth', 'Thickness',
-                                            'Age', 'AgeYoungest', 'AgeOldest',
-                                            'ControlType', 'ChronControlID')]
-          
-          colnames(control.table) <- c('depth', 'thickness', 'age', 
-                                       'age.young', 'age.old', 'control.type',
-                                       'chron.control.id')
-        } else {
-          #  If there is no chron-control table, return an empty control.table element.
-          control.table <- data.frame(depth = NA,
-                                      thickness = NA,
-                                      age = NA, 
-                                      age.young = NA,
-                                      age.old = NA, 
-                                      control.type = NA,
-                                      chron.control.id = NA)
-        }
-        
-        if('Default' %in% names(aa[[1]])){
-          meta.table <- data.frame(default     = aa[[1]]$Default,
-                                   name        = aa[[1]]$ChronologyName,
-                                   age.type    = aa[[1]]$AgeType,
-                                   age.model   = aa[[1]]$AgeModel,
-                                   age.older   = aa[[1]]$AgeOlder,
-                                   age.younger = aa[[1]]$AgeYounger,
-                                   chron.id    = aa[[1]]$ChronologyID,
-                                   date        = aa[[1]]$DatePrepared)
-        } else {
-          # Return an empty data.frame.
-          meta.table <- data.frame(default     = NA,
-                                   name        = NA,
-                                   age.type    = NA,
-                                   age.model   = NA,
-                                   age.older   = NA,
-                                   age.younger = NA,
-                                   chron.id    = NA,
-                                   date        = NA)
-        }
+    aa <- aa[[2]]
+    
+    if (verbose) {
+      writeLines(strwrap(paste0("API call was successful.",
+                                " Returned chronology.")))
     }
-
+    
+    # Here the goal is to reduce this list of lists to as
+    # simple a set of matrices as possible.
+    #  Some of the records do not contain a 'controls' table, so they only contain
+    #  'meta':
+    
+    if(length(aa) == 0){
+      # This removes the need to make a more deeply nested if statement. . . 
+      aa <- list(empty = 0) 
+    }
+    
+    if('controls' %in% names(aa[[1]])){
+      control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
+      
+      control.table <- control.table[, c('Depth', 'Thickness',
+                                         'Age', 'AgeYoungest', 'AgeOldest',
+                                         'ControlType', 'ChronControlID')]
+      
+      colnames(control.table) <- c('depth', 'thickness', 'age', 
+                                   'age.young', 'age.old', 'control.type',
+                                   'chron.control.id')
+    } else {
+      #  If there is no chron-control table, return an empty control.table element.
+      control.table <- data.frame(depth = NA,
+                                  thickness = NA,
+                                  age = NA, 
+                                  age.young = NA,
+                                  age.old = NA, 
+                                  control.type = NA,
+                                  chron.control.id = NA)
+    }
+    
+    if('Default' %in% names(aa[[1]])){
+      meta.table <- data.frame(default     = aa[[1]]$Default,
+                               name        = aa[[1]]$ChronologyName,
+                               age.type    = aa[[1]]$AgeType,
+                               age.model   = aa[[1]]$AgeModel,
+                               age.older   = aa[[1]]$AgeOlder,
+                               age.younger = aa[[1]]$AgeYounger,
+                               chron.id    = aa[[1]]$ChronologyID,
+                               date        = aa[[1]]$DatePrepared)
+    } else {
+      # Return an empty data.frame.
+      meta.table <- data.frame(default     = NA,
+                               name        = NA,
+                               age.type    = NA,
+                               age.model   = NA,
+                               age.older   = NA,
+                               age.younger = NA,
+                               chron.id    = NA,
+                               date        = NA)
+    }
+    
+    if('datasets' %in% names(aa[[1]])){
+      parent <- do.call(rbind, aa[[1]]$dataset)
+      colnames(parent) <- c('dataset.type', 'dataset.id')
+      parent$dataset.id <- as.numeric(parent$dataset.id)
+    } else {
+      parent <- data.frame(dataset.type = NA,
+                           dataset.id = NA)
+    }
+  }
+  
   list(chron.control = control.table,
-       meta = meta.table)
-
+       meta = meta.table,
+       parent = parent)
+  
 }
-
 #' @title Function to return chronological control tables from a \code{download} object.
 #' @description Using a \code{download}, return the default chron-control table as a \code{data.frame}.
 #'
@@ -155,7 +164,9 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
                                         age.older   = NA,
                                         age.younger = NA,
                                         chron.id    = NA,
-                                        date        = NA)))
+                                        date        = NA),
+                parent <- data.frame(dataset.type = NA,
+                                     dataset.id = NA)))
     warning('The download has no assigned chronology id.  Returning an empty data.frame')
   } else {  
     return(get_chroncontrol(x$sample.meta$chronology.id[1], verbose))
