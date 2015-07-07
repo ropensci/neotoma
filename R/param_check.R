@@ -181,7 +181,62 @@ param_check <- function(cl){
       error$message[[length(error$message) + 1]] <- 'The taxonname must be a character.'
     }
   }
-
+  
+  # Parameter check on author:
+  if ('search' %in% names(cl)){
+    if (!is.character(cl$search)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- 'The search string must be a character string.'
+    }
+  }
+  
+  if ('year' %in% names(cl)){
+    if (!is.numeric(cl$year)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- 'The year used must be numeric.'
+    }
+  }
+  
+  if ('pubtype' %in% names(cl)){
+    if (!is.character(cl$pubtype)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- paste0('The pubtype must be a character string. Use get.table',
+                  '(\'PublicationTypes\') to find acceptable tables.')
+    }
+  }
+  
+  # Parameter check on pubid:
+  if ('pubid' %in% names(cl)){
+    if (!is.numeric(cl$pubid)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- 'The pubid must be numeric.'
+    }
+  }
+  
+  # Parameter check on contactid:
+  if ('contactid' %in% names(cl)){
+    if (!is.numeric(cl$contactid)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- 'The contactid must be numeric.'
+    }
+  }
+  
+  # Parameter check on datasetid:
+  if ('datasetid' %in% names(cl)){
+    if (!is.numeric(cl$datasetid)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- 'The datasetid must be numeric.'
+    }
+  }
+  
+  # Parameter check on author:
+  if ('author' %in% names(cl)){
+    if (!is.character(cl$author)){
+      error$flag <- 1
+      error$message[[length(error$message) + 1]] <- 'The author name must be a character string.'
+    }
+  }
+  
   list(cl,error)
 
 }

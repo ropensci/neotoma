@@ -37,6 +37,8 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.3.1: Bugfix for `write_agefile` and the addition of a `browse` method.  See [this gist](https://gist.github.com/SimonGoring/877dd71cc3ad6bf8531e) for an example using `neotoma` and Bacon (Blaauw and Christen, 2011 [[pdf](http://ba.stat.cmu.edu/journal/2011/vol06/issue03/christen.pdf)]).
++ 1.3.0: Improved functionality of `get_chroncontrol` to allow it to deal with empty tables and work directly with `download` and `download_list` objects.
 + 1.2-1: Fix for empty `chroncontrol` tables [issue 178](https://github.com/ropensci/neotoma/issues/178).  Added new methods for `get_chroncontrols` to streamline access from `download` and `download_list` objects.
 + 1.2-0: Added a set of new datasettypes to reflect the increasing breadth of the Neotoma Database.
 + 1.2-0: Fixed bugs relates to the gpid parameter in `get_dataset`.
@@ -52,7 +54,6 @@ install.packages('neotoma')
 ```
 
 + Development version from GitHub:
-
 ```r
 install.packages("devtools")
 library(devtools)
@@ -116,6 +117,10 @@ ggplot(data=pub.years, aes(x = year)) +
 
 ![thing](inst/img/histogramplot.png)
 
+### Cumulative plot of record uploads to Neotoma since 1998.
+Found on [this gist](https://gist.github.com/SimonGoring/718a654f304f2d16ce4b)
+
+### 
 ---
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

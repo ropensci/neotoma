@@ -68,54 +68,14 @@ get_publication.default <- function(x, contactid, datasetid, author,
   }
   cl <- lapply(cl, eval, envir = parent.frame())
 
-  # Parameter check on pubid:
-  if ('pubid' %in% names(cl)){
-    if (!is.numeric(cl$pubid)){
-      stop('The pubid must be numeric.')
-    }
+  #  Pass the parameters to param_check to make sure everything is kosher.
+  error_test <- param_check(cl)
+  if(error_test[[2]]$flag == 1){
+    stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
+  } else {
+    cl <- error_test[[1]]
   }
-
-  # Parameter check on contactid:
-  if ('contactid' %in% names(cl)){
-    if (!is.numeric(cl$contactid)){
-      stop('The contactid must be numeric.')
-    }
-  }
-
-  # Parameter check on datasetid:
-  if ('datasetid' %in% names(cl)){
-    if (!is.numeric(cl$datasetid)){
-      stop('The datasetid must be numeric.')
-    }
-  }
-
-  # Parameter check on author:
-  if ('author' %in% names(cl)){
-    if (!is.character(cl$author)){
-      stop('The author must be a character string.')
-    }
-  }
-
-  if ('pubtype' %in% names(cl)){
-    if (!is.character(cl$pubtype)){
-      stop(paste0('The pubtype must be a character string. Use get.table',
-                  '(\'PublicationTypes\') to find acceptable tables.'))
-    }
-  }
-
-  if ('year' %in% names(cl)){
-    if (!is.numeric(cl$year)){
-      stop('The year used must be numeric.')
-    }
-  }
-
-  # Parameter check on author:
-  if ('search' %in% names(cl)){
-    if (!is.character(cl$search)){
-      stop('The search string must be a character string.')
-    }
-  }
-
+  
   aa <- try(fromJSON(getForm(base.uri, .params = cl),
                      nullValue = NA), silent = TRUE)
 
@@ -135,17 +95,7 @@ get_publication.default <- function(x, contactid, datasetid, author,
   if (class(aa) == 'try-error'){
     output <- NA
   } else {
-      # This line doesn't do anything
-      # names(aa) <- sapply(aa, function(x)x$SiteName)
 
-      # This line looses all the author information beyond the first
-      # suspect it is not needed
-      # aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
-
-      # This is back now doing what is documented to do
-      # could be neater though - how about returning a list with
-      # 2 components, the first everything but the Authors array, the
-      # second the authors array *with* a link to PublicationID??
     get_results <- function(x){
       
       if(length(x) == 0){
