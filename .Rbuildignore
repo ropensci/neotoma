@@ -4,3 +4,4 @@
 README\.html
 ^revdep$
 ^cran-comments.md$
+^package_check.R$
