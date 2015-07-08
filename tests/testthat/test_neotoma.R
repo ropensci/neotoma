@@ -1,9 +1,9 @@
-#  Tests for the neotoma package.  Mostly validating that changes to the functions
-#  do not break the requirements for data formatting.
-# 
- library("testthat")
- library("neotoma")
- library("RJSONIO")
+# #  Tests for the neotoma package.  Mostly validating that changes to the functions
+# #  do not break the requirements for data formatting.
+# # 
+#  library("testthat")
+#  library("neotoma")
+#  library("RJSONIO")
 # 
 # context('The API itself is working properly')
 # test_that('The API is returning data as expected from its documentation',
@@ -129,12 +129,12 @@
 # {
 #   expect_is(get_chroncontrol(get_download(get_dataset(datasettype='pollen', ageold = 12000,ageyoung=-100,altmin = 101, altmax = 103))), 'list')
 #   expect_is(get_chroncontrol(get_download(1176)), 'list')      # test missing chronID table.
-#   expect_named(get_chroncontrol(get_download(1176))[[1]], c('chron.control', 'meta'))    # test empty table
-#   expect_named(get_chroncontrol(1392), c('chron.control', 'meta'))    # test empty table
+#   expect_named(get_chroncontrol(get_download(1176))[[1]], c('chron.control', 'meta', 'parent'))    # test empty table
+#   expect_named(get_chroncontrol(1392), c('chron.control', 'meta', 'parent'))    # test empty table
 #   expect_is(get_chroncontrol(1376), 'list')                          # test partial table
-#   expect_named(get_chroncontrol(1376), c('chron.control', 'meta'))    # test partial table
+#   expect_named(get_chroncontrol(1376), c('chron.control', 'meta', 'parent'))    # test partial table
 #   expect_is(get_chroncontrol(1000), 'list')                          # test full table
-#   expect_named(get_chroncontrol(1000), c('chron.control', 'meta'))    # test full table
+#   expect_named(get_chroncontrol(1000), c('chron.control', 'meta', 'parent'))    # test full table
 # 
 # })
 # 
