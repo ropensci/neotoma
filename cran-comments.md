@@ -7,6 +7,7 @@
 + Travis gives two notes:
   +  Cyclic repository
   +  License file
++ In the last submission Uwe pointed out several "no visible binding" warnings.  I am unable to replicate this warning but have tried to address it by explicitly binding to non-base functions where possible.
   
 ## Downstream Dependencies:
 NA
