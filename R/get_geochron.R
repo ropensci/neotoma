@@ -44,7 +44,7 @@
 #'
 #' radio.chron <- unlist(sapply(geochron.records, get_ages))
 #'
-#' hist(radio.chron, breaks=seq(0, 40000, by = 500),
+#' hist(radio.chron[radio.chron<40000], breaks=seq(0, 40000, by = 500),
 #'      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
 #'      xlab = 'Radiocarbon date (14C years before 1950)')
 #' }
