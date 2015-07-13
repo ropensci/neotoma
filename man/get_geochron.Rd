@@ -40,7 +40,7 @@ Using the dataset ID, return all geochronological data associated with the dataI
 t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
                               ageyoung = 8000)
 
-#  Returns 87 records (as of 01/08/2015).  These are the pollen records though, we want the sites:
+#  Returns 116 records (as of 13/07/2015).  These are the pollen records though, we want the sites:
 geochron.records <- get_geochron(get_site(t8kyr.datasets))
 
 #  We want to extract all the radiocarbon ages from the records:
@@ -54,7 +54,7 @@ get_ages <- function(x){
 
 radio.chron <- unlist(sapply(geochron.records, get_ages))
 
-hist(radio.chron, breaks=seq(0, 40000, by = 500),
+hist(radio.chron[radio.chron<40000], breaks=seq(0, 40000, by = 500),
      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
      xlab = 'Radiocarbon date (14C years before 1950)')
 }
