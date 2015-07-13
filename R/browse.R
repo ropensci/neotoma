@@ -1,6 +1,7 @@
 #' @title Open a browser window to display a Neotoma dataset within the Neotoma Explorer
 #' @description Using a \code{download} or \code{dataset} object, open up a browser window in the users default browser. Passing a \code{download_list} or \code{dataset_list} will open Neotoma Explorer with the first object and return a warning.
 #'
+#' @importFrom utils browseURL
 #' @param x A \code{numeric} value for the dataset ID, a \code{dataset} or \code{download} object.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -32,7 +33,7 @@ browse.default <- function(x){
   if(length(x)>1){
     warning('Can only open one site at a time currently.  Opening the first dataset.')
   }
-  browseURL(paste0('http://apps.neotomadb.org/Explorer/?datasetid=', x))
+  utils::browseURL(paste0('http://apps.neotomadb.org/Explorer/?datasetid=', x))
   NULL
 }
 

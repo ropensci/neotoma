@@ -12,6 +12,7 @@
 #'   \item{\code{"WhitmoreSmall"} }{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #' }
 #'
+#' @importFrom stats aggregate
 #' @param object A pollen object returned by \code{\link{get_download}}.
 #' @param alt.table A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in section Details.
@@ -85,7 +86,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
             agg.list[is.na(agg.list)] <- 'Other'
 
 
-            compressed.list <- aggregate(t(x$counts), by = list(agg.list),
+            compressed.list <- stats::aggregate(t(x$counts), by = list(agg.list),
                                          sum, na.rm = TRUE)
 
             compressed.cols <- compressed.list[, 1]
@@ -146,7 +147,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         agg.list <- as.vector(used.taxa[, use.list])
         agg.list[is.na(agg.list)] <- 'Other'
 
-        compressed.list <- aggregate(t(object), by = list(agg.list),
+        compressed.list <- stats::aggregate(t(object), by = list(agg.list),
                                      sum, na.rm = TRUE)
 
         compressed.cols <- compressed.list[, 1]

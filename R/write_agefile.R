@@ -3,6 +3,7 @@
 #' Passing in a download object the function outputs a Bacon or Clam formatted file to a
 #' user defined destination for age modelling with existing age-depth modeling software.
 #'
+#' @importFrom utils write.csv write.table
 #' @param download A single site returned by \code{get_download}.
 #' @param chronology Default is \code{1}, the default chronology for the core.  If a core has more than one chronology the user can define a different set of chronological controls.
 #' @param path The location of the 'Cores' folder & working directory for Bacon.  Do not include "Cores" in the path name.
@@ -113,9 +114,9 @@ write_agefile <- function(download, chronology = 1, path,
       }
     }
     
-    write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
+    utils::write.csv(chron, paste0(path, '/Cores/', corename, '/', corename, '.csv'),
               row.names = FALSE, quote = TRUE)
-    write.table(depths, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
+    utils::write.table(depths, paste0(path, '/Cores/', corename, '/', corename, '_depths.txt'),
               row.names = FALSE, quote = TRUE,col.names=FALSE)
   }
 }

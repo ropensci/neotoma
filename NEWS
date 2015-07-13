@@ -2,6 +2,7 @@ neotoma 1.3.1
 ====================
 o Bugfix for `write_agefile`
 o Added a `browse` method for datasets, that will open a browser window for a specific dataset or download.
+o The deprecated `compile_list` function has now been removed.  Use `compile_taxa` instead.
 
 
 neotoma 1.3.0
