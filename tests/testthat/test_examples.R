@@ -10,14 +10,13 @@ test_that("Examples run without error", {
 
     ## List of example topics we want to check
     egs <- c('compile_downloads',
-             'compile_list',
              'compile_taxa',
              'counts',
              'get_chroncontrol',
              'get_contact',
              'get_dataset',
              'get_download',
-             #'get_geochron',
+             'get_geochron',
              'get_publication',
              'get_site',
              'get_table',
