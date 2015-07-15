@@ -67,6 +67,11 @@
 #   expect_that(length(get_download(1)) == 1, is_true())
 #   expect_that(length(get_download(c(1,2))) == 2, is_true())
 #   expect_is(get_download(1, verbose=FALSE), 'download_list')
+#   expect_true(is.numeric(get_download(3031)[[1]]$sample.meta$chronology.id[1]))
+#   expect_true(is.numeric(get_download(3031)[[1]]$sample.meta$dataset.id[1]))
+#   expect_true(is.numeric(get_download(6000)[[1]]$sample.meta$chronology.id[1]))
+#   expect_true(is.numeric(get_download(6000)[[1]]$sample.meta$dataset.id[1]))
+#)
 # })
 # 
 # #-----------------------------------------------------
