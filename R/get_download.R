@@ -193,8 +193,8 @@ get_download.default <- function(x, verbose = TRUE){
             base.frame <- as.data.frame(matrix(ncol = 7,
                                                nrow = nrow(sample.meta)))
             colnames(base.frame) <- c('age.older', 'age',
-                                      'age.younger', 'dataset.id', 'chronology.name',
-                                      'age.type', 'chronology.id')
+                                      'age.younger', 'chronology.name',
+                                      'age.type', 'chronology.id', 'dataset.id')
 
             if (!class(chrons) == 'try-error'){
               # Create the list:
@@ -211,6 +211,7 @@ get_download.default <- function(x, verbose = TRUE){
                       data.frame(samples[[i]]$SampleAges[[j]],
                                  stringsAsFactors = FALSE)
                   }
+                  chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
                 }
               }
             }
