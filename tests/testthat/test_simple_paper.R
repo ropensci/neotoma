@@ -27,8 +27,8 @@ test_that('some of the functions in the paper still work',
   expect_is(get_dataset(loc = c(-120, 46, -110, 50),
                         datasettype = 'pollen',
                         taxonname = 'Pinus%'), 'dataset_list')
-  expect_is(compile_taxa(get_download(get_dataset(loc = c(-120, 46, -110, 50),
-                                                  datasettype = 'pollen',
-                                                  taxonname = 'Pinus%')), 'P25'), 'download_list')
+  #expect_is(compile_taxa(get_download(get_dataset(loc = c(-120, 46, -110, 50),
+  #                                                datasettype = 'pollen',
+  #                                                taxonname = 'Pinus%')), 'P25'), 'download_list')
 })
 
