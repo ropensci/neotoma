@@ -2,6 +2,7 @@
 #' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
 #'
 #' @importFrom RJSONIO fromJSON
+#' @importFrom reshape2 dcast
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -214,11 +215,17 @@ get_download.default <- function(x, verbose = TRUE){
                   chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
                 }
               }
+              
+              default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1])==aa1$DefChronologyID)
+
             }
             if (class(chrons) == 'try-error'){
               chron.list <- list(base.frame)
+              default_chron <- 1
             }
 
+
+            
             # sample names - can be NULL hence replace with NA if so
             tmp <- sapply(sample.names <-
                           lapply(samples, `[[`, "SampleUnitName"), is.null)
@@ -226,8 +233,9 @@ get_download.default <- function(x, verbose = TRUE){
 
             # stick all that together, setting names, & reordering cols
             # the most recent age model is provided as the default.
+            # 
             sample.meta <- cbind.data.frame(sample.meta,
-                                            chron.list[[length(chron.list)]],
+                                            chron.list[[default_chron]],
                                             unlist(sample.names))
             names(sample.meta) <- c("depth", "thickness",
                                     "sample.id", "unit.name",

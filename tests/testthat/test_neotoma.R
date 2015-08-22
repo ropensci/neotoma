@@ -1,6 +1,6 @@
-# #  Tests for the neotoma package.  Mostly validating that changes to the functions
-# #  do not break the requirements for data formatting.
-# # 
+#  Tests for the neotoma package.  Mostly validating that changes to the functions
+#  do not break the requirements for data formatting.
+# 
 #  library("testthat")
 #  library("neotoma")
 #  library("RJSONIO")
@@ -42,19 +42,19 @@
 #           expect_message(get_contact(familyname='Smith'), 'The API call')
 #           expect_message(get_contact(contactname='*Smith*'), 'The API call')
 #      })
-# 
-# #-----------------------------------------------------
-# 
-# ## context('get_site works as expected')
-# ## test_that('get_site accepts and returns the right data types',
-# ## {
-# ##   expect_that('site' %in% class(get_site()), is_true())
-# ##   expect_that('site' %in% class(get_site(get_download(1))),
-# ##   expect_is(get_site(gpid='Canada'), 'site')
-# ##               shows_message('API call was'))
-# ## })
-# 
-# #-----------------------------------------------------
+
+#-----------------------------------------------------
+
+## context('get_site works as expected')
+## test_that('get_site accepts and returns the right data types',
+## {
+##   expect_that('site' %in% class(get_site()), is_true())
+##   expect_that('site' %in% class(get_site(get_download(1))),
+##   expect_is(get_site(gpid='Canada'), 'site')
+##               shows_message('API call was'))
+## })
+
+#-----------------------------------------------------
 # 
 # context('get_downloads works as expected')
 # 
@@ -71,10 +71,10 @@
 #   expect_true(is.numeric(get_download(3031)[[1]]$sample.meta$dataset.id[1]))
 #   expect_true(is.numeric(get_download(6000)[[1]]$sample.meta$chronology.id[1]))
 #   expect_true(is.numeric(get_download(6000)[[1]]$sample.meta$dataset.id[1]))
-#)
+#   expect_equal(get_download(17387)$`17387`$sample.meta$chronology.id[1],9726)
 # })
-# 
-# #-----------------------------------------------------
+
+#-----------------------------------------------------
 # 
 # context('get_dataset works as expected')
 # 
@@ -100,8 +100,8 @@
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
 # })
-# 
-# #-----------------------------------------------------
+
+#-----------------------------------------------------
 # 
 # context('Crossing sites, datasets and downloads, using the API:')
 # test_that('Crossing APIs',
