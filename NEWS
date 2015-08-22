@@ -1,3 +1,8 @@
+neotoma 1.3.3
+====================
+o Critical bug fix: `get_download` now correctly assigns the default chronology to `sample.meta`.  All other chronologies (including the default) are stored in the `chronologies` list for the `download`.
+o Bugfix for issue #187, empty `dataset_list`s now return a NULL value, rather than breaking the `print` method.
+
 neotoma 1.3.2
 ====================
 o Bugfix for `get_download`, assignment to the `dataset.id` was incorrectly placed causing the columns to be out of place relative to the data.
@@ -7,7 +12,6 @@ neotoma 1.3.1
 o Bugfix for `write_agefile`
 o Added a `browse` method for datasets, that will open a browser window for a specific dataset or download.
 o The deprecated `compile_list` function has now been removed.  Use `compile_taxa` instead.
-
 
 neotoma 1.3.0
 ====================
@@ -20,7 +24,6 @@ o Added new datasettypes for records, including water chemistry, charcoal, XRD a
 neotoma 1.1-0
 ====================
 o Publication of Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W., Grimm, E. C., & Williams, J. W.. (2015). neotoma: A Programmatic Interface to the Neotoma Paleoecological Database, 1(1), Art. 2. DOI: http://doi.org/10.5334/oq.ab
-
 
 neotoma 0.1
 ====================

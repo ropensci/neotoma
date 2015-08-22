@@ -39,7 +39,8 @@ More details on the use of these parameters can be obtained from
    \url{http://api.neotomadb.org/doc/resources/datasets}.
 
    A list of class `dataset_list`, with each item corresponding to an individual record.
-   Each list item (each dataset record) includes the following components:
+   Searches that return no items will result in a NULL value being returned.
+   Otherwise each list item (each dataset record) includes the following components:
 
  \item{ \code{dataset.id} }{Unique database record identifier for the dataset.}
  \item{ \code{dataset.name}  }{Name of the dataset; not commonly used.}
