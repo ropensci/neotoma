@@ -1,6 +1,11 @@
 #' @export
 print.dataset_list <- function(x, ...){
   
+  if(length(x) == 0){
+    cat('Empty dataset list.')
+    return()
+  }
+  
   dates <- range(sapply(x, '[[', 'access.date'))
   sites <- sapply(lapply(x, '[[', 'site.data'), '[[', 'site.name')
   dataset.id <- sapply(lapply(x, '[[', 'dataset.meta'), '[[', 'dataset.id')

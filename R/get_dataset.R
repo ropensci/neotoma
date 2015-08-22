@@ -22,7 +22,8 @@
 #'    \url{http://api.neotomadb.org/doc/resources/datasets}.
 #'
 #'    A list of class `dataset_list`, with each item corresponding to an individual record.
-#'    Each list item (each dataset record) includes the following components:
+#'    Searches that return no items will result in a NULL value being returned.
+#'    Otherwise each list item (each dataset record) includes the following components:
 #'
 #'  \item{ \code{dataset.id} }{Unique database record identifier for the dataset.}
 #'  \item{ \code{dataset.name}  }{Name of the dataset; not commonly used.}
@@ -108,6 +109,12 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
   }
   if (aa[[1]] == 1){
     output <- aa[[2]]
+    
+    if(length(output) == 0){
+      warning('The criteria used returned 0 sample sites. Returning NULL.')
+      return(NULL)
+    }
+    
     if (length(aa[[2]]) > 1){
       message(paste('The API call was successful, you have returned ',
                     length(output), ' records.\n', sep = ''))
@@ -198,6 +205,10 @@ get_dataset.site <- function(x, ...){
       output <- aa[[2]]
     }
 
+    if(length(output) == 0){
+      warning('The criteria used returned 0 sample sites. Returning NULL.')
+      return(NULL)
+    }
     new.output <- lapply(output, function(x) {
       new.output <- list()
       new.output$site.data <- data.frame(site.id = x$Site$SiteID,
@@ -242,7 +253,7 @@ get_dataset.site <- function(x, ...){
   new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
 
   class(new.output) <- c('dataset_list', 'list')
-
+  
   new.output
 
 }
