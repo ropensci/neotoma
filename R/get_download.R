@@ -217,15 +217,19 @@ get_download.default <- function(x, verbose = TRUE){
               }
               
               default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1])==aa1$DefChronologyID)
-
+              
+              if(length(default_chron)==0){
+                warning(paste0('This dataset has no defined default chronology.  Please use caution.\n',
+                        'Using the first chronology, ', names(chron.list)[1],' as the default.'))
+                default_chron <- 1
+              }
+              
             }
             if (class(chrons) == 'try-error'){
               chron.list <- list(base.frame)
               default_chron <- 1
             }
 
-
-            
             # sample names - can be NULL hence replace with NA if so
             tmp <- sapply(sample.names <-
                           lapply(samples, `[[`, "SampleUnitName"), is.null)
