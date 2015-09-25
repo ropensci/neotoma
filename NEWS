@@ -1,4 +1,4 @@
-neotoma 1.4
+neotoma 1.4.0
 ====================
 o The few records without chronologies were causing errors when `get_download` was applied.
 o Added plot method.

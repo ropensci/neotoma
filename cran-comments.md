@@ -6,7 +6,7 @@
 + There were no ERRORs or WARNINGs
 + Travis gives two notes:
   +  Cyclic repository
-  +  License file
+  +  License file 
   
 ## Downstream Dependencies:
 NA
