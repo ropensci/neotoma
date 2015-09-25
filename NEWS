@@ -1,3 +1,8 @@
+neotoma 1.4
+====================
+o The few records without chronologies were causing errors when `get_download` was applied.
+o Added plot method.
+
 neotoma 1.3.3
 ====================
 o Critical bug fix: `get_download` now correctly assigns the default chronology to `sample.meta`.  All other chronologies (including the default) are stored in the `chronologies` list for the `download`.

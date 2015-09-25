@@ -26,6 +26,9 @@ Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W., Grimm, E. C., & 
 Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](http://api.neotomadb.org/doc/resources/home).
 
 ### Currently implemented in `neotoma`
+
+More functions are available through the package help.  These represent the core functions:
+
 + `get_site` - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
 + `get_dataset` - obtain dataset metadata from Neotoma. [API](http://api.neotomadb.org/doc/resources/datasets)
 + `get_download` - obtain full datasets (pollen or mammal) from Neotoma. [API](http://api.neotomadb.org/doc/resources/downloads)
@@ -37,6 +40,7 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.4: Added `plot` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
 + 1.3.3: Modified `get_download` to ensure the default chronolgy is always associated with `sample.meta`.  Bugfix for issue [#187](https://github.com/ropensci/neotoma/issues/187).  Empty `dataset_list`s now return a NULL value and a warning.
 + 1.3.2: Bugfix for `get_download`, assignment to the `dataset.id` was incorrectly placed causing the columns to be out of place relative to the data (see issue [#197](https://github.com/ropensci/neotoma/issues/197)).
 + 1.3.1: Bugfix for `write_agefile` and the addition of a `browse` method.  See [this gist](https://gist.github.com/SimonGoring/877dd71cc3ad6bf8531e) for an example using `neotoma` and Bacon (Blaauw and Christen, 2011 [[pdf](http://ba.stat.cmu.edu/journal/2011/vol06/issue03/christen.pdf)]).
@@ -44,9 +48,6 @@ Package functions resolve various Neotoma APIs and re-form the data returned by 
 + 1.2-1: Fix for empty `chroncontrol` tables [issue 178](https://github.com/ropensci/neotoma/issues/178).  Added new methods for `get_chroncontrols` to streamline access from `download` and `download_list` objects.
 + 1.2-0: Added a set of new datasettypes to reflect the increasing breadth of the Neotoma Database.
 + 1.2-0: Fixed bugs relates to the gpid parameter in `get_dataset`.
-
-### Coming soon
-+ A broader set of taxonomies for use with datasets, including geography based taxonomies.
 
 ### Install `neotoma`
 
