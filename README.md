@@ -25,6 +25,23 @@ Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W., Grimm, E. C., & 
 
 Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](http://api.neotomadb.org/doc/resources/home).
 
+If you have used the package please consider providing us feedback through a [short survey](https://docs.google.com/forms/d/1NFKtmP43_b56S8AUZnrzYfJqWSDnDuXQr7rhIYKRkt0/viewform).
+
+### Install `neotoma`
+
++ CRAN:
+```r
+install.packages('neotoma')
+```
+
++ Development version from GitHub:
+```r
+install.packages("devtools")
+library(devtools)
+install_github("ropensci/neotoma")
+library(neotoma)
+```
+
 ### Currently implemented in `neotoma`
 
 More functions are available through the package help.  These represent the core functions:
@@ -48,21 +65,6 @@ More functions are available through the package help.  These represent the core
 + 1.2-1: Fix for empty `chroncontrol` tables [issue 178](https://github.com/ropensci/neotoma/issues/178).  Added new methods for `get_chroncontrols` to streamline access from `download` and `download_list` objects.
 + 1.2-0: Added a set of new datasettypes to reflect the increasing breadth of the Neotoma Database.
 + 1.2-0: Fixed bugs relates to the gpid parameter in `get_dataset`.
-
-### Install `neotoma`
-
-+ CRAN:
-```r
-install.packages('neotoma')
-```
-
-+ Development version from GitHub:
-```r
-install.packages("devtools")
-library(devtools)
-install_github("ropensci/neotoma")
-library(neotoma)
-```
 
 ### A few examples
 
@@ -98,7 +100,7 @@ points(site.locs$long, site.locs$lat, pch=19, cex=0.5, col='red')
 ```
 ![thing](inst/img/mammothsites.png)
 
-### Plot the proportion of publications per year for datasets in Neotoma
+#### Plot the proportion of publications per year for datasets in Neotoma
 
 ```R
 # Requires ggplot2
@@ -120,10 +122,17 @@ ggplot(data=pub.years, aes(x = year)) +
 
 ![thing](inst/img/histogramplot.png)
 
-### Cumulative plot of record uploads to Neotoma since 1998.
-Found on [this gist](https://gist.github.com/SimonGoring/718a654f304f2d16ce4b)
+#### Cumulative plot of record uploads to Neotoma since 1998.
 
-### 
+Found at [this gist](https://gist.github.com/SimonGoring/718a654f304f2d16ce4b)
+
+![cumulativerecords](https://cloud.githubusercontent.com/assets/1619126/9884174/0026b83a-5ba4-11e5-9f1a-4a6874ceceb6.png)
+
+#### Obtain records & Rebuild Chronologies with Bacon
+
+Found at [this gist](https://gist.github.com/SimonGoring/877dd71cc3ad6bf8531e).  Prepared in part for a Bacon (Blaauw & Christen, 2011) workshop at the 2015 International Limnogeology Conference in Reno-Tahoe, Nevada led by Amy Myrbo (University of Minnesota).
+
+###
 ---
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
