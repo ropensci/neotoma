@@ -30,7 +30,7 @@
 
 bind <-function(x, ...){
   
-  inputs <- list(...)
+  inputs <- list(x, ...)
   
   if(!length(inputs)>1){
     stop('You must pass more than one object into bind.')

@@ -104,7 +104,7 @@ param_check <- function(cl){
     
     set <- pmatch(cl$datasettype, settypes, nomatch = NA)
     if (is.na(set)) {
-      stop(paste0('datasettype must be one of: ',paste0(settypes, collapse = ', ')))
+      stop(paste0('datasettype must be one of: \n* ',paste0(settypes, collapse = '\n* ')))
     }
   }
   
