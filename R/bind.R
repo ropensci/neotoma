@@ -51,7 +51,20 @@ bind <-function(x, ...){
   inputs <- list(x, ...)
   
   if(!length(inputs)>1){
-    stop('You must pass more than one object into bind.')
+    # If there's only one element, make sure it's a list and that the 
+    # classes within the list are equivalent.
+    inputs <- x
+    if('list' %in% class(inputs)){
+      list_class <- sapply(inputs, class)
+      if(do.call(all.equal, as.list(list_class[1,]))){
+        # All datasets are of the same type:
+        return(do.call(bind, inputs))
+      } else {
+        stop('All list elements must be of the same type.')
+      }
+    } else{
+      stop('When passing a single object, that object must be a list of all the same data type.')
+    }
   }
   
   classes <- sapply(inputs, function(x)unlist(class(x)))
