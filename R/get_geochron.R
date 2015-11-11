@@ -106,7 +106,39 @@ get_geochron.default <- function(x, verbose = TRUE){
 
       # If there are actual stratigraphic samples
       # with data in the dataset returned.
-
+      
+      # We have to pull the dataset information from the `download`:
+      dl <- try(fromJSON(paste0('http://api.neotomadb.org/v1/data/downloads/', x), nullValue = NA))[[2]][[1]]
+      
+      dataset <- list(
+        site.data = data.frame(site.id = dl$Site$SiteID,
+                               site.name = dl$Site$SiteName,
+                               long = mean(unlist(dl$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                           na.rm = TRUE),
+                               lat = mean(unlist(dl$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                          na.rm = TRUE),
+                               elev = dl$Site$Altitude,
+                               description = dl$Site$SiteDescription,
+                               long.acc = abs(dl$Site$LongitudeWest - dl$Site$LongitudeEast),
+                               lat.acc = abs(dl$Site$LatitudeNorth - dl$Site$LatitudeSouth),
+                               row.names = dl$Site$SiteName,
+                               stringsAsFactors = FALSE),
+        dataset.meta = data.frame(dataset.id = dl$DatasetID,
+                                  dataset.name = dl$DatasetName,
+                                  collection.type = dl$CollUnitType,
+                                  collection.handle = dl$CollUnitHandle,
+                                  dataset.type =  dl$DatasetType,
+                                  stringsAsFactors = FALSE),
+        pi.data = do.call(rbind.data.frame,
+                          dl$DatasetPIs),
+        submission = data.frame(submission.date = strptime(dl$NeotomaLastSub,
+                                                           '%m/%d/%Y'),
+                                submission.type = 'Last submission to Neotoma',
+                                stringsAsFactors=FALSE),
+        access.date = Sys.time())
+      
+      class(dataset) <- c('dataset', 'list')
+      
       pull.rec <- function(x){
 
         data.frame(sample.id = x$SampleID,
@@ -125,15 +157,20 @@ get_geochron.default <- function(x, verbose = TRUE){
                    stringsAsFactors = FALSE)
       }
 
-      out <- list(x, do.call(rbind.data.frame, lapply(aa, pull.rec)))
-      
+      out <- list(dataset = dataset, do.call(rbind.data.frame, lapply(aa[[1]], pull.rec)))
       class(out) <- c('geochronologic', 'list')
+      
+      out
     }
 
     out
   }
-
-  lapply(x, function(x)try(get_sample(x)))
+  
+  out <- lapply(x, function(x)try(get_sample(x)))
+  
+  class(out) <- c('geochronologic_list', 'list')
+  
+  out
 
 }
 
