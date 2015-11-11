@@ -89,7 +89,7 @@ get_geochron.default <- function(x, verbose = TRUE){
              call. = FALSE)
     }
 
-    if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) == 0)) {
+    if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]$Samples) == 0)) {
       # The API returned a record, but the record did not
       # have associated geochronology information.
       stop('No geochronological record is associated with this sample',
@@ -167,6 +167,7 @@ get_geochron.default <- function(x, verbose = TRUE){
   }
   
   out <- lapply(x, function(x)try(get_sample(x)))
+  for(i in length(out):1){if('try-error' %in% class(out[[i]]))out[[i]] <- NULL}
   
   class(out) <- c('geochronologic_list', 'list')
   
