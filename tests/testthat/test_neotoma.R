@@ -95,7 +95,7 @@
 #   expect_error(get_dataset(ageof=10))
 #   expect_error(get_dataset(ageof='taxon'))
 #   expect_error(get_dataset(subdate=10))
-#   expect_is(get_dataset(gpid=10), 'dataset_list')
+#   expect_is(get_dataset(gpid=756), 'dataset_list')
 #   expect_is(get_dataset(x = 1), 'dataset_list')
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
@@ -141,5 +141,17 @@
 #   expect_is(get_chroncontrol(1000), 'list')                          # test full table
 #   expect_named(get_chroncontrol(1000), c('chron.control', 'meta', 'parent'))    # test full table
 # 
+# })
+# 
+# #-----------------------------------------------------
+# 
+# context('Test geochron methods')
+# test_that('Compiling',
+# {
+#   expect_is(get_geochron(8444), 'geochronologic_list')
+#   expect_is(get_geochron(8444)[[1]], 'geochronologic')
+#   expect_is(get_geochron(c(8444, 8445)), 'geochronologic_list')
+#   expect_is(get_geochron(1001), 'geochronologic_list')
+#   expect_that(length(get_geochron(c(1001,8444))) == 1, is_true())
 # })
 # 
