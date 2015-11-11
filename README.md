@@ -57,6 +57,7 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.4.1: Small changes to `get_geochron` to address bug reports and improve object `printing` methods.
 + 1.4.0: Added `plot` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
 + 1.3.3: Modified `get_download` to ensure the default chronolgy is always associated with `sample.meta`.  Bugfix for issue [#187](https://github.com/ropensci/neotoma/issues/187).  Empty `dataset_list`s now return a NULL value and a warning.
 + 1.3.2: Bugfix for `get_download`, assignment to the `dataset.id` was incorrectly placed causing the columns to be out of place relative to the data (see issue [#197](https://github.com/ropensci/neotoma/issues/197)).
