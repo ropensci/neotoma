@@ -1,8 +1,8 @@
 #' @title Function to return full download records using \code{site}s, \code{dataset}s, or dataset IDs.
 #' @description Using the dataset ID, site object or dataset object, return all records associated with the data as a \code{download_list}.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom reshape2 dcast
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -89,11 +89,8 @@ get_download.default <- function(x, verbose = TRUE){
     # query Neotoma for data set
     base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
     
-    
-    neotoma_content <- content(GET(paste0(base.uri, '/', x)), as = "text")
-    
+    neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
     if (identical(neotoma_content, "")) stop("")
-    
     aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
     
     # Might as well check here for error and bail
@@ -213,22 +210,31 @@ get_download.default <- function(x, verbose = TRUE){
                                       'age.type', 'chronology.id', 'dataset.id')
 
             if (!class(chrons) == 'try-error'){
+              # Now we create the chronologies, so long as samples have assigned "SampleAges"
+              # If they don't, then we stick in the empty `base.frame` and assign it a name "1"
               # Create the list:
               chron.list <- list()
               for (i in 1:length(chrons)) chron.list[[i]] <- base.frame
-              names(chron.list) <- chrons
+              
+              if(!is.null(names(chron.list)) & length(chrons) > 1){
+                names(chron.list) <- chrons
 
-              for (i in 1:length(samples)){
-                for (j in 1:length(samples[[i]]$SampleAges)){
-                  # Some of the new datasets are passing data without any chronology information.
-                  if(!is.na(samples[[i]]$SampleAges[[j]]['ChronologyName'])) {
-                  
+                for (i in 1:length(samples)){
+                  for (j in 1:length(samples[[i]]$SampleAges)){
+                    # Some of the new datasets are passing data without any chronology information.
+  
                     chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
                       data.frame(samples[[i]]$SampleAges[[j]],
                                  stringsAsFactors = FALSE)
+                    chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
                   }
-                  chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
                 }
+              } else {
+                chron.list[[ j ]][i, ] <-
+                  data.frame(samples[[i]]$SampleAges[[j]],
+                             stringsAsFactors = FALSE)
+                chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
               }
               
               default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1])==aa1$DefChronologyID)
@@ -239,8 +245,7 @@ get_download.default <- function(x, verbose = TRUE){
                 default_chron <- 1
               }
               
-            }
-            if (class(chrons) == 'try-error'){
+            } else {
               chron.list <- list(base.frame)
               default_chron <- 1
             }
@@ -403,7 +408,6 @@ get_download.default <- function(x, verbose = TRUE){
 #' @title Function to return full download records using a \code{dataset}.
 #' @description Using a \code{dataset}, return all records associated with the data as a \code{download_list}.
 #'
-#' @importFrom RJSONIO fromJSON
 #' @param x An object of class \code{dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -430,7 +434,6 @@ get_download.dataset <- function(x, verbose = TRUE){
 #' @title Function to return full download records using a \code{dataset_list}.
 #' @description Using a \code{dataset_list}, return all records associated with the data as a \code{download_list}.
 #'
-#' @importFrom RJSONIO fromJSON
 #' @param x An object of class \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -450,7 +453,6 @@ get_download.dataset_list <- function(x, verbose = TRUE){
 #' @title Function to return full download records using a \code{site}.
 #' @description Using a \code{site}, return all records associated with the data as a \code{download_list}.
 #'
-#' @importFrom RJSONIO fromJSON
 #' @param x An object of class \code{site}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
