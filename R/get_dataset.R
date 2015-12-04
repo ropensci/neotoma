@@ -1,8 +1,8 @@
 #' @title Obtain dataset information from the Neotoma Paleoecological Database or an existing object.
 #' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 #'
-#' @importFrom RCurl getForm
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param x An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -99,16 +99,30 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
     cl <- error_test[[1]]
   }
 
-  neotoma.form <- getForm(base.uri, .params = cl, binary = FALSE,
-                          .encoding = 'utf-16')
-
-  aa <- try(fromJSON(neotoma.form, nullValue = NA))
-
+  neotoma_content <- content(GET(base.uri, query = cl), as = "text")
+  
+  if (identical(neotoma_content, "")) stop("")
+  
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+  
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
   if (aa[[1]] == 1){
     output <- aa[[2]]
+    
+    rep_NULL <- function(x){ 
+      if(is.null(x)){NA}
+      else{
+        if(class(x) == 'list'){
+          lapply(x, rep_NULL)
+        } else {
+          return(x)
+        }
+      }
+    }
+    
+    output <- lapply(output, function(x)rep_NULL(x))
     
     if(length(output) == 0){
       warning('The criteria used returned 0 sample sites. Returning NULL.')

@@ -2,9 +2,8 @@
 #' @title Get contact information.
 #'
 #' @description A function to obtain contact information for data contributors from the Neotoma Paleoecological Database.
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
-#' @importFrom reshape2 dcast melt
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param contactid Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
 #' @param contactname A character string indicating the data contributors' project,
@@ -68,9 +67,12 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
     cl <- error_test[[1]]
   }
 
-  neotoma.form <- getForm(base.uri, .params = cl)
-  aa <- try(fromJSON(neotoma.form, nullValue = NA))
-
+  neotoma_content <- content(GET(base.uri, query = cl), as = "text")
+  
+  if (identical(neotoma_content, "")) stop("")
+  
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+  
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
@@ -81,23 +83,28 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
   }
 
   if (inherits(aa, "try-error")) {
-      output <- neotoma.form
+      output <- neotoma_content
   } else {
-      names(aa) <- sapply(aa, '[[', "ContactID")
-      output <- melt(lapply(aa, data.frame),
-                     id.vars = c("Address", "URL", "GivenNames",
-                     "LeadingInitials", "Fax", "Title", "Email",
-                     "FamilyName", "Phone", "ContactName", "ContactStatus",
-                     "Notes", "Suffix"))
-      output <- dcast(output,
-                      formula = ContactName + ContactStatus + FamilyName +
-                      LeadingInitials + GivenNames + Suffix + Title + Phone +
-                      Fax + Email + URL + Address + Notes ~ variable,
-                      fun.aggregate = length) ##[, -2]
-      colnames(output) <- c('contact.name', 'contact.status', 'family.name',
-                            'leading.initials', 'given.names',
-                            'suffix', 'title', 'phone', 'fax', 'email', 'url',
-                            'address', 'notes', 'alias.id', 'contact.id')
+    
+    # replace NULL values:
+    aa <- lapply(aa, function(x) ifelse(x == "NULL", NA, x))
+    
+    output <- data.frame(contact.name = sapply(aa, '[[', "ContactName"),
+                         contact.status = sapply(aa, '[[', "ContactStatus"), 
+                         family.name = sapply(aa, '[[', "FamilyName"),
+                         leading.initials = sapply(aa, '[[', "LeadingInitials"),
+                         given.names = sapply(aa, '[[', "GivenNames"),
+                         suffix = sapply(aa, '[[', "Suffix"),
+                         title = sapply(aa, '[[', "Title"),
+                         phone = sapply(aa, '[[', "Phone"),
+                         fax = sapply(aa, '[[', "Fax"),
+                         email = sapply(aa, '[[', "Email"),
+                         url = sapply(aa, '[[', "URL"),
+                         address = sapply(aa, '[[', "Address"),
+                         notes = sapply(aa, '[[', "Notes"),
+                         contact.id = sapply(aa, '[[', "ContactID"),
+                         stringsAsFactors = FALSE)
   }
+  
   output
 }
