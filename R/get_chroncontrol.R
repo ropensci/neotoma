@@ -3,7 +3,8 @@
 #' Using the dataset ID, return all records associated with the data.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
 #' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -36,7 +37,8 @@ get_chroncontrol <- function(x, verbose = TRUE, add = FALSE){
 #' @title Function to return chronological control tables from a chronologic ID.
 #' @description Using the chronology ID, return the chron control table as a \code{data.frame}.
 #'
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -55,7 +57,10 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
   }
   
   # query Neotoma for data set
-  aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
+  neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
+  if (identical(neotoma_content, "")) stop("")
+
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
   # Might as well check here for error and bail
   if (inherits(aa, "try-error"))
@@ -148,7 +153,8 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
 #' @title Function to return chronological control tables from a \code{download} object.
 #' @description Using a \code{download}, return the default chron-control table as a \code{data.frame}.
 #'
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x A single \code{download} object.
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
@@ -202,8 +208,10 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE){
 #' @title Function to return chronological control tables from a \code{download_list} object.
 #' @description Using a \code{download_list}, return the default chron-control table as a \code{data.frame}.
 #'
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x A \code{download_list} object.
+#' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
 get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE){
