@@ -61,8 +61,8 @@ get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonid
 #' @title Obtain dataset information from the Neotoma Paleoecological Database or an existing object.
 #' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 #'
-#' @importFrom RCurl getForm
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -99,10 +99,8 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
     cl <- error_test[[1]]
   }
 
-  neotoma_content <- content(GET(base.uri, query = cl), as = "text")
-  
+  neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
   if (identical(neotoma_content, "")) stop("")
-  
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
   if (aa[[1]] == 0){
@@ -202,15 +200,18 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 #'
 #' @param x An object of class \code{site}.
 #' @param ... objects passed from the generic.  Not used in the call.
-#' @importFrom RCurl getForm
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @export
 get_dataset.site <- function(x, ...){
 
   pull_site <- function(siteid){
-
+    
     base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
-    aa <- try(fromJSON(paste0(base.uri, siteid), nullValue = NA))
+    
+    neotoma_content <- httr::content(httr::GET(paste0(base.uri, siteid)), as = "text")
+    if (identical(neotoma_content, "")) stop("")
+    aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
 
     if (aa[[1]] == 0){
       stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
