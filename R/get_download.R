@@ -19,6 +19,7 @@
 #' @section Note:
 #' The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified seperately as crumpled and torn in the same sample and sums these values within a sample.
 #' In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excized).  Use \code{get_geochron} for these objects.
+#' The chronologies can be augmented using the function \code{get_chroncontrol}, where the individual chronology objects in \code{chronologies} will consist of a table equivalent to \code{sample.meta} and a \code{chroncontrol} object.
 #'
 #' @examples \dontrun{
 #' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
@@ -88,8 +89,13 @@ get_download.default <- function(x, verbose = TRUE){
     # query Neotoma for data set
     base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
     
-    aa <- try(fromJSON(paste0(base.uri, '/', x), nullValue = NA))
-
+    
+    neotoma_content <- content(GET(paste0(base.uri, '/', x)), as = "text")
+    
+    if (identical(neotoma_content, "")) stop("")
+    
+    aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+    
     # Might as well check here for error and bail
     if (inherits(aa, "try-error"))
         return(aa)
@@ -102,7 +108,20 @@ get_download.default <- function(x, verbose = TRUE){
 
     if (isTRUE(all.equal(aa[[1]], 1))) {
         aa <- aa[[2]]
-
+        
+        rep_NULL <- function(x){ 
+          if(is.null(x)){NA}
+          else{
+            if(class(x) == 'list'){
+              lapply(x, rep_NULL)
+            } else {
+              return(x)
+            }
+          }
+        }
+        
+        aa <- lapply(aa, function(x)rep_NULL(x))
+        
         if (verbose) {
             message(strwrap(paste0("API call was successful. ",
                                    "Returned record for ",
@@ -158,11 +177,7 @@ get_download.default <- function(x, verbose = TRUE){
             message(paste0('The dataset ID ', dataset$dataset.meta$dataset.id,
                            ' is associated with a geochronology object, not count data.'))
             return(NULL)
-            #geochron <- get_geochron(dataset$dataset.meta$dataset.id)
-            
-            #aa <- list(dataset, geochron = geochron)
-            #class(aa) <- 'geochron'
-            #return(aa)
+
           }
             
           if(!dataset$dataset.meta$dataset.type == 'geochronologic'){
@@ -254,10 +269,13 @@ get_download.default <- function(x, verbose = TRUE){
             # list of data frames
             sample.data <- lapply(lapply(samples, `[[`, "SampleData"),
                                   function(x) do.call(rbind.data.frame, x))
+            
             # 2) How many counts/species in each data frame?
             nsamp <- sapply(sample.data, nrow)
+            
             # 3) bind each data frame - result is a data frame in long format
             sample.data <- do.call(rbind, sample.data)
+            
             # 4) add a Sample column that is the ID from smaple.meta
             sample.data$sample.id <- rep(sample.meta$sample.id, times = nsamp)
 
@@ -270,116 +288,71 @@ get_download.default <- function(x, verbose = TRUE){
                                        'taxon.group', 'value',
                                        'ecological.group', 'sample.id')
             
-            take <- !(sample.data$taxon.group == "Laboratory analyses" |
-                        sample.data$taxon.group == "Charcoal")
-
-            count.data <- sample.data[take, ]
-
-            # Ensure duplicate taxa are renamed
-            # (if variable context is different)
-            count.data$taxon.name <- as.character(count.data$taxon.name)
-            var.context <- !is.na(count.data$variable.context)
-            count.data$taxon.name[var.context] <- paste(count.data$taxon.name,
-                                                       count.data$variable.context,
-                                                       sep = '.')[var.context]
-
-            # data frame of unique taxon info.  This gets included in the
-            # final dataset output by the function.
-            taxon.list <- sample.data[!duplicated(sample.data$taxon.name),
-                                      1:5]
-
-            # Some taxa/objects get duplicated because different identifiers
-            # for taphonomic modification get excluded in the API table.
-            # Because the data is excluded we can't be sure that the
-            # modifications map exactly from sample to sample, so here we
-            # just sum all duplicated taxa and throw a warning to the user:
-            mod.dups <- duplicated(count.data[, c('taxon.name', 'sample.id')])
-
-            if (sum(mod.dups) > 0){
-              tax.dups <- unique(count.data$taxon.name[duplicated(count.data[, c('taxon.name', 'sample.id')])])
-              if (length(tax.dups) == 1){
-                message <- paste0('\nModifiers seem absent from the taxon ',
-                                  tax.dups,
-                                  '. \nget_download will sum at depths ',
-                                  'with multiple entries to resolve the problem.')
-              }
-              if (length(tax.dups) > 1){
-                tax.dups.col <- paste(tax.dups, collapse = ', ')
-                message <- paste0('\nModifiers seem absent from the taxons ',
-                                 tax.dups.col,
-                                 '. \nget_download will sum at depths with ',
-                                 'multiple entries to resolve the problem.')
-              }
-              warning (immediate. = TRUE, message, call. = FALSE)
-            }
-
-            # reshape long sample.data into a sample by taxon data frame
-            # take here *only* counts - but needs work FIXME
+            # get the table:
+            cast_table <- reshape2::dcast(sample.data, 
+                                taxon.name + variable.units + variable.element +
+                                  variable.context + taxon.group +
+                                  ecological.group ~ sample.id, value.var = "value")
             
-            if(nrow(count.data) > 0){
-              counts <- dcast(count.data,
-                              formula = sample.id ~ taxon.name,
-                              value.var = "value",
-                              fun.aggregate = sum, na.rm = TRUE)
-  
-              # add Sample col as the rownames
-              rownames(counts) <- counts$sample.id
-              ## remove the Sample col, but robustly
-              counts <- counts[, -which(names(counts) == "sample.id"), drop = F]
-  
-              # It is possible that some depths have no count data,
-              # but that they were sampled. This will be
-              # reflected as a row with '0' counts for all taxa.
-              if (any(!sample.meta$sample.id %in% rownames(counts))){
-                no.missing <- sum(!sample.meta$sample.id %in% rownames(counts))
-  
-                for (i in 1:no.missing){
-                  counts <- rbind(counts, rep(NA, ncol(counts)))
-                }
-                rownames(counts)[(nrow(counts) + 1 - no.missing):nrow(counts)] <- sample.meta$sample.id[!sample.meta$sample.id %in% rownames(counts)]
-  
-                counts <- counts[as.character(sample.meta$sample.id), ]
+            taxon.list <- cast_table[ ,1:6]
+            
+            # Now we check for any duplicated names and give them an alias
+            # that binds the name with the variable units.
+            if(any(duplicated(cast_table$taxon.name))){
+              
+              which_dup <- as.character(taxon.list$taxon.name[duplicated(taxon.list$taxon.name)])
+              
+              # A variable may be duplicated because the same variable was mapped in
+              # different units, or because it comes from different contexts.
+              # So we want to replace with the appropriate name:
+              
+              taxon.list$alias <- as.character(taxon.list$taxon.name)
+              
+              for(i in which_dup){
+                # Choose the column to resolve the problem.
+                dup_rows <- taxon.list[taxon.list$taxon.name %in% i,]
+                
+                dup_rows$elem_cont <- paste0(dup_rows$variable.element, '|', 
+                                             dup_rows$variable$context)
+                
+                # The pick order should be:
+                # 1. variable.context
+                # 2. variable.element - it's clear
+                # 3. variable.unit - not sure how often the same element is expressed in different units.
+                # 4. context|element
+                dup_rows <- dup_rows[,c('variable.context','variable.element',
+                                        'variable.units', 'elem_cont')]
+                
+                #  To resolve the duplication issue we want to find columns for
+                #  which the sum of duplicates is zero:
+                col_pick <- colSums(apply(dup_rows, 2, duplicated)) == 0
+                
+                pick_name <- names(col_pick[min(which(col_pick))])
+                
+                taxon.list$alias[taxon.list$taxon.name %in% i] <- paste0(taxon.list$alias[taxon.list$taxon.name %in% i],
+                                                                         '|',
+                                                                         dup_rows[,pick_name])
               }
               
-            } else {
-              counts <- NULL
-            }
-  
+              message <- paste0('\nThere were multiple entries for ',
+                                which_dup,
+                                '. \nget_download has mapped aliases for the taxa in the taxon.list.')
+              warning (immediate. = TRUE, message, call. = FALSE)
+            }  
+
+            # This pulls out charcoal & lab data to stick in a different data.frame.
+            take <- !(taxon.list$taxon.group == "Laboratory analyses" |
+                        taxon.list$taxon.group == "Charcoal")
+
+            count.data <- t(cast_table[take, 7:ncol(cast_table)])
+            colnames(count.data) <- taxon.list$alias[take]
+
             # Pull out the lab data and treat it in
             # the same way as the previous:
-            take <- sample.data$taxon.group == "Laboratory analyses" |
-              sample.data$taxon.group == "Charcoal"
-
-            lab.data <- sample.data[take, ]
-
-            if (nrow(lab.data) > 0) {
-                lab.data$lab.name.units <- paste0(lab.data$taxon.name, " (",
-                                                lab.data$variable.element, ": ",
-                                                lab.data$variable.units, ")")
-
-                mod.dups <- duplicated(lab.data[, c(1, 7)])
-
-                if (sum(mod.dups) > 0){
-                  lab.dups <- unique(lab.data$taxon.name[duplicated(lab.data[, c(1, 7)])])
-                  if (length(lab.dups) == 1){
-                    message <- paste0('\nModifiers are absent from the lab object ',
-                                      lab.dups,
-                                      '. \nget_download will use unique',
-                                      'identifiers to resolve the problem.')
-                  }
-                  if (length(lab.dups) > 1){
-                    lab.dups.col <- paste(lab.dups, collapse = ', ')
-                    message <- paste0('\nModifiers are absent from the lab objects ',
-                                      lab.dups.col,
-                                      '. \nget_download will use unique',
-                                      'identifiers to resolve the problem.')
-                  }
-                  warning (immediate. = TRUE, message, call. = FALSE)
-                }
-
-                lab.data <- dcast(lab.data,
-                                  formula = sample.id ~ lab.name.units,
-                                  value.var = "value")
+            
+            if(sum(take) > 0) {
+              lab.data <- t(cast_table[!take, 7:ncol(cast_table)])
+              colnames(lab.data) <- taxon.list$alias[!take]
             } else {
                 lab.data <- NULL
             }
@@ -388,7 +361,7 @@ get_download.default <- function(x, verbose = TRUE){
             aa <- list(dataset = dataset,
                        sample.meta = sample.meta,
                        taxon.list = taxon.list,
-                       counts = counts,
+                       counts = count.data,
                        lab.data = lab.data,
                        chronologies = chron.list)
           

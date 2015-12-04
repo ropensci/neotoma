@@ -8,7 +8,9 @@
 #' @param verbose logical, should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class  \code{"try-error"} containing the error returned
-#'    from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core. 
+#'    from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core.
+#'    When \code{download} or \code{download_list} objects are passes, the user can \code{add} the chroncontrol to the
+#'    \code{download} object explicitly, in which case the function will return a download with \code{chroncontrol} embedded.
 #'    
 #'    This is a list comprising the following items:
 #'
@@ -20,13 +22,14 @@
 #' @examples \dontrun{
 #' #  The point of pulling chronology tables is to re-build or examine the chronological
 #' #  information that was used to build the age-depth model for the core.
+#' 
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_chroncontrol <- function(x, verbose = TRUE){
+get_chroncontrol <- function(x, verbose = TRUE, add = FALSE){
   UseMethod('get_chroncontrol')
 }
 
@@ -37,7 +40,7 @@ get_chroncontrol <- function(x, verbose = TRUE){
 #' @param x A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.default <- function(x, verbose = TRUE){
+get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -147,9 +150,10 @@ get_chroncontrol.default <- function(x, verbose = TRUE){
 #'
 #' @importFrom RJSONIO fromJSON
 #' @param x A single \code{download} object.
+#' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download <- function(x, verbose = TRUE){
+get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE){
   chron_id <- x$sample.meta$chronology.id[1]
   
   if(is.na(chron_id)){
@@ -178,7 +182,19 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
     return(output)
     
   } else {  
-    return(get_chroncontrol(x$sample.meta$chronology.id[1], verbose))
+    
+    output <- get_chroncontrol(x$sample.meta$chronology.id[1], verbose)
+    class(output) <- c('chroncontrol', 'list')
+    
+    if(names(x$chronologies)[1] == x$sample.meta$chronology.name[1] & add == TRUE) {
+      # If we're adding the chronology to the download object:
+      x$chronologies[[1]] <- list(chronology = x$chronologies[[1]],
+                                  chroncontrol = output)
+      return(x)
+    }
+    
+    return(output)
+    
   }
 
 }
@@ -190,6 +206,14 @@ get_chroncontrol.download <- function(x, verbose = TRUE){
 #' @param x A \code{download_list} object.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download_list <- function(x, verbose = TRUE){
-  lapply(x, function(y)get_chroncontrol(y, verbose))
+get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE){
+  
+  output <- lapply(x, function(y)get_chroncontrol(y, verbose, add = add))
+  if(add == FALSE){
+    class(output) <- c('chroncontrol_list', 'list')
+  } else {
+    class(output) <- c('download_list', 'list')
+  }
+  return(output)
+
 }
