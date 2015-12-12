@@ -42,8 +42,10 @@ write_agefile <- function(download, chronology = 1, path,
     if('download' %in% class(download[[1]])){download <- download[[1]]}
     
     if(class(download$chronologies[[chronology]]) == 'list'){
+      # This is new.  We can push chroncontrols into the download object:
       chron.controls <- download$chronologies[[chronology]]$chroncontrol
     } else{
+      # Otherwise, we get them from the download object.
       chron.controls <- get_chroncontrol(download,
                                          verbose = FALSE)
     }
