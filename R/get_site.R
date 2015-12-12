@@ -4,8 +4,8 @@
 #' \code{get_site} returns site information from the Neotoma Paleoecological Database
 #'    based on parameters defined by the user.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param sitename character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
@@ -70,40 +70,51 @@ get_site.default <- function(sitename, ...){
   } else{
     cl <- error_test[[1]]
   }
-
-  neotoma.form <- getForm(base.uri, .params = cl)
-  aa <- try(fromJSON(neotoma.form, nullValue = NA))
-
+  
+  neotoma_content <- content(GET(base.uri, query = cl), as = "text")
+  
+  if (identical(neotoma_content, "")) stop("")
+  
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+  
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
   if (aa[[1]] == 1){
     aa <- aa[[2]]
+    if(length(aa) == 0){
+      cat('The API call was successful, but no records were returned.\n')
+      return()
+    }
+    
     cat('The API call was successful, you have returned ',
         length(aa), 'records.\n')
+    
   }
 
   if (class(aa) == 'try-error'){
      output <- neotoma.form
   } else {
-    names(aa) <- sapply(aa, `[[`, "SiteName")
-    # This is much faster by direct calling of the data frame method
-    # of rbind
-    output <- do.call(rbind.data.frame, aa)
-    # but we need to fix-up some characters that R changed to factors
-    output$SiteName <- as.character(output$SiteName)
-    output$SiteDescription <- as.character(output$SiteDescription)
-
-    output <- data.frame(site.id = output$SiteID,
-                site.name = output$SiteName,
-                long = rowMeans(output[, c('LongitudeWest', 'LongitudeEast')],
-                                na.rm = TRUE),
-                lat = rowMeans(output[,c('LatitudeNorth', 'LatitudeSouth')],
-                               na.rm = TRUE),
-                elev = output$Altitude,
-                description = output$SiteDescription,
-                long.acc = abs(output$LongitudeWest - output$LongitudeEast),
-                lat.acc = abs(output$LatitudeNorth - output$LatitudeSouth))
+    
+    # replace NULL values:
+    aa <- lapply(aa, function(x) ifelse(x == "NULL", NA, x))
+    
+    output <- data.frame(site.id = sapply(aa, '[[', 'SiteID'),
+                         site.name = sapply(aa, '[[', 'SiteName'),
+                         long = rowMeans(data.frame(sapply(aa, '[[', 'LongitudeWest'), 
+                                                    sapply(aa, '[[', 'LongitudeEast')),
+                                         na.rm = TRUE),
+                         lat = rowMeans(data.frame(sapply(aa, '[[', 'LatitudeNorth'),
+                                                   sapply(aa, '[[', 'LatitudeSouth')),
+                                        na.rm = TRUE),
+                         elev = sapply(aa, '[[', 'Altitude'),
+                         description = sapply(aa, '[[', 'SiteDescription'),
+                         long.acc = abs(sapply(aa, '[[', 'LongitudeWest') - 
+                                          sapply(aa, '[[', 'LongitudeEast')),
+                         lat.acc = abs(sapply(aa, '[[', 'LatitudeNorth') - 
+                                         sapply(aa, '[[', 'LatitudeSouth')),
+                         stringsAsFactors = FALSE)
+    
   }
 
   class(output) <- c('site', 'data.frame')
