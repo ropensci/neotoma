@@ -159,15 +159,23 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
           if('CollType' %in% names(x)){x$CollUnitType <- x$CollType} # This is a fix for a very specific issue we were having.
           
-          new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
-                                                dataset.name = x$DatasetName,
-                                                collection.type = x$CollUnitType,
-                                                collection.handle = x$CollUnitHandle,
-                                                dataset.type = x$DatasetType,
+          new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
+                                                                    NA, x$DatasetID),
+                                                dataset.name = ifelse(class(x$DatasetName) == 'logical',
+                                                                      NA, x$DatasetName),
+                                                collection.type = ifelse(class(x$CollUnitType) == 'logical',
+                                                                         NA, x$CollUnitType),
+                                                collection.handle = ifelse(class(x$CollUnitHandle) == 'logical',
+                                                                           NA, x$CollUnitHandle),
+                                                dataset.type = ifelse(class(x$DatasetType) == 'logical',
+                                                                      NA, x$DatasetType),
                                                 stringsAsFactors = FALSE)
-
-          new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
-          rownames(new.output$pi.data) <- NULL
+          if(class(x$DatasetPIs) == 'logical'){ 
+            new.output$pi.data <- NA
+          } else {
+            new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+            rownames(new.output$pi.data) <- NULL
+          }
 
           sub.test <- try(do.call(rbind.data.frame, x$SubDates))
 
@@ -218,14 +226,20 @@ get_dataset.site <- function(x, ...){
     }
     if (aa[[1]] == 1){
       output <- aa[[2]]
+      # replace NULL values:
+      
     }
 
     if(length(output) == 0){
       warning('The criteria used returned 0 sample sites. Returning NULL.')
       return(NULL)
     }
+    
     new.output <- lapply(output, function(x) {
       new.output <- list()
+      
+      x <- lapply(x, function(x) ifelse(x == "NULL" | class(x) == 'logical', NA, x))
+      
       new.output$site.data <- data.frame(site.id = x$Site$SiteID,
                                          site.name = x$Site$SiteName,
                                          long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
@@ -238,15 +252,25 @@ get_dataset.site <- function(x, ...){
                                          lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
-      new.output$dataset.meta <- data.frame(dataset.id = x$DatasetID,
-                                       dataset.name = x$DatasetName,
-                                       collection.type = x$CollUnitType,
-                                       collection.handle = x$CollUnitHandle,
-                                       dataset.type = x$DatasetType,
-                                       stringsAsFactors = FALSE)
-      new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
-      rownames(new.output$pi.data) <- NULL
-
+      
+      new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
+                                                                NA, x$DatasetID),
+                                            dataset.name = ifelse(class(x$DatasetName) == 'logical',
+                                                                  NA, x$DatasetName),
+                                            collection.type = ifelse(class(x$CollUnitType) == 'logical',
+                                                                     NA, x$CollUnitType),
+                                            collection.handle = ifelse(class(x$CollUnitHandle) == 'logical',
+                                                                       NA, x$CollUnitHandle),
+                                            dataset.type = ifelse(class(x$DatasetType) == 'logical',
+                                                                  NA, x$DatasetType),
+                                            stringsAsFactors = FALSE)
+      if(class(x$DatasetPIs) == 'logical'){ 
+        new.output$pi.data <- NA
+      } else {
+        new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+        rownames(new.output$pi.data) <- NULL
+      }
+      
       sub.test <- try(do.call(rbind.data.frame, x$SubDates))
 
       if(length(sub.test) > 0){
@@ -254,7 +278,6 @@ get_dataset.site <- function(x, ...){
       }
 
       new.output$submission <- sub.test
-
 
       new.output$access.date = Sys.time()
 
