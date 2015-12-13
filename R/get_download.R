@@ -221,7 +221,7 @@ get_download.default <- function(x, verbose = TRUE){
               # Create the list:
               chron.list <- lapply(1:length(chrons), function(x) base.frame)
               
-              if(!is.null(chrons) & length(chrons) > 0){
+              if(!(is.null(chrons)|is.na(chrons)) & length(chrons) > 0){
                 names(chron.list) <- chrons
 
                 for (i in 1:length(samples)){
@@ -236,8 +236,8 @@ get_download.default <- function(x, verbose = TRUE){
                   }
                 }
               } else {
-                chron.list[[ 1 ]][i, ] <-
-                  data.frame(samples[[i]]$SampleAges[[1]],
+                chron.list[[ 1 ]][1, ] <-
+                  data.frame(samples[[1]]$SampleAges[[1]],
                              stringsAsFactors = FALSE)
                 chron.list[[1]]$dataset.id <- dataset$dataset.meta$dataset.id
               }
