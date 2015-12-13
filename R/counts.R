@@ -33,7 +33,7 @@
 ##' @export
 ##' @rdname counts
 `counts.download` <- function(obj, ...) {
-    ret <- obj[["counts"]]
+    ret <- as.data.frame(obj$counts)
     class(ret) <- c("neo_counts", "data.frame")
     ret
 }
@@ -41,7 +41,8 @@
 ##' @export
 ##' @rdname counts
 `counts.download_list` <- function(obj, ...) {
-    ret <- lapply(obj, counts)
+    ret <- lapply(obj, '[[', 'counts')
+    ret <- lapply(ret, as.data.frame)
     class(ret) <- c("neo_counts_list", "list")
     ret
 }
