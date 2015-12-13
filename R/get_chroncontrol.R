@@ -75,6 +75,19 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
   if (isTRUE(all.equal(aa[[1]], 1))) {
     aa <- aa[[2]]
     
+    rep_NULL <- function(x){ 
+      if(is.null(x)){NA}
+      else{
+        if(class(x) == 'list'){
+          lapply(x, rep_NULL)
+        } else {
+          return(x)
+        }
+      }
+    }
+    
+    aa <- lapply(aa, function(x)rep_NULL(x))
+    
     if (verbose) {
       writeLines(strwrap(paste0("API call was successful.",
                                 " Returned chronology.")))
@@ -91,7 +104,9 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
     }
     
     if('controls' %in% names(aa[[1]])){
-      control.table <- do.call(rbind.data.frame, lapply(aa, '[[', 'controls')[[1]])
+      
+      flattened <- lapply(lapply(aa, '[[', 'controls')[[1]], data.frame)
+      control.table <- do.call(rbind.data.frame, flattened)
       
       control.table <- control.table[, c('Depth', 'Thickness',
                                          'Age', 'AgeYoungest', 'AgeOldest',
