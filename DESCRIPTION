@@ -25,7 +25,9 @@ Imports:
     RJSONIO,
     RCurl (>= 1.6),
     plyr,
-    reshape2
+    reshape2,
+    jsonlite,
+    httr
 Suggests: 
     testthat,
     knitr

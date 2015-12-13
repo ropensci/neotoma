@@ -49,7 +49,9 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...){
 
 #' @title Return Site Information.
 #' @description Return site information from the Neotoma Paleoecological Database.
-#'
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
+
 #' @param sitename A character string representing the full or partial site name.
 #' @param ... Arguments passed from the generic method, not used.
 #' 
