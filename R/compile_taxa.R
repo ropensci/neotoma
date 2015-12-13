@@ -85,7 +85,6 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
 
             agg.list[is.na(agg.list)] <- 'Other'
 
-
             compressed.list <- stats::aggregate(t(x$counts), by = list(agg.list),
                                          sum, na.rm = TRUE)
 
