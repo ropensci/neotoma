@@ -35,19 +35,25 @@
 #'
 #' #  Extract the Pseudotsuga curves for the sites:
 #' get.curve <- function(x, taxa) {
+#'                if(taxa %in% colnames(x$counts)){
+#'                  count <- x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE)
+#'                } else {
+#'                  count <- rep(0, nrow(x$count))
+#'                }
 #'                data.frame(site = x$dataset$site.data$site.name,
 #'                age = x$sample.meta$age,
-#'                count = x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE))
+#'                count = count)
 #'              }
 #'
 #' curves <- do.call(rbind.data.frame,
-#'                   lapply(compiled.sites, get.curve, taxa = 'Picea'))
+#'                   lapply(compiled.sites, get.curve, taxa = 'Larix/Pseudotsuga'))
 #'
 #' #  For illustration, remove the sites with no Pseudotsuga occurance:
 #' curves <- curves[curves$count > 0, ]
 #'
 #' smooth.curve <- predict(loess(sqrt(count)~age, data=curves),
 #'                         data.frame(age=seq(20000, 0, by = -100)))
+#'                         
 #' plot(sqrt(count) ~ age, data = curves,
 #'      ylab = '% Pseudotsuga/Larix', xlab='Calibrated Years BP', pch=19,
 #'      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
@@ -213,14 +219,13 @@ get_download.default <- function(x, verbose = TRUE){
               # Now we create the chronologies, so long as samples have assigned "SampleAges"
               # If they don't, then we stick in the empty `base.frame` and assign it a name "1"
               # Create the list:
-              chron.list <- list()
-              for (i in 1:length(chrons)) chron.list[[i]] <- base.frame
+              chron.list <- lapply(1:length(chrons), function(x) base.frame)
               
-              if(!is.null(names(chron.list)) & length(chrons) > 1){
+              if(!is.null(chrons) & length(chrons) > 0){
                 names(chron.list) <- chrons
 
                 for (i in 1:length(samples)){
-                  for (j in 1:length(samples[[i]]$SampleAges)){
+                  for (j in 1:length(chrons)){
                     # Some of the new datasets are passing data without any chronology information.
   
                     chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
@@ -231,10 +236,10 @@ get_download.default <- function(x, verbose = TRUE){
                   }
                 }
               } else {
-                chron.list[[ j ]][i, ] <-
-                  data.frame(samples[[i]]$SampleAges[[j]],
+                chron.list[[ 1 ]][i, ] <-
+                  data.frame(samples[[i]]$SampleAges[[1]],
                              stringsAsFactors = FALSE)
-                chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
+                chron.list[[1]]$dataset.id <- dataset$dataset.meta$dataset.id
               }
               
               default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1])==aa1$DefChronologyID)
@@ -350,7 +355,11 @@ get_download.default <- function(x, verbose = TRUE){
                         taxon.list$taxon.group == "Charcoal")
 
             count.data <- t(cast_table[take, 7:ncol(cast_table)])
-            colnames(count.data) <- taxon.list$alias[take]
+            if('alias' %in% colnames(taxon.list)){
+              colnames(count.data) <- taxon.list$alias[take]
+            } else {
+              colnames(count.data) <- taxon.list$taxon.name[take]
+            }
 
             # Pull out the lab data and treat it in
             # the same way as the previous:
