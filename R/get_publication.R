@@ -2,8 +2,8 @@
 #'
 #' @description The function takes the parameters, defined by the user, and returns a table with publication information from the Neotoma Paleoecological Database.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
@@ -44,8 +44,8 @@ get_publication<- function(x, contactid, datasetid, author,
 #' The function takes the parameters, defined by the user, and returns a table with
 #'    publication information from the Neotoma Paleoecological Database.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
@@ -76,14 +76,31 @@ get_publication.default <- function(x, contactid, datasetid, author,
     cl <- error_test[[1]]
   }
   
-  aa <- try(fromJSON(getForm(base.uri, .params = cl),
-                     nullValue = NA), silent = TRUE)
-
+  
+  neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
+  if (identical(neotoma_content, "")) stop("")
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+  
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
   if (aa[[1]] == 1){
     aa <- aa[[2]]
+    
+    rep_NULL <- function(x){ 
+      if(is.null(x)){NA}
+      else{
+        if(class(x) == 'list'){
+          lapply(x, rep_NULL)
+        } else {
+          return(x)
+        }
+      }
+    }
+    
+    # Clear NULLs from the output object & replace with NA values.
+    aa <- lapply(aa, function(x)rep_NULL(x))
+    
     if(length(aa) > 1){
       cat('The API call was successful, you have returned ',
           length(aa), 'records.\n')

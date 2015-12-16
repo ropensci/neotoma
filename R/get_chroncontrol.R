@@ -59,7 +59,6 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
   # query Neotoma for data set
   neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
   if (identical(neotoma_content, "")) stop("")
-
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
   # Might as well check here for error and bail

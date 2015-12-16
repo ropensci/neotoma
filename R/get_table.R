@@ -1,8 +1,8 @@
 
 #' Get Neotoma value tables.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getURLContent
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param table.name Call one of the available tables in the Neotoma Database.
 #'    A full listing of tables can be found here: \url{http://api.neotomadb.org/doc/resources/dbtables}.
 #'    By default it returns all objects in the table.
@@ -61,11 +61,11 @@ get_table <- function(table.name = NULL){
       # Can use getURLContent here which avoids the issue of having
       # an empty param list. Really this fun is not submitting a form
       # so no need for getForm()
-      aa <- try(fromJSON(getURLContent(paste0(base.uri, table.name,
-                                              "?limit=all"),
-                                       binary = FALSE),
-                         nullValue = NA),
-                silent = TRUE)
+      # query Neotoma for data set
+      neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', table.name, 
+                                                        "?limit=all")), as = "text")
+      if (identical(neotoma_content, "")) stop("")
+      aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
 
       if (aa[[1]] == 1){
 
@@ -75,6 +75,19 @@ get_table <- function(table.name = NULL){
         old.string <- getOption("stringsAsFactors") 
         #I don't know how else to do this with the do.call command.
         options(stringsAsFactors = FALSE)
+        
+        rep_NULL <- function(x){ 
+          if(is.null(x)){NA}
+          else{
+            if(class(x) == 'list'){
+              lapply(x, rep_NULL)
+            } else {
+              return(x)
+            }
+          }
+        }
+        
+        aa[[2]] <- rep_NULL(aa[[2]])
         
         table <- do.call(rbind.data.frame, aa[[2]])
         

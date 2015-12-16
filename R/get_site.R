@@ -84,6 +84,20 @@ get_site.default <- function(sitename, ...){
   }
   if (aa[[1]] == 1){
     aa <- aa[[2]]
+    
+    rep_NULL <- function(x){ 
+      if(is.null(x)){NA}
+      else{
+        if(class(x) == 'list'){
+          lapply(x, rep_NULL)
+        } else {
+          return(x)
+        }
+      }
+    }
+    
+    aainsta <- rep_NULL(aa)
+    
     if(length(aa) == 0){
       cat('The API call was successful, but no records were returned.\n')
       return()

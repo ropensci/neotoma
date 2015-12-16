@@ -180,3 +180,13 @@ test_that('Compiling',
              expect_is(get_table('Projects'), 'data.frame')
            })
  
+ #-----------------------------------------------------
+ 
+ context('Trying to bind:')
+ test_that('bind',
+           {
+             expect_error(bind(get_download(1001), get_dataset(1001)))
+             expect_is(bind(get_dataset(1001), get_dataset(1001)), 'dataset_list')
+             expect_is(bind(get_download(1001), get_download(1002)), 'download_list')
+           })
+ 
