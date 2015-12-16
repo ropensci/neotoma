@@ -3,7 +3,8 @@
 #' Using the dataset ID, return all geochronological data associated with the dataID.  At present,
 #'    only returns the dataset in an unparsed format, not as a data table.   This function will only download one dataset at a time.
 #'
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x A numeric dataset ID or a vector of numeric dataset IDs, or an object of class of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.
 #' @param verbose logical; should messages on API call be printed?
 #' 
@@ -58,7 +59,8 @@ get_geochron <- function(x, verbose = TRUE){
   UseMethod('get_geochron')
 }
 
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @export
 get_geochron.default <- function(x, verbose = TRUE){
 
@@ -71,13 +73,13 @@ get_geochron.default <- function(x, verbose = TRUE){
   # one or more geochronologies at a time.
   get_sample <- function(x){
     
-    #dataset <- get_dataset(x)  #### This is the problem here!!
-    
     base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
     
     # query Neotoma for data set
-    aa <- try(fromJSON(paste0(base.uri, '?datasetid=', x), nullValue = NA))
-
+    neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
+    if (identical(neotoma_content, "")) stop("")
+    aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+    
     # Might as well check here for error and bail
     if (inherits(aa, "try-error"))
         return(aa)
@@ -99,7 +101,20 @@ get_geochron.default <- function(x, verbose = TRUE){
     if (isTRUE(all.equal(aa[[1]], 1) & length(aa[[2]]) > 0)) {
       # The API returned a record with geochron data.
       aa <- aa[[2]]
-
+      
+      rep_NULL <- function(x){ 
+        if(is.null(x)){NA}
+        else{
+          if(class(x) == 'list'){
+            lapply(x, rep_NULL)
+          } else {
+            return(x)
+          }
+        }
+      }
+      
+      aa <- lapply(aa, function(x)rep_NULL(x))
+      
       if (verbose) {
           message(strwrap(paste0("API call was successful.")))
       }

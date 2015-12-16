@@ -74,7 +74,8 @@ get_download <- function(x, verbose = TRUE){
 #' @title Function to return full download records using \code{numeric} dataset IDs.
 #' @description Using the dataset ID, return all records associated with the data as a \code{download_list}.
 #'
-#' @importFrom RJSONIO fromJSON
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
