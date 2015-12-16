@@ -171,3 +171,12 @@ test_that('Compiling',
    expect_error(get_taxa(taxonname = "Abies*", taxonid = 19))
  })
  
+ #-----------------------------------------------------
+ 
+ context('Get the tables:')
+ test_that('Getting Tables',
+           {
+             expect_is(get_table('Taxa'), 'data.frame')
+             expect_is(get_table('Projects'), 'data.frame')
+           })
+ 
