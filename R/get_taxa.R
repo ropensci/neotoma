@@ -1,8 +1,8 @@
 
 #' Get taxon information from Neotoma.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param taxonid Numeric taxon identifier used in Neotoma
 #' @param taxonname A character string representing the full or partial name of taxa of interest.
 #' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.
@@ -78,14 +78,32 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
     }
   }
 
-  neotoma.form <- getForm(base.uri, .params = cl)
-  aa <- try(fromJSON(neotoma.form, nullValue = NA))
-
+  # Call the API:
+  neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
+  if (identical(neotoma_content, "")) stop("")
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+  
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
   if (aa[[1]] == 1){
     output <- aa[[2]]
+    
+    rep_NULL <- function(x){ 
+      if(is.null(x)){NA}
+      else{
+        if(class(x) == 'list'){
+          # Recursive function to go through the list & clear NULL values.
+          lapply(x, rep_NULL)
+        } else {
+          return(x)
+        }
+      }
+    }
+    
+    # Clear NULLs from the output object & replace with NA values.
+    output <- lapply(output, function(x)rep_NULL(x))
+    
     cat('The API call was successful, you have returned ',
         length(output), 'records.\n')
   }
