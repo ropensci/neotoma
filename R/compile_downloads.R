@@ -94,7 +94,7 @@ compile_downloads <-function(downloads){
 
 
   if (inherits(downloads, 'download_list')) {
-      site.info <- ldply(downloads, down.to.df)
+      site.info <- plyr::ldply(downloads, down.to.df)
   }
   if (inherits(downloads, 'download')) {
       site.info <- down.to.df(downloads)
