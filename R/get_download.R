@@ -207,11 +207,80 @@ get_download.default <- function(x, verbose = TRUE){
 
             # First, get all unique chronology names.
             # Some cores don't have age models, so we use a try function.
-            chrons <- try(unique(as.vector(unlist(sapply(samples,
-                                                         function(x)sapply(x$SampleAges, function(x)x$ChronologyName))))), silent = TRUE)
+            
+            # There is an issue in about 31 records in the US database (where I tested)
+            # where there are samples without named sample ages, but not a second chronology.
+            # The issue is that there are undated samples within a record that has dated records.
+            # So some samples are NAPD1 and then the undated samples, deeper in the core are just 'NA'
+            # This means that NA is just a continuous flow from NAPD1.
+            
+            # In records with two chronologies we get an array with two rows.
+            # If there are unidentified samples within the chronology they aren't named.
+            # This becomes problematic when we have `n` chronologies, plus samples without
+            # named chronologies.
+            
+            chron_list <- lapply(samples, '[[', 'SampleAges')
+            
+            chron_names <- unique(unlist(sapply(chron_list, function(x)unique(sapply(x, '[[', 'ChronologyName')))))
+            chron_lengths <- sapply(chron_list, length)
+            # When there is an NA aged sample in a record it fucks everything up
+            # because it's not inherently a part of a chronology.
+            
+            if(any(is.na(chron_names)) & !all(diff(chron_lengths) == 0)){
+              # This implies that many records have multiple chronology
+              # coverage, but that some don't & have NA coverage.
+              # In that case we want to duplicate the record, and then
+              # assign names to the chronologies.
+              reassign <- function(x, chron_names){
+                if(length(x) == length(na.omit(chron_names))){
+                  return(x)
+                } else {
+                  x <- rep(x, max(chron_lengths))
+                  return(lapply(1:max(chron_lengths), 
+                          function(y){x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
+                }
+              }
+            } else if(any(is.na(chron_names)) & all(diff(chron_lengths) == 0)){
+                # This implies that many records have multiple chronology
+                # coverage, but that some don't & have NA coverage.
+                # In that case we want to duplicate the record, and then
+                # assign names to the chronologies.
+                reassign <- function(x, chron_names){
+                  if(length(x) == length(na.omit(chron_names)) & !is.na(x[[1]]$ChronologyName)){
+                    return(x)
+                  } else {
+                    x <- rep(x, max(chron_lengths))
+                    return(lapply(1:max(chron_lengths), 
+                                  function(y){x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
+                  }
+                }
+                
+                chron_list <- lapply(chron_list, reassign, chron_names = chron_names)
+                
+            } else if(all(is.na(chron_names))){
+              chron_names <- 'No chronology'
+              chron_list <- lapply(chron_list, function(x){x$ChronologyName <- chron_names; x})
+            }
+            
+            chron_vectors <- sapply(chron_list, function(x)unique(sapply(x, '[[', 'ChronologyName')))
+
+            # This fills in the end of a set of sample ages if there are NAs in a series,
+            # but with the fix above it shouldn't be necessary.
+            if(!is.null(nrow(chron_vectors))){
+              chron_vectors <- t(apply(chron_vectors, 1, function(x){
+                                  if(any(is.na(x)) & !all(is.na(x))){
+                                    x[is.na(x)] <- unique(x[!is.na(x)])
+                                  }
+                                  x}))
+            } else {
+              chron_vectors[is.na(chron_vectors)] <- unique(chron_vectors[!is.na(chron_vectors)])
+            }
+            
+            chrons <- try(unique(as.vector(unlist(chron_vectors))), silent = TRUE)
 
             base.frame <- as.data.frame(matrix(ncol = 7,
                                                nrow = nrow(sample.meta)))
+            
             colnames(base.frame) <- c('age.older', 'age',
                                       'age.younger', 'chronology.name',
                                       'age.type', 'chronology.id', 'dataset.id')
@@ -228,12 +297,11 @@ get_download.default <- function(x, verbose = TRUE){
                 for (i in 1:length(samples)){
                   for (j in 1:length(chrons)){
                     # Some of the new datasets are passing data without any chronology information.
-  
-                    chron.list[[ samples[[i]]$SampleAges[[j]]$ChronologyName ]][i, ] <-
-                      data.frame(samples[[i]]$SampleAges[[j]],
-                                 stringsAsFactors = FALSE)
-                    chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
-                    chron.list[[samples[[i]]$SampleAges[[j]]$ChronologyName]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    
+                    chron.list[[j]][i, ] <- data.frame(chron_list[[i]][[j]],
+                                                       stringsAsFactors = FALSE)
+                    chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
                   }
                 }
               } else {
@@ -321,10 +389,8 @@ get_download.default <- function(x, verbose = TRUE){
               
               for(i in which_dup){
                 # Choose the column to resolve the problem.
-                dup_rows <- taxon.list[taxon.list$taxon.name %in% i,]
-                
-                dup_rows$elem_cont <- paste0(dup_rows$variable.element, '|', 
-                                             dup_rows$variable$context)
+                dup_rows <- data.frame(taxon.list[taxon.list$taxon.name %in% i,],
+                                       stringsAsFactors = FALSE)
                 
                 # The pick order should be:
                 # 1. variable.context
@@ -332,22 +398,23 @@ get_download.default <- function(x, verbose = TRUE){
                 # 3. variable.unit - not sure how often the same element is expressed in different units.
                 # 4. context|element
                 dup_rows <- dup_rows[,c('variable.context','variable.element',
-                                        'variable.units', 'elem_cont')]
+                                        'variable.units')]
                 
-                #  To resolve the duplication issue we want to find columns for
+                dup_rows <- dup_rows[,colSums(is.na(dup_rows)) == 0]
+                
+                #  To resolve the duplication issue we want to find the shortest combination of columns for
                 #  which the sum of duplicates is zero:
-                col_pick <- colSums(apply(dup_rows, 2, duplicated)) == 0
-                
-                pick_name <- names(col_pick[min(which(col_pick))])
-                
-                taxon.list$alias[taxon.list$taxon.name %in% i] <- paste0(taxon.list$alias[taxon.list$taxon.name %in% i],
-                                                                         '|',
-                                                                         dup_rows[,pick_name])
+
+                taxon.list$alias[taxon.list$taxon.name %in% i] <- sapply(1:nrow(dup_rows),
+                                                                         function(x){
+                                                                           paste0(taxon.list$alias[taxon.list$taxon.name %in% i][x], '|',
+                                                                                           paste0(as.character(t(dup_rows)[,x]), collapse = '|')) })
               }
               
               message <- paste0('\nThere were multiple entries for ',
-                                which_dup,
-                                '. \nget_download has mapped aliases for the taxa in the taxon.list.')
+                                unique(which_dup),
+                                sapply(unique(which_dup), function(x)ifelse(length(grep("\\.$", 'abcd', perl = TRUE)) == 1, '.', '')),
+                                ' \nget_download has mapped aliases for the taxa in the taxon.list.')
               warning (immediate. = TRUE, message, call. = FALSE)
             }  
 
