@@ -3,8 +3,6 @@
 
  library("testthat")
  library("neotoma")
- library(jsonlite)
- library(httr)
 
 context('The API itself is working properly')
 test_that('The API is returning data as expected from its documentation',
@@ -48,15 +46,15 @@ test_that('get_contact accepts and returns the right data types',
           expect_message(get_contact(contactname='*Smith*'), 'The API call')
      })
 
------------------------------------------------------
+#-----------------------------------------------------
 
  context('get_publication')
- test_that('get_site accepts and returns the right data types',
+ test_that('get_publication accepts and returns the right data types',
  {
    expect_is(get_publication(10), 'list')
  })
 
------------------------------------------------------
+#-----------------------------------------------------
 
 context('get_downloads works as expected')
 
@@ -75,9 +73,13 @@ test_that('get_download accepts numeric values and returns values as expected',
   expect_true(is.numeric(get_download(6000)[[1]]$sample.meta$dataset.id[1]))
   expect_true(is.data.frame(get_download(6283)[[1]]$taxon.list))
   expect_equal(get_download(17387)$`17387`$sample.meta$chronology.id[1],9726)
+  # A set that failed because of weird chronology tables:
+  expect_is(get_download(1776), 'download_list')
+  expect_is(get_download(13046), 'download_list')
+  
 })
 
------------------------------------------------------
+#-----------------------------------------------------
 
 context('get_dataset works as expected')
 
@@ -104,7 +106,7 @@ test_that('is get_dataset working?',
   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
 })
 
------------------------------------------------------
+#-----------------------------------------------------
 
 context('Crossing sites, datasets and downloads, using the API:')
 test_that('Crossing APIs',
@@ -151,7 +153,7 @@ test_that('Compiling',
 context('Test geochron methods')
 test_that('Compiling',
 {
-  expect_is(get_geochron(8444), 'geochronologic_list')
+  expect_is(get_geochron(16128), 'geochronologic_list')
   expect_that(length(get_geochron(16225)[[1]][[2]])>0, is_true())
   expect_is(get_geochron(8444)[[1]], 'geochronologic')
   expect_is(get_geochron(c(8444, 8445)), 'geochronologic_list')
@@ -177,7 +179,7 @@ test_that('Compiling',
  test_that('Getting Tables',
            {
              expect_is(get_table('Taxa'), 'data.frame')
-             expect_is(get_table('Projects'), 'data.frame')
+             expect_is(get_table('Tephras'), 'data.frame')
            })
  
  #-----------------------------------------------------
@@ -185,8 +187,23 @@ test_that('Compiling',
  context('Trying to bind:')
  test_that('bind',
            {
-             expect_error(bind(get_download(1001), get_dataset(1001)))
+             expect_error(bind(get_download(1001), get_dataset(1001)), "Objects must be")
              expect_is(bind(get_dataset(1001), get_dataset(1001)), 'dataset_list')
              expect_is(bind(get_download(1001), get_download(1002)), 'download_list')
            })
  
+ #-----------------------------------------------------
+ 
+ context('Trying to browse:')
+ test_that('bind',
+           {
+             expect_error(browse(), "Error in browse()")
+           })
+ 
+ #-----------------------------------------------------
+ 
+ context('Trying to browse:')
+ test_that('bind',
+           {
+             expect_error(browse(), "Error in browse()")
+           })

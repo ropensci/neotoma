@@ -7,6 +7,7 @@
 #' @importFrom httr GET content
 #' @param x A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
 #' @param verbose logical, should messages on API call be printed?
+#' @param add logical, should this chron control be added to the download object?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns either an object of class  \code{"try-error"} containing the error returned
 #'    from the Neotoma API call, or a full data object containing all the relevant information required to build either the default or prior chronology for a core.

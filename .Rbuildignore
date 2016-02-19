@@ -5,3 +5,7 @@ README\.html
 ^revdep$
 ^cran-comments.md$
 ^package_check.R$
+^code_of_conduct.md
+^read_methods.R
+^read.tilia.Rd
+^\tests\local_dont_run\*.*

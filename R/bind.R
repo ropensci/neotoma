@@ -73,21 +73,15 @@ bind <-function(x, ...){
     new.list <- do.call(c, inputs)
     class(new.list) <- c('download_list', 'list')
     return(new.list)
-  }
-  
-  if(all(classes[1,] == 'dataset_list')){
+  } else if(all(classes[1,] == 'dataset_list')){
     new.list <- do.call(c, inputs)
     class(new.list) <- c('dataset_list', 'list')
     return(new.list)
-  }
-  
-  if(all(classes[1,] == 'site')){
+  } else if(all(classes[1,] == 'site')){
     new.list <- do.call(rbind.data.frame, inputs)
     class(new.list) <- c('site', 'data.frame')
     return(new.list)
-  }
-  
-  if(!all(classes[1,] == 'download_list') & all(classes[1,] %in% c('download_list', 'download'))){
+  } else if(!all(classes[1,] == 'download_list') & all(classes[1,] %in% c('download_list', 'download'))){
     #  Turn them into download_lists first.
     inputs <- lapply(inputs, function(x){
       if(class(x)[1] == 'download'){
@@ -100,9 +94,7 @@ bind <-function(x, ...){
     class(new.list) <- c('download_list', 'list')
     return(new.list)
     
-  }
-  
-  if(!all(classes[1,] == 'dataset_list') & all(classes[1,] %in% c('dataset_list', 'dataset'))){
+  }else if(!all(classes[1,] == 'dataset_list') & all(classes[1,] %in% c('dataset_list', 'dataset'))){
     #  Turn them into dataset_lists first.
     x <- lapply(inputs, function(x){
       if(class(x)[1] == 'dataset'){
@@ -116,4 +108,8 @@ bind <-function(x, ...){
     return(new.list)
     
   }
+  else {
+    stop('Objects must be of the same class (or related "_list" classes)')
+  }
+  
 }

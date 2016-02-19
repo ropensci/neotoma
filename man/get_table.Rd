@@ -22,7 +22,7 @@ A table of values corresponding to the parameter of interest.
 taxon.table <- get_table('Taxa')
 
 #  Get the frequency of the first ten taxa in Neotoma.
-tester <- function(x) length(get_datasets(taxonname = x))
+tester <- function(x) length(get_dataset(taxonname = x))
 taxon.counts2 <- sapply(taxon.table$TaxonName[1:10], tester)
 }
 }
