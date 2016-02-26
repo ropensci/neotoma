@@ -111,9 +111,16 @@ get_download.default <- function(x, verbose = TRUE){
     }
 
     if (isTRUE(all.equal(aa[[1]], 1))) {
+
+      if(aa[[1]] == 1 & length(aa[[2]]) == 0){
+        # Is this the best way to deal with it?
+        message(paste0("Dataset ID ", x, " has no associated record in Neotoma."))
+        return(NULL)
+      }
         aa <- aa[[2]]
         
         rep_NULL <- function(x){ 
+          # small function to recursively fill all NULL values with NAs.
           if(is.null(x)){NA}
           else{
             if(class(x) == 'list'){
@@ -170,6 +177,8 @@ get_download.default <- function(x, verbose = TRUE){
                                     stringsAsFactors=FALSE),
             access.date = Sys.time())
 
+          # Assign classes
+          
           class(dataset) <- c('dataset', 'list')
           class(dataset$site) <- c('site', 'data.frame')
           
@@ -240,6 +249,9 @@ get_download.default <- function(x, verbose = TRUE){
                           function(y){x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
                 }
               }
+            } else  if(all(is.na(chron_names))){
+              chron_names <- 'No chronology'
+              chron_list <- lapply(chron_list, function(x){x[[1]]$ChronologyName <- chron_names; x})
             } else if(any(is.na(chron_names)) & all(diff(chron_lengths) == 0)){
                 # This implies that many records have multiple chronology
                 # coverage, but that some don't & have NA coverage.
@@ -254,14 +266,9 @@ get_download.default <- function(x, verbose = TRUE){
                                   function(y){x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
                   }
                 }
-                
-                chron_list <- lapply(chron_list, reassign, chron_names = chron_names)
-                
-            } else if(all(is.na(chron_names))){
-              chron_names <- 'No chronology'
-              chron_list <- lapply(chron_list, function(x){x$ChronologyName <- chron_names; x})
+                chron_list <- lapply(chron_list, reassign, chron_names = chron_names)   
             }
-            
+          
             chron_vectors <- sapply(chron_list, function(x)unique(sapply(x, '[[', 'ChronologyName')))
 
             # This fills in the end of a set of sample ages if there are NAs in a series,
@@ -291,17 +298,34 @@ get_download.default <- function(x, verbose = TRUE){
               # Create the list:
               chron.list <- lapply(1:length(chrons), function(x) base.frame)
               
-              if(!(is.null(chrons)|is.na(chrons)) & length(chrons) > 0){
+              if(!(is.null(chrons) | any(is.na(chrons))) & length(chrons) > 0){
                 names(chron.list) <- chrons
 
                 for (i in 1:length(samples)){
-                  for (j in 1:length(chrons)){
-                    # Some of the new datasets are passing data without any chronology information.
+                  
+                  if(length(chron_list[[i]]) < length(chrons) & length(chron_list[[i]]) == 1){
+                    #  If there's a sample with nothing in it then it gets only a single
+                    # chron_list object, which makes the `j` loop choke.
+                    #  This current implementation only accounts for a completely
+                    # undated sample within the core, but not if one model spans a different length
+                    # of the core.
                     
-                    chron.list[[j]][i, ] <- data.frame(chron_list[[i]][[j]],
-                                                       stringsAsFactors = FALSE)
-                    chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
-                    chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    for(j in 1:length(chrons)){
+                      # Fix the `j` placeholder at 1
+                      chron.list[[j]][i, ] <- data.frame(chron_list[[i]][[1]],
+                                                         stringsAsFactors = FALSE)
+                      chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    }
+                    
+                  } else {
+                    for (j in 1:length(chrons)){
+                      # Some of the new datasets are passing data without any chronology information.
+                      # Here we're filling in the dataset metadata
+                      
+                      chron.list[[j]][i, ] <- data.frame(chron_list[[i]][[j]],
+                                                         stringsAsFactors = FALSE)
+                      chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    }
                   }
                 }
               } else {

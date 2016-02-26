@@ -8,4 +8,4 @@ README\.html
 ^code_of_conduct.md
 ^read_methods.R
 ^read.tilia.Rd
-^\tests\local_dont_run\*.*
+tests/local_dont_run/*.*
