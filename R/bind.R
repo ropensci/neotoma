@@ -94,7 +94,7 @@ bind <-function(x, ...){
     class(new.list) <- c('download_list', 'list')
     return(new.list)
     
-  }else if(!all(classes[1,] == 'dataset_list') & all(classes[1,] %in% c('dataset_list', 'dataset'))){
+  } else if(!all(classes[1,] == 'dataset_list') & all(classes[1,] %in% c('dataset_list', 'dataset'))){
     #  Turn them into dataset_lists first.
     x <- lapply(inputs, function(x){
       if(class(x)[1] == 'dataset'){
@@ -102,7 +102,7 @@ bind <-function(x, ...){
         class(x) <- c('dataset_list', 'list')
       }
       x})
-    
+
     new.list <- do.call(c, inputs)
     class(new.list) <- c('dataset_list', 'list')
     return(new.list)

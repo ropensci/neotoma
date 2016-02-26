@@ -73,10 +73,10 @@ get_geochron.default <- function(x, verbose = TRUE){
   # one or more geochronologies at a time.
   get_sample <- function(x){
     
-    base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies/'
+    base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies'
     
     # query Neotoma for data set
-    neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
+    neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/?datasetid=', x)), as = "text")
     if (identical(neotoma_content, "")) stop("")
     aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
     
@@ -123,7 +123,9 @@ get_geochron.default <- function(x, verbose = TRUE){
       # with data in the dataset returned.
       
       # We have to pull the dataset information from the `download`:
-      dl <- try(fromJSON(paste0('http://api.neotomadb.org/v1/data/downloads/', x), nullValue = NA))[[2]][[1]]
+      dl <- try(jsonlite::fromJSON(paste0('http://api.neotomadb.org/v1/data/downloads/', x)))[[2]]
+      
+      dl <- lapply(dl, function(x)rep_NULL(x))
       
       dataset <- list(
         site.data = data.frame(site.id = dl$Site$SiteID,
