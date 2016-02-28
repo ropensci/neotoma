@@ -6,7 +6,7 @@
 ##' @param file a string representing a Tilia TLX format file.
 ##' @return Return a `download` object.
 ##'
-##' @author Simon Goring
+##' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 ##'
 ##' @export
 ##' @rdname read.tilia

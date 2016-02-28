@@ -42,7 +42,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
-get_site <- function(sitename, altmin, altmax, loc, gpid, ...){
+get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
   UseMethod('get_site')
   
 }
@@ -56,7 +56,7 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...){
 #' @param ... Arguments passed from the generic method, not used.
 #' 
 #' @export
-get_site.default <- function(sitename, ...){
+get_site.default <- function(sitename, ...) {
 
   base.uri <- 'http://api.neotomadb.org/v1/data/sites'
 
@@ -67,7 +67,7 @@ get_site.default <- function(sitename, ...){
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
-  if(error_test[[2]]$flag == 1){
+  if (error_test[[2]]$flag == 1) {
     stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
   } else{
     cl <- error_test[[1]]
@@ -79,16 +79,16 @@ get_site.default <- function(sitename, ...){
   
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
-  if (aa[[1]] == 0){
+  if (aa[[1]] == 0) {
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
-  if (aa[[1]] == 1){
+  if (aa[[1]] == 1) {
     aa <- aa[[2]]
     
-    rep_NULL <- function(x){ 
-      if(is.null(x)){NA}
+    rep_NULL <- function(x) { 
+      if (is.null(x)) {NA}
       else{
-        if(class(x) == 'list'){
+        if (class(x) == 'list') {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -98,7 +98,7 @@ get_site.default <- function(sitename, ...){
     
     aainsta <- rep_NULL(aa)
     
-    if(length(aa) == 0){
+    if (length(aa) == 0) {
       cat('The API call was successful, but no records were returned.\n')
       return()
     }
@@ -108,8 +108,8 @@ get_site.default <- function(sitename, ...){
     
   }
 
-  if (class(aa) == 'try-error'){
-     output <- neotoma.form
+  if (class(aa) == 'try-error') {
+     output <- aa
   } else {
     
     # replace NULL values:
@@ -145,7 +145,7 @@ get_site.default <- function(sitename, ...){
 #' @param sitename An object of class \code{dataset}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.dataset <- function(sitename, ...){
+get_site.dataset <- function(sitename, ...) {
   site <- sitename$site.data
   class(site) <- c('site', 'data.frame')
   site
@@ -157,7 +157,7 @@ get_site.dataset <- function(sitename, ...){
 #' @param sitename An object of class \code{dataset_list}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.dataset_list <- function(sitename, ...){
+get_site.dataset_list <- function(sitename, ...) {
   site <- do.call(rbind.data.frame,lapply(sitename, '[[', 'site.data'))
   class(site) <- c('site', 'data.frame')
   site
@@ -169,7 +169,7 @@ get_site.dataset_list <- function(sitename, ...){
 #' @param sitename An object of class \code{download}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.download <- function(sitename, ...){
+get_site.download <- function(sitename, ...) {
 
   site <- sitename$dataset$site.data
   
@@ -183,7 +183,7 @@ get_site.download <- function(sitename, ...){
 #' @param sitename An object of class \code{download_list}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.download_list <- function(sitename, ...){
+get_site.download_list <- function(sitename, ...) {
   
   site <- do.call(rbind.data.frame,lapply(lapply(sitename, '[[', 'dataset'), '[[', 'site.data'))
   
@@ -197,7 +197,7 @@ get_site.download_list <- function(sitename, ...){
 #' @param sitename An object of class \code{geochronologic}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.geochronologic <- function(sitename, ...){
+get_site.geochronologic <- function(sitename, ...) {
   
   site <- sitename[[1]]$site.data
   
@@ -211,7 +211,7 @@ get_site.geochronologic <- function(sitename, ...){
 #' @param sitename An object of class \code{geochronologic_list}.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.geochronologic_list <- function(sitename, ...){
+get_site.geochronologic_list <- function(sitename, ...) {
   
   site <- do.call(rbind.data.frame,lapply(sitename, function(y)y[[1]]$site.data))
   

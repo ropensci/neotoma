@@ -54,7 +54,7 @@
 #' @keywords IO connection
 #' @export
 #'
-get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
+get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate) {
   UseMethod('get_dataset')
 }
 
@@ -77,7 +77,7 @@ get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonid
 #' @param ageof If a taxon ID or taxon name is defined this parameter must be set to \code{"taxon"}, otherwise it may refer to \code{"sample"}, in which case the age bounds are for any samples within datasets or \code{"dataset"} if you want only datasets that are within the bounds of ageold and ageyoung.
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #' @export
-get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate){
+get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate) {
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
 
@@ -87,13 +87,13 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
   cl[[1]] <- NULL
   cl <- lapply(cl, eval, envir = parent.frame())
   
-  if('x' %in% names(cl)){
+  if ('x' %in% names(cl)) {
     names(cl)[which(names(cl) == 'x')] <- 'siteid'
   }
 
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
-  if(error_test[[2]]$flag == 1){
+  if (error_test[[2]]$flag == 1) {
     stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
   } else {
     cl <- error_test[[1]]
@@ -103,16 +103,16 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
   if (identical(neotoma_content, "")) stop("")
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
-  if (aa[[1]] == 0){
+  if (aa[[1]] == 0) {
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
-  if (aa[[1]] == 1){
+  if (aa[[1]] == 1) {
     output <- aa[[2]]
     
-    rep_NULL <- function(x){ 
-      if(is.null(x)){NA}
+    rep_NULL <- function(x) { 
+      if (is.null(x)) {NA}
       else{
-        if(class(x) == 'list'){
+        if (class(x) == 'list') {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -122,12 +122,12 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
     
     output <- lapply(output, function(x)rep_NULL(x))
     
-    if(length(output) == 0){
+    if (length(output) == 0) {
       warning('The criteria used returned 0 sample sites. Returning NULL.')
       return(NULL)
     }
     
-    if (length(aa[[2]]) > 1){
+    if (length(aa[[2]]) > 1) {
       message(paste('The API call was successful, you have returned ',
                     length(output), ' records.\n', sep = ''))
     } else {
@@ -138,7 +138,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
 
   if (inherits(output, "try-error")) {
-      new.output <- neotoma.form
+      new.output <- output
   } else {
       new.output <- lapply(output, function(x) {
           new.output <- list()
@@ -157,7 +157,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
           class(new.output$site.data) <- c('site', 'data.frame')
 
-          if('CollType' %in% names(x)){x$CollUnitType <- x$CollType} # This is a fix for a very specific issue we were having.
+          if ('CollType' %in% names(x)) {x$CollUnitType <- x$CollType} # This is a fix for a very specific issue we were having.
           
           new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
                                                                     NA, x$DatasetID),
@@ -170,7 +170,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
                                                 dataset.type = ifelse(class(x$DatasetType) == 'logical',
                                                                       NA, x$DatasetType),
                                                 stringsAsFactors = FALSE)
-          if(class(x$DatasetPIs) == 'logical'){ 
+          if (class(x$DatasetPIs) == 'logical') { 
             new.output$pi.data <- NA
           } else {
             new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
@@ -179,7 +179,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
           sub.test <- try(do.call(rbind.data.frame, x$SubDates))
 
-          if(length(sub.test) > 0){
+          if (length(sub.test) > 0) {
               colnames(sub.test) <- c("submission.date",  "submission.type")
               sub.test$submission.date <- as.character(sub.test$submission.date)
               sub.test$submission.type <- as.character(sub.test$submission.type)
@@ -211,9 +211,9 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @export
-get_dataset.site <- function(x, ...){
+get_dataset.site <- function(x, ...) {
 
-  pull_site <- function(siteid){
+  pull_site <- function(siteid) {
     
     base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
     
@@ -221,16 +221,16 @@ get_dataset.site <- function(x, ...){
     if (identical(neotoma_content, "")) stop("")
     aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
 
-    if (aa[[1]] == 0){
+    if (aa[[1]] == 0) {
       stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
     }
-    if (aa[[1]] == 1){
+    if (aa[[1]] == 1) {
       output <- aa[[2]]
       # replace NULL values:
       
     }
 
-    if(length(output) == 0){
+    if (length(output) == 0) {
       warning('The criteria used returned 0 sample sites. Returning NULL.')
       return(NULL)
     }
@@ -264,7 +264,7 @@ get_dataset.site <- function(x, ...){
                                             dataset.type = ifelse(class(x$DatasetType) == 'logical',
                                                                   NA, x$DatasetType),
                                             stringsAsFactors = FALSE)
-      if(class(x$DatasetPIs) == 'logical'){ 
+      if (class(x$DatasetPIs) == 'logical') { 
         new.output$pi.data <- NA
       } else {
         new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
@@ -273,7 +273,7 @@ get_dataset.site <- function(x, ...){
       
       sub.test <- try(do.call(rbind.data.frame, x$SubDates))
 
-      if(length(sub.test) > 0){
+      if (length(sub.test) > 0) {
         colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
       }
 
@@ -302,7 +302,7 @@ get_dataset.site <- function(x, ...){
 #' @param x An object of class \code{download}.
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.download <- function(x, ...){
+get_dataset.download <- function(x, ...) {
   # Just pull the dataset out of the download.
   output <- list(x$dataset)
 
@@ -320,10 +320,10 @@ get_dataset.download <- function(x, ...){
 #' @param x An object of class \code{download_list}.
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.download_list <- function(x, ...){
+get_dataset.download_list <- function(x, ...) {
 
   # Just pull the dataset out of the download and reassign classes:
-  output <- lapply(x, FUN=function(y){
+  output <- lapply(x, FUN=function(y) {
     dataset <- y$dataset
     class(dataset) <- c('dataset', 'list')
     dataset })
@@ -341,7 +341,7 @@ get_dataset.download_list <- function(x, ...){
 #' @param x An object of class \code{geochronologic}.
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.geochronologic <- function(x, ...){
+get_dataset.geochronologic <- function(x, ...) {
   x[[1]]
 }
 
@@ -351,7 +351,7 @@ get_dataset.geochronologic <- function(x, ...){
 #' @param x An object of class \code{geochronologic_list}.
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.geochronologic_list <- function(x, ...){
+get_dataset.geochronologic_list <- function(x, ...) {
   out <- lapply(x, function(y)y[[1]])
   class(out) <- c('dataset_list', 'list')
   out
