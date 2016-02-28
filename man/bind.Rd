@@ -27,8 +27,10 @@ single sites.
 \dontrun{
 #  Search for sites with "Thuja" pollen that are older than 8kyr BP and
 #  that are on the west coast of North America:
-t8kyr.poa <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
-t8kyr.canis <- get_dataset(taxonname='Canis*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.poa <- get_dataset(taxonname='Thuja*', 
+                         loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.canis <- get_dataset(taxonname='Canis*', 
+                           loc=c(-150, 20, -100, 60), ageyoung = 8000)
 
 t8kyr.co_site <- bind(t8kyr.poa, t8kyr.canis)
 plot(t8kyr.co_site)
@@ -42,7 +44,11 @@ dataset_types <- c('ostracode surface sample',
                    'pollen surface sample')
 
 # Run the 'get_dataset` function for each of the different dataset types 
-dataset_lists <- lapply(dataset_types, function(x)get_dataset(datasettype=x, loc = c(-100,43,-92,48)))
+dataset_lists <- lapply(dataset_types, 
+                          function(x) { 
+                            get_dataset(datasettype=x, 
+                                        loc = c(-100,43,-92,48))
+                                        })
 
 # Using do.call here to make sure that I don't have to split the list out.
 new_datasets <- do.call(bind, dataset_lists)

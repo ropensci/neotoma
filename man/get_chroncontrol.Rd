@@ -10,6 +10,8 @@ get_chroncontrol(x, verbose = TRUE, add = FALSE)
 \item{x}{A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.}
 
 \item{verbose}{logical, should messages on API call be printed?}
+
+\item{add}{logical, should this chron control be added to the download object?}
 }
 \value{
 This command returns either an object of class  \code{"try-error"} containing the error returned

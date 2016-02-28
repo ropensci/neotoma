@@ -1,3 +1,9 @@
+neotoma 1.5.0
+====================
+o More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported.
+o Function `read.tilia` added to read Tilia (http://tiliait.com) style XML files.
+o Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
+
 neotoma 1.4.0
 ====================
 o The few records without chronologies were causing errors when `get_download` was applied.

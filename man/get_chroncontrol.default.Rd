@@ -10,6 +10,8 @@
 \item{x}{A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.}
 
 \item{verbose}{logical; should messages on API call be printed?}
+
+\item{add}{logical, should this chron control be added to the download object?}
 }
 \description{
 Using the chronology ID, return the chron control table as a \code{data.frame}.

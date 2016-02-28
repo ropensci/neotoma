@@ -4,7 +4,7 @@
 \alias{read.tilia}
 \title{Read proxy data from Tilia TLX files}
 \usage{
-read.tilia(filename)
+read.tilia(file)
 }
 \arguments{
 \item{file}{a string representing a Tilia TLX format file.}
