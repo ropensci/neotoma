@@ -12,7 +12,7 @@ print.dataset <- function(x, ...){
              'Accessed ', format(x$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
   } else {
     cat(paste0('A dataset for ',
-               x$site$site.name))
+               x$site$site.name), '\n')
   }
   
   print(format(data.frame(dataset.id = x$dataset.meta$dataset.id, 

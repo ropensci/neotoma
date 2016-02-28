@@ -77,6 +77,7 @@
 #   expect_is(get_download(1776), 'download_list')
 #   expect_is(get_download(13046), 'download_list')
 #   expect_is(get_download(15108), 'download_list')
+#   expect_is(get_download(15080), 'download_list')
 #   
 # })
 # 
@@ -202,9 +203,11 @@
 #            })
 #  
 #  #-----------------------------------------------------
-#  
-#  context('Trying to browse:')
-#  test_that('bind',
+
+#  context('Read Tilia files:')
+#  test_that('read.tilia',
 #            {
-#              expect_error(browse(), "Error in browse()")
+#              expect_is(read.tilia('inst/crystal.tlx'), "download")
 #            })
+#  
+#  #-----------------------------------------------------

@@ -31,7 +31,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_chroncontrol <- function(x, verbose = TRUE, add = FALSE){
+get_chroncontrol <- function(x, verbose = TRUE, add = FALSE) {
   UseMethod('get_chroncontrol')
 }
 
@@ -41,9 +41,10 @@ get_chroncontrol <- function(x, verbose = TRUE, add = FALSE){
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.
+#' @param add logical, should this chron control be added to the download object?
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
+get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -75,10 +76,10 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
   if (isTRUE(all.equal(aa[[1]], 1))) {
     aa <- aa[[2]]
     
-    rep_NULL <- function(x){ 
-      if(is.null(x)){NA}
+    rep_NULL <- function(x) { 
+      if (is.null(x)) { NA }
       else{
-        if(class(x) == 'list'){
+        if (class(x) == 'list') {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -98,12 +99,12 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
     #  Some of the records do not contain a 'controls' table, so they only contain
     #  'meta':
     
-    if(length(aa) == 0){
+    if (length(aa) == 0) {
       # This removes the need to make a more deeply nested if statement. . . 
       aa <- list(empty = 0) 
     }
     
-    if('controls' %in% names(aa[[1]])){
+    if ('controls' %in% names(aa[[1]])) {
       
       flattened <- lapply(lapply(aa, '[[', 'controls')[[1]], data.frame)
       control.table <- do.call(rbind.data.frame, flattened)
@@ -126,7 +127,7 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
                                   chron.control.id = NA)
     }
     
-    if('Default' %in% names(aa[[1]])){
+    if ('Default' %in% names(aa[[1]])) {
       meta.table <- data.frame(default     = aa[[1]]$Default,
                                name        = aa[[1]]$ChronologyName,
                                age.type    = aa[[1]]$AgeType,
@@ -147,7 +148,7 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
                                date        = NA)
     }
     
-    if('datasets' %in% names(aa[[1]])){
+    if ('datasets' %in% names(aa[[1]])) {
       parent <- do.call(rbind, aa[[1]]$dataset)
       colnames(parent) <- c('dataset.type', 'dataset.id')
       parent$dataset.id <- as.numeric(parent$dataset.id)
@@ -174,10 +175,10 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE){
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE){
+get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
   chron_id <- x$sample.meta$chronology.id[1]
   
-  if(is.na(chron_id)){
+  if (is.na(chron_id)) {
     output <- list(chron.control = data.frame(depth = NA,
                                                thickness = NA,
                                                age = NA, 
@@ -207,7 +208,7 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE){
     output <- get_chroncontrol(x$sample.meta$chronology.id[1], verbose)
     class(output) <- c('chroncontrol', 'list')
     
-    if(names(x$chronologies)[1] == x$sample.meta$chronology.name[1] & add == TRUE) {
+    if (names(x$chronologies)[1] == x$sample.meta$chronology.name[1] & add == TRUE) {
       # If we're adding the chronology to the download object:
       x$chronologies[[1]] <- list(chronology = x$chronologies[[1]],
                                   chroncontrol = output)
@@ -229,10 +230,10 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE){
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE){
+get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE) {
   
   output <- lapply(x, function(y)get_chroncontrol(y, verbose, add = add))
-  if(add == FALSE){
+  if (add == FALSE) {
     class(output) <- c('chroncontrol_list', 'list')
   } else {
     class(output) <- c('download_list', 'list')
