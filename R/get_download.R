@@ -432,11 +432,16 @@ get_download.default <- function(x, verbose = TRUE) {
                 
                 #  To resolve the duplication issue we want to find the shortest combination of columns for
                 #  which the sum of duplicates is zero:
-
-                taxon.list$alias[taxon.list$taxon.name %in% i] <- sapply(1:nrow(dup_rows),
-                                                                         function(x) {
-                                                                           paste0(taxon.list$alias[taxon.list$taxon.name %in% i][x], '|',
-                                                                                           paste0(as.character(t(dup_rows)[,x]), collapse = '|')) })
+                if (is.null(nrow(dup_rows))) {
+                  # In some cases there are lots of NAs. . . 
+                  taxon.list$alias[taxon.list$taxon.name %in% i] <-  paste0(taxon.list$alias[taxon.list$taxon.name %in% i], '|',
+                                                                            as.character(dup_rows))
+                } else {
+                  taxon.list$alias[taxon.list$taxon.name %in% i] <- sapply(1:nrow(dup_rows),
+                                                                           function(x) {
+                                                                             paste0(taxon.list$alias[taxon.list$taxon.name %in% i][x], '|',
+                                                                                             paste0(as.character(t(dup_rows)[,x]), collapse = '|')) })
+                }
               }
               
               message <- paste0('\nThere were multiple entries for ',
