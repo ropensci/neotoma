@@ -3,6 +3,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom stats na.omit
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -241,7 +242,7 @@ get_download.default <- function(x, verbose = TRUE){
               # In that case we want to duplicate the record, and then
               # assign names to the chronologies.
               reassign <- function(x, chron_names){
-                if(length(x) == length(na.omit(chron_names))){
+                if(length(x) == length(stats::na.omit(chron_names))){
                   return(x)
                 } else {
                   x <- rep(x, max(chron_lengths))

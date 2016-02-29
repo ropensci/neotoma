@@ -1,6 +1,7 @@
+#' @importFrom graphics legend par plot points
 #' @export
 plot.site <- function(x, database = NULL, ...) {
-  if(is.null(database)){
+  if(is.null(database)) {
     plot(x$long, x$lat, xlab = "Longitude", ylab = "Latitude", ...)
   }  else {
     plot(x$long, x$lat, xlab = "Longitude", ylab = "Latitude", type = 'n')

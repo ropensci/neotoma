@@ -4,9 +4,8 @@
 
 ## R CMD check results:
 + There were no ERRORs or WARNINGs
-+ Travis gives two notes:
-  +  Cyclic repository
-  +  License file 
++ Travis gives no notes.
++ Appveyor gives no notes.
   
 ## Downstream Dependencies:
 NA
