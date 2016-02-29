@@ -27,6 +27,6 @@ dim(marion.cnt)
 
 }
 \author{
-Simon Goring
+Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 

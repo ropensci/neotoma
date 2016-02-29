@@ -33,7 +33,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
+get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup) {
 
   base.uri <- 'http://api.neotomadb.org/v1/data/taxa'
 
@@ -42,13 +42,13 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
   cl <- lapply(cl, eval, envir = parent.frame())
 
   # Parameter check on taxagroup:
-  if ('taxagroup' %in% names(cl)){
+  if ('taxagroup' %in% names(cl)) {
     taxon.codes <- c('AVE', 'BIM', 'BRY',
                      'BTL', 'FSH', 'HRP',
                      'LAB', 'MAM', 'MOL',
                      'PHY', 'TES', 'VPL')
 
-    if (!cl$taxagroup %in% taxon.codes){
+    if (!cl$taxagroup %in% taxon.codes) {
       stop(paste0('taxonGroup is not an accepted code. ',
                   'Use get_table(\'TaxaGroupTypes\') ',
                   'to obtain acceptible classes'))
@@ -57,9 +57,9 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
 
   # Parameter check on taxonname and taxonids, I'm allowing
   # only one, but I think it can accept two.
-  if (any(c('taxonids', 'taxonname') %in% names(cl))){
+  if (any(c('taxonids', 'taxonname') %in% names(cl))) {
 
-    if (all(c('taxonids', 'taxonname') %in% names(cl))){
+    if (all(c('taxonids', 'taxonname') %in% names(cl))) {
       stop('Can only accept either taxonids OR taxonname, not both.')
     }
     if ('taxonids' %in% names(cl) & !is.numeric(cl$taxonids)) {
@@ -72,8 +72,8 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
     }
   }
 
-  if ('status' %in% names(cl)){
-    if (!cl$status %in% c('extinct', 'extant', 'all')){
+  if ('status' %in% names(cl)) {
+    if (!cl$status %in% c('extinct', 'extant', 'all')) {
       stop('Status must be one of: \'extinct\', \'extant\', or \'all\'')
     }
   }
@@ -83,16 +83,16 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
   if (identical(neotoma_content, "")) stop("")
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
-  if (aa[[1]] == 0){
+  if (aa[[1]] == 0) {
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
-  if (aa[[1]] == 1){
+  if (aa[[1]] == 1) {
     output <- aa[[2]]
     
-    rep_NULL <- function(x){ 
-      if(is.null(x)){NA}
+    rep_NULL <- function(x) { 
+      if (is.null(x)) {NA}
       else{
-        if(class(x) == 'list'){
+        if (class(x) == 'list') {
           # Recursive function to go through the list & clear NULL values.
           lapply(x, rep_NULL)
         } else {
@@ -108,8 +108,8 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
         length(output), 'records.\n')
   }
 
-  if (class(aa) == 'try-error'){
-    output <- neotoma.form
+  if (class(aa) == 'try-error') {
+    output <- aa
   } else {
 
       # Don't need anaonymous function here, call `[[()` with
@@ -117,9 +117,9 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup){
       names(output) <- sapply(output, `[[`, "TaxonName")
 
       # There are some values in here that are empty lists:
-      output <- lapply(output, function(x){
+      output <- lapply(output, function(x) {
           len <- sapply(x, length) == 0
-          if (any(len)){
+          if (any(len)) {
               x[[which(len)]] <- NA
           }
           x
