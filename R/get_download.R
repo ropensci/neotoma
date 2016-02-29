@@ -36,7 +36,7 @@
 #'
 #' #  Extract the Pseudotsuga curves for the sites:
 #' get.curve <- function(x, taxa) {
-#'                if(taxa %in% colnames(x$counts)){
+#'                if (taxa %in% colnames(x$counts)) {
 #'                  count <- x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE)
 #'                } else {
 #'                  count <- rep(0, nrow(x$count))
@@ -68,7 +68,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_download <- function(x, verbose = TRUE){
+get_download <- function(x, verbose = TRUE) {
   UseMethod('get_download')
 }
 
@@ -80,7 +80,7 @@ get_download <- function(x, verbose = TRUE){
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.default <- function(x, verbose = TRUE){
+get_download.default <- function(x, verbose = TRUE) {
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -93,7 +93,7 @@ get_download.default <- function(x, verbose = TRUE){
           stop('The dataset id (x) must be numeric.')
   }
 
-  get.sample <- function(x){
+  get.sample <- function(x) {
     # query Neotoma for data set
     base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
     
@@ -113,18 +113,18 @@ get_download.default <- function(x, verbose = TRUE){
 
     if (isTRUE(all.equal(aa[[1]], 1))) {
 
-      if(aa[[1]] == 1 & length(aa[[2]]) == 0){
+      if (aa[[1]] == 1 & length(aa[[2]]) == 0) {
         # Is this the best way to deal with it?
         message(paste0("Dataset ID ", x, " has no associated record in Neotoma."))
         return(NULL)
       }
         aa <- aa[[2]]
         
-        rep_NULL <- function(x){ 
+        rep_NULL <- function(x) { 
           # small function to recursively fill all NULL values with NAs.
-          if(is.null(x)){NA}
+          if (is.null(x)) {NA}
           else{
-            if(class(x) == 'list'){
+            if (class(x) == 'list') {
               lapply(x, rep_NULL)
             } else {
               return(x)
@@ -175,7 +175,7 @@ get_download.default <- function(x, verbose = TRUE){
             submission = data.frame(submission.date = strptime(aa1$NeotomaLastSub,
                                                                '%m/%d/%Y'),
                                     submission.type = 'Last submission to Neotoma',
-                                    stringsAsFactors=FALSE),
+                                    stringsAsFactors = FALSE),
             access.date = Sys.time())
 
           # Assign classes
@@ -186,7 +186,7 @@ get_download.default <- function(x, verbose = TRUE){
           #  Geochronological datasets behave differently than any other dataset.
           #  It's frustrating.  This is the only way we can figure it out in a
           #  general way.
-          if(dataset$dataset.meta$dataset.type == 'geochronologic'){
+          if (dataset$dataset.meta$dataset.type == 'geochronologic') {
             
             message(paste0('The dataset ID ', dataset$dataset.meta$dataset.id,
                            ' is associated with a geochronology object, not count data.'))
@@ -194,7 +194,7 @@ get_download.default <- function(x, verbose = TRUE){
 
           }
             
-          if(!dataset$dataset.meta$dataset.type == 'geochronologic'){
+          if (!dataset$dataset.meta$dataset.type == 'geochronologic') {
             # copy to make indexing below easier?
             samples <- aa1$Samples
 
@@ -236,35 +236,35 @@ get_download.default <- function(x, verbose = TRUE){
             # When there is an NA aged sample in a record it fucks everything up
             # because it's not inherently a part of a chronology.
             
-            if(any(is.na(chron_names)) & !all(diff(chron_lengths) == 0)){
+            if (any(is.na(chron_names)) & !all(diff(chron_lengths) == 0)) {
               # This implies that many records have multiple chronology
               # coverage, but that some don't & have NA coverage.
               # In that case we want to duplicate the record, and then
               # assign names to the chronologies.
-              reassign <- function(x, chron_names){
-                if(length(x) == length(stats::na.omit(chron_names))){
+              reassign <- function(x, chron_names) {
+                if (length(x) == length(stats::na.omit(chron_names))) {
                   return(x)
                 } else {
                   x <- rep(x, max(chron_lengths))
                   return(lapply(1:max(chron_lengths), 
-                          function(y){x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
+                          function(y) {x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
                 }
               }
-            } else  if(all(is.na(chron_names))){
+            } else if (all(is.na(chron_names))) {
               chron_names <- 'No chronology'
-              chron_list <- lapply(chron_list, function(x){x[[1]]$ChronologyName <- chron_names; x})
-            } else if(any(is.na(chron_names)) & all(diff(chron_lengths) == 0)){
+              chron_list <- lapply(chron_list, function(x) {x[[1]]$ChronologyName <- chron_names; x})
+            } else if (any(is.na(chron_names)) & all(diff(chron_lengths) == 0)) {
                 # This implies that many records have multiple chronology
                 # coverage, but that some don't & have NA coverage.
                 # In that case we want to duplicate the record, and then
                 # assign names to the chronologies.
-                reassign <- function(x, chron_names){
-                  if(length(x) == length(na.omit(chron_names)) & !is.na(x[[1]]$ChronologyName)){
+                reassign <- function(x, chron_names) {
+                  if (length(x) == length(na.omit(chron_names)) & !is.na(x[[1]]$ChronologyName)) {
                     return(x)
                   } else {
                     x <- rep(x, max(chron_lengths))
                     return(lapply(1:max(chron_lengths), 
-                                  function(y){x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
+                                  function(y) {x[[y]]$ChronologyName <- chron_names[y]; x[[y]]}))
                   }
                 }
                 chron_list <- lapply(chron_list, reassign, chron_names = chron_names)   
@@ -274,9 +274,9 @@ get_download.default <- function(x, verbose = TRUE){
 
             # This fills in the end of a set of sample ages if there are NAs in a series,
             # but with the fix above it shouldn't be necessary.
-            if(!is.null(nrow(chron_vectors))){
-              chron_vectors <- t(apply(chron_vectors, 1, function(x){
-                                  if(any(is.na(x)) & !all(is.na(x))){
+            if (!is.null(nrow(chron_vectors))) {
+              chron_vectors <- t(apply(chron_vectors, 1, function(x) {
+                                  if (any(is.na(x)) & !all(is.na(x))) {
                                     x[is.na(x)] <- unique(x[!is.na(x)])
                                   }
                                   x}))
@@ -293,25 +293,26 @@ get_download.default <- function(x, verbose = TRUE){
                                       'age.younger', 'chronology.name',
                                       'age.type', 'chronology.id', 'dataset.id')
 
-            if (!class(chrons) == 'try-error'){
+            if (!class(chrons) == 'try-error') {
               # Now we create the chronologies, so long as samples have assigned "SampleAges"
               # If they don't, then we stick in the empty `base.frame` and assign it a name "1"
               # Create the list:
               chron.list <- lapply(1:length(chrons), function(x) base.frame)
               
-              if(!(is.null(chrons) | any(is.na(chrons))) & length(chrons) > 0){
+              if (!(is.null(chrons) | any(is.na(chrons))) & length(chrons) > 0) {
+                # If there is a chronology:
                 names(chron.list) <- chrons
 
-                for (i in 1:length(samples)){
+                for (i in 1:length(samples)) {
                   
-                  if(length(chron_list[[i]]) < length(chrons) & length(chron_list[[i]]) == 1){
+                  if (length(chron_list[[i]]) < length(chrons) & length(chron_list[[i]]) == 1) {
                     #  If there's a sample with nothing in it then it gets only a single
                     # chron_list object, which makes the `j` loop choke.
                     #  This current implementation only accounts for a completely
                     # undated sample within the core, but not if one model spans a different length
                     # of the core.
                     
-                    for(j in 1:length(chrons)){
+                    for (j in 1:length(chrons)) {
                       # Fix the `j` placeholder at 1
                       chron.list[[j]][i, ] <- data.frame(chron_list[[i]][[1]],
                                                          stringsAsFactors = FALSE)
@@ -319,7 +320,7 @@ get_download.default <- function(x, verbose = TRUE){
                     }
                     
                   } else {
-                    for (j in 1:length(chrons)){
+                    for (j in 1:length(chrons)) {
                       # Some of the new datasets are passing data without any chronology information.
                       # Here we're filling in the dataset metadata
                       
@@ -336,11 +337,12 @@ get_download.default <- function(x, verbose = TRUE){
                 chron.list[[1]]$dataset.id <- dataset$dataset.meta$dataset.id
               }
               
-              default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1])==aa1$DefChronologyID)
+              default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1]) == aa1$DefChronologyID)
               
-              if(length(default_chron)==0){
+              if (length(default_chron) == 0) {
                 warning(paste0('This dataset has no defined default chronology.  Please use caution.\n',
-                        'Using the first chronology, ', names(chron.list)[1],' as the default.'))
+                        'Using the first chronology, ', names(chron.list)[1],' as the default.'),
+                        immediate. = TRUE)
                 default_chron <- 1
               }
               
@@ -380,7 +382,7 @@ get_download.default <- function(x, verbose = TRUE){
             # 3) bind each data frame - result is a data frame in long format
             sample.data <- do.call(rbind, sample.data)
             
-            # 4) add a Sample column that is the ID from smaple.meta
+            # 4) add a Sample column that is the ID from sample.meta
             sample.data$sample.id <- rep(sample.meta$sample.id, times = nsamp)
 
             # We're going to isolate the count data and clean it up by
@@ -402,7 +404,7 @@ get_download.default <- function(x, verbose = TRUE){
             
             # Now we check for any duplicated names and give them an alias
             # that binds the name with the variable units.
-            if(any(duplicated(cast_table$taxon.name))){
+            if (any(duplicated(cast_table$taxon.name))) {
               
               which_dup <- as.character(taxon.list$taxon.name[duplicated(taxon.list$taxon.name)])
               
@@ -412,7 +414,7 @@ get_download.default <- function(x, verbose = TRUE){
               
               taxon.list$alias <- as.character(taxon.list$taxon.name)
               
-              for(i in which_dup){
+              for (i in which_dup) {
                 # Choose the column to resolve the problem.
                 dup_rows <- data.frame(taxon.list[taxon.list$taxon.name %in% i,],
                                        stringsAsFactors = FALSE)
@@ -425,13 +427,14 @@ get_download.default <- function(x, verbose = TRUE){
                 dup_rows <- dup_rows[,c('variable.context','variable.element',
                                         'variable.units')]
                 
-                dup_rows <- dup_rows[,colSums(is.na(dup_rows)) == 0]
+                # Remove any columns where all elements are NA:
+                dup_rows <- dup_rows[, apply(dup_rows, 2, function(x) { !all(is.na(x)) } )]
                 
                 #  To resolve the duplication issue we want to find the shortest combination of columns for
                 #  which the sum of duplicates is zero:
 
                 taxon.list$alias[taxon.list$taxon.name %in% i] <- sapply(1:nrow(dup_rows),
-                                                                         function(x){
+                                                                         function(x) {
                                                                            paste0(taxon.list$alias[taxon.list$taxon.name %in% i][x], '|',
                                                                                            paste0(as.character(t(dup_rows)[,x]), collapse = '|')) })
               }
@@ -440,7 +443,7 @@ get_download.default <- function(x, verbose = TRUE){
                                 unique(which_dup),
                                 sapply(unique(which_dup), function(x)ifelse(length(grep("\\.$", 'abcd', perl = TRUE)) == 1, '.', '')),
                                 ' \nget_download has mapped aliases for the taxa in the taxon.list.')
-              warning (immediate. = TRUE, message, call. = FALSE)
+              warning(immediate. = TRUE, message, call. = FALSE)
             }  
 
             # This pulls out charcoal & lab data to stick in a different data.frame.
@@ -448,7 +451,7 @@ get_download.default <- function(x, verbose = TRUE){
                         taxon.list$taxon.group == "Charcoal")
 
             count.data <- t(cast_table[take, 7:ncol(cast_table)])
-            if('alias' %in% colnames(taxon.list)){
+            if ('alias' %in% colnames(taxon.list)) {
               colnames(count.data) <- taxon.list$alias[take]
             } else {
               colnames(count.data) <- taxon.list$taxon.name[take]
@@ -457,7 +460,7 @@ get_download.default <- function(x, verbose = TRUE){
             # Pull out the lab data and treat it in
             # the same way as the previous:
             
-            if(sum(take) > 0) {
+            if (sum(take) > 0) {
               lab.data <- t(cast_table[!take, 7:ncol(cast_table)])
               colnames(lab.data) <- taxon.list$alias[!take]
             } else {
@@ -490,8 +493,8 @@ get_download.default <- function(x, verbose = TRUE){
 
   drop.any <- sapply(aa,is.null)
 
-  if(any(drop.any > 0)){
-    if(all(drop.any > 0)){
+  if (any(drop.any > 0)) {
+    if (all(drop.any > 0)) {
       stop('All datasets return non-download objects\n')
     } else {
       warning('Some datasetids returned empty downloads, be aware that length(datasetid) is longer than the download_list.\n')
@@ -513,7 +516,7 @@ get_download.default <- function(x, verbose = TRUE){
 #' @param x An object of class \code{dataset}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.dataset <- function(x, verbose = TRUE){
+get_download.dataset <- function(x, verbose = TRUE) {
 
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -521,7 +524,7 @@ get_download.dataset <- function(x, verbose = TRUE){
   
   datasetid <- x$dataset.meta$dataset.id
   
-  if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
+  if (!x$dataset.meta$dataset.type %in% 'geochronologic') {
     aa <- get_download(datasetid, verbose = verbose)
   } else {
     cat('Dataset is a geochronological data object.  Defaulting to get_geochron.\n')
@@ -539,7 +542,7 @@ get_download.dataset <- function(x, verbose = TRUE){
 #' @param x An object of class \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.dataset_list <- function(x, verbose = TRUE){
+get_download.dataset_list <- function(x, verbose = TRUE) {
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -558,7 +561,7 @@ get_download.dataset_list <- function(x, verbose = TRUE){
 #' @param x An object of class \code{site}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_download.site <- function(x, verbose = TRUE){
+get_download.site <- function(x, verbose = TRUE) {
   
   message('Fetching datasets for the site(s)')
   dataset <- get_dataset(x)
