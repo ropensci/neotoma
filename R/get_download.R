@@ -192,9 +192,8 @@ get_download.default <- function(x, verbose = TRUE) {
                            ' is associated with a geochronology object, not count data.'))
             return(NULL)
 
-          }
+          } else {
             
-          if (!dataset$dataset.meta$dataset.type == 'geochronologic') {
             # copy to make indexing below easier?
             samples <- aa1$Samples
 
@@ -269,19 +268,55 @@ get_download.default <- function(x, verbose = TRUE) {
                 }
                 chron_list <- lapply(chron_list, reassign, chron_names = chron_names)   
             }
-          
+            
             chron_vectors <- sapply(chron_list, function(x)unique(sapply(x, '[[', 'ChronologyName')))
 
+            if (is.list(chron_vectors)) {
+              #  If it's a list then there are levels without common chronologies
+              #  in practice this is more likely for faunal/macrofossil remains.
+              unique_vectors <- stats::na.omit(unique(unlist(chron_vectors)))
+              
+              # Now, we inject an empty age for the missing chronology:
+              for (i in unique_vectors) {
+                for (j in 1:length(chron_list)) {
+                  if (!i %in% sapply(chron_list[[j]], '[[', 'ChronologyName')) {
+                    if (any(is.na(sapply(chron_list[[j]], '[[', 'ChronologyName')))) {
+                      # Clear any empty records:
+                      chron_list[[j]][[which(is.na(sapply(chron_list[[j]], '[[', 'ChronologyName')))]] <- NULL
+                    }
+                    add_length <- length(chron_list[[j]]) + 1
+                    
+                    chron_list[[j]][[add_length]] <- list(AgeOlder = NA,
+                                                          Age = NA,
+                                                          AgeYounger = NA,
+                                                          ChronologyName = i,
+                                                          AgeType = NA,
+                                                          ChronologyID = NA)
+                    
+                  }
+                }
+              }
+              
+              # Now we just need to re-sort the lists:
+              chron_list <- lapply(chron_list, function(x){
+                lapply(match(sapply(x, '[[', 'ChronologyName'), unique_vectors), function(y)x[[y]])
+              })
+              
+              chron_vectors <- sapply(chron_list, function(x)unique(sapply(x, '[[', 'ChronologyName')))
+              
+            }
             # This fills in the end of a set of sample ages if there are NAs in a series,
             # but with the fix above it shouldn't be necessary.
             if (!is.null(nrow(chron_vectors))) {
+              # There's a problem here that the things aren't in the right order.
+              
               chron_vectors <- t(apply(chron_vectors, 1, function(x) {
-                                  if (any(is.na(x)) & !all(is.na(x))) {
-                                    x[is.na(x)] <- unique(x[!is.na(x)])
-                                  }
-                                  x}))
+                                        if (any(is.na(x)) & !all(is.na(x))) {
+                                          x[is.na(x)] <- unique(x[!is.na(x)])
+                                        }
+                                    x } ))
             } else {
-              chron_vectors[is.na(chron_vectors)] <- unique(chron_vectors[!is.na(chron_vectors)])
+              chron_vectors[is.na(chron_vectors)] <- unique(unlist(chron_vectors[!is.na(chron_vectors)]))
             }
             
             chrons <- try(unique(as.vector(unlist(chron_vectors))), silent = TRUE)
@@ -300,7 +335,7 @@ get_download.default <- function(x, verbose = TRUE) {
               chron.list <- lapply(1:length(chrons), function(x) base.frame)
               
               if (!(is.null(chrons) | any(is.na(chrons))) & length(chrons) > 0) {
-                # If there is a chronology:
+                # If there is a chronology and there are no NAs in it:
                 names(chron.list) <- chrons
 
                 for (i in 1:length(samples)) {
@@ -317,6 +352,12 @@ get_download.default <- function(x, verbose = TRUE) {
                       chron.list[[j]][i, ] <- data.frame(chron_list[[i]][[1]],
                                                          stringsAsFactors = FALSE)
                       chron.list[[j]]$dataset.id <- dataset$dataset.meta$dataset.id
+                    }
+                    
+                  } else if (!is.null(chrons) & any(is.na(chrons)) & length(chrons) > 0) {
+                    # There is a chronology, but one of levels has an NA:
+                    for (i in 1:length(chron_list)) {
+                      chron_list
                     }
                     
                   } else {
@@ -338,6 +379,7 @@ get_download.default <- function(x, verbose = TRUE) {
               }
               
               default_chron <- which(sapply(chron.list, function(x)x$chronology.id[1]) == aa1$DefChronologyID)
+              if (length(default_chron) > 1) { default_chron <- default_chron[1] }
               
               if (length(default_chron) == 0) {
                 warning(paste0('This dataset has no defined default chronology.  Please use caution.\n',
@@ -375,6 +417,11 @@ get_download.default <- function(x, verbose = TRUE) {
             # list of data frames
             sample.data <- lapply(lapply(samples, `[[`, "SampleData"),
                                   function(x) do.call(rbind.data.frame, x))
+            
+            if (length(unlist(sample.data)) == 0) {
+              warning('This record contains no count data.  Returning a NULL record.')
+              return(NULL)
+            }
             
             # 2) How many counts/species in each data frame?
             nsamp <- sapply(sample.data, nrow)

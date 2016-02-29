@@ -46,7 +46,7 @@ compiled.sites <- compile_taxa(pollen.records, list.name='WS64')
 
 #  Extract the Pseudotsuga curves for the sites:
 get.curve <- function(x, taxa) {
-               if(taxa \%in\% colnames(x$counts)){
+               if (taxa \%in\% colnames(x$counts)) {
                  count <- x$counts[,taxa]/rowSums(x$counts, na.rm=TRUE)
                } else {
                  count <- rep(0, nrow(x$count))
