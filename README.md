@@ -60,6 +60,7 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.5.1: Minor fix to the `get_dataset` for site level datato account for some datasets with empty submission data.  Some style changes to code (non-functional changes)
 + 1.5.0: More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported. Function `read.tilia` added to read Tilia (http://tiliait.com) style XML files. Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
 + 1.4.1: Small changes to `get_geochron` to address bug reports and improve object `printing` methods.
 + 1.4.0: Added `plot` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
