@@ -8,3 +8,4 @@ README\.html
 ^code_of_conduct.md
 ^read_methods.R
 tests/local_dont_run/*.*
+download.out

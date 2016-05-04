@@ -321,8 +321,13 @@ get_download.default <- function(x, verbose = TRUE) {
             
             chrons <- try(unique(as.vector(unlist(chron_vectors))), silent = TRUE)
 
-            base.frame <- as.data.frame(matrix(ncol = 7,
-                                               nrow = nrow(sample.meta)))
+            base.frame <- data.frame(age.older = rep(NA, nrow(sample.meta)),
+                                     age = rep(NA, nrow(sample.meta)),
+                                     age.younger = rep(NA, nrow(sample.meta)),
+                                     chronology.name = rep(NA, nrow(sample.meta)),
+                                     age.type = rep(NA, nrow(sample.meta)), 
+                                     chronology.id = rep(NA, nrow(sample.meta)), 
+                                     dataset.id = rep(NA, nrow(sample.meta)))
             
             colnames(base.frame) <- c('age.older', 'age',
                                       'age.younger', 'chronology.name',

@@ -1,4 +1,3 @@
-
 #' Function to convert multiple downloads into a single large table.
 #'
 #' From the assemblage data for multiple cores, return a single data.frame with columns for site
@@ -47,23 +46,23 @@
 #' @keywords utilities
 #' @export
 
-compile_downloads <-function(downloads){
+compile_downloads <- function(downloads) {
 
-  if(!('download_list' %in% class(downloads) | all(sapply(downloads, class) == 'download') |
-       'download' %in% class(downloads))){
+  if (!('download_list' %in% class(downloads) | all(sapply(downloads, class) == 'download') |
+       'download' %in% class(downloads))) {
     stop('compile_datasets can only operate on lists as returned from get_download, or a list of download objects.')
   }
 
-  down.to.df <- function(x){
-    if('download' %in% class(x)){
+  down.to.df <- function(x) {
+    if ('download' %in% class(x)) {
       #  There can be NULL values in the download object.  We'll turn them to NA values:
-      if(is.null(x$dataset$site$site.name)) x$dataset$site$site.name <- paste('NoName_ID')
-      if(is.null(x$sample.meta$depths)) x$sample.meta$depths <- NA
-      if(is.null(x$sample.meta$age)) x$sample.meta$age <- NA
-      if(is.null(x$sample.meta$age.older)) x$sample.meta$age.older <- NA
-      if(is.null(x$sample.meta$age.younger)) x$sample.meta$age.younger <- NA
-      if(is.null(x$dataset$site$lat)) x$dataset$site$lat <- NA
-      if(is.null(x$dataset$site$long)) x$dataset$site$long <- NA
+      if (is.null(x$dataset$site$site.name)) x$dataset$site$site.name <- paste('NoName_ID')
+      if (is.null(x$sample.meta$depths)) x$sample.meta$depths <- NA
+      if (is.null(x$sample.meta$age)) x$sample.meta$age <- NA
+      if (is.null(x$sample.meta$age.older)) x$sample.meta$age.older <- NA
+      if (is.null(x$sample.meta$age.younger)) x$sample.meta$age.younger <- NA
+      if (is.null(x$dataset$site$lat)) x$dataset$site$lat <- NA
+      if (is.null(x$dataset$site$long)) x$dataset$site$long <- NA
 
       site.info <- data.frame(site.name = x$dataset$site$site.name,
                               depth = x$sample.meta$depth,

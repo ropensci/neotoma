@@ -108,6 +108,8 @@ write_agefile <- function(download, chronology = 1, path,
     }
 
     if(any(is.na(chron[,1]))){
+      chron <- chron[!is.na(chron[,1]),]
+      
       warning('Some samples in this chronology have no dates.  These samples are being removed.')
     }
     

@@ -107,6 +107,7 @@
 #   expect_is(get_dataset(x = 1), 'dataset_list')
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
+#   expect_is(get_dataset(get_site(sitename = "Lac à Sam%")), "dataset_list")
 # })
 # 
 # #-----------------------------------------------------

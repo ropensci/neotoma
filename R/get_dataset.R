@@ -213,6 +213,18 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 #' @export
 get_dataset.site <- function(x, ...) {
 
+  rep_NULL <- function(x) { 
+    if (is.null(x) | length(x) == 0) {NA}
+    else{
+      if (class(x) == 'list') {
+        lapply(x, rep_NULL)
+      } else {
+        return(x)
+      }
+    }
+  }
+  
+  
   pull_site <- function(siteid) {
     
     base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
@@ -238,7 +250,7 @@ get_dataset.site <- function(x, ...) {
     new.output <- lapply(output, function(x) {
       new.output <- list()
       
-      x <- lapply(x, function(x) ifelse(x == "NULL" | class(x) == 'logical', NA, x))
+      x <- rep_NULL(x)
       
       new.output$site.data <- data.frame(site.id = x$Site$SiteID,
                                          site.name = x$Site$SiteName,
@@ -271,10 +283,12 @@ get_dataset.site <- function(x, ...) {
         rownames(new.output$pi.data) <- NULL
       }
       
-      sub.test <- try(do.call(rbind.data.frame, x$SubDates))
+      sub.test <- try(do.call(rbind.data.frame, x$SubDates), silent=TRUE)
 
-      if (length(sub.test) > 0) {
+      if (length(sub.test) > 0 & !"try-error" %in% class(sub.test)) {
         colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
+      } else {
+        sub.test <- data.frame(SubmissionDate = NA, SubmissionType = NA)
       }
 
       new.output$submission <- sub.test
@@ -289,7 +303,7 @@ get_dataset.site <- function(x, ...) {
   }
 
   new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
-
+  
   class(new.output) <- c('dataset_list', 'list')
   
   new.output
