@@ -1,3 +1,9 @@
+neotoma 1.5.1
+====================
+o Fix for datasets with empty submission dates.
+o Some minor (non-functional) code cleaning.
+o Added extra tests.
+
 neotoma 1.5.0
 ====================
 o More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported.
