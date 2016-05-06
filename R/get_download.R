@@ -450,7 +450,7 @@ get_download.default <- function(x, verbose = TRUE) {
             cast_table <- reshape2::dcast(sample.data, 
                                 taxon.name + variable.units + variable.element +
                                   variable.context + taxon.group +
-                                  ecological.group ~ sample.id, value.var = "value")
+                                  ecological.group ~ sample.id, value.var = "value", fun.aggregate = sum)
             
             taxon.list <- cast_table[ ,1:6]
             
