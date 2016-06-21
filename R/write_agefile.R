@@ -17,7 +17,9 @@
 #' @examples \dontrun{
 #' #  The point of pulling chronology tables is to re-build or examine the chronological 
 #' #  information that was used to build the age-depth model for the core.
-#' 
+#' # Find a particular record:
+#' get_download(get_dataset(datasettype = 'pollen'))
+#' write_agefile()
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
