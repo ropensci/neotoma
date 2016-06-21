@@ -232,7 +232,7 @@ get_download.default <- function(x, verbose = TRUE) {
             
             chron_names <- unique(unlist(sapply(chron_list, function(x)unique(sapply(x, '[[', 'ChronologyName')))))
             chron_lengths <- sapply(chron_list, length)
-            # When there is an NA aged sample in a record it fucks everything up
+            # When there is an NA aged sample in a record it makes everything worse
             # because it's not inherently a part of a chronology.
             
             if (any(is.na(chron_names)) & !all(diff(chron_lengths) == 0)) {
@@ -555,7 +555,7 @@ get_download.default <- function(x, verbose = TRUE) {
       stop('All datasets return non-download objects\n')
     } else {
       warning('Some datasetids returned empty downloads, be aware that length(datasetid) is longer than the download_list.\n')
-      aa <- aa[-(which(sapply(aa,is.null),arr.ind=TRUE))]
+      aa <- aa[-(which(sapply(aa,is.null), arr.ind = TRUE))]
     }
   }
   
@@ -605,7 +605,7 @@ get_download.dataset_list <- function(x, verbose = TRUE) {
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   
-  datasetid <- sapply(x, FUN=function(x)x$dataset$dataset.id)
+  datasetid <- sapply(x, FUN = function(x)x$dataset$dataset.id)
   
   aa <- get_download(datasetid, verbose = verbose)
   
@@ -623,7 +623,7 @@ get_download.site <- function(x, verbose = TRUE) {
   message('Fetching datasets for the site(s)')
   dataset <- get_dataset(x)
   
-  datasetid <- unlist(lapply(dataset, FUN=function(x)x$dataset$dataset.id))
+  datasetid <- unlist(lapply(dataset, FUN = function(x)x$dataset$dataset.id))
   
   message('Getting downloads:')
   aa <- get_download(datasetid, verbose = verbose)
