@@ -51,7 +51,7 @@
 #' @keywords utilities
 #' @export
 
-bind <- function(x, verbose = TRUE){
+bind <- function(x, ...){
   UseMethod('bind')
 }
 
