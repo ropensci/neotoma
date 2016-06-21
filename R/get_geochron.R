@@ -239,23 +239,23 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
       message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
       x <- x[dataset.types %in% 'geochronologic']
       
-      if(length(x) > 1){
-        class(x) <- c('dataset_list', 'list')
-        
-        aa <- lapply(x, function(y){
-          out <- get_geochron(y)
-          out
-        })
-        
-        class(aa) <- c('geochronologic_list', 'list')
-        
-      } else {
-        x <- x[[1]]
-        aa <- get_geochron(x)
-      }
+    }
+    if (length(x) > 1) {
+      class(x) <- c('dataset_list', 'list')
+      
+      aa <- lapply(x, function(y){
+        out <- get_geochron(y)
+        outbb[1]
+      })
+      
+      class(aa) <- c('geochronologic_list', 'list')
+      
+    } else {
+      x <- x[[1]]
+      aa <- get_geochron(x)
     }
   }
-  
+
   aa
 }
 
