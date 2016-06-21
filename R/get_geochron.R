@@ -230,30 +230,32 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
   # call. Use missing() to check for presence of argument
   # and then process as per usual
   
-  dataset.types <- unlist(lapply(x, FUN=function(x)x$dataset$dataset.type))
+  dataset.types <- unlist(lapply(x, FUN = function(x)x$dataset$dataset.type))
   
-  if(any(!dataset.types%in%'geochronologic')){
-    if(all(!dataset.types%in%'geochronologic')){
-      stop('This set contains no geochronological datasets.  Use get_download instead.')
-    } else {
-      message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
-      x <- x[dataset.types %in% 'geochronologic']
-      
-    }
-    if (length(x) > 1) {
-      class(x) <- c('dataset_list', 'list')
-      
-      aa <- lapply(x, function(y){
-        out <- get_geochron(y)
-        outbb[1]
-      })
-      
-      class(aa) <- c('geochronologic_list', 'list')
-      
-    } else {
-      x <- x[[1]]
-      aa <- get_geochron(x)
-    }
+  if (all(!dataset.types %in% 'geochronologic')) {
+    # There are no geochronological records in the dataset:
+    stop('This set contains no geochronological datasets.  Use get_download instead.')
+  }
+  
+  if (any(!dataset.types %in% 'geochronologic')) {
+    # There are no geochronological records in the dataset:
+    message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
+    x <- x[dataset.types %in% 'geochronologic']
+  }
+  
+  if (length(x) > 1) {
+    class(x) <- c('dataset_list', 'list')
+    
+    aa <- lapply(x, function(y) {
+      out <- get_geochron(y, verbose = FALSE)
+      out[1]
+    })
+    
+    class(aa) <- c('geochronologic_list', 'list')
+    
+  } else {
+    x <- x[[1]]
+    aa <- get_geochron(x, verbose = FALSE)
   }
 
   aa
