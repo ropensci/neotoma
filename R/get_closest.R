@@ -7,7 +7,7 @@
 #' @param x A vector long/lat pair, or a dataset, site or download.
 #' @param n The number of records to return.
 #' @param buffer The size of the buffer for dataset search (in degrees)
-#' @param ... other arguments to pass to \code{get_dataset}.
+#' @param ... optional arguments to pass into \code{get_dataset}.
 #' 
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}, Andria Dawson \email{andria.dawson@gmail.com}
 #' 
@@ -69,5 +69,17 @@ get_closest.default <- function(x, n, buffer, ...) {
 #' @export
 get_closest.site <- function(x, n, buffer, ...) {
   coords <- c(x$long, x$lat)
+  get_closest(coords, n, buffer, ...)
+}
+
+#' @export
+get_closest.dataset <- function(x, n, buffer, ...) {
+  coords <- c(get_site(x)$long, get_site(x)$lat)
+  get_closest(coords, n, buffer, ...)
+}
+
+#' @export
+get_closest.download <- function(x, n, buffer, ...) {
+  coords <- c(get_site(x)$long, get_site(x)$lat)
   get_closest(coords, n, buffer, ...)
 }
