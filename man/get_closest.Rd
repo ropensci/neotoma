@@ -13,7 +13,7 @@ get_closest(x, n, buffer, ...)
 
 \item{buffer}{The size of the buffer for dataset search (in degrees)}
 
-\item{...}{other arguments to pass to \code{get_dataset}.}
+\item{...}{optional arguments to pass into \code{get_dataset}.}
 }
 \value{
 This command returns a \code{dataset} or \code{dataset_list}, or NULL if no records exist within the bounding box.
