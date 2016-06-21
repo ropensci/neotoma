@@ -7,14 +7,14 @@
 # context('The API itself is working properly')
 # test_that('The API is returning data as expected from its documentation',
 #       {
-#           aa <- jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?siteid=1'), as='text'))
-#           bb <- jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?gpid=756'), as='text'))
+#           aa <- jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?siteid=1'), as = 'text'))
+#           bb <- jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?gpid=756'), as = 'text'))
 #           expect_is(aa, 'list')
 #           expect_is(bb, 'list')
 #           expect_equal(length(aa), 2)
 #           expect_equal(aa[[1]], 1)
 #           expect_more_than(length(aa[[2]]), 0)
-#           expect_equal(jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?banana'), as='text'))[[1]], 0)
+#           expect_equal(jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?banana'), as = 'text'))[[1]], 0)
 #           expect_equal(bb[[1]], 1)
 #           expect_more_than(length(bb[[2]]), 0)
 #       })
@@ -28,7 +28,7 @@
 #           expect_that('site' %in% class(get_site()), is_true())
 #           expect_that('site' %in% class(get_site(get_download(1))),
 #                     shows_message('API call was'))
-#           expect_is(get_site(gpid='Canada'), 'site')
+#           expect_is(get_site(gpid = 'Canada'), 'site')
 #       })
 # 
 # 
@@ -37,13 +37,13 @@
 # context('get_contact work as expected')
 # test_that('get_contact accepts and returns the right data types',
 #       {
-#           expect_error(get_contact(contactid='aaa'))
-#           expect_error(get_contact(contactname=12))
-#           expect_error(get_contact(contactstatus=1))
-#           expect_error(get_contact(familyname=12))
-#           expect_message(get_contact(contactid=1), 'The API call')
-#           expect_message(get_contact(familyname='Smith'), 'The API call')
-#           expect_message(get_contact(contactname='*Smith*'), 'The API call')
+#           expect_error(get_contact(contactid = 'aaa'))
+#           expect_error(get_contact(contactname = 12))
+#           expect_error(get_contact(contactstatus = 1))
+#           expect_error(get_contact(familyname = 12))
+#           expect_message(get_contact(contactid = 1), 'The API call')
+#           expect_message(get_contact(familyname = 'Smith'), 'The API call')
+#           expect_message(get_contact(contactname = '*Smith*'), 'The API call')
 #      })
 # 
 # #-----------------------------------------------------
@@ -79,7 +79,7 @@
 #   expect_is(get_download(15108), 'download_list')
 #   expect_is(get_download(15080), 'download_list')
 #   expect_is(get_download(14196), 'download_list') # weird chronology situation.
-#   
+# 
 # })
 # 
 # #-----------------------------------------------------
@@ -107,7 +107,7 @@
 #   expect_is(get_dataset(x = 1), 'dataset_list')
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
-#   expect_is(get_dataset(get_site(sitename = "Lac à Sam%")), "dataset_list")
+#   expect_is(get_dataset(get_site(sitename = "Lac Ã  Sam%")), "dataset_list")
 # })
 # 
 # #-----------------------------------------------------
@@ -118,7 +118,7 @@
 #   expect_is(get_dataset(get_download(100)), 'dataset_list')            # test download_list
 #   expect_is(get_dataset(get_download(100)[[1]]), 'dataset_list')       # test download
 #   expect_is(get_dataset(get_site(sitename='Marion%')), 'dataset_list') # test site
-#   expect_is(get_download(x=c(1642, 1705, 1772)), 'download_list') # test site
+#   expect_is(get_download(x = c(1642, 1705, 1772)), 'download_list')    # test site
 #   expect_is(get_site(get_download(100)), 'site')                       # test download_list
 #   expect_is(get_site(get_download(100)[[1]]), 'site')                  # test download
 #   expect_is(get_site(get_dataset(x=100)), 'site')                      # test dataset_list
@@ -158,7 +158,7 @@
 # test_that('Compiling',
 # {
 #   expect_is(get_geochron(16128), 'geochronologic_list')
-#   expect_that(length(get_geochron(16225)[[1]][[2]])>0, is_true())
+#   expect_that(length(get_geochron(16225)[[1]][[2]]) > 0, is_true())
 #   expect_is(get_geochron(8444)[[1]], 'geochronologic')
 #   expect_is(get_geochron(c(8444, 8445)), 'geochronologic_list')
 #   expect_error(get_geochron(1001), 'no geochronological')
@@ -176,18 +176,18 @@
 #    expect_is(get_taxa(taxonid = 19), 'data.frame')
 #    expect_error(get_taxa(taxonname = "Abies*", taxonid = 19))
 #  })
-#  
+# 
 #  #-----------------------------------------------------
-#  
+# 
 #  context('Get the tables:')
 #  test_that('Getting Tables',
 #            {
 #              expect_is(get_table('Taxa'), 'data.frame')
 #              expect_is(get_table('Tephras'), 'data.frame')
 #            })
-#  
+# 
 #  #-----------------------------------------------------
-#  
+# 
 #  context('Trying to bind:')
 #  test_that('bind',
 #            {
@@ -195,21 +195,21 @@
 #              expect_is(bind(get_dataset(1001), get_dataset(1001)), 'dataset_list')
 #              expect_is(bind(get_download(1001), get_download(1002)), 'download_list')
 #            })
-#  
+# 
 #  #-----------------------------------------------------
-#  
+# 
 #  context('Trying to browse:')
-#  test_that('bind',
+#  test_that('borwse',
 #            {
 #              expect_error(browse(), "Error in browse()")
 #            })
-#  
+# 
 #  #-----------------------------------------------------
-
+# 
 #  context('Read Tilia files:')
 #  test_that('read.tilia',
 #            {
 #              expect_is(read.tilia('inst/crystal.tlx'), "download")
 #            })
-#  
+# 
 #  #-----------------------------------------------------

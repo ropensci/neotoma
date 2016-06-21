@@ -51,8 +51,8 @@
 #' @keywords utilities
 #' @export
 
-get_geochron <- function(x, verbose = TRUE){
-  UseMethod('get_geochron')
+bind <- function(x, verbose = TRUE){
+  UseMethod('bind')
 }
 
 #' @export
