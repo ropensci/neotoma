@@ -1,4 +1,4 @@
-# ## Tests for the neotoma package.  Mostly validating that changes to the functions
+# # Tests for the neotoma package.  Mostly validating that changes to the functions
 # ## do not break the requirements for data formatting.
 # 
 #  library("testthat")
@@ -7,14 +7,14 @@
 # context('The API itself is working properly')
 # test_that('The API is returning data as expected from its documentation',
 #       {
-#           aa <- jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?siteid=1'), as = 'text'))
-#           bb <- jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?gpid=756'), as = 'text'))
+#           aa <- jsonlite::fromJSON(httr::content(httr::GET('http://api.neotomadb.org/v1/data/datasets?siteid=1'), as = 'text'))
+#           bb <- jsonlite::fromJSON(httr::content(httr::GET('http://api.neotomadb.org/v1/data/datasets?gpid=756'), as = 'text'))
 #           expect_is(aa, 'list')
 #           expect_is(bb, 'list')
 #           expect_equal(length(aa), 2)
 #           expect_equal(aa[[1]], 1)
 #           expect_more_than(length(aa[[2]]), 0)
-#           expect_equal(jsonlite::fromJSON(content(httr::GET('http://api.neotomadb.org/v1/data/datasets?banana'), as = 'text'))[[1]], 0)
+#           expect_equal(jsonlite::fromJSON(httr::content(httr::GET('http://api.neotomadb.org/v1/data/datasets?banana'), as = 'text'))[[1]], 0)
 #           expect_equal(bb[[1]], 1)
 #           expect_more_than(length(bb[[2]]), 0)
 #       })
@@ -66,7 +66,7 @@
 #   expect_message(get_download(1), 'API call was successful')
 #   expect_that(length(get_download(1)) == 1, is_true())
 #   expect_that(length(get_download(c(1,2))) == 2, is_true())
-#   expect_is(get_download(1, verbose=FALSE), 'download_list')
+#   expect_is(get_download(1, verbose = FALSE), 'download_list')
 #   expect_true(is.numeric(get_download(3031)[[1]]$sample.meta$chronology.id[1]))
 #   expect_true(is.numeric(get_download(3031)[[1]]$sample.meta$dataset.id[1]))
 #   expect_true(is.numeric(get_download(6000)[[1]]$sample.meta$chronology.id[1]))
@@ -108,7 +108,7 @@
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
 #   expect_is(get_dataset(get_site(sitename = "Lac à Sam%")), "dataset_list")
-#   expect_is(get_dataset(gpid=c(471, 472, 473)), "dataset_list")
+#   expect_is(get_dataset(gpid=c(756, 2845, 5242), datasettype = "pollen"), "dataset_list") # Canada, Mexico, Spain
 # })
 # 
 # #-----------------------------------------------------
@@ -156,7 +156,7 @@
 # #-----------------------------------------------------
 # 
 # context('Test geochron methods')
-# test_that('Compiling',
+# test_that('Geochron',
 # {
 #   expect_is(get_geochron(16128), 'geochronologic_list')
 #   expect_that(length(get_geochron(16225)[[1]][[2]]) > 0, is_true())
@@ -189,7 +189,7 @@
 # 
 #  #-----------------------------------------------------
 # 
-#  context('Trying to bind:')
+# context('Trying to bind:')
 #  test_that('bind',
 #            {
 #              expect_error(bind(get_download(1001), get_dataset(1001)), "Objects must be")
@@ -200,9 +200,9 @@
 #  #-----------------------------------------------------
 # 
 #  context('Trying to browse:')
-#  test_that('borwse',
+#  test_that('browse',
 #            {
-#              expect_error(browse(), "Error in browse()")
+#              expect_error(browse(), "argument")
 #            })
 # 
 #  #-----------------------------------------------------
