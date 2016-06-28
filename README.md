@@ -60,17 +60,11 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
-+ 1.5.1: Minor fix to the `get_dataset` for site level datato account for some datasets with empty submission data.  Some style changes to code (non-functional changes)
++ 1.6.0: Support for vector inputs in the `gpid` selection. Added a `get_closest` function to find the closest sample site. Mostly clean-up of reported bugs by users. Revised examples for faster check speed.
++ 1.5.1: Minor fix to the `get_dataset` for site level data to account for some datasets with empty submission data.  Some style changes to code (non-functional changes)
 + 1.5.0: More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported. Function `read.tilia` added to read Tilia (http://tiliait.com) style XML files. Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
 + 1.4.1: Small changes to `get_geochron` to address bug reports and improve object `printing` methods.
 + 1.4.0: Added `plot` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
-+ 1.3.3: Modified `get_download` to ensure the default chronolgy is always associated with `sample.meta`.  Bugfix for issue [#187](https://github.com/ropensci/neotoma/issues/187).  Empty `dataset_list`s now return a NULL value and a warning.
-+ 1.3.2: Bugfix for `get_download`, assignment to the `dataset.id` was incorrectly placed causing the columns to be out of place relative to the data (see issue [#197](https://github.com/ropensci/neotoma/issues/197)).
-+ 1.3.1: Bugfix for `write_agefile` and the addition of a `browse` method.  See [this gist](https://gist.github.com/SimonGoring/877dd71cc3ad6bf8531e) for an example using `neotoma` and Bacon (Blaauw and Christen, 2011 [[pdf](https://projecteuclid.org/euclid.ba/1339616472)]).
-+ 1.3.0: Improved functionality of `get_chroncontrol` to allow it to deal with empty tables and work directly with `download` and `download_list` objects.
-+ 1.2-1: Fix for empty `chroncontrol` tables [issue 178](https://github.com/ropensci/neotoma/issues/178).  Added new methods for `get_chroncontrols` to streamline access from `download` and `download_list` objects.
-+ 1.2-0: Added a set of new datasettypes to reflect the increasing breadth of the Neotoma Database.
-+ 1.2-0: Fixed bugs relates to the gpid parameter in `get_dataset`.
 
 ### A few examples
 

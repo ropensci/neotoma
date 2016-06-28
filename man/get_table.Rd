@@ -21,9 +21,13 @@ A table of values corresponding to the parameter of interest.
 \dontrun{
 taxon.table <- get_table('Taxa')
 
-#  Get the frequency of the first ten taxa in Neotoma.
-tester <- function(x) length(get_dataset(taxonname = x))
-taxon.counts2 <- sapply(taxon.table$TaxonName[1:10], tester)
+#  Get the frequency of a random taxon in Neotoma.
+tax_sample <- sample(nrow(taxon.table), 1)
+cat("The taxon", 
+    taxon.table$TaxonName[tax_sample], 
+    "occurs in Neotoma", 
+    length(get_dataset(taxonname = taxon.table$TaxonName[tax_sample])), 
+    "times.")
 }
 }
 \author{

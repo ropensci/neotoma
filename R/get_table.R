@@ -16,7 +16,9 @@
 #' tax_sample <- sample(nrow(taxon.table), 1)
 #' cat("The taxon", 
 #'     taxon.table$TaxonName[tax_sample], 
-#'     "occurs in Neotoma", length(get_dataset(taxonname = taxon.table$TaxonName[tax_sample])), "times.")
+#'     "occurs in Neotoma", 
+#'     length(get_dataset(taxonname = taxon.table$TaxonName[tax_sample])), 
+#'     "times.")
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org

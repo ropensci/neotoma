@@ -1,3 +1,10 @@
+neotoma 1.6.0
+====================
+o Support for vector inputs in the `gpid` selection.
+o Added a `get_closest` function to find the closest datasets to a sample site.
+o Mostly clean-up of reported bugs by users.
+o Revised examples for faster check speed.
+
 neotoma 1.5.1
 ====================
 o Fix for datasets with empty submission dates.

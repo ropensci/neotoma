@@ -9,3 +9,4 @@ README\.html
 ^read_methods.R
 tests/local_dont_run/*.*
 download.out
+inst/Cores
