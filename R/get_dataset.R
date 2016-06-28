@@ -94,10 +94,12 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
   #  Pass the parameters to param_check to make sure everything is kosher.
   error_test <- param_check(cl)
   if (error_test[[2]]$flag == 1) {
-    stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
+    stop(paste0(unlist(error_test[[2]]$message), collapse = '\n  '))
   } else {
     cl <- error_test[[1]]
   }
+  
+  cl <- lapply(cl, function(x){ if (length(x) > 1) {paste0(x, collapse=',')} else {x} })
 
   neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
   if (identical(neotoma_content, "")) stop("")

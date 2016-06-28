@@ -4,7 +4,7 @@
 \alias{bind}
 \title{Function to bind objects together into a longer object.}
 \usage{
-bind(x, verbose = TRUE)
+bind(x, ...)
 }
 \arguments{
 \item{x}{An object returned by one of the \code{get_*} commands for download, site or dataset.}

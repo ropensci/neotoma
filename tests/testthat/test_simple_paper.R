@@ -1,4 +1,4 @@
-#  Tests for the neotoma package.  Mostly validating that changes to the functions
+#  Tests for the neotoma package.  Mostly validating to make sure changes to the functions
 #  do not break the requirements for data formatting.
 
 library("testthat")
