@@ -25,14 +25,14 @@
 #'
 #'  A full data object containing all the relevant geochronological data available for a dataset.
 #' @examples \dontrun{
-#' #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
-#' #  find the relevant radiocarbon ages associated with the cores.
-#' #  Are some time periods better dated than others?
-#' t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
-#'                               ageyoung = 8000)
-#'
+#' #  Search for the sites around Marion Lake, BC.  I want to find sites within about 1km.
+#' 
+#' marion <- get_site(sitename = "Marion Lake*")
+#' 
+#' marion_close <- get_closest(marion, n = 10, buffer = 1)
+#' 
 #' #  Returns 116 records (as of 13/07/2015).  These are the pollen records though, we want the sites:
-#' geochron.records <- get_geochron(get_site(t8kyr.datasets))
+#' geochron.records <- get_geochron(marion_close)
 #'
 #' #  We want to extract all the radiocarbon ages from the records:
 #'
@@ -45,8 +45,8 @@
 #'
 #' radio.chron <- unlist(sapply(geochron.records, get_ages))
 #'
-#' hist(radio.chron[radio.chron<40000], breaks=seq(0, 40000, by = 500),
-#'      main = 'Distribution of radiocarbon dates for Pseudotsuga records',
+#' hist(radio.chron[radio.chron<40000], breaks=seq(0, 25000, by = 1000),
+#'      main = 'Radiocarbon dates for Pseudotsuga records',
 #'      xlab = 'Radiocarbon date (14C years before 1950)')
 #' }
 #'
@@ -65,7 +65,7 @@ get_geochron <- function(x, verbose = TRUE){
 get_geochron.default <- function(x, verbose = TRUE){
 
   #  If it doesn't get passed through the other methods x needs to be numeric.
-  if (!is.numeric(x)){
+  if (!is.numeric(x)) {
     stop('datasetid must be numeric.')
   }
 
@@ -103,9 +103,9 @@ get_geochron.default <- function(x, verbose = TRUE){
       aa <- aa[[2]]
       
       rep_NULL <- function(x){ 
-        if(is.null(x)){NA}
-        else{
-          if(class(x) == 'list'){
+        if (is.null(x)) {NA}
+        else {
+          if (class(x) == 'list') {
             lapply(x, rep_NULL)
           } else {
             return(x)
@@ -151,7 +151,7 @@ get_geochron.default <- function(x, verbose = TRUE){
         submission = data.frame(submission.date = strptime(dl$NeotomaLastSub,
                                                            '%m/%d/%Y'),
                                 submission.type = 'Last submission to Neotoma',
-                                stringsAsFactors=FALSE),
+                                stringsAsFactors = FALSE),
         access.date = Sys.time())
       
       class(dataset) <- c('dataset', 'list')
@@ -174,7 +174,7 @@ get_geochron.default <- function(x, verbose = TRUE){
                    stringsAsFactors = FALSE)
       }
 
-      out <- list(dataset = dataset, 
+      out <- list(dataset = dataset,
                   geochron   = do.call(rbind.data.frame, lapply(aa[[1]], pull.rec)))
       class(out) <- c('geochronologic', 'list')
       
@@ -185,12 +185,14 @@ get_geochron.default <- function(x, verbose = TRUE){
   }
   
   out <- lapply(x, function(x)try(get_sample(x)))
-  for(i in length(out):1){if('try-error' %in% class(out[[i]]))out[[i]] <- NULL}
+  for (i in length(out):1) {
+    if ('try-error' %in% class(out[[i]])) out[[i]] <- NULL 
+  }
   
-  if(length(out) == 0){
+  if (length(out) == 0) {
     # It's possible that we had some successes, if not then we need to return
     # an error.
-    stop('There were no geochronological records returned.', call.=FALSE)
+    stop('There were no geochronological records returned.', call. = FALSE)
   }
   
   class(out) <- c('geochronologic_list', 'list')
@@ -208,7 +210,7 @@ get_geochron.dataset <- function(x, verbose = TRUE){
   
   datasetid <- x$dataset.meta$dataset.id
   
-  if(!x$dataset.meta$dataset.type %in% 'geochronologic'){
+  if (!x$dataset.meta$dataset.type %in% 'geochronologic') {
     stop(paste0('The dataset ID ', x$dataset.meta$dataset.id,
                    ' is not associated with a geochronology object.'))
   } else {
@@ -247,14 +249,12 @@ get_geochron.dataset_list <- function(x, verbose = TRUE){
     class(x) <- c('dataset_list', 'list')
     
     aa <- lapply(x, function(y) {
-      out <- get_geochron(y, verbose = FALSE)
-      out[1]
+      get_geochron(y, verbose = FALSE)
     })
     
     class(aa) <- c('geochronologic_list', 'list')
     
   } else {
-    x <- x[[1]]
     aa <- get_geochron(x, verbose = FALSE)
   }
 
@@ -266,10 +266,10 @@ get_geochron.site <- function(x, verbose = TRUE){
   
   dataset <- get_dataset(x)
   
-  dataset.types <- unlist(lapply(dataset, FUN=function(x)x$dataset.meta$dataset.type))
+  dataset.types <- unlist(lapply(dataset, FUN = function(x)x$dataset.meta$dataset.type))
   
-  if(any(!dataset.types%in%'geochronologic')){
-    if(all(!dataset.types%in%'geochronologic')){
+  if (any(!dataset.types %in%   'geochronologic')) {
+    if (all(!dataset.types %in% 'geochronologic')) {
       stop('This set contains no geochronological datasets.  Use get_download instead.')
     } else {
       message('This dataset contains records that are not geochronological datasets.  Only geochronological datasets will be returned.')
