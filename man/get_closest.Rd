@@ -11,7 +11,7 @@ get_closest(x, n, buffer, ...)
 
 \item{n}{The number of records to return.}
 
-\item{buffer}{The size of the buffer for dataset search (in degrees)}
+\item{buffer}{The size of the buffer for dataset search (in kilometers)}
 
 \item{...}{optional arguments to pass into \code{get_dataset}.}
 }

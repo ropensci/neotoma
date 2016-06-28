@@ -34,14 +34,14 @@ Using the dataset ID, return all geochronological data associated with the dataI
 }
 \examples{
 \dontrun{
-#  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
-#  find the relevant radiocarbon ages associated with the cores.
-#  Are some time periods better dated than others?
-t8kyr.datasets <- get_dataset(taxonname='*Pseudotsuga*', loc=c(-150, 20, -100, 60),
-                              ageyoung = 8000)
+#  Search for the sites around Marion Lake, BC.  I want to find sites within about 1km.
+
+marion <- get_site(sitename = "Marion Lake*")
+
+marion_close <- get_closest(marion, n = 10, buffer = 1)
 
 #  Returns 116 records (as of 13/07/2015).  These are the pollen records though, we want the sites:
-geochron.records <- get_geochron(get_site(t8kyr.datasets))
+geochron.records <- get_geochron(marion_close)
 
 #  We want to extract all the radiocarbon ages from the records:
 
