@@ -6,7 +6,7 @@
 #' @importFrom utils write.csv write.table
 #' @param x A vector long/lat pair, or a dataset, site or download.
 #' @param n The number of records to return.
-#' @param buffer The size of the buffer for dataset search (in degrees)
+#' @param buffer The size of the buffer for dataset search (in kilometers)
 #' @param ... optional arguments to pass into \code{get_dataset}.
 #' 
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}, Andria Dawson \email{andria.dawson@gmail.com}
