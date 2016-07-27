@@ -1,4 +1,3 @@
-
 #' @title Get contact information.
 #'
 #' @description A function to obtain contact information for data contributors from the Neotoma Paleoecological Database.
@@ -68,11 +67,11 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
   }
 
   neotoma_content <- content(GET(base.uri, query = cl), as = "text")
-  
+
   if (identical(neotoma_content, "")) stop("")
-  
+
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
-  
+
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
@@ -85,12 +84,12 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
   if (inherits(aa, "try-error")) {
       output <- neotoma_content
   } else {
-    
+
     # replace NULL values:
     aa <- lapply(aa, function(x) ifelse(x == "NULL", NA, x))
-    
+
     output <- data.frame(contact.name = sapply(aa, '[[', "ContactName"),
-                         contact.status = sapply(aa, '[[', "ContactStatus"), 
+                         contact.status = sapply(aa, '[[', "ContactStatus"),
                          family.name = sapply(aa, '[[', "FamilyName"),
                          leading.initials = sapply(aa, '[[', "LeadingInitials"),
                          given.names = sapply(aa, '[[', "GivenNames"),
@@ -105,6 +104,6 @@ get_contact <- function(contactid, contactname, contactstatus, familyname){
                          contact.id = sapply(aa, '[[', "ContactID"),
                          stringsAsFactors = FALSE)
   }
-  
+
   output
 }

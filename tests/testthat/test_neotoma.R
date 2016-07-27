@@ -1,9 +1,9 @@
 # # Tests for the neotoma package.  Mostly validating that changes to the functions
 # ## do not break the requirements for data formatting.
-# 
+#
 #  library("testthat")
 #  library("neotoma")
-# 
+#
 # context('The API itself is working properly')
 # test_that('The API is returning data as expected from its documentation',
 #       {
@@ -18,7 +18,7 @@
 #           expect_equal(bb[[1]], 1)
 #           expect_more_than(length(bb[[2]]), 0)
 #       })
-# 
+#
 # context('get_site works as expected')
 # test_that('get_site accepts and returns the right data types',
 #       {
@@ -30,8 +30,8 @@
 #                     shows_message('API call was'))
 #           expect_is(get_site(gpid = 'Canada'), 'site')
 #       })
-# 
-# 
+#
+#
 # ## Turning just this and only the first expect_error is enough to throw
 # ## an error on Travis:
 # context('get_contact work as expected')
@@ -45,19 +45,19 @@
 #           expect_message(get_contact(familyname = 'Smith'), 'The API call')
 #           expect_message(get_contact(contactname = '*Smith*'), 'The API call')
 #      })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 #  context('get_publication')
 #  test_that('get_publication accepts and returns the right data types',
 #  {
 #    expect_is(get_publication(10), 'list')
 #  })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('get_downloads works as expected')
-# 
+#
 # test_that('get_download accepts numeric values and returns values as expected',
 # {
 #   expect_error(get_download('a'))
@@ -79,13 +79,13 @@
 #   expect_is(get_download(15108), 'download_list')
 #   expect_is(get_download(15080), 'download_list')
 #   expect_is(get_download(14196), 'download_list') # weird chronology situation.
-# 
+#
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('get_dataset works as expected')
-# 
+#
 # test_that('is get_dataset working?',
 # {
 #   expect_error(get_dataset(x='a'))
@@ -110,9 +110,9 @@
 #   expect_is(get_dataset(get_site(sitename = "Lac à Sam%")), "dataset_list")
 #   expect_is(get_dataset(gpid=c(756, 2845, 5242), datasettype = "pollen"), "dataset_list") # Canada, Mexico, Spain
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Crossing sites, datasets and downloads, using the API:')
 # test_that('Crossing APIs',
 # {
@@ -125,9 +125,9 @@
 #   expect_is(get_site(get_dataset(x=100)), 'site')                      # test dataset_list
 #   expect_is(get_site(get_dataset(x=100)[[1]]), 'site')                 # test dataset
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Compiling objects and returning what is expected:')
 # test_that('Compiling',
 # {
@@ -136,9 +136,9 @@
 #   expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
 #   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Test new chroncontrol methods and fixes')
 # test_that('Compiling',
 # {
@@ -150,11 +150,11 @@
 #   expect_named(get_chroncontrol(1376), c('chron.control', 'meta', 'parent'))    # test partial table
 #   expect_is(get_chroncontrol(1000), 'list')                          # test full table
 #   expect_named(get_chroncontrol(1000), c('chron.control', 'meta', 'parent'))    # test full table
-# 
+#
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Test geochron methods')
 # test_that('Geochron',
 # {
@@ -166,10 +166,10 @@
 #   expect_is(get_geochron(c(1001, 8445)), 'geochronologic_list')
 #   expect_that(length(get_geochron(c(1001,8444))) == 1, is_true())
 # })
-# 
-# 
+#
+#
 # #-----------------------------------------------------
-# 
+#
 #  context('Test get_taxon works:')
 #  test_that('Getting Taxa',
 #  {
@@ -177,18 +177,18 @@
 #    expect_is(get_taxa(taxonid = 19), 'data.frame')
 #    expect_error(get_taxa(taxonname = "Abies*", taxonid = 19))
 #  })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Get the tables:')
 #  test_that('Getting Tables',
 #            {
 #              expect_is(get_table('Taxa'), 'data.frame')
 #              expect_is(get_table('Tephras'), 'data.frame')
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 # context('Trying to bind:')
 #  test_that('bind',
 #            {
@@ -196,21 +196,21 @@
 #              expect_is(bind(get_dataset(1001), get_dataset(1001)), 'dataset_list')
 #              expect_is(bind(get_download(1001), get_download(1002)), 'download_list')
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Trying to browse:')
 #  test_that('browse',
 #            {
 #              expect_error(browse(), "argument")
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Read Tilia files:')
 #  test_that('read.tilia',
 #            {
 #              expect_is(read.tilia('inst/crystal.tlx'), "download")
 #            })
-# 
+#
 #  #-----------------------------------------------------
