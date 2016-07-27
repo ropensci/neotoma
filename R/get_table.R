@@ -1,4 +1,3 @@
-
 #' Get Neotoma value tables.
 #'
 #' @importFrom jsonlite fromJSON

@@ -26,11 +26,13 @@ user defined destination for age modelling with existing age-depth modeling soft
 }
 \examples{
 \dontrun{
-#  The point of pulling chronology tables is to re-build or examine the chronological 
-#  information that was used to build the age-depth model for the core.
 # Find a particular record:
 
 three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+
+# You will need to edit the `path` argument here to point to a directory that 
+# contains a `Cores` directory.
+
 write_agefile(download = three_pines[[1]], 
               path = "./inst", 
               corename = "THREEPINES", 
