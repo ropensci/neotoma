@@ -64,18 +64,23 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
   if (missing(x)) {
     stop(paste(sQuote("chronologyid"), "(x) must be provided."))
   } else {
-    if (!is.numeric(x))
+    if (!is.numeric(x)) {
       stop('chronology ID (x) must be numeric.')
+    }
   }
   
   # query Neotoma for data set
   neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
-  if (identical(neotoma_content, "")) stop("")
+  if (identical(neotoma_content, "")) {
+    stop("")
+  }
+  
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
   
   # Might as well check here for error and bail
-  if (inherits(aa, "try-error"))
+  if (inherits(aa, "try-error")) {
     return(aa)
+  }
   
   # if no error continue processing
   if (isTRUE(all.equal(aa[[1]], 0))) {
@@ -158,24 +163,22 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
                                date        = NA)
     }
     
-    if ('datasets' %in% names(aa[[1]])) {
-      parent <- do.call(rbind, aa[[1]]$dataset)
-      colnames(parent) <- c('dataset.type', 'dataset.id')
-      parent$dataset.id <- as.numeric(parent$dataset.id)
-    } else {
-      parent <- data.frame(dataset.type = NA,
-                           dataset.id = NA)
-    }
   }
   
   output <- list(chron.control = control.table,
-                 meta = meta.table,
-                 parent = parent)
+                 meta        = meta.table,
+                 access.date = Sys.time(),
+                 parent      = data.frame(dataset.name = NA,
+                                          dataset.id = NA,
+                                          dataset.type = NA))
+  
   class(output) <- c('chroncontrol', 'list')
+  
   
   output
             
 }
+
 #' @title Function to return chronological control tables from a \code{download} object.
 #' @description Using a \code{download}, return the default chron-control table as a \code{data.frame}.
 #'
@@ -204,8 +207,10 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
                                             age.younger = NA,
                                             chron.id    = NA,
                                             date        = NA),
-                    parent = data.frame(dataset.type = NA,
-                                         dataset.id = NA))
+                    
+                    parent = data.frame(dataset.name = NA,
+                                        dataset.id = NA,
+                                        dataset.type = NA))
     
     class(output) <- c('chroncontrol', 'list')
     
@@ -223,7 +228,12 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
       x$chronologies[[1]] <- list(chronology = x$chronologies[[1]],
                                   chroncontrol = output)
       return(x)
-    }
+    } else {
+      output$parent <- data.frame(dataset.name = x$dataset$site.data$site.name,
+                                  dataset.id = x$dataset$dataset.meta$dataset.id,
+                                  dataset.type = x$dataset$dataset.meta$dataset.type,
+                                  stringsAsFactors = FALSE)
+    } 
     
     return(output)
     
@@ -250,4 +260,43 @@ get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE) {
   }
   return(output)
 
+}
+
+#' @title Function to return chronological control tables from a \code{dataset_list}.
+#' @description Using a \code{dataset_list}, return the default chron-control table.
+#'
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
+#' @param x A \code{dataset_list} object.
+#' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
+#' @param verbose logical; should messages on API call be printed?
+#' @export
+get_chroncontrol.dataset_list <- function(x, verbose = TRUE, add = FALSE) {
+  
+  output <- lapply(get_download(x), function(y)get_chroncontrol(y, verbose, add = FALSE))
+  
+  class(output) <- c('chroncontrol_list', 'list')
+  
+  return(output)
+  
+}
+
+#' @title Function to return chronological control tables from a \code{dataset}.
+#' @description Using a \code{dataset}, return the default chron-control table.
+#'
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
+#' @param x A \code{dataset}.
+#' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
+#' @param verbose logical; should messages on API call be printed?
+#' @export
+get_chroncontrol.dataset <- function(x, verbose = TRUE, add = FALSE) {
+  
+  output <- get_chroncontrol(get_download(x, verbose = verbose), 
+                             verbose = verbose, add = FALSE)
+  
+  class(output) <- c('chroncontrol_list', 'list')
+  
+  return(output)
+  
 }
