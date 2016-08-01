@@ -26,7 +26,8 @@ Imports:
     reshape2,
     jsonlite,
     httr,
-    xml2
+    xml2,
+    analogue
 Suggests:
     testthat,
     knitr
