@@ -6,7 +6,7 @@
 #' @param download The target \code{download} if \code{add} is \code{TRUE}.
 #' @param chron_name The name for the chronology if the Bacon file is being added to a \code{download}.
 #' @param as_default Should the chronology become the default?
-#' @param section If there are multiple Bacon runs in a folder, identify the file by the number of sections in the run.
+#' @param sections If there are multiple Bacon runs in a folder, identify the file by the number of sections in the run.
 #' @param age_field Should the age be assigned to the \code{"median"} or the \code{"wmean"}?
 #' 
 #' @details The function expects that you are in a working directory containing a "Cores" which would then contain output files from Bacon runs.  The output can either be added to an existing record (for example, replacing the default age model returned by Neotoma), or it can be loaded on its own.
@@ -44,10 +44,10 @@ read_bacon <- function(x, add = FALSE, chron_name = "Bacon", as_default = TRUE, 
     }
   }
   
-  ages <- read.table(paste0('Cores/', x, '/', x, '_', sect, '_ages.txt'),
+  ages <- utils::read.table(paste0('Cores/', x, '/', x, '_', sect, '_ages.txt'),
                           header = TRUE)
   
-  settings <- read.table(paste0('Cores/', x, '/', x, "_settings.txt"),
+  settings <- utils::read.table(paste0('Cores/', x, '/', x, "_settings.txt"),
                          comment.char = "")
   
   age_scale <- ifelse(settings[which(settings[,2] == "#cc"), 1] == 1,

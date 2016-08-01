@@ -18,9 +18,9 @@ read_bacon(x, add = FALSE, chron_name = "Bacon", as_default = TRUE,
 
 \item{download}{The target \code{download} if \code{add} is \code{TRUE}.}
 
-\item{age_field}{Should the age be assigned to the \code{"median"} or the \code{"wmean"}?}
+\item{sections}{If there are multiple Bacon runs in a folder, identify the file by the number of sections in the run.}
 
-\item{section}{If there are multiple Bacon runs in a folder, identify the file by the number of sections in the run.}
+\item{age_field}{Should the age be assigned to the \code{"median"} or the \code{"wmean"}?}
 }
 \description{
 Reads in Bacon output and formats it for inclusion in a download object.
