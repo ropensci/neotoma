@@ -37,7 +37,7 @@ read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_defa
   }
   
   if (is.null(sections)) {
-    out_files <- list.files(paste0('Cores/', x, '/'), pattern = "ages.txt")
+    out_files <- list.files(paste0(path, '/Cores/', x, '/'), pattern = "ages.txt")
     if (length(out_files) > 1) {
       stop("There are multiple output files in the Core directory.  Please use the `sections` parameter in `read_bacon`.")
     } else {
@@ -45,10 +45,10 @@ read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_defa
     }
   }
   
-  ages <- utils::read.table(paste0('Cores/', x, '/', x, '_', sections, '_ages.txt'),
+  ages <- utils::read.table(paste0(path, '/Cores/', x, '/', x, '_', sections, '_ages.txt'),
                           header = TRUE)
   
-  settings <- utils::read.table(paste0('Cores/', x, '/', x, "_settings.txt"),
+  settings <- utils::read.table(paste0(path, '/Cores/', x, '/', x, "_settings.txt"),
                          comment.char = "")
   
   age_scale <- ifelse(settings[which(settings[,2] == "#cc"), 1] == 1,
@@ -59,7 +59,7 @@ read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_defa
                            age.younger = ages$min,
                            chronology.name = chron_name,
                            age.type = age_scale,
-                           chronology.id = paste0('Cores/', x, '/', x, '_', sections),
+                           chronology.id = paste0(path, '/Cores/', x, '/', x, '_', sections),
                            dataset.id = NA)
   
   if (add == TRUE) {
