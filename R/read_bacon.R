@@ -2,6 +2,7 @@
 #' 
 #' Reads in Bacon output and formats it for inclusion in a download object.
 #' @param x A folder path that contains a Bacon \code{age} file.
+#' @param path The location of the \code{Cores} folder.
 #' @param add Should the results be added to an existing \code{download}? Defaults to \code{FALSE}.
 #' @param download The target \code{download} if \code{add} is \code{TRUE}.
 #' @param chron_name The name for the chronology if the Bacon file is being added to a \code{download}.
@@ -30,7 +31,7 @@
 #' 
 #' }
 #' @export
-read_bacon <- function(x, add = FALSE, chron_name = "Bacon", as_default = TRUE, download = NULL, sections = NULL, age_field = "median") {
+read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_default = TRUE, download = NULL, sections = NULL, age_field = "median") {
   if (add == TRUE & (is.null(download) | !"download" %in% class(download))) {
     stop("You can't add if you don't include a download object to add to.")
   }
