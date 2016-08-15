@@ -54,7 +54,8 @@ write_agefile <- function(download, chronology = 1, path,
       chron.controls <- download$chronologies[[chronology]]$chroncontrol
     } else {
       # Otherwise, we get them from the download object.
-      chron.controls <- get_chroncontrol(download,
+      chronology.id <- download$chronologies[[chronology]]$chronology.id[1]
+      chron.controls <- get_chroncontrol(chronology.id,
                                          verbose = FALSE)
     }
     
