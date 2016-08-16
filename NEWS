@@ -1,3 +1,7 @@
+neotoma 1.6.1
+====================
+o Bugfix 
+
 neotoma 1.6.0
 ====================
 o Support for vector inputs in the `gpid` selection.
