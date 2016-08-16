@@ -99,7 +99,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
     cl <- error_test[[1]]
   }
   
-  cl <- lapply(cl, function(x){ if (length(x) > 1) {paste0(x, collapse=',')} else {x} })
+  cl <- lapply(cl, function(x){ if (length(x) > 1) {paste0(x, collapse = ',')} else {x} })
 
   neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
   if (identical(neotoma_content, "")) stop("")
@@ -226,7 +226,6 @@ get_dataset.site <- function(x, ...) {
     }
   }
   
-  
   pull_site <- function(siteid) {
     
     base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
@@ -285,7 +284,7 @@ get_dataset.site <- function(x, ...) {
         rownames(new.output$pi.data) <- NULL
       }
       
-      sub.test <- try(do.call(rbind.data.frame, x$SubDates), silent=TRUE)
+      sub.test <- try(do.call(rbind.data.frame, x$SubDates), silent = TRUE)
 
       if (length(sub.test) > 0 & !"try-error" %in% class(sub.test)) {
         colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
@@ -303,8 +302,8 @@ get_dataset.site <- function(x, ...) {
 
     new.output
   }
-
-  new.output <- unlist(lapply(x$site.id,pull_site), recursive=FALSE)
+  
+  new.output <- unlist(lapply(x$site.id, pull_site), recursive = FALSE)
   
   class(new.output) <- c('dataset_list', 'list')
   
@@ -339,7 +338,7 @@ get_dataset.download <- function(x, ...) {
 get_dataset.download_list <- function(x, ...) {
 
   # Just pull the dataset out of the download and reassign classes:
-  output <- lapply(x, FUN=function(y) {
+  output <- lapply(x, FUN = function(y) {
     dataset <- y$dataset
     class(dataset) <- c('dataset', 'list')
     dataset })
