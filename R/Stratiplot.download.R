@@ -2,10 +2,11 @@
 #' @description Draws paleoecological diagrams from a \code{download} object.  Allows control of variable type (using the \code{tran} function from the \code{analogue} package), and taxonomic grouping.
 #' @param x A \code{download} object.
 #' @param yaxis One of the columns in \code{sample.meta}, including \code{depth}, \code{age}, \code{age.younger}, or \code{age.older}, default \code{age}.
-#' @param type An option for axis transformation using \code{tran} from the \code{analogue} package.
+#' @param method An option for axis transformation using \code{tran} from the \code{analogue} package.  \code{"none"} by default.
 #' @param group An ecological group from the taxon table.  
 #' @param ... variables to be passed to \code{Stratiplot}.
 #' @details A wrapper for the \code{analogue} package's \code{Stratiplot} function.  Allowing the user to plot a stratigraphic diagram directly from a \code{download} object.
+#' @return A \code{trellis} object.
 #' @examples
 #' \dontrun{
 #' lake_o_dl <- get_download(15925)
@@ -14,7 +15,7 @@
 #' @importFrom analogue Stratiplot tran
 #'@export
 #'
-Stratiplot.download <- function(x, yaxis = "age", type = NA, group = NULL, ...) {
+Stratiplot.download <- function(x, yaxis = "age", method = "none", group = NULL, ...) {
   counts <- x$counts
   
   if (!yaxis %in% c("depth", "age.older", "age.younger", "age")) {
@@ -34,7 +35,7 @@ Stratiplot.download <- function(x, yaxis = "age", type = NA, group = NULL, ...) 
   
   y <- x$sample.meta[,yaxis]
   
-  counts <- analogue::tran(counts[,taxa], method = type)
+  counts <- analogue::tran(counts[,taxa], method = method)
   
   analogue::Stratiplot(counts, y, ...)
   

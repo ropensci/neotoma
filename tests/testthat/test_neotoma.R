@@ -159,6 +159,7 @@
 # test_that('Geochron',
 # {
 #   expect_is(get_geochron(16128), 'geochronologic_list')
+#   expect_silent(get_geochron(16128, verbose = FALSE))
 #   expect_that(length(get_geochron(16225)[[1]][[2]]) > 0, is_true())
 #   expect_is(get_geochron(8444)[[1]], 'geochronologic')
 #   expect_is(get_geochron(c(8444, 8445)), 'geochronologic_list')
@@ -211,6 +212,15 @@
 #  test_that('read.tilia',
 #            {
 #              expect_is(read.tilia('inst/crystal.tlx'), "download")
+#            })
+#
+#  #-----------------------------------------------------
+#
+#  context('Stratiplot tests')
+#  test_that('Stratiplot.download',
+#            {
+#               testthat::expect_silent(Stratiplot(get_download(15887, verbose = FALSE)))
+#               testthat::expect_is(Stratiplot(get_download(15887, verbose = FALSE)), "trellis")
 #            })
 #
 #  #-----------------------------------------------------

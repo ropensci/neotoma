@@ -4,15 +4,15 @@
 \alias{Stratiplot.download}
 \title{Palaeoecological stratigraphic diagrams}
 \usage{
-\method{Stratiplot}{download}(x, yaxis = "age", type = NA, group = NULL,
-  ...)
+\method{Stratiplot}{download}(x, yaxis = "age", type = "none",
+  group = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{download} object.}
 
 \item{yaxis}{One of the columns in \code{sample.meta}, including \code{depth}, \code{age}, \code{age.younger}, or \code{age.older}, default \code{age}.}
 
-\item{type}{An option for axis transformation using \code{tran} from the \code{analogue} package.}
+\item{type}{An option for axis transformation using \code{tran} from the \code{analogue} package.  \code{"none"} by default.}
 
 \item{group}{An ecological group from the taxon table.}
 
