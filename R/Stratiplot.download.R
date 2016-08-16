@@ -40,3 +40,12 @@ Stratiplot.download <- function(x, yaxis = "age", method = "none", group = NULL,
   analogue::Stratiplot(counts, y, ...)
   
 }
+
+Stratiplot.download_list <- function(x, yaxis = "age", method = "none", group = NULL, ...) {
+  if(length(x) == 1){
+    Stratiplot(x[[1]], yaxis = "age", method = "none", group = NULL, ...)
+  } else {
+    stop("You must select a single `download` object to plot.")
+  }
+    
+}
