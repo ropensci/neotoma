@@ -4,7 +4,7 @@
 \alias{Stratiplot.download}
 \title{Palaeoecological stratigraphic diagrams}
 \usage{
-\method{Stratiplot}{download}(x, yaxis = "age", type = "none",
+\method{Stratiplot}{download}(x, yaxis = "age", method = "none",
   group = NULL, ...)
 }
 \arguments{
@@ -12,11 +12,14 @@
 
 \item{yaxis}{One of the columns in \code{sample.meta}, including \code{depth}, \code{age}, \code{age.younger}, or \code{age.older}, default \code{age}.}
 
-\item{type}{An option for axis transformation using \code{tran} from the \code{analogue} package.  \code{"none"} by default.}
+\item{method}{An option for axis transformation using \code{tran} from the \code{analogue} package.  \code{"none"} by default.}
 
 \item{group}{An ecological group from the taxon table.}
 
 \item{...}{variables to be passed to \code{Stratiplot}.}
+}
+\value{
+A \code{trellis} object.
 }
 \description{
 Draws paleoecological diagrams from a \code{download} object.  Allows control of variable type (using the \code{tran} function from the \code{analogue} package), and taxonomic grouping.
