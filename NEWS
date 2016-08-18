@@ -1,6 +1,9 @@
 neotoma 1.6.1
 ====================
-o Bugfix 
+o Bugfix
+o New `Stratiplot` method, using the `analogue` package to plot dataset diagrams from `download` and `download_list` objects.
+o Bug fixes for `write_agefile`
+o New function `read_bacon` to read in and integrate Bacon chronologies into `download` objects.
 
 neotoma 1.6.0
 ====================
