@@ -9,8 +9,11 @@
 #' @param as_default Should the chronology become the default?
 #' @param sections If there are multiple Bacon runs in a folder, identify the file by the number of sections in the run.
 #' @param age_field Should the age be assigned to the \code{"median"} or the \code{"wmean"}?
+#' @param interp If the depths don't match up, should we interpolate from the Bacon output? (default \code{TRUE})
 #' 
 #' @details The function expects that you are in a working directory containing a "Cores" which would then contain output files from Bacon runs.  The output can either be added to an existing record (for example, replacing the default age model returned by Neotoma), or it can be loaded on its own.
+#' If the depths for the loaded file do not match with the depths in the `download`'s `sample.meta` then the user can use the `interp` parameter to interpolate between depths.  This method uses linear interpolation.
+#' 
 #' @examples
 #' \dontrun{
 #' # Download the record for Lake O' Pines:
@@ -31,7 +34,7 @@
 #' 
 #' }
 #' @export
-read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_default = TRUE, download = NULL, sections = NULL, age_field = "median") {
+read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_default = TRUE, download = NULL, sections = NULL, age_field = "median", interp = TRUE) {
   if (add == TRUE & (is.null(download) | !"download" %in% class(download))) {
     stop("You can't add if you don't include a download object to add to.")
   }
@@ -48,15 +51,37 @@ read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_defa
   ages <- utils::read.table(paste0(path, '/Cores/', x, '/', x, '_', sections, '_ages.txt'),
                           header = TRUE)
   
-  settings <- utils::read.table(paste0(path, '/Cores/', x, '/', x, "_settings.txt"),
-                         comment.char = "")
+  matched_depths <- match(download$sample.meta$depth, ages$depth)
+
+  # With a hiatus we get variable row lengths, so we need to use `readLines`:
+  file_in <- file(paste0(path, '/Cores/', x, '/', x, "_settings.txt"))
+  settings <- readLines(file_in)
+  close(file_in)
+    
+  if (all(is.na(matched_depths)) & !(interp == TRUE)) {
+    stop("The Bacon ages file and the core output do not have matching depths.\nPerhaps try using `depths.file = TRUE` flag when running Bacon, or set `interp=TRUE` flag.")
+  }
+  if (any(is.na(matched_depths)) & (interp == TRUE)) {
+    warning(paste0(sum(is.na(matched_depths)), " depths need to be interpolated.  Using linear interpolation."))
+    ages_old <- ages
+    
+    ages <- data.frame(depth  = download$sample.meta$depth,
+                       min    = approx(ages$depth, ages$min, xout = download$sample.meta$depth)$y,
+                       max    = approx(ages$depth, ages$max, xout = download$sample.meta$depth)$y,
+                       median = approx(ages$depth, ages$median, xout = download$sample.meta$depth)$y,
+                       wmean  = approx(ages$depth, ages$wmean, xout = download$sample.meta$depth)$y)
+  } else {
+    
+  }
   
-  age_scale <- ifelse(settings[which(settings[,2] == "#cc"), 1] == 1,
+  age_scale <- ifelse(settings[grep("#cc$", settings)] == "1 #cc",
                       "Calibrated radiocarbon years BP", "BC/AD")
+
+  matched_depths <- match(download$sample.meta$depth, ages$depth)
   
-  chronology <- data.frame(age.older = ages$max,
-                           age = ages[,age_field],
-                           age.younger = ages$min,
+  chronology <- data.frame(age.older = ages$max[matched_depths],
+                           age = ages[matched_depths,age_field],
+                           age.younger = ages$min[matched_depths],
                            chronology.name = chron_name,
                            age.type = age_scale,
                            chronology.id = paste0(path, '/Cores/', x, '/', x, '_', sections),

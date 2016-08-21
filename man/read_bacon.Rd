@@ -6,7 +6,7 @@
 \usage{
 read_bacon(x, path = ".", add = FALSE, chron_name = "Bacon",
   as_default = TRUE, download = NULL, sections = NULL,
-  age_field = "median")
+  age_field = "median", interp = TRUE)
 }
 \arguments{
 \item{x}{A folder path that contains a Bacon \code{age} file.}
@@ -24,6 +24,8 @@ read_bacon(x, path = ".", add = FALSE, chron_name = "Bacon",
 \item{sections}{If there are multiple Bacon runs in a folder, identify the file by the number of sections in the run.}
 
 \item{age_field}{Should the age be assigned to the \code{"median"} or the \code{"wmean"}?}
+
+\item{interp}{If the depths don't match up, should we interpolate from the Bacon output? (default \code{TRUE})}
 }
 \description{
 Reads in Bacon output and formats it for inclusion in a download object.
