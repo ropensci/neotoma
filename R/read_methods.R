@@ -22,11 +22,11 @@
 ##' }
 ##' 
 `read.tilia` <- function(file) {
-    tilia_xml <- xml2::read_xml('inst/crystal.tlx')
+    tilia_xml <- xml2::read_xml(file)
     tilia_list <- xml2::as_list(tilia_xml)
     
     find_NA <- function(x,y) {
-      wrap <- try(xml2::xml_text(xml2::xml_find_one(x,y)), silent=TRUE)
+      wrap <- try(xml2::xml_text(xml2::xml_find_first(x,y)), silent=TRUE)
       if (class(wrap) == 'try-error') wrap <- NA
       return(wrap)
     }
@@ -70,9 +70,10 @@
                  address          = find_NA(x,'.//Address'),
                  notes            = find_NA(x,'.//Notes'),
                  contact.id       = find_NA(x,'.//NeotomaContactID'),
-                 alias.id         = find_NA(x,'.//NeotomaAliasID'))
+                 alias.id         = find_NA(x,'.//NeotomaAliasID'),
+                 stringsAsFactors = FALSE)
       }))
-  
+    
     contacts <- contacts[!rowSums(is.na(contacts)) == ncol(contacts),]
     class(contacts) <- c('contact', 'data.frame')
     
@@ -82,20 +83,20 @@
       site.data = site,
       dataset.meta = data.frame(dataset.id = NA,
                                 dataset.name      = find_NA(tilia_xml, 
-                                                            './/Datasets//Dataset//Name'),
+                                                            './/Dataset//Name'),
                                 collection.type   = find_NA(tilia_xml, 
                                                             './/CollectionUnit//CollectionType'),
                                 collection.handle = find_NA(tilia_xml,
                                                             './/CollectionUnit//Handle'),
                                 dataset.type      = find_NA(tilia_xml, 
-                                                            './/Datasets//Dataset//DatasetType'),
+                                                            './/Dataset//DatasetType'),
                                 stringsAsFactors = FALSE),
       pi.data      = data.frame(ContactID = contacts$contact.id,
                                 ContactName = contacts$contact.name),
       submission   = data.frame(submission.date = NA,
                                 submission.type = NA,
                                 stringsAsFactors=FALSE),
-      access.date = NA)
+      access.date = Sys.Date())
     
     class(dataset) <- c('dataset', 'list')
     
@@ -132,6 +133,10 @@
     chron_nos <- regexpr('[0-9]',all_sample[1,chrons], perl = TRUE)
     unique_chrons <- substr(all_sample[1,chrons], chron_nos, chron_nos)
     
+    if (length(unique_chrons) == 0) {
+      unique_chrons <- "1"
+    }
+    
     # Now we have unique chronology numbers.
     
     sample.meta <- list()
@@ -140,76 +145,92 @@
       
       chron_set <- all_sample[,chrons[unique_chrons == i]]
       
-      # Clear the 
+      # This doesn't work for mammal assemblage data where there's only one assemblage:
       depths <- !is.na(all_sample[,1])
       
-      if (!is.null(ncol(chron_set))) {
-        # Get age elements if there are multiple elements for the chronology:  
-        if (length(grep('old', chron_set[1,], ignore.case = TRUE)) > 0) {
-          age_older <- suppressWarnings(as.numeric(gsub('\n', '', 
-                                                    chron_set[depths,grep('old', chron_set[1,], 
-                                                                      ignore.case = TRUE)])))
-        } else { age_older <- rep(NA, sum(depths)) }
+      if (any(depths)) {
         
-        if (length(grep('young', chron_set[1,], ignore.case = TRUE)) > 0) {
-          age_younger <- suppressWarnings(as.numeric(gsub('\n', '', 
-                                                    chron_set[depths,grep('young', chron_set[1,], 
-                                                                      ignore.case = TRUE)])))
-        } else { age_younger <- rep(NA, sum(depths)) }
-        
-        if (length(grep(paste0('^\n#Chron',i,'\n$'), chron_set[1,])) > 0) {
-          age <- suppressWarnings(as.numeric(gsub('\n', '', 
-                                                  chron_set[depths,grep(paste0('^\n#Chron',i,'\n$'), 
-                                                                    chron_set[1,], 
-                                                                    ignore.case = TRUE)])))  
-        } else {
-          age <- rep(NA, sum(depths))
-        }
+        if (!is.null(ncol(chron_set))) {
+          # This tests whether there are multiple chronologies (there would be multiple columns)
+          # Get age elements if there are multiple chronologies:  
+          if (length(grep('old', chron_set[1,], ignore.case = TRUE)) > 0) {
+            age_older <- suppressWarnings(as.numeric(gsub('\n', '', 
+                                                      chron_set[depths,grep('old', chron_set[1,], 
+                                                                        ignore.case = TRUE)])))
+          } else { age_older <- rep(NA, sum(depths)) }
           
-      } else {
-        # There's only one vector of ages, check if they're the age, 
-        # older or younger
-        if (length(grep(paste0("Chron", i, ".Old"), chron_set[1])) == 0) {
-          age_older <- rep(NA, sum(depths))
+          if (length(grep('young', chron_set[1,], ignore.case = TRUE)) > 0) {
+            age_younger <- suppressWarnings(as.numeric(gsub('\n', '', 
+                                                      chron_set[depths,grep('young', chron_set[1,], 
+                                                                        ignore.case = TRUE)])))
+          } else { age_younger <- rep(NA, sum(depths)) }
+          
+          if (length(grep(paste0('^\n#Chron',i,'\n$'), chron_set[1,])) > 0) {
+            age <- suppressWarnings(as.numeric(gsub('\n', '', 
+                                                    chron_set[depths,grep(paste0('^\n#Chron',i,'\n$'), 
+                                                                      chron_set[1,], 
+                                                                      ignore.case = TRUE)])))  
+          } else {
+            age <- rep(NA, sum(depths))
+          }
+            
         } else {
-          age_older <- suppressWarnings(as.numeric(chron_set[depths]))
+          # There's only one vector of ages, check if they're the age, 
+          # older or younger
+          if (length(grep(paste0("Chron", i, ".Old"), chron_set[1])) == 0) {
+            age_older <- rep(NA, sum(depths))
+          } else {
+            age_older <- suppressWarnings(as.numeric(chron_set[depths]))
+          }
+          if (length(grep(paste0("Chron", i, ".Young"), chron_set[1])) == 0) {
+            age_younger <- rep(NA, sum(depths))
+          } else {
+            age_younger <- suppressWarnings(as.numeric(chron_set[depths]))
+          }
+          if (length(grep(paste0("^\n#Chron", i, "\n$"), chron_set[1])) == 0) {
+            age <- rep(NA, sum(depths))
+          } else {
+            age <- suppressWarnings(as.numeric(chron_set[depths]))
+          }
         }
-        if (length(grep(paste0("Chron", i, ".Young"), chron_set[1])) == 0) {
-          age_younger <- rep(NA, sum(depths))
+        
+        if (is.null(ncol(chron_set))) {
+          chron_name <- gsub('\n', '', chron_set[2])
+          age_type   <- gsub('\n', '', chron_set[4])
         } else {
-          age_younger <- suppressWarnings(as.numeric(chron_set[depths]))
+          chron_name <- gsub('\n', '', chron_set[2, which.min(nchar(chron_set[2,]))])
+          age_type   <- gsub('\n', '', chron_set[4, which.min(nchar(chron_set[2,]))])
         }
-        if (length(grep(paste0("^\n#Chron", i, "\n$"), chron_set[1])) == 0) {
-          age <- rep(NA, sum(depths))
-        } else {
-          age <- suppressWarnings(as.numeric(chron_set[depths]))
-        }
+        
+        sample.meta[[i]] <- data.frame(depth = as.numeric(gsub('\n', '', all_sample[depths,1])),
+                                  thick = NA,
+                                  age.older = age_older,
+                                  age = age,
+                                  age.younger = age_younger,
+                                  chronology.name = chron_name,
+                                  age.type = age_type,
+                                  chronology.id = NA,
+                                  dataset.id = NA)
       }
+      else {
       
-      if (is.null(ncol(chron_set))) {
-        chron_name <- gsub('\n', '', chron_set[2])
-        age_type   <- gsub('\n', '', chron_set[4])
-      } else {
-        chron_name <- gsub('\n', '', chron_set[2, which.min(nchar(chron_set[2,]))])
-        age_type   <- gsub('\n', '', chron_set[4, which.min(nchar(chron_set[2,]))])
+        models <- xml2::xml_find_all(tilia_xml, ".//AgeModel")
+        
+        sample.meta[[i]] <- data.frame(depth = NA,
+                                       thick = NA,
+                                       age.older )
       }
-      
-      sample.meta[[i]] <- data.frame(depth = as.numeric(gsub('\n', '', all_sample[depths,1])),
-                                thick = NA,
-                                age.older = age_older,
-                                age = age,
-                                age.younger = age_younger,
-                                chronology.name = chron_name,
-                                age.type = age_type,
-                                chronology.id = NA,
-                                dataset.id = NA)
-      
     }
     
     # There can be only one sample.meta though.  The default will be (from now on) the
+    # chronology with the highest number in the chron index (if there's more than one).
     chronologies <- sample.meta
-    sample.meta <- sample.meta[[which.max(names(sample.meta))]]
-    # chronology with the highest number in the chron index.
+    
+    if (length(sample.meta) > 1) {
+      sample.meta <- sample.meta[[which.max(names(sample.meta))]]
+    } else {
+      sample.meta <- sample.meta[[1]]
+    }
     
     # Here we want to push the chroncontrols for each model into a list:
     
@@ -218,7 +239,7 @@
     get_controls <- function(x) {
       
       #default = which(sapply(tilia_list$AgeModels, function(x)x$Default == "True"))
-      controls <- xml2::xml_find_one(x, ".//ChronControls")
+      controls <- xml2::xml_find_first(x, ".//ChronControls")
       
       controls <- data.frame(age.older = as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//AgeLimitOlder"))),
                              age = as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//Age"))),
@@ -261,7 +282,7 @@
                chron_controls = chron_controls,
                chronologies   = chronologies)
     
-    class(aa) <- 'download'
+    class(aa) <- c('download', 'list')
     
     aa
 }
