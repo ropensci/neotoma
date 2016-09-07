@@ -133,6 +133,12 @@ Found at [this gist](https://gist.github.com/SimonGoring/718a654f304f2d16ce4b)
 
 Found at [this gist](https://gist.github.com/SimonGoring/877dd71cc3ad6bf8531e).  Prepared in part for a Bacon (Blaauw & Christen, 2011) workshop at the 2015 International Limnogeology Conference in Reno-Tahoe, Nevada led by Amy Myrbo (University of Minnesota).
 
+#### Simple paleo-data visualization
+
+Simple paleo-data visualization in R, linking the `rioja`, `neotoma` and `dplyr` packages.  Found at [this gist](https://gist.github.com/SimonGoring/dbb4c8e0087882dc143baa89fa041d2b).
+
+![gif](inst/img/inkspot_neotoma.gif)
+
 ### `neotoma` Workshops
 
 We have provided a set of educational tools through the [NeotomaDB](http://github.com/neotomaDB) GitHub repository in the [Workshops](http://github.com/NeotomaDB/Workshops) repository.  These are free to share, and can be modified as needed.

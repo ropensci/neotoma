@@ -20,15 +20,22 @@ plot.dataset <- function(x, ...) {
 plot.dataset_list <- function(x, ...) {
   site <- get_site(x)
   
-  types <- factor(sapply(x, function(x)x$dataset.meta$dataset.type))
+  site <- site[!(is.na(site$long) | is.na(site$lat)),]
   
+  types <- sapply(x, function(x)x$dataset.meta$dataset.type)
+  
+  types[is.na(types)] <- "Undefined"
+  
+  types <- factor(types)
+  
+  # Split the factor levels so they plot better in the legend:
   levels(types) <- gsub(' ', '\n', levels(types))
   
   old_par <- par()
   par(mar=c(5, 4, 4, 5))
   plot(site, pch=as.numeric(types)-1, ..., bty='L')
-  legend(max(site$long)+0.5,max(site$lat), levels(types), 
-         pch=(1:length(types))-1, xpd=TRUE, cex = 0.75)
+  legend(max(site$long) + 0.5, max(site$lat), levels(types), 
+         pch = (1:length(types)) - 1, xpd = TRUE, cex = 0.75)
   par(mar = old_par$mar)
 }
 
@@ -40,16 +47,8 @@ plot.download <- function(x, ...) {
 
 #' @export
 plot.download_list <- function(x, ...) {
-  site <- get_site(x)
+  dataset <- get_dataset(x)
 
-  types <- factor(sapply(x, function(x)x$dataset$dataset.meta$dataset.type))
-  levels(types) <- gsub(' ', '\n', levels(types))
+  plot(dataset, ...)
   
-  old_par <- par()
-  par(mar=c(5, 4, 4, 5))
-  plot(site, pch=as.numeric(types)-1, ..., bty='L')
-  legend(max(site$long)+0.5,max(site$lat), levels(types), 
-         pch=(1:length(types))-1, xpd=TRUE, cex = 0.75)
-  par(mar = old_par$mar)
-
 }

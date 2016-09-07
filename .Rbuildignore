@@ -10,3 +10,4 @@ README\.html
 tests/local_dont_run/*.*
 download.out
 inst/Cores
+R/dev_Bchron.R
