@@ -32,6 +32,7 @@ Reads in Bacon output and formats it for inclusion in a download object.
 }
 \details{
 The function expects that you are in a working directory containing a "Cores" which would then contain output files from Bacon runs.  The output can either be added to an existing record (for example, replacing the default age model returned by Neotoma), or it can be loaded on its own.
+If the depths for the loaded file do not match with the depths in the `download`'s `sample.meta` then the user can use the `interp` parameter to interpolate between depths.  This method uses linear interpolation.
 }
 \examples{
 \dontrun{
