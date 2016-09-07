@@ -5,7 +5,8 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
-#' @param x A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
+#' @param x A single numeric chronology ID, a vector of numeric dataset IDs as returned by \code{\link{get_dataset}} or a \code{download} or \code{download_list} object.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param verbose logical, should messages on API call be printed?
 #' @param add logical, should this chron control be added to the download object?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -41,7 +42,7 @@
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_chroncontrol <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   UseMethod('get_chroncontrol')
 }
 
@@ -54,7 +55,7 @@ get_chroncontrol <- function(x, verbose = TRUE, add = FALSE) {
 #' @param add logical, should this chron control be added to the download object?
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.default <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
@@ -185,11 +186,18 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A single \code{download} object.
+#' @param chronology For \code{download} methods, which chronology controls should be used?
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
-  chron_id <- x$sample.meta$chronology.id[1]
+get_chroncontrol.download <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
+  
+  
+  chron_id <- x$chronologies[[chronology]]$chronology.id[1]
+  
+  if (!is.numeric(chron_id)) {
+    stop(paste0("The supplied chronology ID, ", chron_id, ", is not numeric.  Please pick a different `download` chronology."))
+  }
   
   if (is.na(chron_id)) {
     output <- list(chron.control = data.frame(depth = NA,
@@ -250,7 +258,7 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.download_list <- function(x,  chronology = 1, verbose = TRUE, add = FALSE) {
   
   output <- lapply(x, function(y)get_chroncontrol(y, verbose, add = add))
   if (add == FALSE) {
@@ -271,7 +279,7 @@ get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE) {
 #' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.dataset_list <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.dataset_list <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
   output <- lapply(get_download(x), function(y)get_chroncontrol(y, verbose, add = FALSE))
   
@@ -290,7 +298,7 @@ get_chroncontrol.dataset_list <- function(x, verbose = TRUE, add = FALSE) {
 #' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.dataset <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.dataset <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
   output <- get_chroncontrol(get_download(x, verbose = verbose), 
                              verbose = verbose, add = FALSE)
@@ -298,5 +306,5 @@ get_chroncontrol.dataset <- function(x, verbose = TRUE, add = FALSE) {
   class(output) <- c('chroncontrol_list', 'list')
   
   return(output)
-  
+
 }

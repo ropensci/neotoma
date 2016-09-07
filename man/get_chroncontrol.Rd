@@ -4,10 +4,12 @@
 \alias{get_chroncontrol}
 \title{Function to return chronological control tables used to build age models.}
 \usage{
-get_chroncontrol(x, verbose = TRUE, add = FALSE)
+get_chroncontrol(x, chronology = 1, verbose = TRUE, add = FALSE)
 }
 \arguments{
-\item{x}{A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.}
+\item{x}{A single numeric chronology ID, a vector of numeric dataset IDs as returned by \code{\link{get_dataset}} or a \code{download} or \code{download_list} object.}
+
+\item{chronology}{When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.}
 
 \item{verbose}{logical, should messages on API call be printed?}
 

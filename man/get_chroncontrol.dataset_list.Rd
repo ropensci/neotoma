@@ -4,7 +4,8 @@
 \alias{get_chroncontrol.dataset_list}
 \title{Function to return chronological control tables from a \code{dataset_list}.}
 \usage{
-\method{get_chroncontrol}{dataset_list}(x, verbose = TRUE, add = FALSE)
+\method{get_chroncontrol}{dataset_list}(x, chronology = 1, verbose = TRUE,
+  add = FALSE)
 }
 \arguments{
 \item{x}{A \code{dataset_list} object.}
