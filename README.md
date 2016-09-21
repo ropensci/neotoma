@@ -60,6 +60,7 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.6.2: Improved the basic `plot` method based on tests against Tilia files in the Neotoma Holding Tank & built more robust interpolation in `read_bacon` so that age models without interpolated dates can still be imported. `browse` now opens multiple datastes in the Neotoma Explorer at once.
 + 1.6.1: New `Stratiplot` method, using the `analogue` package to plot dataset diagrams from `download` and `download_list` objects, bug fixes for `write_agefile` and a new function, `read_bacon`, to read in and integrate Bacon chronologies into `download` objects.
 + 1.6.0: Support for vector inputs in the `gpid` selection. Added a `get_closest` function to find the closest sample site. Mostly clean-up of reported bugs by users. Revised examples for faster check speed.
 + 1.5.1: Minor fix to the `get_dataset` for site level data to account for some datasets with empty submission data.  Some style changes to code (non-functional changes)

@@ -1,3 +1,9 @@
+neotoma 1.6.2
+====================
+o Bugfix in `get_chroncontrol`, `read.tilia` based on experience in extensive testing.  Improved the basic `plot` method based on tests against Tilia files in the Neotoma Holding Tank.
+o Built more robust interpolation in `read_bacon` so that age models without interpolated dates can still be imported.
+o `browse` now opens multiple datastes in the Neotoma Explorer at once.
+
 neotoma 1.6.1
 ====================
 o Bugfix
