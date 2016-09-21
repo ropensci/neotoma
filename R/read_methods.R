@@ -26,7 +26,7 @@
     tilia_list <- xml2::as_list(tilia_xml)
     
     find_NA <- function(x,y) {
-      wrap <- try(xml2::xml_text(xml2::xml_find_first(x,y)), silent=TRUE)
+      wrap <- try(xml2::xml_text(xml2::xml_find_first(x,y)), silent = TRUE)
       if (class(wrap) == 'try-error') wrap <- NA
       return(wrap)
     }
@@ -37,9 +37,9 @@
     site <- data.frame(site.id     = NA,
                        site.name   = find_NA(tilia_site,'.//SiteName'),
                        long        = mean(as.numeric(find_NA(tilia_site,'.//LongEast')),
-                                          as.numeric(find_NA(tilia_site,'.//LongWest')), na.rm=TRUE),
+                                          as.numeric(find_NA(tilia_site,'.//LongWest')), na.rm = TRUE),
                        lat         = mean(as.numeric(find_NA(tilia_site,'.//LatNorth')), 
-                                          as.numeric(find_NA(tilia_site,'.//LatSouth')), na.rm=TRUE),
+                                          as.numeric(find_NA(tilia_site,'.//LatSouth')), na.rm = TRUE),
                        elev        = as.numeric(find_NA(tilia_site,'.//Altitude')),
                        description = as.character(find_NA(tilia_site,'.//Notes')),
                        long.acc    = abs(as.numeric(find_NA(tilia_site,'.//LongEast')) - 
@@ -95,7 +95,7 @@
                                 ContactName = contacts$contact.name),
       submission   = data.frame(submission.date = NA,
                                 submission.type = NA,
-                                stringsAsFactors=FALSE),
+                                stringsAsFactors = FALSE),
       access.date = Sys.Date())
     
     class(dataset) <- c('dataset', 'list')
@@ -105,7 +105,8 @@
     spreadsheet <- xml2::xml_find_all(tilia_xml,'//SpreadSheet')
     
     empty.frame <- rep(NA, max(sapply(1:length(xml2::xml_children(spreadsheet)), 
-                                      function(x)length(xml2::xml_children(xml2::xml_children(spreadsheet)[x]))), na.rm=TRUE))
+                                      function(x)length(xml2::xml_children(xml2::xml_children(spreadsheet)[x]))), 
+                               na.rm = TRUE))
     
     # Find the "Data" table:
     # x comes in as (xml_children(spreadsheet)[1])
@@ -117,6 +118,14 @@
       
       empty.frame
     }
+    
+    cells <- xml2::xml_attrs(xml2::xml_find_all(spreadsheet, "//cell"))
+    rows <- sapply(cells, as.numeric)
+    
+    columns <- xml2::xml_attrs(xml2::xml_find_all(spreadsheet, "//Col"))
+    cols <- sapply(columns, function(x)as.numeric(x["ID"]))
+    
+    
     
     all_sample <- do.call(rbind.data.frame, 
                     lapply(1:length(xml2::xml_children(spreadsheet)),
@@ -131,7 +140,7 @@
     
     chrons <- grep("Chron", all_sample[1,])
     chron_nos <- regexpr('[0-9]',all_sample[1,chrons], perl = TRUE)
-    unique_chrons <- substr(all_sample[1,chrons], chron_nos, chron_nos)
+    unique_chrons <- unique(substr(all_sample[1,chrons], chron_nos, chron_nos))
     
     if (length(unique_chrons) == 0) {
       unique_chrons <- "1"
@@ -141,7 +150,7 @@
     
     sample.meta <- list()
     
-    for(i in unique_chrons) {
+    for (i in unique_chrons) {
       
       chron_set <- all_sample[,chrons[unique_chrons == i]]
       
@@ -157,13 +166,17 @@
             age_older <- suppressWarnings(as.numeric(gsub('\n', '', 
                                                       chron_set[depths,grep('old', chron_set[1,], 
                                                                         ignore.case = TRUE)])))
-          } else { age_older <- rep(NA, sum(depths)) }
+          } else {
+            age_older <- rep(NA, sum(depths)) 
+          }
           
           if (length(grep('young', chron_set[1,], ignore.case = TRUE)) > 0) {
             age_younger <- suppressWarnings(as.numeric(gsub('\n', '', 
                                                       chron_set[depths,grep('young', chron_set[1,], 
                                                                         ignore.case = TRUE)])))
-          } else { age_younger <- rep(NA, sum(depths)) }
+          } else {
+            age_younger <- rep(NA, sum(depths))
+          }
           
           if (length(grep(paste0('^\n#Chron',i,'\n$'), chron_set[1,])) > 0) {
             age <- suppressWarnings(as.numeric(gsub('\n', '', 
@@ -214,11 +227,31 @@
       }
       else {
       
+        # There's no actual date stuff, just a raw age model:
         models <- xml2::xml_find_all(tilia_xml, ".//AgeModel")
         
-        sample.meta[[i]] <- data.frame(depth = NA,
-                                       thick = NA,
-                                       age.older )
+        if (length(models) == 0) {
+          sample.meta[[i]] <- data.frame(depth = NA,
+                                         thick = NA,
+                                         age.older = NA,
+                                         age = NA,
+                                         age.younger = NA,
+                                         chronology.name = NA,
+                                         age.type = NA,
+                                         chronology.id = NA,
+                                         dataset.id = NA)
+          
+        } else {
+          sample.meta[[i]] <- data.frame(depth = NA,
+                                         thick = NA,
+                                         age.older = xml2::xml_double(xml2::xml_find_all(models, ".//AgeBoundOlder")),
+                                         age = NA,
+                                         age.younger = xml2::xml_double(xml2::xml_find_all(models, ".//AgeBoundYounger")),
+                                         chronology.name = xml2::xml_text(xml2::xml_find_all(models, ".//ChronologyName")),
+                                         age.type = xml2::xml_text(xml2::xml_find_all(models, ".//AgeUnits")),
+                                         chronology.id = NA,
+                                         dataset.id = NA)
+        }
       }
     }
     
@@ -228,6 +261,10 @@
     
     if (length(sample.meta) > 1) {
       sample.meta <- sample.meta[[which.max(names(sample.meta))]]
+      if (colSums(apply(do.call(rbind, chronologies), 2, duplicated)) == (length(chronologies) - 1)) {
+        # This gets rid of empty chronologies, which seem to be a thing that happens . . .
+        chronologies <- chronologies[[1]]
+      }
     } else {
       sample.meta <- sample.meta[[1]]
     }
@@ -236,22 +273,57 @@
     
     models <- xml2::xml_find_all(tilia_xml, ".//AgeModel")
     
-    get_controls <- function(x) {
+    if (length(models) == 0) {
+      chron_controls <- list(data.frame(age.older = NA,
+                                        age = NA,
+                                        age.younger =  NA,
+                                        chronology.name = NA,
+                                        age.type = NA,
+                                        chronology.id = NA,
+                                        dataset.id = NA))
+      warning("There is no age model for this record.")
+    } else {
+    
+      get_controls <- function(x) {
+        
+        #default = which(sapply(tilia_list$AgeModels, function(x)x$Default == "True"))
+        controls <- xml2::xml_find_first(x, ".//ChronControls")
+        
+        if (xml2::xml_attr(controls, "Count") == 0) {
+          # This is a special case for directly dated material (mostly?) where you have a single sample:
+          controls <- data.frame(age.older = as.numeric(xml2::xml_text(xml2::xml_find_all(x, ".//AgeBoundOlder"))),
+                                 age = NA,
+                                 age.younger =  as.numeric(xml2::xml_text(xml2::xml_find_all(x, ".//AgeBoundYounger"))),
+                                 chronology.name = (xml2::xml_text(xml2::xml_find_all(x, ".//ChronologyName"))),
+                                 age.type = (xml2::xml_text(xml2::xml_find_all(x, ".//AgeUnits"))),
+                                 chronology.id = NA,
+                                 dataset.id = NA)
+        } else {
+          
+          controls <- data.frame(age.older = as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//AgeLimitOlder"))),
+                                 age = as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//Age"))),
+                                 age.younger =  as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//Age"))),
+                                 chronology.name = (xml2::xml_text(xml2::xml_find_all(x, ".//ChronologyName"))),
+                                 age.type = (xml2::xml_text(xml2::xml_find_all(x, ".//AgeUnits"))),
+                                 chronology.id = NA,
+                                 dataset.id = NA)
+        }
+        
+        return(controls)
+        
+      }
       
-      #default = which(sapply(tilia_list$AgeModels, function(x)x$Default == "True"))
-      controls <- xml2::xml_find_first(x, ".//ChronControls")
-      
-      controls <- data.frame(age.older = as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//AgeLimitOlder"))),
-                             age = as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//Age"))),
-                             age.younger =  as.numeric(xml2::xml_text(xml2::xml_find_all(controls, ".//Age"))),
-                             chronology.name = (xml2::xml_text(xml2::xml_find_all(x, ".//ChronologyName"))),
-                             age.type = (xml2::xml_text(xml2::xml_find_all(x, ".//AgeUnits"))),
-                             chronology.id = NA,
-                             dataset.id = NA)
-      controls
+      chron_controls <- lapply(models, get_controls)
     }
     
-    chron_controls <- lapply(models, get_controls)
+    # Put information in sample.meta if it was missing because we were looking at directly dated material:
+    if (all(is.na(sample.meta)) & length(chron_controls) == 1 & nrow(chron_controls[[1]]) == 1) {
+      
+      matched_cols <- colnames(sample.meta)[colnames(sample.meta) %in% colnames(chron_controls[[1]])]
+      sample.meta[,matched_cols] <- chron_controls[[1]][,matched_cols]
+      chronologies[[1]] <- sample.meta
+      
+    }
     
     #  Everything in the spreadsheet table,
     #  but everything (chrons &cetera) are all together.
@@ -259,24 +331,57 @@
     
     count_cols <- regexpr('#', all_sample[1,]) < 0 & !is.na(all_sample[1,])
     
+    # This is problematic.  There are some records where the "Elements" and others
+    # are not entered.
+    
+    if (nrow(all_sample) < 5) {
+      stop("Tilia file is missing variable context - Units, Context or Elements are missing.")
+    }
+    
     taxon_sub <- all_sample[1:5, count_cols]
     
-    taxon_list = data.frame(taxon.name = gsub('\n', '', taxon_sub[2,]),
-                            variable.units = gsub('\n', '', taxon_sub[4,]),
-                            variable.element = gsub('\n', '', taxon_sub[3,]),
-                            variable.context = NA,
-                            taxon.group = NA,
-                            ecological.group = gsub('\n', '', taxon_sub[5,]))
+    col_vis <- function(x, sheet){
+      # parse the boolean attributes
+      if (x %in% cols) {
+        col <- which(xml2::xml_attr(xml2::xml_find_all(sheet, "//Col"), "ID") == x)
+        
+        # Fails if there are no age models:
+        first_row <- grep("#", all_sample[1,])
+        first_row <- ifelse(length(first_row) == 0, 3, max(first_row))
+        
+        return(all_sample[col,(first_row + 1):ncol(all_sample)])
+      } else {
+        NA
+      }
+    }
     
-    count_data <- matrix(as.numeric(gsub('\n', '', all_sample[6:nrow(all_sample), count_cols])),
+    taxon_table <- get_table("Taxa")
+    
+    taxa_list <- data.frame(taxon.name          = col_vis(2, spreadsheet),
+                            variable.units      = col_vis(4, spreadsheet),
+                            variable.element    = col_vis(3, spreadsheet),
+                            variable.context    = col_vis(5, spreadsheet),
+                            variable.taphonomy  = col_vis(6, spreadsheet),
+                            taxon.group         = NA,
+                            ecological.group    = col_vis(7, spreadsheet))
+    
+    if (!all(is.na(taxa_list$taxon.name))) {
+      taxa_list$taxon.group <- taxon_table$TaxaGroupID[match(taxa_list$taxon.name, 
+                                                             taxon_table$TaxonName)]
+    }
+    
+    # Where is count starting:
+    count_start <- sum(!apply(apply(taxa_list, 2, is.na), 2, all)) + 1
+    # Second most common choke point for records:
+    count_data <- matrix(as.numeric(gsub('\n', '', all_sample[count_start:nrow(all_sample), count_cols])),
                          ncol = sum(count_cols))
     
-    lab_data   <- count_data[, taxon_list$ecological.group == 'LABO']
-    count_data <- count_data[, !taxon_list$ecological.group == 'LABO']
+    lab_data   <- count_data[, taxa_list$ecological.group == 'LABO']
+    count_data <- count_data[, !taxa_list$ecological.group == 'LABO']
     
     aa <- list(dataset        = dataset,
                sample.meta    = sample.meta,
-               taxon_list     = taxon_list,
+               taxon_list     = taxa_list,
                counts         = count_data,
                lab.data       = lab_data,
                chron_controls = chron_controls,
