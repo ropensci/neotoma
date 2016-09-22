@@ -10,6 +10,8 @@
 \arguments{
 \item{x}{A \code{dataset}.}
 
+\item{chronology}{When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.}
+
 \item{verbose}{logical; should messages on API call be printed?}
 
 \item{add}{Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})}

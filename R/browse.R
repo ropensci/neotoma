@@ -4,6 +4,8 @@
 #' @importFrom utils browseURL
 #' @description Using a numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object, open up a browser window in the users default browser. Very large objects
 #'
+#' @param x A numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object.
+#'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return Returns a NULL value, opens a browser.
 #' 

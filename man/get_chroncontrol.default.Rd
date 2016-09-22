@@ -10,6 +10,8 @@
 \arguments{
 \item{x}{A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.}
 
+\item{chronology}{For \code{download} methods, which chronology controls should be used?}
+
 \item{verbose}{logical; should messages on API call be printed?}
 
 \item{add}{logical, should this chron control be added to the download object?}

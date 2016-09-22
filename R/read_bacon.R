@@ -66,10 +66,10 @@ read_bacon <- function(x, path = '.', add = FALSE, chron_name = "Bacon", as_defa
     ages_old <- ages
     
     ages <- data.frame(depth  = download$sample.meta$depth,
-                       min    = approx(ages$depth, ages$min, xout = download$sample.meta$depth)$y,
-                       max    = approx(ages$depth, ages$max, xout = download$sample.meta$depth)$y,
-                       median = approx(ages$depth, ages$median, xout = download$sample.meta$depth)$y,
-                       wmean  = approx(ages$depth, ages$wmean, xout = download$sample.meta$depth)$y)
+                       min    = stats::approx(ages$depth, ages$min, xout = download$sample.meta$depth)$y,
+                       max    = stats::approx(ages$depth, ages$max, xout = download$sample.meta$depth)$y,
+                       median = stats::approx(ages$depth, ages$median, xout = download$sample.meta$depth)$y,
+                       wmean  = stats::approx(ages$depth, ages$wmean, xout = download$sample.meta$depth)$y)
   } else {
     
   }

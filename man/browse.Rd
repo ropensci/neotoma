@@ -6,6 +6,9 @@
 \usage{
 browse(x)
 }
+\arguments{
+\item{x}{A numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object.}
+}
 \value{
 Returns a NULL value, opens a browser.
 }

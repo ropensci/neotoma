@@ -52,6 +52,7 @@ get_chroncontrol <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.
+#' @param chronology For \code{download} methods, which chronology controls should be used?
 #' @param add logical, should this chron control be added to the download object?
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -255,6 +256,7 @@ get_chroncontrol.download <- function(x, chronology = 1, verbose = TRUE, add = F
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A \code{download_list} object.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -276,6 +278,7 @@ get_chroncontrol.download_list <- function(x,  chronology = 1, verbose = TRUE, a
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A \code{dataset_list} object.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -295,6 +298,7 @@ get_chroncontrol.dataset_list <- function(x, chronology = 1, verbose = TRUE, add
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A \code{dataset}.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
