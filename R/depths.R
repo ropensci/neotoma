@@ -39,7 +39,7 @@
 
 #' @export
 ##' @rdname depths
-depths.default <- function(obj){
+depths.default <- function(obj, ...){
   stop("Input data must be a `download` or a `download_list")
 }
 
