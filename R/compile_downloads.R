@@ -63,17 +63,22 @@ compile_downloads <- function(downloads) {
       if (is.null(x$sample.meta$age.younger)) x$sample.meta$age.younger <- NA
       if (is.null(x$dataset$site$lat)) x$dataset$site$lat <- NA
       if (is.null(x$dataset$site$long)) x$dataset$site$long <- NA
-
+      
+      if(!all.equal(x$sample.meta$sample.id, as.numeric(rownames(x$counts))) == TRUE){
+        good_rows <- x$sample.meta$sample.id %in% as.numeric(rownames(x$counts))
+        good_counts <- as.character(x$sample.meta$sample.id[good_rows])
+      }
+      
       site.info <- data.frame(site.name = x$dataset$site$site.name,
-                              depth = x$sample.meta$depth,
-                              age = x$sample.meta$age,
-                              age.old = x$sample.meta$age.older,
-                              age.young = x$sample.meta$age.younger,
-                              date.type = x$sample.meta$age.type,
+                              depth = x$sample.meta$depth[good_rows],
+                              age = x$sample.meta$age[good_rows],
+                              age.old = x$sample.meta$age.older[good_rows],
+                              age.young = x$sample.meta$age.younger[good_rows],
+                              date.type = x$sample.meta$age.type[good_rows],
                               lat = x$dataset$site$lat,
                               long = x$dataset$site$long,
                               dataset = x$dataset$dataset.meta$dataset.id,
-                              x$counts)
+                              x$counts[good_counts,])
     }
     else{
       #  Dummy data for empty sites.

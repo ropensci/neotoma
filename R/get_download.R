@@ -428,6 +428,21 @@ get_download.default <- function(x, verbose = TRUE) {
               return(NULL)
             }
             
+            if (any(sapply(sample.data, length) == 0)) {
+              sample.data <- lapply(sample.data, function(x) {
+                if(length(x) == 0) {
+                  x <- data.frame(TaxonName = NA,
+                                  VariableUnits = NA,
+                                  VariableElement = NA,
+                                  VariableContext = NA,
+                                  TaxaGroup = NA, 
+                                  Value = NA, 
+                                  EcolGroupID = NA)
+                }
+                return(x)
+              })
+            }
+            
             # 2) How many counts/species in each data frame?
             nsamp <- sapply(sample.data, nrow)
             
@@ -452,6 +467,7 @@ get_download.default <- function(x, verbose = TRUE) {
                                   variable.context + taxon.group +
                                   ecological.group ~ sample.id, value.var = "value", fun.aggregate = sum)
             
+            cast_table <- cast_table[!is.na(cast_table$taxon.name), ]
             taxon.list <- cast_table[ ,1:6]
             
             # Now we check for any duplicated names and give them an alias
