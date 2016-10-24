@@ -68,7 +68,7 @@ More functions are available through the package help.  These represent the core
 + 1.4.1: Small changes to `get_geochron` to address bug reports and improve object `printing` methods.
 + 1.4.0: Added `plot` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
 
-### A few examples
+### A few examples:
 
 #### Find the distribution of sites with Mammoth fossils in Neotoma
 
@@ -139,6 +139,14 @@ Found at [this gist](https://gist.github.com/SimonGoring/877dd71cc3ad6bf8531e). 
 Simple paleo-data visualization in R, linking the `rioja`, `neotoma` and `dplyr` packages.  Found at [this gist](https://gist.github.com/SimonGoring/dbb4c8e0087882dc143baa89fa041d2b).
 
 ![gif](inst/img/inkspot_neotoma.gif)
+
+#### Find all site elevations in California:
+
+Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/6a2ba1d55a3a7f78723b37e896b55b70).
+
+#### Match all Neotoma taxa to external databases using `taxize`:
+
+Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/24fb1228204f768f3f0020f37060db18).
 
 ### `neotoma` Workshops
 
