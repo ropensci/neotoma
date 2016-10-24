@@ -16,11 +16,15 @@
 #' pollen.data <- get_download(684)
 #' pollen.chron <- get_chroncontrol(pollen.data)[[1]]
 #'
+#' age_sds <- pollen.chron$chron.control$age - focal$chron.control$age.young,
+#' get_curves <- ifelse(regexpr("Radiocarbon",
+#'                              pollen.chron$chron.control$control.type) > -1, 
+#'                      'intcal13', 'normal')
+#'
 #' new_chron <- Bchron::Bchronology(ages   = pollen.chron$chron.control$age,
-#'                                  ageSds = pollen.chron$chron.control$age - focal$chron.control$age.young,
+#'                                  ageSds = age_sds
 #'                                  positions = pollen.chron$chron.control$depth,
-#'                                  calCurves = ifelse(regexpr("Radiocarbon", pollen.chron$chron.control$control.type) > -1,
-#'                                                     'intcal13', 'normal'), 
+#'                                  calCurves = , 
 #'                                  predictPositions = depths(pollen.data))
 #'
 #' }
