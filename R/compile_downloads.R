@@ -68,7 +68,7 @@ compile_downloads <- function(downloads) {
         good_rows <- x$sample.meta$sample.id %in% as.numeric(rownames(x$counts))
         good_counts <- as.character(x$sample.meta$sample.id[good_rows])
       } else {
-        good_rows   <- rep(TRUE, nrow(x$sample.meta$sample.id))
+        good_rows   <- rep(TRUE, nrow(x$sample.meta))
         good_counts <- 1:nrow(x$sample.meta)
       }
       
