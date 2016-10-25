@@ -64,8 +64,13 @@ compile_downloads <- function(downloads) {
       if (is.null(x$dataset$site$lat)) x$dataset$site$lat <- NA
       if (is.null(x$dataset$site$long)) x$dataset$site$long <- NA
       
-      good_rows <- x$sample.meta$sample.id %in% as.numeric(rownames(x$counts))
-      good_counts <- as.character(x$sample.meta$sample.id[good_rows])
+      if (!is.null(rownames(x$counts))) {
+        good_rows <- x$sample.meta$sample.id %in% as.numeric(rownames(x$counts))
+        good_counts <- as.character(x$sample.meta$sample.id[good_rows])
+      } else {
+        good_rows   <- rep(TRUE, nrow(x$sample.meta$sample.id))
+        good_counts <- 1:nrow(x$sample.meta)
+      }
       
       site.info <- data.frame(site.name = x$dataset$site$site.name,
                               depth = x$sample.meta$depth[good_rows],
