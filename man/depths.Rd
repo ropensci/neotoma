@@ -9,7 +9,7 @@
 \usage{
 depths(obj, ...)
 
-\method{depths}{default}(obj)
+\method{depths}{default}(obj, ...)
 
 \method{depths}{download}(obj, ...)
 
