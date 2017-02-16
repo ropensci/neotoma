@@ -1,5 +1,8 @@
 language: r
 
+after_success:
+- Rscript -e 'covr::codecov()'
+
 notifications:
   slack:
     secure: M/pDn42cC/+pDT09QnG5h9Ll9KywbbUSTmgBLsSlfm9nj70oreqksG23jD6aLLc2VKNatBATgpt9FqtSVziqWjvERTLobAeYDz35VHTE8GNNbwKA09tLgMl9B1YM4+jlLWBKOz1iU5TmPRHxwxAVxtTTgyxoH5lMWjn4jGL0llg=
