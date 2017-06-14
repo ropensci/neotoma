@@ -70,13 +70,12 @@ canID <- gpids[which(gpids$GeoPoliticalName == 'Canada'),1]
 v2kyr.datasets <- get_dataset(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
+}
 \keyword{IO}
 \keyword{connection}
-

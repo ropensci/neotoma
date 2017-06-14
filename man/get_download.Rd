@@ -31,6 +31,7 @@ The function returns a warning in cases where single taxa are defined by multipl
 In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excized).  Use \code{get_geochron} for these objects.
 The chronologies can be augmented using the function \code{get_chroncontrol}, where the individual chronology objects in \code{chronologies} will consist of a table equivalent to \code{sample.meta} and a \code{chroncontrol} object.
 }
+
 \examples{
 \dontrun{
 #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
@@ -74,13 +75,12 @@ lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 #  lends support to a warmer, drier early-Holocene in western North America.
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
+}
 \keyword{IO}
 \keyword{connection}
-

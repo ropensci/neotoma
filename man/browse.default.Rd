@@ -12,4 +12,3 @@
 \description{
 Using a numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object, open up a browser window in the users default browser. Very large objects
 }
-

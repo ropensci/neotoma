@@ -19,4 +19,3 @@
 \description{
 Using the chronology ID, return the chron control table as a \code{data.frame}.
 }
-

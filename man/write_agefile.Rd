@@ -39,14 +39,13 @@ write_agefile(download = three_pines[[1]],
               cal.prog = "Bacon")
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
+}
 \keyword{API}
 \keyword{Neotoma}
 \keyword{Palaeoecology}
-

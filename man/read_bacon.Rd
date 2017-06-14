@@ -54,4 +54,3 @@ lake_o_dl <- read_bacon("LAKEPINES", add = TRUE, download = download, sections =
 
 }
 }
-

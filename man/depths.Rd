@@ -49,13 +49,12 @@ new_chron <- Bchron::Bchronology(ages   = pollen.chron$chron.control$age,
 
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/sites
 }
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
+}
 \keyword{IO}
 \keyword{connection}
-

@@ -46,9 +46,6 @@ gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 
@@ -60,5 +57,7 @@ Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconst
 
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
+}
 \keyword{utilities}
-

@@ -17,4 +17,3 @@ The taxonomy table for datasets in neotoma, as would be returned by \code{\link{
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-

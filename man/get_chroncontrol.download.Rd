@@ -19,4 +19,3 @@
 \description{
 Using a \code{download}, return the default chron-control table as a \code{data.frame}.
 }
-

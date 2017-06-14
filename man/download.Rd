@@ -2,6 +2,7 @@
 % Please edit documentation in R/clamodel.R, R/download.R
 \name{download}
 \alias{download}
+\alias{download}
 \title{A class for download objects.}
 \description{
 A \code{download} is an object with the full record for a single dataset.
@@ -19,4 +20,3 @@ Simon Goring
 Simon Goring
 }
 \keyword{methods}
-

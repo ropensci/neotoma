@@ -26,4 +26,3 @@
 The function takes the parameters, defined by the user, and returns a table with
    publication information from the Neotoma Paleoecological Database.
 }
-

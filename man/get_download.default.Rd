@@ -14,4 +14,3 @@
 \description{
 Using the dataset ID, return all records associated with the data as a \code{download_list}.
 }
-

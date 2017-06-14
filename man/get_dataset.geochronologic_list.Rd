@@ -14,4 +14,3 @@
 \description{
 A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 }
-

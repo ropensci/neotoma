@@ -37,4 +37,3 @@ ostro.ages <- ages(ostro.dl)
 \author{
 Simon Goring
 }
-

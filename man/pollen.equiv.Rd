@@ -17,4 +17,3 @@ Taxon conversion table (readable).
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}; Jeremiah Marsicek
 }
-

@@ -14,4 +14,3 @@
 \description{
 A function to access a \code{dataset} within a \code{download} object.
 }
-

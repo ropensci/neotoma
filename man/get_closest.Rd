@@ -30,14 +30,13 @@ user defined destination for age modelling with existing age-depth modeling soft
 get_closest(x = c(-89.4012, 43.0731), n = 10, buffer = 5, datasettype = "pollen")
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}, Andria Dawson \email{andria.dawson@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 API Reference:  http://api.neotomadb.org/doc/resources/contacts
 }
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}, Andria Dawson \email{andria.dawson@gmail.com}
+}
 \keyword{API}
 \keyword{Neotoma}
 \keyword{Palaeoecology}
-

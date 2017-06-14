@@ -40,4 +40,3 @@ lakes_o_nw <- get_download(get_site(sitename = "Lake B\%"))
 
 }
 }
-

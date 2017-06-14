@@ -14,4 +14,3 @@
 \description{
 The function takes a \code{dataset} and returns a table with publication information from the Neotoma Paleoecological Database.
 }
-

@@ -33,4 +33,3 @@ lake_o_dl <- get_download(15925)
 Stratiplot(lake_o_dl[[1]])
 }
 }
-

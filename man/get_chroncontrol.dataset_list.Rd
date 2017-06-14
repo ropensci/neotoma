@@ -19,4 +19,3 @@
 \description{
 Using a \code{dataset_list}, return the default chron-control table.
 }
-

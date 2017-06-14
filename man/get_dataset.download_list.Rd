@@ -14,4 +14,3 @@
 \description{
 A function to return datasets corresponding to the objects within a \code{download_list}.
 }
-

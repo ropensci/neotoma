@@ -17,4 +17,3 @@ A list of geopolitical entities with associated numeric ID values.
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-

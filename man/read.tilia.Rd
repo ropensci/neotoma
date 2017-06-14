@@ -29,4 +29,3 @@ dim(marion.cnt)
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-

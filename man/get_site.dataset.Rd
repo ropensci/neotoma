@@ -14,4 +14,3 @@
 \description{
 Return site information from the Neotoma Paleoecological Database.
 }
-
