@@ -226,11 +226,26 @@ get_dataset.site <- function(x, ...) {
     }
   }
   
-  pull_site <- function(siteid) {
+  pull_site <- function(siteid, ...) {
+    
+    cl <- as.list(match.call())
+    cl[[1]] <- NULL
+    cl <- lapply(cl, eval, envir = parent.frame())
+    
+    #  Pass the parameters to param_check to make sure everything is kosher.
+    error_test <- param_check(cl)
+    if (error_test[[2]]$flag == 1) {
+      stop(paste0(unlist(error_test[[2]]$message), collapse = '\n  '))
+    } else {
+      cl <- error_test[[1]]
+    }
+    
+    cl <- lapply(cl, function(x){ if (length(x) > 1) {paste0(x, collapse = ',')} else {x} })
     
     base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
     
-    neotoma_content <- httr::content(httr::GET(paste0(base.uri, siteid)), as = "text")
+    neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
+    
     if (identical(neotoma_content, "")) stop("")
     aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
 
@@ -303,7 +318,7 @@ get_dataset.site <- function(x, ...) {
     new.output
   }
   
-  new.output <- unlist(lapply(x$site.id, pull_site), recursive = FALSE)
+  new.output <- unlist(lapply(x$site.id, function(x){pull_site(siteid = x, ...)}), recursive = FALSE)
   
   class(new.output) <- c('dataset_list', 'list')
   
