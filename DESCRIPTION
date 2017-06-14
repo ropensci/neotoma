@@ -13,7 +13,7 @@ Authors@R: c(person(given = c("Simon", "J."), family = "Goring",
     person(given = "Luke", family = "Sosalla", role = "ctb"))
 Maintainer: Simon J. Goring <goring@wisc.edu>
 Description: Access paleoecological datasets from the Neotoma Paleoecological
-    Database using the published API (http://api.neotomadb.org/).  The functions
+    Database using the published API (<http://api.neotomadb.org/>).  The functions
     in this package access various pre-built API functions and attempt to return
     the results from Neotoma in a usable format for researchers and the public.
 License: MIT + file LICENSE
