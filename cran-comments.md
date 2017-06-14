@@ -7,7 +7,7 @@
 + There were no ERRORs or WARNINGs
 + For Windows there were spelling warnings, but all spellings are acceptable
 + Travis gives no notes.
-+ Appveyor fails, but see note above.
-  
++ Appveyor passes
+
 ## Downstream Dependencies:
 NA
