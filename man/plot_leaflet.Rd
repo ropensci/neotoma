@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_leaflet.R
 \name{plot_leaflet}
 \alias{plot_leaflet}
-\title{Leaflet plots fo neotoma data.}
+\title{Leaflet plots for neotoma data.}
 \usage{
 plot_leaflet(x, providerTiles = "Stamen.TerrainBackground", ...)
 }

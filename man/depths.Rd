@@ -18,7 +18,7 @@ depths(obj, ...)
 \arguments{
 \item{obj}{A \code{download} object.}
 
-\item{...}{arugments passed to other methods.}
+\item{...}{argugments passed to other methods.}
 }
 \value{
 Returns a vector of depths.

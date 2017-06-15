@@ -12,10 +12,10 @@ get_download(x, verbose = TRUE)
 \item{verbose}{logical; should messages on API call be printed?}
 }
 \value{
-This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned from the Neotoma API call, or an object of class \code{download_list}, containing a set of \code{download} objects, each with relevant assemblage information and metadata:
+This command returns either object of class \code{"try-error"}' (see \code{\link{try}}) defined by the error returned from the Neotoma API call, or an object of class \code{download_list}, containing a set of \code{download} objects, each with relevant assemblage information and metadata:
 The \code{download} object is a list of lists and data frames that describe an assemblage, the constituent taxa, the chronology, site and PIs who contributed the data. The following are important components:
 
- \item{ \code{dataset} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
+ \item{ \code{dataset} }{A table describing the collection, including dataset information, PI data compatible with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
  \item{ \code{sample.meta} }{Dataset information for the core, primarily the age-depth model and chronology.  In cases where multiple age models exist for a single record the most recent chronology is provided here.}
  \item{ \code{taxon.list} }{The list of taxa contained within the dataset, unordered, including information that can be used in \code{\link{get_taxa}}}
  \item{ \code{counts} }{The assemblage data for the dataset, arranged with each successive depth in rows and the taxa as columns.  All taxa are described in \code{taxon.list}, the chronology is in \code{sample.data}}
@@ -27,8 +27,8 @@ Using the dataset ID, site object or dataset object, return all records associat
 }
 \section{Note}{
 
-The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified seperately as crumpled and torn in the same sample and sums these values within a sample.
-In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excized).  Use \code{get_geochron} for these objects.
+The function returns a warning in cases where single taxa are defined by multiple taphonomic characteristics, for example grains that are identified separately as crumpled and torn in the same sample and sums these values within a sample.
+In the case that a geochronology dataset is passed to \code{get_download} the function returns a message and a NULL object (that is later excised).  Use \code{get_geochron} for these objects.
 The chronologies can be augmented using the function \code{get_chroncontrol}, where the individual chronology objects in \code{chronologies} will consist of a table equivalent to \code{sample.meta} and a \code{chroncontrol} object.
 }
 
@@ -74,6 +74,7 @@ lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 #  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
 #  lends support to a warmer, drier early-Holocene in western North America.
 }
+
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org

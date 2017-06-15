@@ -63,6 +63,7 @@
 #' #  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
 #' #  lends support to a warmer, drier early-Holocene in western North America.
 #' }
+#' 
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts

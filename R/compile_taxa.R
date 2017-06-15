@@ -1,4 +1,3 @@
-
 #' Function to convert assemblage taxa to standardized lists.
 #'
 #' From the assemblage data for the core return assemblage data with the assemblage taxa
@@ -32,13 +31,23 @@
 #' gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 #'
 #' }
+#' 
+#' @references 
+#' 
 #' Neotoma Project Website: http://www.neotomadb.org
 #'
-#' Gavin DG, Oswald WW, Wahl ER, Williams JW. 2003. A statistical approach to evaluating distance metrics and analog assignments for pollen records. Quaternary Research 60: 356-367.
+#' Gavin DG, Oswald WW, Wahl ER, Williams JW. 2003. A statistical approach to 
+#'   evaluating distance metrics and analog assignments for pollen records. 
+#'   Quaternary Research 60: 356-367.
 #'
-#' Whitmore J, Gajewski K, Sawada M, Williams JW, Shuman B, Bartlein PJ, Minckley T, Viau AE, Webb III T, Shafer S, Anderson P, Brubaker L. 2005. Modern pollen data from North America and Greenland for multi-scale paleoenvironmental applications. Quaternary Science Reviews 24: 1828-1848.
+#' Whitmore J, Gajewski K, Sawada M, Williams JW, Shuman B, Bartlein PJ, Minckley T, 
+#'   Viau AE, Webb III T, Shafer S, Anderson P, Brubaker L. 2005. Modern pollen data 
+#'   from North America and Greenland for multi-scale paleoenvironmental applications. 
+#'   Quaternary Science Reviews 24: 1828-1848.
 #'
-#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687.
+#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental 
+#'   reconstructions from the modern analog technique and North American surface pollen 
+#'   dataset. Quaternary Science Reviews. 27:669-687.
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords utilities
