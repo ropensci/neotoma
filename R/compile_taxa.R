@@ -32,7 +32,6 @@
 #' gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 #'
 #' }
-#' @references
 #' Neotoma Project Website: http://www.neotomadb.org
 #'
 #' Gavin DG, Oswald WW, Wahl ER, Williams JW. 2003. A statistical approach to evaluating distance metrics and analog assignments for pollen records. Quaternary Research 60: 356-367.

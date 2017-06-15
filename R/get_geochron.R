@@ -9,7 +9,7 @@
 #' @param verbose logical; should messages on API call be printed?
 #' 
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
+#' @return This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) defined by the error returned
 #'    from the Neotoma API call, or a \code{geochronologic} object, which is a list with two components, a \code{dataset} and a geochronology table, a \code{data.frame} with the following components:
 #'
 #'  \item{ \code{sample.id} }{A unique identifier for the geochronological unit.}
@@ -18,10 +18,10 @@
 #'  \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
 #'  \item{ \code{e.young} }{The younger error limit of the age value.}
 #'  \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
-#'  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
+#'  \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatible with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
 #'  \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
 #'  \item{ \code{notes} }{Text string}
-#'  \item{ \code{infinite} }{Boolean, does the dated material return an "infinte" date?}
+#'  \item{ \code{infinite} }{Boolean, does the dated material return an "infinite" date?}
 #'
 #'  A full data object containing all the relevant geochronological data available for a dataset.
 #' @examples \dontrun{

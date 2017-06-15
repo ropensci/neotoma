@@ -1,4 +1,4 @@
-#' @title Leaflet plots fo neotoma data.
+#' @title Leaflet plots for neotoma data.
 #' @description A plotting function to provide interactive data investigation using the leaflet tools.
 #'   This package requires a connection to the internet for proper functioning.
 #' @param x A neotoma data object

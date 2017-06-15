@@ -5,7 +5,7 @@
 ##' @title Access proxy count data
 ##'
 ##' @param obj an R object from which counts are to be extracted.
-##' @param ... arugments passed to other methods.
+##' @param ... argugments passed to other methods.
 ##' @return Either a data frame of counts or a list of such objects.
 ##'
 ##' @author Gavin Simpson

@@ -15,7 +15,7 @@
 #' @return The function takes parameters defined by the user and returns a list
 #'    of contact information supplied by the Neotoma Paleoecological Database.
 #'    The user may define all or none of the possible fields.  The function contains
-#'    data chacks for each defined parameter.
+#'    data checks for each defined parameter.
 #'
 #'    The function returns either a single item of class \code{"try-error"} describing
 #'    the reason for failure (either mis-defined parameters or an error from the Neotoma API),
