@@ -31,7 +31,7 @@
 #' gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 #'
 #' }
-#' 
+
 #' @references 
 #' 
 #' Neotoma Project Website: http://www.neotomadb.org
