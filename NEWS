@@ -1,4 +1,4 @@
-neotoma 1.7
+neotoma 1.7.0
 ====================
 o Added `plot_leaflet` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.
 o Minor bugfix for `get_download` to allow records to be sent to Neotoma and to be filtered.
