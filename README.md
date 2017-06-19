@@ -153,8 +153,3 @@ Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/24fb1228204f
 ### `neotoma` Workshops
 
 We have provided a set of educational tools through the [NeotomaDB](http://github.com/neotomaDB) GitHub repository in the [Workshops](http://github.com/NeotomaDB/Workshops) repository.  These are free to share, and can be modified as needed.
-
-###
----
-
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
