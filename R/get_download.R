@@ -60,8 +60,9 @@
 #'      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
 #' lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 #'
-#' #  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the early-Holocene that
-#' #  lends support to a warmer, drier early-Holocene in western North America.
+#' #  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the 
+#' #  early-Holocene that lends support to a warmer, drier early-Holocene in
+#' #  western North America.
 #' }
 #' 
 #' @references

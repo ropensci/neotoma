@@ -27,10 +27,15 @@
 #'
 #' source("Bacon.R") 
 #' 
-#' # These defaults just help the core run quickly, they're not neccesarily good parameters.
-#' Bacon("LAKEPINES", acc.mean = 10, thick = 50, depths.file = TRUE, suggest = FALSE, ask = FALSE)
+#' # These defaults just help the core run quickly, they're not 
+#' # neccesarily good parameters.
 #' 
-#' lake_o_dl <- read_bacon("LAKEPINES", add = TRUE, download = download, sections = 17)
+#' Bacon("LAKEPINES", acc.mean = 10, 
+#'       thick = 50, depths.file = TRUE, 
+#'       suggest = FALSE, ask = FALSE)
+#' 
+#' lake_o_dl <- read_bacon("LAKEPINES", add = TRUE, 
+#'                         download = download, sections = 17)
 #' 
 #' }
 #' @export

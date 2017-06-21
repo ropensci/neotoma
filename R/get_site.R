@@ -33,7 +33,10 @@
 #' main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')
 #'
 #' #  Get site information from a dataset:
-#' nw.datasets <- get_dataset(loc = c(-140, 50, -110, 65), datasettype='pollen',taxonname='Pinus*')
+#' nw.datasets <- get_dataset(loc = c(-140, 50, -110, 65), 
+#'                            datasettype='pollen',
+#'                            taxonname='Pinus*')
+#'                            
 #' nw.sites <- get_site(nw.datasets)
 #'
 #' }

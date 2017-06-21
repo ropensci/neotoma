@@ -26,9 +26,12 @@ single sites.
 \dontrun{
 #  Search for sites with "Thuja" pollen that are older than 8kyr BP and
 #  that are on the west coast of North America:
-t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.datasets <- get_dataset(taxonname='Thuja*', 
+                              loc=c(-150, 20, -100, 60), 
+                              ageyoung = 8000)
 
-#  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
+#  Returns 3 records (as of 04/04/2013), get dataset for the first record, 
+#  Gold Lake Bog.
 thuja.sites <- get_download(t8kyr.datasets)
 
 gold.p25 <- compile_taxa(thuja.sites, 'P25')

@@ -34,13 +34,15 @@ Using the dataset ID, return all geochronological data associated with the dataI
 }
 \examples{
 \dontrun{
-#  Search for the sites around Marion Lake, BC.  I want to find sites within about 1km.
+#  Search for the sites around Marion Lake, BC.  I want to find sites within 
+#  about 1km.
 
 marion <- get_site(sitename = "Marion Lake*")
 
 marion_close <- get_closest(marion, n = 10, buffer = 1)
 
-#  Returns 116 records (as of 13/07/2015).  These are the pollen records though, we want the sites:
+#  Returns 116 records (as of 13/07/2015).  These are the pollen records though, 
+#  we want the sites:
 geochron.records <- get_geochron(marion_close)
 
 #  We want to extract all the radiocarbon ages from the records:

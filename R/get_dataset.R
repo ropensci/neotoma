@@ -40,13 +40,17 @@
 #' @examples \dontrun{
 #' # Search for sites with "Thuja" pollen that are older than 8kyr BP and
 #' # that are on the west coast of North America:
-#' t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+#' t8kyr.datasets <- get_dataset(taxonname='Thuja*', 
+#'                               loc=c(-150, 20, -100, 60), 
+#'                               ageyoung = 8000)
 #'
 #' # Search for vertebrate fossils in Canada (gpid: 756) within the last 2kyr.
 #' gpids <- get_table(table.name='GeoPoliticalUnits')
 #' canID <- gpids[which(gpids$GeoPoliticalName == 'Canada'),1]
 #'
-#' v2kyr.datasets <- get_dataset(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)
+#' v2kyr.datasets <- get_dataset(datasettype='vertebrate fauna', 
+#'                               gpid=canID, 
+#'                               ageold = 2000)
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org

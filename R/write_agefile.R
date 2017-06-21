@@ -17,7 +17,8 @@
 #' @examples \dontrun{
 #' # Find a particular record:
 #'
-#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), 
+#'                                         datasettype = "pollen"))
 #' 
 #' # You will need to edit the `path` argument here to point to a directory that 
 #' # contains a `Cores` directory.
