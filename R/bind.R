@@ -24,21 +24,21 @@
 #' plot(t8kyr.co_site)
 #' 
 #' ####
-#' # Download dataset data across four dataset types along the forest prairie boundary:
-#' # We want to look at four different dataset types across a forest prairie boundary:
+#' # We want to look at four different dataset types across a forest-prairie 
+#' # boundary:
 #' dataset_types <- c("ostracode surface sample",
 #'                    "water chemistry",
 #'                    "diatom surface sample",
 #'                    "pollen surface sample")
 #' 
-#' # Run the "get_dataset` function for each of the different dataset types 
+#' # Run the `get_dataset` function for each of the different dataset types 
 #' dataset_lists <- lapply(dataset_types, 
 #'                           function(x) { 
 #'                             get_dataset(datasettype=x, 
 #'                                         loc = c(-100,43,-92,48))
 #'                                         })
 #' 
-#' # Using do.call here to make sure that I don"t have to split the list out.
+#' # Using do.call here to make sure that I don't have to split the list out.
 #' new_datasets <- do.call(bind, dataset_lists)
 #' 
 #' # And voila!

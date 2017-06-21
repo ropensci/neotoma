@@ -23,11 +23,13 @@
 #'  If Neotoma returns empty content, either the control table or the associated metadata (which happens in approximately 25% of cases) then the data.frames are returned with NA content.
 #'  
 #' @examples \dontrun{
-#' #  The point of pulling chronology tables is to re-build or examine the chronological
-#' #  information that was used to build the age-depth model for the core.  You can do this by hand,
-#' #  but the `write_agefile` function works with `download` objects directly.
+#' #  The point of pulling chronology tables is to re-build or examine the 
+#' #  chronological information that was used to build the age-depth model for 
+#' #  the core.  You can do this by hand, but the `write_agefile` function works 
+#' #  with `download` objects directly.
 #' 
-#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), 
+#'                                         datasettype = "pollen"))
 #' pines_chron <- get_chroncontrol(three_pines)
 #' 
 #' # Spline interpolation:
@@ -38,8 +40,8 @@
 #' 
 #' }
 #' @references
-#' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' + Neotoma Project Website: http://www.neotomadb.org
+#' + API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 get_chroncontrol <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
