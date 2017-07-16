@@ -35,6 +35,7 @@
 }
 
 ##' @export
+##' @importFrom dplyr bind_rows
 ##' @rdname taxa
 `taxa.download_list` <- function(obj, collapse = TRUE, hierarchy = FALSE, ...) {
     ret <- lapply(obj, '[[', 'taxon.list')

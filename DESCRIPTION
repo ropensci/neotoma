@@ -28,7 +28,8 @@ Imports:
     httr,
     xml2,
     analogue,
-    leaflet
+    leaflet,
+    dplyr
 Suggests:
     testthat,
     knitr
