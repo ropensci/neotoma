@@ -120,9 +120,10 @@ param_check <- function(cl) {
   if ('gpid' %in% names(cl)) {
     if (is.character(cl$gpid)) {
       gprow <- match(x = cl$gpid, table = gp.table$GeoPoliticalName)
-      if (is.na(gprow)) {
+      if (any(is.na(gprow))) {
         error$flag <- 1
-        error$message[[length(error$message) + 1]] <- 'Cannot find a match for the gpid provided.'
+        message <- paste0('Cannot find a match for the gpid provided. Missing: ', cl$gpid[which(is.na(gprow))])
+        error$message[[length(error$message) + 1]] <- message
       }
       cl$gpid <- gp.table$GeoPoliticalID[gprow]
     } else {

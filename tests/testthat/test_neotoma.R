@@ -107,6 +107,7 @@
 #   expect_is(get_dataset(x = 1), 'dataset_list')
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
+#   expect_error(get_dataset(datasettype='pollen', gpid=c("Wisconsin", "Michigan", "Minnesota", "Barf Town", "Poop Ville")))
 #   expect_is(get_dataset(get_site(sitename = "Lac à Sam%")), "dataset_list")
 #   expect_is(get_dataset(gpid=c(756, 2845, 5242), datasettype = "pollen"), "dataset_list") # Canada, Mexico, Spain
 # })
