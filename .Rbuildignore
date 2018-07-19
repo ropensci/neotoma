@@ -2,3 +2,12 @@
 ^\.Rproj\.user$
 ^.*\.yml
 README\.html
+^revdep$
+^cran-comments.md$
+^package_check.R$
+^code_of_conduct.md
+^read_methods.R
+tests/local_dont_run/*.*
+download.out
+inst/Cores
+R/dev_Bchron.R

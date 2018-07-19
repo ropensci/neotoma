@@ -1,4 +1,3 @@
-
 #' Function to convert assemblage taxa to standardized lists.
 #'
 #' From the assemblage data for the core return assemblage data with the assemblage taxa
@@ -12,6 +11,7 @@
 #'   \item{\code{"WhitmoreSmall"} }{  As above, but taxa for which both fully resolved and undifferentiated exist these taxa are summed.}
 #' }
 #'
+#' @importFrom stats aggregate
 #' @param object A pollen object returned by \code{\link{get_download}}.
 #' @param alt.table A user provided table formatted with at least two columns, one called 'taxon' and the other named as in \code{list.name}.
 #' @param list.name The taxon compilation list, one of a set of lists from the literature (e.g., \code{"P25"}, \code{"WhitmoreFull"}).  More detail in section Details.
@@ -31,14 +31,23 @@
 #' gold.p25 <- compile_taxa(GOLDKBG, 'P25')
 #'
 #' }
-#' @references
+
+#' @references 
+#' 
 #' Neotoma Project Website: http://www.neotomadb.org
 #'
-#' Gavin DG, Oswald WW, Wahl ER, Williams JW. 2003. A statistical approach to evaluating distance metrics and analog assignments for pollen records. Quaternary Research 60: 356-367.
+#' Gavin DG, Oswald WW, Wahl ER, Williams JW. 2003. A statistical approach to 
+#'   evaluating distance metrics and analog assignments for pollen records. 
+#'   Quaternary Research 60: 356-367.
 #'
-#' Whitmore J, Gajewski K, Sawada M, Williams JW, Shuman B, Bartlein PJ, Minckley T, Viau AE, Webb III T, Shafer S, Anderson P, Brubaker L. 2005. Modern pollen data from North America and Greenland for multi-scale paleoenvironmental applications. Quaternary Science Reviews 24: 1828-1848.
+#' Whitmore J, Gajewski K, Sawada M, Williams JW, Shuman B, Bartlein PJ, Minckley T, 
+#'   Viau AE, Webb III T, Shafer S, Anderson P, Brubaker L. 2005. Modern pollen data 
+#'   from North America and Greenland for multi-scale paleoenvironmental applications. 
+#'   Quaternary Science Reviews 24: 1828-1848.
 #'
-#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687.
+#' Williams J, Shuman B. 2008. Obtaining accurate and precise environmental 
+#'   reconstructions from the modern analog technique and North American surface pollen 
+#'   dataset. Quaternary Science Reviews. 27:669-687.
 #'
 #' API Reference:  http://api.neotomadb.org/doc/resources/contacts
 #' @keywords utilities
@@ -67,8 +76,6 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         }
         use.list <- which(avail.lists %in% list.name)
     } else {
-        pollen.equiv <- NULL
-        data(pollen.equiv, envir = environment())
         avail.lists <- c('P25', 'WS64', 'WhitmoreFull', 'WhitmoreSmall')
         use.list <- which(avail.lists %in% list.name) + 2
     }
@@ -86,8 +93,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
 
             agg.list[is.na(agg.list)] <- 'Other'
 
-
-            compressed.list <- aggregate(t(x$counts), by = list(agg.list),
+            compressed.list <- stats::aggregate(t(x$counts), by = list(agg.list),
                                          sum, na.rm = TRUE)
 
             compressed.cols <- compressed.list[, 1]
@@ -148,7 +154,7 @@ compile_taxa <- function(object, list.name, alt.table = NULL, cf = TRUE, type = 
         agg.list <- as.vector(used.taxa[, use.list])
         agg.list[is.na(agg.list)] <- 'Other'
 
-        compressed.list <- aggregate(t(object), by = list(agg.list),
+        compressed.list <- stats::aggregate(t(object), by = list(agg.list),
                                      sum, na.rm = TRUE)
 
         compressed.cols <- compressed.list[, 1]

@@ -6,10 +6,15 @@ print.dataset <- function(x, ...){
   locs <- as.numeric(get_site(x)[,c('long', 'lat')])
   types <- x$dataset.meta$dataset.type
   
-  cat(paste0('A dataset for ',
-           x$site$site.name, '\n',
-           'Accessed ', format(x$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
-
+  if(!is.na(x$access.date)){
+    cat(paste0('A dataset for ',
+             x$site$site.name, '\n',
+             'Accessed ', format(x$access.date, "%Y-%m-%d %H:%M"), 'h. \n'))
+  } else {
+    cat(paste0('A dataset for ',
+               x$site$site.name), '\n')
+  }
+  
   print(format(data.frame(dataset.id = x$dataset.meta$dataset.id, 
                           site.name = site, 
                           long = locs[1],

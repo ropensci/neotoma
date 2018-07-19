@@ -2,8 +2,8 @@
 #'
 #' @description The function takes the parameters, defined by the user, and returns a table with publication information from the Neotoma Paleoecological Database.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr GET content
 #' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
@@ -44,8 +44,8 @@ get_publication<- function(x, contactid, datasetid, author,
 #' The function takes the parameters, defined by the user, and returns a table with
 #'    publication information from the Neotoma Paleoecological Database.
 #'
-#' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr content GET
 #' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
@@ -62,64 +62,45 @@ get_publication.default <- function(x, contactid, datasetid, author,
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
+  
+  if('x' %in% names(cl)){
+    names(cl)[which(names(cl) == 'x')] <- 'pubid'
+  }
   cl <- lapply(cl, eval, envir = parent.frame())
 
-  # Parameter check on pubid:
-  if ('pubid' %in% names(cl)){
-    if (!is.numeric(cl$pubid)){
-      stop('The pubid must be numeric.')
-    }
+  #  Pass the parameters to param_check to make sure everything is kosher.
+  error_test <- param_check(cl)
+  if(error_test[[2]]$flag == 1){
+    stop(paste0(unlist(error_test[[2]]$message), collapse='\n  '))
+  } else {
+    cl <- error_test[[1]]
   }
-
-  # Parameter check on contactid:
-  if ('contactid' %in% names(cl)){
-    if (!is.numeric(cl$contactid)){
-      stop('The contactid must be numeric.')
-    }
-  }
-
-  # Parameter check on datasetid:
-  if ('datasetid' %in% names(cl)){
-    if (!is.numeric(cl$datasetid)){
-      stop('The datasetid must be numeric.')
-    }
-  }
-
-  # Parameter check on author:
-  if ('author' %in% names(cl)){
-    if (!is.character(cl$author)){
-      stop('The author must be a character string.')
-    }
-  }
-
-  if ('pubtype' %in% names(cl)){
-    if (!is.character(cl$pubtype)){
-      stop(paste0('The pubtype must be a character string. Use get.table',
-                  '(\'PublicationTypes\') to find acceptable tables.'))
-    }
-  }
-
-  if ('year' %in% names(cl)){
-    if (!is.numeric(cl$year)){
-      stop('The year used must be numeric.')
-    }
-  }
-
-  # Parameter check on author:
-  if ('search' %in% names(cl)){
-    if (!is.character(cl$search)){
-      stop('The search string must be a character string.')
-    }
-  }
-
-  aa <- try(fromJSON(getForm(base.uri, .params = cl),
-                     nullValue = NA), silent = TRUE)
-
+  
+  
+  neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
+  if (identical(neotoma_content, "")) stop("")
+  aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+  
   if (aa[[1]] == 0){
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
   if (aa[[1]] == 1){
     aa <- aa[[2]]
+    
+    rep_NULL <- function(x){ 
+      if(is.null(x)){NA}
+      else{
+        if(class(x) == 'list'){
+          lapply(x, rep_NULL)
+        } else {
+          return(x)
+        }
+      }
+    }
+    
+    # Clear NULLs from the output object & replace with NA values.
+    aa <- lapply(aa, function(x)rep_NULL(x))
+    
     if(length(aa) > 1){
       cat('The API call was successful, you have returned ',
           length(aa), 'records.\n')
@@ -131,17 +112,7 @@ get_publication.default <- function(x, contactid, datasetid, author,
   if (class(aa) == 'try-error'){
     output <- NA
   } else {
-      # This line doesn't do anything
-      # names(aa) <- sapply(aa, function(x)x$SiteName)
 
-      # This line looses all the author information beyond the first
-      # suspect it is not needed
-      # aa <- lapply(aa, lapply, function(x) ifelse(length(x) == 0, NA, x))
-
-      # This is back now doing what is documented to do
-      # could be neater though - how about returning a list with
-      # 2 components, the first everything but the Authors array, the
-      # second the authors array *with* a link to PublicationID??
     get_results <- function(x){
       
       if(length(x) == 0){

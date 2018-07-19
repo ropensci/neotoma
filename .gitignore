@@ -19,3 +19,8 @@ file.notes.csv
 Diagram1.dia
 Diagram1.dia.autosave
 .RData
+neotoma_ropensci.Rproj
+inst/doc
+download.out
+..Rcheck
+R/dev_Bchron.R

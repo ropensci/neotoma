@@ -1,0 +1,2182 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--written 16-Aug-2015 2:32:29 PM-->
+<TiliaFile>
+<Version>
+<Application>Tilia</Application>
+<MajorVersion>2</MajorVersion>
+<MinorVersion>0</MinorVersion>
+<Release>37</Release>
+</Version>
+<Contacts>
+<Contact ID="1">
+<NeotomaContactID>5126</NeotomaContactID>
+<NeotomaAliasID>5126</NeotomaAliasID>
+<FullContactName>Goring, Simon J.</FullContactName>
+<ShortContactName>Goring, S.J.</ShortContactName>
+<FamilyName>Goring</FamilyName>
+<GivenNames>Simon J.</GivenNames>
+<LeadingInitials>S.J.</LeadingInitials>
+<Title>Dr.</Title>
+<Status>active</Status>
+<Email>goring@wisc.edu</Email>
+<URL>http://downwithtime.wordpress.com/</URL>
+<Address>
+<AddressLine>550 North Park St \r\nDepartment of Geography \r\nUniversity of Wisconsin \r\nMadison, WI 53706\r\nUSA</AddressLine>
+</Address>
+</Contact>
+<Contact ID="2">
+<NeotomaContactID>6568</NeotomaContactID>
+<NeotomaAliasID>6568</NeotomaAliasID>
+<FullContactName>Ripp, Morgan R.</FullContactName>
+<ShortContactName>Ripp, M.R.</ShortContactName>
+<FamilyName>Ripp</FamilyName>
+<GivenNames>Morgan R.</GivenNames>
+<LeadingInitials>M.R.</LeadingInitials>
+<Status>active</Status>
+<Telephone>+1-608-890-1188</Telephone>
+<Address>
+<AddressLine>550 North Park St\r\nDepartment of Geography\r\nUniversity of Wisconsin\r\nMadison, Wisconsin 53706\r\nUSA</AddressLine>
+</Address>
+</Contact>
+<Contact ID="3">
+<NeotomaContactID>6403</NeotomaContactID>
+<NeotomaAliasID>6403</NeotomaAliasID>
+<FullContactName>Umbanhowar, Charles E., Jr.</FullContactName>
+<ShortContactName>Umbanhowar, C.E., Jr.</ShortContactName>
+<FamilyName>Umbanhowar</FamilyName>
+<GivenNames>Charles E.</GivenNames>
+<LeadingInitials>C.E.</LeadingInitials>
+<Suffix>Jr.</Suffix>
+<Title>Dr.</Title>
+<Status>active</Status>
+<Telephone>+1-507-786-3397</Telephone>
+<Email>ceumb@stolaf.edu</Email>
+<URL>http://www.stolaf.edu/people/ceumb/</URL>
+<Address>
+<AddressLine>Department of Biology\r\nSaint Olaf College\r\n1520 Saint Olaf Ave\r\nNorthfield, MN 55057\r\nUSA</AddressLine>
+</Address>
+</Contact>
+</Contacts>
+<Publications>
+<Publication ID="1" Primary="false">
+<PublicationType>journal article</PublicationType>
+<NeotomaID>7389</NeotomaID>
+<DOI>10.1191/0959683604hl745rp</DOI>
+<PublicationYear>2004</PublicationYear>
+<Citation>Umbanhowar, C.E., Jr. 2004. Interaction of fire, climate and vegetation change at a large landscape scale in the Big Woods of Minnesota, USA. The Holocene 14(5):661-676. [DOI: 10.1191/0959683604hl745rp]</Citation>
+<Authors>
+<Author>
+<Contact ID="3"/>
+<LastName>Umbanhowar</LastName>
+<Initials>C.E.</Initials>
+<Suffix>Jr.</Suffix>
+</Author>
+</Authors>
+<Title>Interaction of fire, climate and vegetation change at a large landscape scale in the Big Woods of Minnesota, USA</Title>
+<Journal>The Holocene</Journal>
+<Volume>14</Volume>
+<Issue>5</Issue>
+<Pages>661-676</Pages>
+</Publication>
+</Publications>
+<SpreadSheetBook>
+<SpreadSheetOptions>
+<HeaderRow>0</HeaderRow>
+<FontName>Tahoma</FontName>
+<FontSize>9</FontSize>
+<DefaultColWidth>64</DefaultColWidth>
+<DefaultRowHeight>18</DefaultRowHeight>
+<PercentDecimalPlaces>1</PercentDecimalPlaces>
+<CheckDupCodes>True</CheckDupCodes>
+<CaseSensitiveCodes>False</CaseSensitiveCodes>
+<CodesVisible>True</CodesVisible>
+<ElementsVisible>True</ElementsVisible>
+<UnitsVisible>True</UnitsVisible>
+<ContextsVisible>False</ContextsVisible>
+<TaphonomyVisible>False</TaphonomyVisible>
+<GroupsVisible>True</GroupsVisible>
+<GroupCategories>
+<GroupCategory>algae</GroupCategory>
+<GroupCategory>bryophytes</GroupCategory>
+<GroupCategory>fungi</GroupCategory>
+<GroupCategory>laboratory analyses</GroupCategory>
+<GroupCategory>unidentified palynomorphs</GroupCategory>
+<GroupCategory>vascular plants</GroupCategory>
+</GroupCategories>
+</SpreadSheetOptions>
+<SpreadSheet page="0" name="Data">
+<Col ID="1" Width="64">
+<cell row="3">
+<text>#Chron1</text>
+</cell>
+<cell row="4">
+<text>#Chron2</text>
+</cell>
+<cell row="5">
+<text>#Chron2.Old</text>
+</cell>
+<cell row="6">
+<text>#Chron2.Young</text>
+</cell>
+<cell row="7">
+<text>#Samp.Analyst</text>
+</cell>
+<cell row="8">
+<text>#Samp.Keywords</text>
+</cell>
+<cell row="9">
+<text>Art</text>
+</cell>
+<cell row="10">
+<text>Bet</text>
+</cell>
+<cell row="11">
+<text>Que</text>
+</cell>
+<cell row="12">
+<text>samp.quant</text>
+</cell>
+<cell row="13">
+<text>Til</text>
+</cell>
+<cell row="14">
+<text>Ulm</text>
+</cell>
+<cell row="15">
+<text>Ace</text>
+</cell>
+<cell row="16">
+<text>Amb</text>
+</cell>
+<cell row="17">
+<text>Poaeae</text>
+</cell>
+<cell row="18">
+<text>Asteae.sf.Astdae</text>
+</cell>
+<cell row="19">
+<text>Pln</text>
+</cell>
+<cell row="20">
+<text>Che-t</text>
+</cell>
+<cell row="21">
+<text>Ost</text>
+</cell>
+<cell row="22">
+<text>spik</text>
+</cell>
+<cell row="23">
+<text>[other.plnt]</text>
+</cell>
+<cell row="24">
+<text>Pin/Pic</text>
+</cell>
+<cell row="25">
+<text>spik.susp</text>
+</cell>
+</Col>
+<Col ID="2" Width="180">
+<cell row="3">
+<text>Umbanhower</text>
+</cell>
+<cell row="4">
+<text>Bacon</text>
+</cell>
+<cell row="5">
+<text>Bacon Older Bound</text>
+</cell>
+<cell row="6">
+<text>Bacon Younger Bound</text>
+</cell>
+<cell row="7">
+<text>Sample Analyst</text>
+</cell>
+<cell row="8">
+<text>Sample Keywords</text>
+</cell>
+<cell row="9">
+<text>Artemisia</text>
+</cell>
+<cell row="10">
+<text>Betula</text>
+</cell>
+<cell row="11">
+<text>Quercus</text>
+</cell>
+<cell row="12">
+<text>Sample quantity</text>
+</cell>
+<cell row="13">
+<text>Tilia</text>
+</cell>
+<cell row="14">
+<text>Ulmus</text>
+</cell>
+<cell row="15">
+<text>Acer</text>
+</cell>
+<cell row="16">
+<text>Ambrosia</text>
+</cell>
+<cell row="17">
+<text>Poaceae</text>
+</cell>
+<cell row="18">
+<text>Asteraceae subf. Asteroideae</text>
+</cell>
+<cell row="19">
+<text>Plantago</text>
+</cell>
+<cell row="20">
+<text>Chenopodium-type</text>
+</cell>
+<cell row="21">
+<text>Ostrya</text>
+</cell>
+<cell row="22">
+<text>Spike</text>
+</cell>
+<cell row="23">
+<text>Other plants</text>
+</cell>
+<cell row="24">
+<text>Pinus/Picea</text>
+</cell>
+<cell row="25">
+<text>Spike suspension</text>
+</cell>
+</Col>
+<Col ID="3" Width="64">
+<cell row="9">
+<text>pollen</text>
+</cell>
+<cell row="10">
+<text>pollen</text>
+</cell>
+<cell row="11">
+<text>pollen</text>
+</cell>
+<cell row="12">
+<text>volume</text>
+</cell>
+<cell row="13">
+<text>pollen</text>
+</cell>
+<cell row="14">
+<text>pollen</text>
+</cell>
+<cell row="15">
+<text>pollen</text>
+</cell>
+<cell row="16">
+<text>pollen</text>
+</cell>
+<cell row="17">
+<text>pollen</text>
+</cell>
+<cell row="18">
+<text>pollen</text>
+</cell>
+<cell row="19">
+<text>pollen</text>
+</cell>
+<cell row="20">
+<text>pollen</text>
+</cell>
+<cell row="21">
+<text>pollen</text>
+</cell>
+<cell row="22">
+<text>counted</text>
+</cell>
+<cell row="23">
+<text>pollen</text>
+</cell>
+<cell row="24">
+<text>pollen</text>
+</cell>
+<cell row="25">
+<text>concentration</text>
+</cell>
+</Col>
+<Col ID="4" Width="64">
+<cell row="3">
+<text>calendar yr BP</text>
+</cell>
+<cell row="4">
+<text>calendar yr BP</text>
+</cell>
+<cell row="5">
+<text>calendar yr BP</text>
+</cell>
+<cell row="6">
+<text>calendar yr BP</text>
+</cell>
+<cell row="9">
+<text>NISP</text>
+</cell>
+<cell row="10">
+<text>NISP</text>
+</cell>
+<cell row="11">
+<text>NISP</text>
+</cell>
+<cell row="12">
+<text>ml</text>
+</cell>
+<cell row="13">
+<text>NISP</text>
+</cell>
+<cell row="14">
+<text>NISP</text>
+</cell>
+<cell row="15">
+<text>NISP</text>
+</cell>
+<cell row="16">
+<text>NISP</text>
+</cell>
+<cell row="17">
+<text>NISP</text>
+</cell>
+<cell row="18">
+<text>NISP</text>
+</cell>
+<cell row="19">
+<text>NISP</text>
+</cell>
+<cell row="20">
+<text>NISP</text>
+</cell>
+<cell row="21">
+<text>NISP</text>
+</cell>
+<cell row="22">
+<text>number</text>
+</cell>
+<cell row="23">
+<text>NISP</text>
+</cell>
+<cell row="24">
+<text>NISP</text>
+</cell>
+<cell row="25">
+<text>grains/ml</text>
+</cell>
+</Col>
+<Col ID="7" Width="64">
+<cell row="9">
+<text>UPHE</text>
+</cell>
+<cell row="10">
+<text>TRSH</text>
+</cell>
+<cell row="11">
+<text>TRSH</text>
+</cell>
+<cell row="12">
+<text>LABO</text>
+</cell>
+<cell row="13">
+<text>TRSH</text>
+</cell>
+<cell row="14">
+<text>TRSH</text>
+</cell>
+<cell row="15">
+<text>TRSH</text>
+</cell>
+<cell row="16">
+<text>UPHE</text>
+</cell>
+<cell row="17">
+<text>UPHE</text>
+</cell>
+<cell row="18">
+<text>UPHE</text>
+</cell>
+<cell row="19">
+<text>UPHE</text>
+</cell>
+<cell row="20">
+<text>UPHE</text>
+</cell>
+<cell row="21">
+<text>TRSH</text>
+</cell>
+<cell row="22">
+<text>LABO</text>
+</cell>
+<cell row="23">
+<text>UNID</text>
+</cell>
+<cell row="24">
+<text>TRSH</text>
+</cell>
+<cell row="25">
+<text>LABO</text>
+</cell>
+</Col>
+<Col ID="8" Width="64">
+<cell row="1">
+<value>35</value>
+</cell>
+<cell row="3">
+<value>52</value>
+</cell>
+<cell row="4">
+<value>62</value>
+</cell>
+<cell row="5">
+<value>127</value>
+</cell>
+<cell row="6">
+<value>15</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>3</value>
+</cell>
+<cell row="10">
+<value>3</value>
+</cell>
+<cell row="11">
+<value>57</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>7</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>57</value>
+</cell>
+<cell row="17">
+<value>41</value>
+</cell>
+<cell row="18">
+<value>5</value>
+</cell>
+<cell row="20">
+<value>2</value>
+</cell>
+<cell row="21">
+<value>4</value>
+</cell>
+<cell row="22">
+<value>161</value>
+</cell>
+<cell row="23">
+<value>10</value>
+</cell>
+<cell row="24">
+<value>10</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="9" Width="64">
+<cell row="1">
+<value>43</value>
+</cell>
+<cell row="3">
+<value>75</value>
+</cell>
+<cell row="4">
+<value>88</value>
+</cell>
+<cell row="5">
+<value>164</value>
+</cell>
+<cell row="6">
+<value>41</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>7</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>87</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>2</value>
+</cell>
+<cell row="14">
+<value>11</value>
+</cell>
+<cell row="16">
+<value>22</value>
+</cell>
+<cell row="17">
+<value>13</value>
+</cell>
+<cell row="18">
+<value>3</value>
+</cell>
+<cell row="20">
+<value>2</value>
+</cell>
+<cell row="21">
+<value>12</value>
+</cell>
+<cell row="22">
+<value>211</value>
+</cell>
+<cell row="23">
+<value>18</value>
+</cell>
+<cell row="24">
+<value>16</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="10" Width="64">
+<cell row="1">
+<value>45</value>
+</cell>
+<cell row="3">
+<value>81</value>
+</cell>
+<cell row="4">
+<value>94</value>
+</cell>
+<cell row="5">
+<value>172</value>
+</cell>
+<cell row="6">
+<value>49</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>4</value>
+</cell>
+<cell row="10">
+<value>3</value>
+</cell>
+<cell row="11">
+<value>95</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>5</value>
+</cell>
+<cell row="14">
+<value>12</value>
+</cell>
+<cell row="16">
+<value>20</value>
+</cell>
+<cell row="17">
+<value>9</value>
+</cell>
+<cell row="18">
+<value>2</value>
+</cell>
+<cell row="20">
+<value>2</value>
+</cell>
+<cell row="21">
+<value>15</value>
+</cell>
+<cell row="22">
+<value>237</value>
+</cell>
+<cell row="23">
+<value>22</value>
+</cell>
+<cell row="24">
+<value>11</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="11" Width="64">
+<cell row="1">
+<value>47</value>
+</cell>
+<cell row="3">
+<value>87</value>
+</cell>
+<cell row="4">
+<value>100</value>
+</cell>
+<cell row="5">
+<value>181</value>
+</cell>
+<cell row="6">
+<value>54</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>6</value>
+</cell>
+<cell row="10">
+<value>17</value>
+</cell>
+<cell row="11">
+<value>79</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>2</value>
+</cell>
+<cell row="14">
+<value>8</value>
+</cell>
+<cell row="15">
+<value>3</value>
+</cell>
+<cell row="16">
+<value>18</value>
+</cell>
+<cell row="17">
+<value>15</value>
+</cell>
+<cell row="18">
+<value>2</value>
+</cell>
+<cell row="19">
+<value>1</value>
+</cell>
+<cell row="20">
+<value>4</value>
+</cell>
+<cell row="21">
+<value>6</value>
+</cell>
+<cell row="22">
+<value>254</value>
+</cell>
+<cell row="23">
+<value>22</value>
+</cell>
+<cell row="24">
+<value>10</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="12" Width="64">
+<cell row="1">
+<value>53</value>
+</cell>
+<cell row="3">
+<value>104</value>
+</cell>
+<cell row="4">
+<value>122</value>
+</cell>
+<cell row="5">
+<value>209</value>
+</cell>
+<cell row="6">
+<value>84</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="8">
+<text>pre-European sample</text>
+</cell>
+<cell row="9">
+<value>7</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>91</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>3</value>
+</cell>
+<cell row="14">
+<value>5</value>
+</cell>
+<cell row="15">
+<value>3</value>
+</cell>
+<cell row="16">
+<value>11</value>
+</cell>
+<cell row="17">
+<value>15</value>
+</cell>
+<cell row="18">
+<value>4</value>
+</cell>
+<cell row="20">
+<value>2</value>
+</cell>
+<cell row="21">
+<value>8</value>
+</cell>
+<cell row="22">
+<value>343</value>
+</cell>
+<cell row="23">
+<value>30</value>
+</cell>
+<cell row="24">
+<value>14</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="13" Width="64">
+<cell row="1">
+<value>57</value>
+</cell>
+<cell row="3">
+<value>153</value>
+</cell>
+<cell row="4">
+<value>146</value>
+</cell>
+<cell row="5">
+<value>241</value>
+</cell>
+<cell row="6">
+<value>102</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>7</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>101</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>2</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>8</value>
+</cell>
+<cell row="17">
+<value>14</value>
+</cell>
+<cell row="18">
+<value>4</value>
+</cell>
+<cell row="20">
+<value>1</value>
+</cell>
+<cell row="21">
+<value>14</value>
+</cell>
+<cell row="22">
+<value>472</value>
+</cell>
+<cell row="23">
+<value>17</value>
+</cell>
+<cell row="24">
+<value>23</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="14" Width="64">
+<cell row="1">
+<value>63</value>
+</cell>
+<cell row="3">
+<value>226</value>
+</cell>
+<cell row="4">
+<value>226</value>
+</cell>
+<cell row="5">
+<value>357</value>
+</cell>
+<cell row="6">
+<value>142</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>16</value>
+</cell>
+<cell row="10">
+<value>12</value>
+</cell>
+<cell row="11">
+<value>101</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>3</value>
+</cell>
+<cell row="16">
+<value>18</value>
+</cell>
+<cell row="17">
+<value>9</value>
+</cell>
+<cell row="18">
+<value>5</value>
+</cell>
+<cell row="20">
+<value>1</value>
+</cell>
+<cell row="21">
+<value>3</value>
+</cell>
+<cell row="22">
+<value>527</value>
+</cell>
+<cell row="23">
+<value>15</value>
+</cell>
+<cell row="24">
+<value>16</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="15" Width="64">
+<cell row="1">
+<value>71</value>
+</cell>
+<cell row="3">
+<value>323</value>
+</cell>
+<cell row="4">
+<value>335</value>
+</cell>
+<cell row="5">
+<value>469</value>
+</cell>
+<cell row="6">
+<value>215</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>4</value>
+</cell>
+<cell row="10">
+<value>12</value>
+</cell>
+<cell row="11">
+<value>85</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>7</value>
+</cell>
+<cell row="16">
+<value>13</value>
+</cell>
+<cell row="17">
+<value>12</value>
+</cell>
+<cell row="18">
+<value>9</value>
+</cell>
+<cell row="20">
+<value>5</value>
+</cell>
+<cell row="21">
+<value>8</value>
+</cell>
+<cell row="22">
+<value>256</value>
+</cell>
+<cell row="23">
+<value>23</value>
+</cell>
+<cell row="24">
+<value>22</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="16" Width="64">
+<cell row="1">
+<value>81</value>
+</cell>
+<cell row="3">
+<value>464</value>
+</cell>
+<cell row="4">
+<value>473</value>
+</cell>
+<cell row="5">
+<value>642</value>
+</cell>
+<cell row="6">
+<value>327</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>10</value>
+</cell>
+<cell row="10">
+<value>3</value>
+</cell>
+<cell row="11">
+<value>81</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>4</value>
+</cell>
+<cell row="16">
+<value>24</value>
+</cell>
+<cell row="17">
+<value>11</value>
+</cell>
+<cell row="18">
+<value>12</value>
+</cell>
+<cell row="20">
+<value>4</value>
+</cell>
+<cell row="21">
+<value>4</value>
+</cell>
+<cell row="22">
+<value>236</value>
+</cell>
+<cell row="23">
+<value>21</value>
+</cell>
+<cell row="24">
+<value>24</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="17" Width="64">
+<cell row="1">
+<value>85</value>
+</cell>
+<cell row="3">
+<value>524</value>
+</cell>
+<cell row="4">
+<value>527</value>
+</cell>
+<cell row="5">
+<value>720</value>
+</cell>
+<cell row="6">
+<value>362</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>5</value>
+</cell>
+<cell row="10">
+<value>2</value>
+</cell>
+<cell row="11">
+<value>79</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>11</value>
+</cell>
+<cell row="15">
+<value>2</value>
+</cell>
+<cell row="16">
+<value>32</value>
+</cell>
+<cell row="17">
+<value>12</value>
+</cell>
+<cell row="18">
+<value>4</value>
+</cell>
+<cell row="20">
+<value>5</value>
+</cell>
+<cell row="21">
+<value>10</value>
+</cell>
+<cell row="22">
+<value>427</value>
+</cell>
+<cell row="23">
+<value>15</value>
+</cell>
+<cell row="24">
+<value>23</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="18" Width="64">
+<cell row="1">
+<value>95</value>
+</cell>
+<cell row="3">
+<value>673</value>
+</cell>
+<cell row="4">
+<value>662</value>
+</cell>
+<cell row="5">
+<value>899</value>
+</cell>
+<cell row="6">
+<value>457</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>8</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>82</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>2</value>
+</cell>
+<cell row="14">
+<value>9</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>16</value>
+</cell>
+<cell row="17">
+<value>14</value>
+</cell>
+<cell row="18">
+<value>7</value>
+</cell>
+<cell row="20">
+<value>4</value>
+</cell>
+<cell row="21">
+<value>2</value>
+</cell>
+<cell row="22">
+<value>239</value>
+</cell>
+<cell row="23">
+<value>24</value>
+</cell>
+<cell row="24">
+<value>24</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="19" Width="64">
+<cell row="1">
+<value>99</value>
+</cell>
+<cell row="3">
+<value>733</value>
+</cell>
+<cell row="4">
+<value>716</value>
+</cell>
+<cell row="5">
+<value>962</value>
+</cell>
+<cell row="6">
+<value>498</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>8</value>
+</cell>
+<cell row="10">
+<value>5</value>
+</cell>
+<cell row="11">
+<value>63</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>4</value>
+</cell>
+<cell row="16">
+<value>12</value>
+</cell>
+<cell row="17">
+<value>14</value>
+</cell>
+<cell row="18">
+<value>3</value>
+</cell>
+<cell row="20">
+<value>17</value>
+</cell>
+<cell row="21">
+<value>4</value>
+</cell>
+<cell row="22">
+<value>611</value>
+</cell>
+<cell row="23">
+<value>23</value>
+</cell>
+<cell row="24">
+<value>46</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="20" Width="64">
+<cell row="1">
+<value>101</value>
+</cell>
+<cell row="3">
+<value>762</value>
+</cell>
+<cell row="4">
+<value>743</value>
+</cell>
+<cell row="5">
+<value>996</value>
+</cell>
+<cell row="6">
+<value>517</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>19</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>47</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>3</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>8</value>
+</cell>
+<cell row="17">
+<value>28</value>
+</cell>
+<cell row="18">
+<value>13</value>
+</cell>
+<cell row="20">
+<value>17</value>
+</cell>
+<cell row="21">
+<value>2</value>
+</cell>
+<cell row="22">
+<value>259</value>
+</cell>
+<cell row="23">
+<value>9</value>
+</cell>
+<cell row="24">
+<value>46</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="21" Width="64">
+<cell row="1">
+<value>107</value>
+</cell>
+<cell row="3">
+<value>852</value>
+</cell>
+<cell row="4">
+<value>824</value>
+</cell>
+<cell row="5">
+<value>1091</value>
+</cell>
+<cell row="6">
+<value>578</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>14</value>
+</cell>
+<cell row="10">
+<value>9</value>
+</cell>
+<cell row="11">
+<value>49</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>2</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>16</value>
+</cell>
+<cell row="17">
+<value>22</value>
+</cell>
+<cell row="18">
+<value>14</value>
+</cell>
+<cell row="20">
+<value>14</value>
+</cell>
+<cell row="21">
+<value>4</value>
+</cell>
+<cell row="22">
+<value>318</value>
+</cell>
+<cell row="23">
+<value>12</value>
+</cell>
+<cell row="24">
+<value>35</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="22" Width="64">
+<cell row="1">
+<value>115</value>
+</cell>
+<cell row="3">
+<value>971</value>
+</cell>
+<cell row="4">
+<value>931</value>
+</cell>
+<cell row="5">
+<value>1200</value>
+</cell>
+<cell row="6">
+<value>675</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>14</value>
+</cell>
+<cell row="10">
+<value>6</value>
+</cell>
+<cell row="11">
+<value>66</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>3</value>
+</cell>
+<cell row="16">
+<value>20</value>
+</cell>
+<cell row="17">
+<value>14</value>
+</cell>
+<cell row="18">
+<value>11</value>
+</cell>
+<cell row="20">
+<value>5</value>
+</cell>
+<cell row="21">
+<value>4</value>
+</cell>
+<cell row="22">
+<value>405</value>
+</cell>
+<cell row="23">
+<value>10</value>
+</cell>
+<cell row="24">
+<value>42</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="23" Width="64">
+<cell row="1">
+<value>125</value>
+</cell>
+<cell row="3">
+<value>1120</value>
+</cell>
+<cell row="4">
+<value>1067</value>
+</cell>
+<cell row="5">
+<value>1338</value>
+</cell>
+<cell row="6">
+<value>796</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>12</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>55</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>3</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>16</value>
+</cell>
+<cell row="17">
+<value>27</value>
+</cell>
+<cell row="18">
+<value>7</value>
+</cell>
+<cell row="20">
+<value>19</value>
+</cell>
+<cell row="21">
+<value>1</value>
+</cell>
+<cell row="22">
+<value>428</value>
+</cell>
+<cell row="23">
+<value>27</value>
+</cell>
+<cell row="24">
+<value>26</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="24" Width="64">
+<cell row="1">
+<value>129</value>
+</cell>
+<cell row="3">
+<value>1180</value>
+</cell>
+<cell row="4">
+<value>1121</value>
+</cell>
+<cell row="5">
+<value>1391</value>
+</cell>
+<cell row="6">
+<value>849</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>19</value>
+</cell>
+<cell row="10">
+<value>2</value>
+</cell>
+<cell row="11">
+<value>58</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>4</value>
+</cell>
+<cell row="16">
+<value>17</value>
+</cell>
+<cell row="17">
+<value>25</value>
+</cell>
+<cell row="18">
+<value>6</value>
+</cell>
+<cell row="20">
+<value>29</value>
+</cell>
+<cell row="22">
+<value>532</value>
+</cell>
+<cell row="23">
+<value>17</value>
+</cell>
+<cell row="24">
+<value>23</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="25" Width="64">
+<cell row="1">
+<value>137</value>
+</cell>
+<cell row="3">
+<value>1299</value>
+</cell>
+<cell row="4">
+<value>1231</value>
+</cell>
+<cell row="5">
+<value>1494</value>
+</cell>
+<cell row="6">
+<value>951</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>13</value>
+</cell>
+<cell row="10">
+<value>11</value>
+</cell>
+<cell row="11">
+<value>56</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>1</value>
+</cell>
+<cell row="15">
+<value>2</value>
+</cell>
+<cell row="16">
+<value>12</value>
+</cell>
+<cell row="17">
+<value>24</value>
+</cell>
+<cell row="18">
+<value>13</value>
+</cell>
+<cell row="20">
+<value>2</value>
+</cell>
+<cell row="21">
+<value>2</value>
+</cell>
+<cell row="22">
+<value>236</value>
+</cell>
+<cell row="23">
+<value>21</value>
+</cell>
+<cell row="24">
+<value>40</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="26" Width="64">
+<cell row="1">
+<value>145</value>
+</cell>
+<cell row="3">
+<value>1418</value>
+</cell>
+<cell row="4">
+<value>1341</value>
+</cell>
+<cell row="5">
+<value>1588</value>
+</cell>
+<cell row="6">
+<value>1063</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>21</value>
+</cell>
+<cell row="10">
+<value>6</value>
+</cell>
+<cell row="11">
+<value>54</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>2</value>
+</cell>
+<cell row="15">
+<value>2</value>
+</cell>
+<cell row="16">
+<value>14</value>
+</cell>
+<cell row="17">
+<value>36</value>
+</cell>
+<cell row="18">
+<value>12</value>
+</cell>
+<cell row="20">
+<value>3</value>
+</cell>
+<cell row="21">
+<value>3</value>
+</cell>
+<cell row="22">
+<value>251</value>
+</cell>
+<cell row="23">
+<value>25</value>
+</cell>
+<cell row="24">
+<value>21</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="27" Width="64">
+<cell row="1">
+<value>159</value>
+</cell>
+<cell row="3">
+<value>1627</value>
+</cell>
+<cell row="4">
+<value>1529</value>
+</cell>
+<cell row="5">
+<value>1749</value>
+</cell>
+<cell row="6">
+<value>1262</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>10</value>
+</cell>
+<cell row="10">
+<value>8</value>
+</cell>
+<cell row="11">
+<value>72</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>5</value>
+</cell>
+<cell row="16">
+<value>14</value>
+</cell>
+<cell row="17">
+<value>27</value>
+</cell>
+<cell row="18">
+<value>7</value>
+</cell>
+<cell row="20">
+<value>7</value>
+</cell>
+<cell row="21">
+<value>9</value>
+</cell>
+<cell row="22">
+<value>508</value>
+</cell>
+<cell row="23">
+<value>17</value>
+</cell>
+<cell row="24">
+<value>23</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="28" Width="64">
+<cell row="1">
+<value>167</value>
+</cell>
+<cell row="3">
+<value>1746</value>
+</cell>
+<cell row="4">
+<value>1637</value>
+</cell>
+<cell row="5">
+<value>1838</value>
+</cell>
+<cell row="6">
+<value>1385</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>18</value>
+</cell>
+<cell row="10">
+<value>5</value>
+</cell>
+<cell row="11">
+<value>39</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>4</value>
+</cell>
+<cell row="15">
+<value>1</value>
+</cell>
+<cell row="16">
+<value>8</value>
+</cell>
+<cell row="17">
+<value>30</value>
+</cell>
+<cell row="18">
+<value>11</value>
+</cell>
+<cell row="20">
+<value>37</value>
+</cell>
+<cell row="21">
+<value>3</value>
+</cell>
+<cell row="22">
+<value>170</value>
+</cell>
+<cell row="23">
+<value>22</value>
+</cell>
+<cell row="24">
+<value>21</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+<Col ID="29" Width="64">
+<cell row="1">
+<value>173</value>
+</cell>
+<cell row="3">
+<value>1835</value>
+</cell>
+<cell row="4">
+<value>1719</value>
+</cell>
+<cell row="5">
+<value>1897</value>
+</cell>
+<cell row="6">
+<value>1488</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>11</value>
+</cell>
+<cell row="10">
+<value>3</value>
+</cell>
+<cell row="11">
+<value>60</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="13">
+<value>3</value>
+</cell>
+<cell row="14">
+<value>2</value>
+</cell>
+<cell row="16">
+<value>17</value>
+</cell>
+<cell row="17">
+<value>17</value>
+</cell>
+<cell row="18">
+<value>7</value>
+</cell>
+<cell row="20">
+<value>25</value>
+</cell>
+<cell row="21">
+<value>2</value>
+</cell>
+<cell row="22">
+<value>167</value>
+</cell>
+<cell row="23">
+<value>15</value>
+</cell>
+<cell row="24">
+<value>39</value>
+</cell>
+<cell row="25">
+<value>91000</value>
+</cell>
+</Col>
+<Col ID="30" Width="64">
+<cell row="1">
+<value>185</value>
+</cell>
+<cell row="3">
+<value>2014</value>
+</cell>
+<cell row="4">
+<value>1815</value>
+</cell>
+<cell row="5">
+<value>1958</value>
+</cell>
+<cell row="6">
+<value>1616</value>
+</cell>
+<cell row="7">
+<text>Umbanhowar, C.E., Jr.</text>
+<contact ID="3"/>
+</cell>
+<cell row="9">
+<value>10</value>
+</cell>
+<cell row="10">
+<value>7</value>
+</cell>
+<cell row="11">
+<value>42</value>
+</cell>
+<cell row="12">
+<value>1</value>
+</cell>
+<cell row="14">
+<value>6</value>
+</cell>
+<cell row="16">
+<value>12</value>
+</cell>
+<cell row="17">
+<value>22</value>
+</cell>
+<cell row="18">
+<value>5</value>
+</cell>
+<cell row="20">
+<value>23</value>
+</cell>
+<cell row="21">
+<value>8</value>
+</cell>
+<cell row="22">
+<value>182</value>
+</cell>
+<cell row="23">
+<value>22</value>
+</cell>
+<cell row="24">
+<value>37</value>
+</cell>
+<cell row="25">
+<value>79300</value>
+</cell>
+</Col>
+</SpreadSheet>
+</SpreadSheetBook>
+<Site>
+<SiteName>Crystal Lake</SiteName>
+<LongEast>-93.20779</LongEast>
+<LongWest>-93.21646</LongWest>
+<LatNorth>44.33585</LatNorth>
+<LatSouth>44.33112</LatSouth>
+<Altitude>351</Altitude>
+<Area>15</Area>
+<Country>United States</Country>
+<State>Minnesota</State>
+<County>Rice</County>
+<Notes>MNR Lake Identifier: 660001</Notes>
+<LakeParameters>
+<LakeParameter>
+<Parameter>Maximum depth (m)</Parameter>
+<Value>2</Value>
+</LakeParameter>
+<LakeParameter>
+<Parameter>Surface area (ha)</Parameter>
+<Value>15</Value>
+</LakeParameter>
+</LakeParameters>
+</Site>
+<CollectionUnit>
+<Handle>CRYSTAL</Handle>
+<CollectionType>Core</CollectionType>
+<CollectionDevice>~7 cm polycarbonate tube ﬁtted with a piston</CollectionDevice>
+<Collectors>
+<Contact ID="3"/>
+</Collectors>
+<DepositionalEnvironment>Glacial Origin Lake</DepositionalEnvironment>
+<WaterDepth>2</WaterDepth>
+</CollectionUnit>
+<Datasets>
+<Dataset>
+<DatasetType>pollen</DatasetType>
+<Name>CRYSTAL</Name>
+<IsSSamp>False</IsSSamp>
+<IsAggregate>False</IsAggregate>
+<Investigators>
+<Contact ID="3"/>
+</Investigators>
+<Processors>
+<Contact ID="2"/>
+</Processors>
+<Publications>
+<Publication ID="1"/>
+</Publications>
+</Dataset>
+</Datasets>
+<GeochronDataset>
+<Geochronology AnalysisUnitID="Depth">
+<GeochronSample ID="1">
+<Method>Carbon-14</Method>
+<AgeUnits>Radiocarbon years BP</AgeUnits>
+<Depth>74</Depth>
+<Thickness>2</Thickness>
+<LabNumber>CAMS65357</LabNumber>
+<Age>360</Age>
+<ErrorOlder>90</ErrorOlder>
+<ErrorYounger>90</ErrorYounger>
+<Sigma>1</Sigma>
+<StdDev>90</StdDev>
+<GreaterThan>False</GreaterThan>
+<MaterialDated>Charcoal</MaterialDated>
+<PublicationsText>Umbanhowar 2004</PublicationsText>
+<Publications>
+<Publication ID="1"/>
+</Publications>
+</GeochronSample>
+<GeochronSample ID="2">
+<Method>Carbon-14</Method>
+<AgeUnits>Radiocarbon years BP</AgeUnits>
+<Depth>178</Depth>
+<Thickness>4</Thickness>
+<LabNumber>CAMS68380</LabNumber>
+<Age>1910</Age>
+<ErrorOlder>40</ErrorOlder>
+<ErrorYounger>40</ErrorYounger>
+<Sigma>1</Sigma>
+<StdDev>40</StdDev>
+<GreaterThan>False</GreaterThan>
+<MaterialDated>Charcoal</MaterialDated>
+<PublicationsText>Umbanhowar 2004</PublicationsText>
+<Publications>
+<Publication ID="1"/>
+</Publications>
+</GeochronSample>
+</Geochronology>
+</GeochronDataset>
+<AgeModels AnalysisUnitID="Depth">
+<AgeModel>
+<ChronNumber>1</ChronNumber>
+<ChronologyName>Umbanhower</ChronologyName>
+<AgeUnits>Calendar years BP</AgeUnits>
+<Default>False</Default>
+<DatePrepared>41843</DatePrepared>
+<Model>linear interpolation</Model>
+<AgeBoundOlder>2010</AgeBoundOlder>
+<AgeBoundYounger>50</AgeBoundYounger>
+<PreparersText>Ripp, M.R.</PreparersText>
+<Preparers>
+<Contact ID="2"/>
+</Preparers>
+<ChronControls>
+<ChronControl>
+<ControlType>Core top</ControlType>
+<Depth>2</Depth>
+<Thickness>4</Thickness>
+<Age>-44</Age>
+<AgeLimitOlder>-43</AgeLimitOlder>
+<AgeLimitYounger>-45</AgeLimitYounger>
+</ChronControl>
+<ChronControl>
+<ControlType>European settlement horizon</ControlType>
+<Depth>53</Depth>
+<Thickness>2</Thickness>
+<Age>104</Age>
+<AgeLimitOlder>114</AgeLimitOlder>
+<AgeLimitYounger>94</AgeLimitYounger>
+</ChronControl>
+<ChronControl>
+<ControlType>Radiocarbon</ControlType>
+<Depth>74</Depth>
+<Thickness>2</Thickness>
+<Age>360</Age>
+<AgeLimitOlder>450</AgeLimitOlder>
+<AgeLimitYounger>270</AgeLimitYounger>
+<GeochronLinks>
+<GeochronLink ID="1"/>
+</GeochronLinks>
+</ChronControl>
+<ChronControl>
+<ControlType>Radiocarbon</ControlType>
+<Depth>178</Depth>
+<Thickness>4</Thickness>
+<Age>1910</Age>
+<AgeLimitOlder>1950</AgeLimitOlder>
+<AgeLimitYounger>1870</AgeLimitYounger>
+<GeochronLinks>
+<GeochronLink ID="2"/>
+</GeochronLinks>
+</ChronControl>
+</ChronControls>
+</AgeModel>
+<AgeModel>
+<ChronNumber>2</ChronNumber>
+<ChronologyName>Bacon</ChronologyName>
+<AgeUnits>Calendar years BP</AgeUnits>
+<Default>True</Default>
+<DatePrepared>41843</DatePrepared>
+<Model>Bacon</Model>
+<AgeBoundOlder>1950</AgeBoundOlder>
+<AgeBoundYounger>10</AgeBoundYounger>
+<Notes>2 #d.min
+178 #d.max
+1 #d.by
+1 #depths.file
+NA #slump
+10 #acc.mean
+1.5 #acc.shape
+0.7 #mem.mean
+4 #mem.strength
+NA #hiatus.depths
+1000 #hiatus.mean
+1 #hiatus.shape
+0 #BCAD
+1 #cc
+0 #postbomb
+IntCal13 #cc1
+Marine13 #cc2
+SHCal13 #cc3
+ConstCal #cc4
+cm #unit
+0 #normal
+3 #t.a
+4 #t.b
+0 #d.R
+0 #d.STD
+0.95 #prob</Notes>
+<PreparersText>Goring, S.J.</PreparersText>
+<Preparers>
+<Contact ID="1"/>
+</Preparers>
+<ChronControls>
+<ChronControl>
+<ControlType>Core top</ControlType>
+<Depth>2</Depth>
+<Thickness>4</Thickness>
+<Age>-44</Age>
+<AgeLimitOlder>-43</AgeLimitOlder>
+<AgeLimitYounger>-45</AgeLimitYounger>
+</ChronControl>
+<ChronControl>
+<ControlType>European settlement horizon</ControlType>
+<Depth>53</Depth>
+<Thickness>2</Thickness>
+<Age>104</Age>
+<AgeLimitOlder>114</AgeLimitOlder>
+<AgeLimitYounger>94</AgeLimitYounger>
+</ChronControl>
+<ChronControl>
+<ControlType>Radiocarbon</ControlType>
+<Depth>74</Depth>
+<Thickness>2</Thickness>
+<Age>360</Age>
+<AgeLimitOlder>450</AgeLimitOlder>
+<AgeLimitYounger>270</AgeLimitYounger>
+<GeochronLinks>
+<GeochronLink ID="1"/>
+</GeochronLinks>
+</ChronControl>
+<ChronControl>
+<ControlType>Radiocarbon</ControlType>
+<Depth>178</Depth>
+<Thickness>4</Thickness>
+<Age>1910</Age>
+<AgeLimitOlder>1950</AgeLimitOlder>
+<AgeLimitYounger>1870</AgeLimitYounger>
+<GeochronLinks>
+<GeochronLink ID="2"/>
+</GeochronLinks>
+</ChronControl>
+</ChronControls>
+</AgeModel>
+</AgeModels>
+</TiliaFile>
