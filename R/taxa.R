@@ -29,7 +29,8 @@
 ##' @export
 ##' @rdname taxa
 `taxa.download` <- function(obj, ...) {
-    ret <- as.data.frame(obj$taxon.list)
+    ret <- as.data.frame(obj$taxon.list,
+                         stringsAsFactors = FALSE)
     class(ret) <- c("neo_taxa", "data.frame")
     ret
 }
@@ -39,14 +40,16 @@
 ##' @rdname taxa
 `taxa.download_list` <- function(obj, collapse = TRUE, hierarchy = FALSE, ...) {
     ret <- lapply(obj, '[[', 'taxon.list')
-    ret <- lapply(ret, as.data.frame, stringsAsFactors = FALSE)
-    
+    ret <- lapply(ret,
+                  as.data.frame,
+                  stringsAsFactors = FALSE)
+
     # if (hierarchy == TRUE) {
     #  taxonomy <- get_table("Taxa")
-      
+
       # match_taxa <- function(tax){
       #   row <- match(tax, taxonomy$TaxonName)
-      #   
+      #
       #   output <- taxonomy[row,]
       #   if (taxonomy$TaxonID[row] == taxonomy$HigherTaxonID[row]) {
       #     return(taxonomy[row,])
@@ -56,19 +59,19 @@
       #   }
       #   return(output)
       # }
-        
+
     # }
-    
+
     if (collapse == TRUE) {
       ret <- dplyr::bind_rows(ret)
       ret <- ret[!duplicated(ret[,c(1:3)]),]
-      
+
       # if(hierarchy == TRUE) {
       #   taxonhier <- do.call(rbind.data.frame, lapply(ret$taxon.name, match_taxa))
       #   taxonhier <- taxonhier[!duplicated(taxonhier), c("TaxonID", "TaxonName", "TaxaGroupID", "HigherTaxonID")]
       # }
     }
-    
+
     class(ret) <- c("neo_taxa_list", "list")
     ret
 }

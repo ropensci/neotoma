@@ -36,7 +36,7 @@ The chronologies can be augmented using the function \code{get_chroncontrol}, wh
 \dontrun{
 #  Search for sites with "Pseudotsuga" pollen that are older than 8kyr BP and
 #  that are roughly within western British Columbia:
-t8kyr.datasets <- get_dataset(taxonname='*Picea*', loc=c(-90, 41, -89, 44), 
+t8kyr.datasets <- get_dataset(taxonname='*Picea*', loc=c(-90, 41, -89, 44),
                               ageold = 20000, ageyoung=10000)
 
 #  Returns 20 records (as of 04/04/2013), get the dataset for all records:
@@ -65,13 +65,13 @@ curves <- curves[curves$count > 0, ]
 
 smooth.curve <- predict(loess(sqrt(count)~age, data=curves),
                         data.frame(age=seq(20000, 0, by = -100)))
-                        
+
 plot(sqrt(count) ~ age, data = curves,
      ylab = '\% Pseudotsuga/Larix', xlab='Calibrated Years BP', pch=19,
      col=rgb(0.1, 0.1, 0.1, 0.1), xlim=c(0, 20000))
 lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 
-#  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the 
+#  This figure shows us an apparent peak in Larix/Pseudotsuga pollen in the
 #  early-Holocene that lends support to a warmer, drier early-Holocene in
 #  western North America.
 }
