@@ -1,3 +1,7 @@
+neotoma 1.7.1
+====================
+o Bugfix for `compile_download`, single sample downloads were failing to compile properly.
+
 neotoma 1.7.0
 ====================
 o Added `plot_leaflet` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.

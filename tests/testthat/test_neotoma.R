@@ -144,6 +144,8 @@
 #   expect_is(compile_downloads(get_download(4559:4564)), 'data.frame')
 #   expect_is(compile_taxa(get_download(100), 'P25'), 'download_list')
 #   expect_is(compile_taxa(get_download(100)[[1]], 'P25'), 'download')
+#   expect_equal(nrow(compile_downloads(get_download(4565))), 1)
+#   
 # })
 #
 # #-----------------------------------------------------
