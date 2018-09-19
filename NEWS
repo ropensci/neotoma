@@ -1,3 +1,7 @@
+neotoma 1.7.2
+====================
+o Bugfixes, added the `taxa` function to easily extract taxa from one or multiple download objects.
+
 neotoma 1.7.1
 ====================
 o Bugfix for `compile_download`, single sample downloads were failing to compile properly.

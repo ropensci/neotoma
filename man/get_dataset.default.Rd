@@ -4,8 +4,8 @@
 \alias{get_dataset.default}
 \title{Obtain dataset information from the Neotoma Paleoecological Database or an existing object.}
 \usage{
-\method{get_dataset}{default}(x, datasettype, piid, altmin, altmax, loc, gpid,
-  taxonids, taxonname, ageold, ageyoung, ageof, subdate)
+\method{get_dataset}{default}(x, datasettype, piid, altmin, altmax, loc,
+  gpid, taxonids, taxonname, ageold, ageyoung, ageof, subdate)
 }
 \arguments{
 \item{x}{A numeric value corresponding to the site ID.}
