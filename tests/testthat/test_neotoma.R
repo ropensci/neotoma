@@ -4,6 +4,14 @@
 #  library("testthat")
 #  library("neotoma")
 #
+# context('Get closest is working')
+# test_that('the right number of samples are returned',
+#           {
+#             cl_smp <- get_closest(x = c(-89.4012, 43.0731), n = 5, buffer = 5, datasettype = "pollen")
+#             expect_is(cl_smp, 'dataset_list')
+#             expect_equal(length(cl_smp), 5)
+#           })
+#
 # context('The API itself is working properly')
 # test_that('The API is returning data as expected from its documentation',
 #       {
