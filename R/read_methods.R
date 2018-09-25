@@ -13,12 +13,7 @@
 ##'
 ##' @examples
 ##' \dontrun{
-##' marion <- read.tilia('crystal.tlx')
-##'
-##' western.cnt <- counts(western.dl)
-##' sapply(western.cnt, dim)
-##' marion.cnt<- counts(western.dl[[1]])
-##' dim(marion.cnt)
+##'   crystal <- read.tilia('crystal.tlx')
 ##' }
 ##' 
 `read.tilia` <- function(file) {
@@ -261,9 +256,16 @@
     
     if (length(sample.meta) > 1) {
       sample.meta <- sample.meta[[which.max(names(sample.meta))]]
-      if (colSums(apply(do.call(rbind, chronologies), 2, duplicated)) == (length(chronologies) - 1)) {
-        # This gets rid of empty chronologies, which seem to be a thing that happens . . .
-        chronologies <- chronologies[[1]]
+      
+      if(length(chronologies) > 1) {
+        dups <- any(duplicated(chronologies))
+      } else {
+        dups <- FALSE
+      }
+      
+      if (dups) {
+        # The objective is to remove any chronologies that are duplicated.
+        chronologies <- chronologies[!duplicated(chronologies)]
       }
     } else {
       sample.meta <- sample.meta[[1]]
@@ -289,7 +291,7 @@
         #default = which(sapply(tilia_list$AgeModels, function(x)x$Default == "True"))
         controls <- xml2::xml_find_first(x, ".//ChronControls")
         
-        if (xml2::xml_attr(controls, "Count") == 0) {
+        if (!is.na(xml2::xml_attr(controls, "Count")) & xml2::xml_attr(controls, "Count") == 0) {
           # This is a special case for directly dated material (mostly?) where you have a single sample:
           controls <- data.frame(age.older = as.numeric(xml2::xml_text(xml2::xml_find_all(x, ".//AgeBoundOlder"))),
                                  age = NA,
@@ -376,12 +378,14 @@
     count_data <- matrix(as.numeric(gsub('\n', '', all_sample[count_start:nrow(all_sample), count_cols])),
                          ncol = sum(count_cols))
     
+    colnames(count_data) <- taxa_list$taxon.name
+    
     lab_data   <- count_data[, taxa_list$ecological.group == 'LABO']
     count_data <- count_data[, !taxa_list$ecological.group == 'LABO']
     
     aa <- list(dataset        = dataset,
                sample.meta    = sample.meta,
-               taxon_list     = taxa_list,
+               taxon.list     = taxa_list,
                counts         = count_data,
                lab.data       = lab_data,
                chron_controls = chron_controls,

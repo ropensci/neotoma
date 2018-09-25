@@ -4,8 +4,7 @@
 + [Appveyor](https://ci.appveyor.com/project/sckott/neotoma/branch/master) tests are passing.
 
 ## R CMD check results:
-+ There was one NOTE - For Windows & Linux there were spelling warnings, but all spellings are acceptable.
-+ There was one warning - LaTeX errors when creating PDF version.  Only on local build, not on Travis or appveyor.
++ R CMD check succeeded
 + Travis gives no notes.
 + Appveyor passes
 
