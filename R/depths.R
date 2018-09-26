@@ -4,7 +4,7 @@
 #' @description Using a numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object, open up a browser window in the users default browser. Very large objects
 #'
 #' @param obj A \code{download} object.
-#' @param ... argugments passed to other methods.
+#' @param ... arguments passed to other methods.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return Returns a vector of depths.

@@ -17,12 +17,7 @@ Read proxy data from a Tilia TLX format file.
 }
 \examples{
 \dontrun{
-marion <- read.tilia('crystal.tlx')
-
-western.cnt <- counts(western.dl)
-sapply(western.cnt, dim)
-marion.cnt<- counts(western.dl[[1]])
-dim(marion.cnt)
+  crystal <- read.tilia('crystal.tlx')
 }
 
 }
