@@ -3,6 +3,7 @@ Type: Package
 Title: Access to the Neotoma Paleoecological Database Through R
 Version: 1.7.2
 Date: 2018-09-17
+Encoding: UTF-8
 Author: Simon J. Goring [aut, cre], Gavin L. Simpson [aut], Jeremiah P. Marsicek
     [ctb], Karthik Ram [aut], Luke Sosalla [ctb]
 Authors@R: c(person(given = c("Simon", "J."), family = "Goring",
