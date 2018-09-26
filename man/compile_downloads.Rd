@@ -7,7 +7,7 @@
 compile_downloads(downloads)
 }
 \arguments{
-\item{downloads}{A download_list as returned by \code{\link{get_download}}, or mutliple downloads joined in a list.}
+\item{downloads}{A download_list as returned by \code{\link{get_download}}, or multiple downloads joined in a list.}
 }
 \value{
 This command returns a data frame.

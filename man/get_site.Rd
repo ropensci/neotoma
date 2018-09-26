@@ -17,7 +17,7 @@ get_site(sitename, altmin, altmax, loc, gpid, ...)
 
 \item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
 
-\item{...}{Optional additional argugments}
+\item{...}{Optional additional arguments}
 }
 \value{
 A data frame:

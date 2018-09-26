@@ -9,7 +9,7 @@
 #' single sites.
 #'
 #' @importFrom plyr ldply
-#' @param downloads A download_list as returned by \code{\link{get_download}}, or mutliple downloads joined in a list.
+#' @param downloads A download_list as returned by \code{\link{get_download}}, or multiple downloads joined in a list.
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return This command returns a data frame.
 #'

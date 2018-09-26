@@ -16,7 +16,7 @@ taxa(obj, ...)
 \arguments{
 \item{obj}{an R object from which counts are to be extracted.}
 
-\item{...}{argugments passed to other methods.}
+\item{...}{arguments passed to other methods.}
 
 \item{collapse}{should the results be returned as a list, one for each site (\code{FALSE}), or a single dataframe of all taxa? Default is \code{TRUE}}
 

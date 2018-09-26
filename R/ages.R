@@ -5,7 +5,7 @@
 ##' @title Access proxy age data
 ##'
 ##' @param obj an R object from which counts are to be extracted.
-##' @param ... argugments passed to other methods.
+##' @param ... arguments passed to other methods.
 ##' @return Either a data frame of ages or a list of such objects.
 ##'
 ##' @author Simon Goring

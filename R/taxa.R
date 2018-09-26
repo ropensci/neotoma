@@ -7,7 +7,7 @@
 ##' @param obj an R object from which counts are to be extracted.
 ##' @param collapse should the results be returned as a list, one for each site (\code{FALSE}), or a single dataframe of all taxa? Default is \code{TRUE}
 ##' @param hierarchy Should the taxonomic hierarchy be included?
-##' @param ... argugments passed to other methods.
+##' @param ... arguments passed to other methods.
 ##' @return Either a data frame of taxa or a list of such objects.
 ##'
 ##' @author Simon Goring

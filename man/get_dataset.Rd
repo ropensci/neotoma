@@ -18,7 +18,7 @@ get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 
 \item{altmax}{Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).}
 
-\item{loc}{A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator}
+\item{loc}{A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator}
 
 \item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}}
 
@@ -50,7 +50,7 @@ More details on the use of these parameters can be obtained from
  \item{ \code{DatasetType}  }{The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.}
  \item{ \code{AgeOldest}  }{The oldest of all sample ages (in calendar years before present) in the dataset.}
  \item{ \code{AgeYoungest}  }{The youngest of all sample ages (in calendar years before present) in the dataset.}
- \item{ \code{SubDates}  }{An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.}
+ \item{ \code{SubDates}  }{An array of objects that describe dataset submission events.  If multiple submissions occurred then this is a table.}
  \item{ \code{DatasetPIs}  }{An array of objects that describe Principal Investigators associated with a dataset.}
  \item{ \code{Site}  }{An object describing the site where the dataset samples were taken.}
 }
