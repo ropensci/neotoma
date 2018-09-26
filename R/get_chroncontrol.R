@@ -195,10 +195,9 @@ get_chroncontrol.default <- function(x, chronology = 1, verbose = TRUE, add = FA
 #' @export
 get_chroncontrol.download <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
-  
   chron_id <- x$chronologies[[chronology]]$chronology.id[1]
   
-  if (!is.numeric(chron_id)) {
+  if (!is.numeric(chron_id) & !is.na(chron_id)) {
     stop(paste0("The supplied chronology ID, ", chron_id, ", is not numeric.  Please pick a different `download` chronology."))
   }
   
@@ -218,7 +217,8 @@ get_chroncontrol.download <- function(x, chronology = 1, verbose = TRUE, add = F
                                             age.younger = NA,
                                             chron.id    = NA,
                                             date        = NA),
-                    
+                   
+                    access.date = Sys.time(),
                     parent = data.frame(dataset.name = NA,
                                         dataset.id = NA,
                                         dataset.type = NA))

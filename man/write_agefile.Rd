@@ -4,7 +4,8 @@
 \alias{write_agefile}
 \title{Write age control file to disk formatted for either Bacon or Clam}
 \usage{
-write_agefile(download, chronology = 1, path, corename, cal.prog = "Bacon")
+write_agefile(download, chronology = 1, path, corename,
+  cal.prog = "Bacon")
 }
 \arguments{
 \item{download}{A single site returned by \code{get_download}.}
