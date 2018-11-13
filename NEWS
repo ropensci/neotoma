@@ -1,3 +1,7 @@
+neotoma 1.7.3
+====================
+o Added numeric/integer methods to the `get_site` and `get_dataset` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
+
 neotoma 1.7.2
 ====================
 o Bugfixes, added the `taxa` function to easily extract taxa from one or multiple download objects.

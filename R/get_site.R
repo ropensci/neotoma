@@ -142,7 +142,7 @@ get_site.default <- function(sitename, ...) {
 }
 
 
-#' @title Return Site Information from a \code{dataset}
+#' @title Return Site Information from a numeric list of site ids.
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
 #' @param sitename An object of class \code{dataset}.
@@ -220,4 +220,97 @@ get_site.geochronologic_list <- function(sitename, ...) {
   
   class(site) <- c('site', 'data.frame')
   site
+}
+
+#' @title Return Site Information from a vector of integers.
+#' @description Return site information from the Neotoma Paleoecological Database.
+#'
+#' @param sitename An integer or vector of integers.
+#' @param ... Arguments passed from the generic method, not used.
+#' @export
+get_site.integer <- function(sitename, ...) {
+  
+  call_site <- function(x) {
+    base.uri <- 'http://api.neotomadb.org/v1/data/sites/'
+    
+    neotoma_content <- httr::content(httr::GET(paste0(base.uri, x)), as = "text")
+    
+    if (identical(neotoma_content, "")) stop("")
+    
+    aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+    
+    if (aa[[1]] == 0) {
+      stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
+    }
+    if (aa[[1]] == 1) {
+      aa <- aa[[2]]
+      
+      rep_NULL <- function(x) { 
+        if (is.null(x)) {NA}
+        else{
+          if (class(x) == 'list') {
+            lapply(x, rep_NULL)
+          } else {
+            return(x)
+          }
+        }
+      }
+      
+      aainsta <- rep_NULL(aa)
+      
+      if (length(aa) == 0) {
+        cat('The API call was successful, but no records were returned.\n')
+        return()
+      }
+      
+      cat('The API call was successful, you have returned ',
+          length(aa), 'records.\n')
+      
+    }
+    
+    if (class(aa) == 'try-error') {
+      output <- aa
+    } else {
+      
+      # replace NULL values:
+      aa <- lapply(aa, function(x) ifelse(x == "NULL", NA, x))
+      
+      output <- data.frame(site.id = sapply(aa, '[[', 'SiteID'),
+                           site.name = sapply(aa, '[[', 'SiteName'),
+                           long = rowMeans(data.frame(sapply(aa, '[[', 'LongitudeWest'), 
+                                                      sapply(aa, '[[', 'LongitudeEast')),
+                                           na.rm = TRUE),
+                           lat = rowMeans(data.frame(sapply(aa, '[[', 'LatitudeNorth'),
+                                                     sapply(aa, '[[', 'LatitudeSouth')),
+                                          na.rm = TRUE),
+                           elev = sapply(aa, '[[', 'Altitude'),
+                           description = sapply(aa, '[[', 'SiteDescription'),
+                           long.acc = abs(sapply(aa, '[[', 'LongitudeWest') - 
+                                            sapply(aa, '[[', 'LongitudeEast')),
+                           lat.acc = abs(sapply(aa, '[[', 'LatitudeNorth') - 
+                                           sapply(aa, '[[', 'LatitudeSouth')),
+                           stringsAsFactors = FALSE)
+      
+    }
+    
+    return(output)
+    
+  }
+  
+  output <- do.call(rbind.data.frame, lapply(sitename, call_site))
+  class(output) <- c('site', 'data.frame')
+  output
+  
+}
+
+
+#' @title Return Site information from a vector of numeric elements.
+#' @description Return site information from the Neotoma Paleoecological Database.
+#'
+#' @param sitename A numeric value or vector of numeric elements.
+#' @param ... Arguments passed from the generic method, not used.
+#' @export
+get_site.numeric <- function(sitename, ...) {
+  
+  get_site(as.integer(sitename))
 }

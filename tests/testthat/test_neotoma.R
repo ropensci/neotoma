@@ -1,10 +1,10 @@
 # # Tests for the neotoma package.  Mostly validating that changes to the functions
 # ## do not break the requirements for data formatting.
-# 
+#
 #  library("testthat")
 #  library("neotoma")
 #  library("analogue")
-# 
+#
 # context('Get closest is working')
 # test_that('the right number of samples are returned',
 #           {
@@ -12,19 +12,19 @@
 #             expect_is(cl_smp, 'dataset_list')
 #             expect_equal(length(cl_smp), 5)
 #           })
-# 
+#
 # context('Testing print methods')
-# 
+#
 # sts <- get_site(sitename='Ca%')
 # dst <- get_dataset(sts)
 # dls <- get_download(dst, verbose = FALSE)
 # gcr <- get_geochron(dst)
-# 
+#
 # test_that('Printing objects works',
 #           {
 #             expect
 #           })
-# 
+#
 # context('The API itself is working properly')
 # test_that('The API is returning data as expected from its documentation',
 #       {
@@ -39,7 +39,7 @@
 #           expect_equal(bb[[1]], 1)
 #           expect_more_than(length(bb[[2]]), 0)
 #       })
-# 
+#
 # context('get_site works as expected')
 # test_that('get_site accepts and returns the right data types',
 #       {
@@ -50,9 +50,11 @@
 #           expect_that('site' %in% class(get_site(get_download(1))),
 #                     shows_message('API call was'))
 #           expect_is(get_site(gpid = 'Canada'), 'site')
+#           expect_is(get_site(100:130), 'site')
+#           expect_that(nrow(get_site(200:220)) == 19, is_true())
 #       })
-# 
-# 
+#
+#
 # ## Turning just this and only the first expect_error is enough to throw
 # ## an error on Travis:
 # context('get_contact work as expected')
@@ -66,19 +68,19 @@
 #           expect_message(get_contact(familyname = 'Smith'), 'The API call')
 #           expect_message(get_contact(contactname = '*Smith*'), 'The API call')
 #      })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 #  context('get_publication')
 #  test_that('get_publication accepts and returns the right data types',
 #  {
 #    expect_is(get_publication(10), 'list')
 #  })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('get_downloads works as expected')
-# 
+#
 # test_that('get_download accepts numeric values and returns values as expected',
 # {
 #   expect_error(get_download('a', verbose = FALSE))
@@ -100,13 +102,13 @@
 #   expect_is(get_download(15108, verbose = FALSE), 'download_list')
 #   expect_is(get_download(15080, verbose = FALSE), 'download_list')
 #   expect_is(get_download(14196, verbose = FALSE), 'download_list') # weird chronology situation.
-# 
+#
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('get_dataset works as expected')
-# 
+#
 # test_that('is get_dataset working?',
 # {
 #   expect_error(get_dataset(x='a'))
@@ -128,13 +130,14 @@
 #   expect_is(get_dataset(x = 1), 'dataset_list')
 #   expect_is(get_dataset(x = 1)[[1]], 'dataset')
 #   expect_is(get_dataset(gpid='Canada'), 'dataset_list')
+#   expect_is(get_dataset(100:102), 'dataset_list')
 #   expect_error(get_dataset(datasettype='pollen', gpid=c("Wisconsin", "Michigan", "Minnesota", "Barf Town", "Poop Ville")))
 #   expect_is(get_dataset(get_site(sitename = "Lac à Sam%")), "dataset_list")
 #   expect_is(get_dataset(gpid=c(756, 2845, 5242), datasettype = "pollen"), "dataset_list") # Canada, Mexico, Spain
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Crossing sites, datasets and downloads, using the API:')
 # test_that('Crossing APIs',
 # {
@@ -147,9 +150,9 @@
 #   expect_is(get_site(get_dataset(x=100)), 'site')                      # test dataset_list
 #   expect_is(get_site(get_dataset(x=100)[[1]]), 'site')                 # test dataset
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Compiling objects and returning what is expected:')
 # test_that('Compiling',
 # {
@@ -158,11 +161,11 @@
 #   expect_is(compile_taxa(get_download(100, verbose = FALSE), 'P25'), 'download_list')
 #   expect_is(compile_taxa(get_download(100, verbose = FALSE)[[1]], 'P25'), 'download')
 #   expect_equal(nrow(compile_downloads(get_download(4565, verbose = FALSE))), 1)
-# 
+#
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Test new chroncontrol methods and fixes')
 # test_that('Compiling',
 # {
@@ -174,11 +177,11 @@
 #   expect_named(get_chroncontrol(1376), c('chron.control', 'meta', 'access.date', 'parent'))    # test partial table
 #   expect_is(get_chroncontrol(1000), 'list')                          # test full table
 #   expect_named(get_chroncontrol(1000), c('chron.control', 'meta', 'access.date', 'parent'))    # test full table
-# 
+#
 # })
-# 
+#
 # #-----------------------------------------------------
-# 
+#
 # context('Test geochron methods')
 # test_that('Geochron',
 # {
@@ -191,10 +194,10 @@
 #   expect_is(get_geochron(c(1001, 8445)), 'geochronologic_list')
 #   expect_that(length(get_geochron(c(1001,8444))) == 1, is_true())
 # })
-# 
-# 
+#
+#
 # #-----------------------------------------------------
-# 
+#
 #  context('Test get_taxon works:')
 #  test_that('Getting Taxa',
 #  {
@@ -202,18 +205,18 @@
 #    expect_is(get_taxa(taxonid = 19), 'data.frame')
 #    expect_error(get_taxa(taxonname = "Abies*", taxonid = 19))
 #  })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Get the tables:')
 #  test_that('Getting Tables',
 #            {
 #              expect_is(get_table('Taxa'), 'data.frame')
 #              expect_is(get_table('Tephras'), 'data.frame')
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 # context('Trying to bind:')
 #  test_that('bind',
 #            {
@@ -221,17 +224,17 @@
 #              expect_is(bind(get_dataset(1001), get_dataset(1001)), 'dataset_list')
 #              expect_is(bind(get_download(1001, verbose = FALSE), get_download(1002, verbose = FALSE)), 'download_list')
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Trying to browse:')
 #  test_that('browse',
 #            {
 #              expect_error(browse(), "argument")
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Read Tilia files:')
 #  test_that('read.tilia',
 #            {
@@ -243,18 +246,26 @@
 #              }
 #              crystal <- read.tilia(fileloc)
 #              expect_is(crystal, "download")
-#              expect_is(taxa(crystal), "neo_taxa")  
+#              expect_is(taxa(crystal), "neo_taxa")
 #              expect_true(ncol(taxa(crystal)) == 7)
 #              expect_true(nrow(ages(crystal)) == nrow(crystal$sample.meta))
 #            })
-# 
+#
 #  #-----------------------------------------------------
-# 
+#
 #  context('Stratiplot tests')
 #  test_that('Stratiplot.download',
 #            {
 #               testthat::expect_silent(Stratiplot(get_download(15887, verbose = FALSE)))
 #               testthat::expect_is(Stratiplot(get_download(15887, verbose = FALSE)), "trellis")
 #            })
-# 
+#
 #  #-----------------------------------------------------
+#
+#  context('Surface Sample errors')
+#  test_that('compiling surface samples',
+#            {
+
+#               testthat::expect_silent(Stratiplot(get_download(15887, verbose = FALSE)))
+#               testthat::expect_is(Stratiplot(get_download(15887, verbose = FALSE)), "trellis")
+#            })
