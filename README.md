@@ -61,16 +61,17 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
-+ 1.7.2: Bugfixes, added the `taxa` function to easily extract taxa from one or multiple download objects.
-+ 1.7.1: Bugfix for `compile_download`, single sample downloads were failing to compile properly, added the `taxa` function to extract taxa lists from large download objects.
-+ 1.7.0: Added `plot_leaflet` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.  Minor bugfix for `get_download` to allow records to be sent to Neotoma and to be filtered.
-+ 1.6.2: Improved the basic `plot` method based on tests against Tilia files in the Neotoma Holding Tank & built more robust interpolation in `read_bacon` so that age models without interpolated dates can still be imported. `browse` now opens multiple datastes in the Neotoma Explorer at once.
-+ 1.6.1: New `Stratiplot` method, using the `analogue` package to plot dataset diagrams from `download` and `download_list` objects, bug fixes for `write_agefile` and a new function, `read_bacon`, to read in and integrate Bacon chronologies into `download` objects.
-+ 1.6.0: Support for vector inputs in the `gpid` selection. Added a `get_closest` function to find the closest sample site. Mostly clean-up of reported bugs by users. Revised examples for faster check speed.
-+ 1.5.1: Minor fix to the `get_dataset` for site level data to account for some datasets with empty submission data.  Some style changes to code (non-functional changes)
-+ 1.5.0: More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported. Function `read.tilia` added to read Tilia (http://tiliait.com) style XML files. Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
-+ 1.4.1: Small changes to `get_geochron` to address bug reports and improve object `printing` methods.
-+ 1.4.0: Added `plot` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
++ 1.7.3: Added numeric/integer methods to the `get_site()` and `get_dataset()` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
++ 1.7.2: Bugfixes, added the `taxa()` function to easily extract taxa from one or multiple download objects.
++ 1.7.1: Bugfix for `compile_download()`, single sample downloads were failing to compile properly, added the `taxa()` function to extract taxa lists from large download objects.
++ 1.7.0: Added `plot_leaflet()` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.  Minor bugfix for `get_download()` to allow records to be sent to Neotoma and to be filtered.
++ 1.6.2: Improved the basic `plot()` method based on tests against Tilia files in the Neotoma Holding Tank & built more robust interpolation in `read_bacon()` so that age models without interpolated dates can still be imported. `browse()` now opens multiple datastes in the Neotoma Explorer at once.
++ 1.6.1: New `Stratiplot()` method, using the `analogue` package to plot dataset diagrams from `download` and `download_list` objects, bug fixes for `write_agefile()` and a new function, `read_bacon()`, to read in and integrate Bacon chronologies into `download` objects.
++ 1.6.0: Support for vector inputs in the `gpid` selection. Added a `get_closest()` function to find the closest sample site. Mostly clean-up of reported bugs by users. Revised examples for faster check speed.
++ 1.5.1: Minor fix to the `get_dataset()` for site level data to account for some datasets with empty submission data.  Some style changes to code (non-functional changes)
++ 1.5.0: More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported. Function `read.tilia()` added to read Tilia (http://tiliait.com) style XML files. Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
++ 1.4.1: Small changes to `get_geochron()` to address bug reports and improve object `print` methods.
++ 1.4.0: Added `plot()` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
 
 ### A few examples:
 

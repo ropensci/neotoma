@@ -390,3 +390,119 @@ get_dataset.geochronologic_list <- function(x, ...) {
   class(out) <- c('dataset_list', 'list')
   out
 }
+
+#' @title Obtain dataset information from a vector of dataset IDs.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x A single numeric dataset id, or a numeric vector.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_dataset.numeric <- function(x, ...) {
+  
+  rep_NULL <- function(x) { 
+    if (is.null(x) | length(x) == 0) {NA}
+    else{
+      if (class(x) == 'list') {
+        lapply(x, rep_NULL)
+      } else {
+        return(x)
+      }
+    }
+  }
+  
+  pull_datasets <- function(x) {
+
+    #  Pass the parameters to param_check to make sure everything is kosher.
+
+    base.uri <- paste0('http://api.neotomadb.org/v1/data/datasets/', x)
+    
+    neotoma_content <- httr::content(httr::GET(base.uri), as = "text")
+    
+    if (identical(neotoma_content, "")) stop("")
+    aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+    
+    if (aa[[1]] == 0) {
+      stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
+    }
+    if (aa[[1]] == 1) {
+      output <- aa[[2]]
+      # replace NULL values:
+      
+    }
+    
+    if (length(output) == 0) {
+      warning('The criteria used returned 0 sample sites. Returning NULL.')
+      return(NULL)
+    }
+    
+    new.output <- lapply(output, function(x) {
+      new.output <- list()
+      
+      x <- rep_NULL(x)
+      
+      new.output$site.data <- data.frame(site.id = x$Site$SiteID,
+                                         site.name = x$Site$SiteName,
+                                         long = mean(unlist(x$Site[c('LongitudeWest', 'LongitudeEast')]),
+                                                     na.rm = TRUE),
+                                         lat = mean(unlist(x$Site[c('LatitudeNorth', 'LatitudeSouth')]),
+                                                    na.rm = TRUE),
+                                         elev = x$Site$Altitude,
+                                         description = x$Site$SiteDescription,
+                                         long.acc = abs(x$Site$LongitudeWest - x$Site$LongitudeEast),
+                                         lat.acc = abs(x$Site$LatitudeNorth - x$Site$LatitudeSouth),
+                                         row.names = x$Site$SiteName,
+                                         stringsAsFactors = FALSE)
+      
+      new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
+                                                                NA, x$DatasetID),
+                                            dataset.name = ifelse(class(x$DatasetName) == 'logical',
+                                                                  NA, x$DatasetName),
+                                            collection.type = ifelse(class(x$CollUnitType) == 'logical',
+                                                                     NA, x$CollUnitType),
+                                            collection.handle = ifelse(class(x$CollUnitHandle) == 'logical',
+                                                                       NA, x$CollUnitHandle),
+                                            dataset.type = ifelse(class(x$DatasetType) == 'logical',
+                                                                  NA, x$DatasetType),
+                                            stringsAsFactors = FALSE)
+      if (class(x$DatasetPIs) == 'logical') { 
+        new.output$pi.data <- NA
+      } else {
+        new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
+        rownames(new.output$pi.data) <- NULL
+      }
+      
+      sub.test <- try(do.call(rbind.data.frame, x$SubDates), silent = TRUE)
+      
+      if (length(sub.test) > 0 & !"try-error" %in% class(sub.test)) {
+        colnames(sub.test) <- c("SubmissionDate",  "SubmissionType")
+      } else {
+        sub.test <- data.frame(SubmissionDate = NA, SubmissionType = NA)
+      }
+      
+      new.output$submission <- sub.test
+      
+      new.output$access.date = Sys.time()
+      
+      class(new.output) <- c('dataset', 'list')
+      
+      new.output})
+    
+    new.output
+  }
+  
+  new.output <- unlist(lapply(x, function(x){pull_datasets(x)}), recursive = FALSE)
+  
+  class(new.output) <- c('dataset_list', 'list')
+
+  new.output
+}
+
+#' @title Obtain dataset information from a vector of dataset IDs.
+#' @description A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+#'
+#' @param x A single numeric dataset id, or a numeric vector.
+#' @param ... objects passed from the generic.  Not used in the call.
+#' @export
+get_dataset.integer <- function(x, ...) {
+  get_dataset(as.numeric(x))
+}
