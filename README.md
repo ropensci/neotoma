@@ -61,6 +61,7 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.7.4: Bug fix: `get_dataset(gpid=123)` was returning an error, fix corrects the error to allow unassigned `x` variables.  Updated the allowable dataset types for searching to reflect the larger set of dataset types within Neotoma.
 + 1.7.3: Added numeric/integer methods to the `get_site()` and `get_dataset()` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
 + 1.7.2: Bugfixes, added the `taxa()` function to easily extract taxa from one or multiple download objects.
 + 1.7.1: Bugfix for `compile_download()`, single sample downloads were failing to compile properly, added the `taxa()` function to extract taxa lists from large download objects.
@@ -152,6 +153,11 @@ Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/6a2ba1d55a3a
 #### Match all Neotoma taxa to external databases using `taxize`:
 
 Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/24fb1228204f768f3f0020f37060db18).
+
+#### Other Resources Using `neotoma`
+
+*  [A simple `neotoma` workshop](http://www.goring.org/resources/Neotoma_Lesson.html)
+*  [Data exploration and chronologies with `neotoma`](http://www.goring.org/resources/neotoma_lab_meeting.html)
 
 ### `neotoma` Workshops
 

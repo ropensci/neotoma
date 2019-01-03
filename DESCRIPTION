@@ -1,7 +1,7 @@
 Package: neotoma
 Type: Package
 Title: Access to the Neotoma Paleoecological Database Through R
-Version: 1.7.3
+Version: 1.7.4
 Date: 2018-11-13
 Encoding: UTF-8
 Author: Simon J. Goring [aut, cre], Gavin L. Simpson [aut], Jeremiah P. Marsicek
