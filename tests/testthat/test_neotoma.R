@@ -220,6 +220,13 @@
 # context('Trying to bind:')
 #  test_that('bind',
 #            {
+  #              gpid_table <- neotoma::get_table("GeoPoliticalUnits") %>% 
+  # dplyr::filter(GeoPoliticalName %in% c('Canada', 'United States', 'Mexico')) %>% 
+  # dplyr::select(GeoPoliticalID) %>% 
+  # unlist %>% 
+  # purrr::map(~ neotoma::get_dataset(gpid = .x, datasettype = 'pollen'))
+  #              expect_is(bind(bind(gpid_table[[1]], gpid_table[[2]]), gpid_table[[3]]), 'dataset_list')
+#
 #              expect_error(bind(get_download(1001, verbose = FALSE), get_dataset(1001)), "Objects must be")
 #              expect_is(bind(get_dataset(1001), get_dataset(1001)), 'dataset_list')
 #              expect_is(bind(get_download(1001, verbose = FALSE), get_download(1002, verbose = FALSE)), 'download_list')
