@@ -1,0 +1,29 @@
+Package: neotoma
+Type: Package
+Title: Access to the Neotoma Paleoecological Database Through R
+Version: 1.7.4
+Date: 2019-01-03
+Encoding: UTF-8
+Author: Simon J. Goring [aut, cre], Gavin L. Simpson [aut], Jeremiah P. Marsicek
+    [ctb], Karthik Ram [aut], Luke Sosalla [ctb]
+Authors@R: c(person(given = c("Simon", "J."), family = "Goring",
+    role = c("aut", "cre"), email = "goring@wisc.edu"),
+    person(given = c("Gavin", "L."), family = "Simpson", role = "aut"),
+    person(given = c("Jeremiah", "P."), family = "Marsicek", role = "ctb"),
+    person(given = "Karthik", family = "Ram", role = "aut"),
+    person(given = "Luke", family = "Sosalla", role = "ctb"))
+Maintainer: Simon J. Goring <goring@wisc.edu>
+Description: Access paleoecological datasets from the Neotoma Paleoecological
+    Database using the published API (<http://api.neotomadb.org/>).  The functions
+    in this package access various pre-built API functions and attempt to return
+    the results from Neotoma in a usable format for researchers and the public.
+License: MIT + file LICENSE
+URL: https://github.com/ropensci/neotoma
+BugReports: https://github.com/ropensci/neotoma/issues
+Depends: R (>= 2.10)
+Imports: plyr, reshape2, jsonlite, httr, xml2, analogue, leaflet, dplyr
+Suggests: testthat, knitr
+RoxygenNote: 6.1.1
+NeedsCompilation: no
+Packaged: 2019-01-03 23:57:10 UTC; simon
+Built: R 3.5.2; ; 2019-01-03 23:58:07 UTC; unix

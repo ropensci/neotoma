@@ -1,0 +1,94 @@
+neotoma 1.7.4
+====================
+o Bug fix: `get_dataset(gpid=123) was returning an error, fix corrects the error to allow unassigned `x` variables.
+o Updated the allowable dataset types for searching to reflect the larger set of dataset types within Neotoma.
+
+neotoma 1.7.3
+====================
+o Added numeric/integer methods to the `get_site` and `get_dataset` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
+
+neotoma 1.7.2
+====================
+o Bugfixes, added the `taxa` function to easily extract taxa from one or multiple download objects.
+
+neotoma 1.7.1
+====================
+o Bugfix for `compile_download`, single sample downloads were failing to compile properly.
+
+neotoma 1.7.0
+====================
+o Added `plot_leaflet` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.
+o Minor bugfix for `get_download` to allow records to be sent to Neotoma and to be filtered.
+
+neotoma 1.6.2
+====================
+o Bugfix in `get_chroncontrol`, `read.tilia` based on experience in extensive testing.  Improved the basic `plot` method based on tests against Tilia files in the Neotoma Holding Tank.
+o Built more robust interpolation in `read_bacon` so that age models without interpolated dates can still be imported.
+o `browse` now opens multiple datastes in the Neotoma Explorer at once.
+
+neotoma 1.6.1
+====================
+o Bugfix
+o New `Stratiplot` method, using the `analogue` package to plot dataset diagrams from `download` and `download_list` objects.
+o Bug fixes for `write_agefile`
+o New function `read_bacon` to read in and integrate Bacon chronologies into `download` objects.
+
+neotoma 1.6.0
+====================
+o Support for vector inputs in the `gpid` selection.
+o Added a `get_closest` function to find the closest datasets to a sample site.
+o Mostly clean-up of reported bugs by users.
+o Revised examples for faster check speed.
+
+neotoma 1.5.1
+====================
+o Fix for datasets with empty submission dates.
+o Some minor (non-functional) code cleaning.
+o Added extra tests.
+
+neotoma 1.5.0
+====================
+o More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported.
+o Function `read.tilia` added to read Tilia (http://tiliait.com) style XML files.
+o Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
+
+neotoma 1.4.0
+====================
+o The few records without chronologies were causing errors when `get_download` was applied.
+o Added plot method.
+
+neotoma 1.3.3
+====================
+o Critical bug fix: `get_download` now correctly assigns the default chronology to `sample.meta`.  All other chronologies (including the default) are stored in the `chronologies` list for the `download`.
+o Bugfix for issue #187, empty `dataset_list`s now return a NULL value, rather than breaking the `print` method.
+
+neotoma 1.3.2
+====================
+o Bugfix for `get_download`, assignment to the `dataset.id` was incorrectly placed causing the columns to be out of place relative to the data.
+
+neotoma 1.3.1
+====================
+o Bugfix for `write_agefile`
+o Added a `browse` method for datasets, that will open a browser window for a specific dataset or download.
+o The deprecated `compile_list` function has now been removed.  Use `compile_taxa` instead.
+
+neotoma 1.3.0
+====================
+o Improved functionality of get_chroncontrol to allow it to deal with empty tables and work directly with download and download_list objects.
+
+neotoma 1.2-0
+====================
+o Added new datasettypes for records, including water chemistry, charcoal, XRD and others.
+
+neotoma 1.1-0
+====================
+o Publication of Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W., Grimm, E. C., & Williams, J. W.. (2015). neotoma: A Programmatic Interface to the Neotoma Paleoecological Database, 1(1), Art. 2. DOI: http://doi.org/10.5334/oq.ab
+
+neotoma 0.1
+====================
+o continued development of API implementation and working toward a common 
+  standard for data output.
+
+o Continued development of tests for the package.
+
+o Changed function names to singular.

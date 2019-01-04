@@ -1,0 +1,130 @@
+Stratiplot.download     Palaeoecological stratigraphic diagrams
+Stratiplot.download_list
+                        Palaeoecological stratigraphic diagrams
+ages                    Access proxy age data
+bind                    Function to bind objects together into a longer
+                        object.
+browse                  Open a browser window to display a Neotoma
+                        dataset within the Neotoma Explorer
+browse.dataset          Open a browser window to display a Neotoma
+                        dataset within the Neotoma Explorer
+browse.dataset_list     Open a browser window to display a Neotoma
+                        dataset within the Neotoma Explorer
+browse.default          Open a browser window to display a Neotoma
+                        dataset within the Neotoma Explorer
+browse.download         Open a browser window to display a Neotoma
+                        dataset within the Neotoma Explorer
+browse.download_list    Open a browser window to display a Neotoma
+                        dataset within the Neotoma Explorer
+compile_downloads       Function to convert multiple downloads into a
+                        single large table.
+compile_taxa            Function to convert assemblage taxa to
+                        standardized lists.
+counts                  Access proxy count data
+depths                  Extracts the depth values from a 'download'
+                        object
+download                A class for download objects.
+get_chroncontrol        Function to return chronological control tables
+                        used to build age models.
+get_chroncontrol.dataset
+                        Function to return chronological control tables
+                        from a 'dataset'.
+get_chroncontrol.dataset_list
+                        Function to return chronological control tables
+                        from a 'dataset_list'.
+get_chroncontrol.default
+                        Function to return chronological control tables
+                        from a chronologic ID.
+get_chroncontrol.download
+                        Function to return chronological control tables
+                        from a 'download' object.
+get_chroncontrol.download_list
+                        Function to return chronological control tables
+                        from a 'download_list' object.
+get_closest             Find the closest dataset records to a site,
+                        dataset or long/lat pair in Neotoma
+get_contact             Get contact information.
+get_dataset             Obtain dataset information from the Neotoma
+                        Paleoecological Database or an existing object.
+get_dataset.default     Obtain dataset information from the Neotoma
+                        Paleoecological Database or an existing object.
+get_dataset.download    Obtain dataset information from an existing
+                        'download' object.
+get_dataset.download_list
+                        Obtain dataset information from a
+                        'download_list'.
+get_dataset.geochronologic
+                        Obtain dataset information from an object of
+                        class 'geochronologic'.
+get_dataset.geochronologic_list
+                        Obtain dataset information from an object of
+                        class 'geochronologic_list'.
+get_dataset.integer     Obtain dataset information from a vector of
+                        dataset IDs.
+get_dataset.numeric     Obtain dataset information from a vector of
+                        dataset IDs.
+get_dataset.site        Obtain dataset information from an existing
+                        'site' object.
+get_download            Function to return full download records using
+                        'site's, 'dataset's, or dataset IDs.
+get_download.dataset    Function to return full download records using
+                        a 'dataset'.
+get_download.dataset_list
+                        Function to return full download records using
+                        a 'dataset_list'.
+get_download.default    Function to return full download records using
+                        'numeric' dataset IDs.
+get_download.site       Function to return full download records using
+                        a 'site'.
+get_geochron            Function to return geochronological data from
+                        records.
+get_publication         A function to get publications for sites or
+                        datasets in the Neotoma Database using the API.
+get_publication.dataset
+                        A function to get publications for datasets in
+                        the Neotoma Database using the API.
+get_publication.dataset_list
+                        A function to get publications for
+                        dataset_lists in the Neotoma Database using the
+                        API.
+get_publication.default
+                        A function to get publications for sites or
+                        datasets in the Neotoma Database using the API.
+get_publication.download
+                        A function to get publications for downloads in
+                        the Neotoma Database using the API.
+get_publication.download_list
+                        A function to get publications for datasets in
+                        the Neotoma Database using the API.
+get_site                Return Site Information.
+get_site.dataset        Return Site Information from a numeric list of
+                        site ids.
+get_site.dataset_list   Return Site Information from a 'dataset_list'
+get_site.default        Return Site Information.
+get_site.download       Return Site Information from a 'download'
+get_site.download_list
+                        Return Site Information from a 'download_list'
+get_site.geochronologic
+                        Return Site Information from a 'geochronologic'
+get_site.geochronologic_list
+                        Return Site Information from a
+                        'geochronologic_list'
+get_site.integer        Return Site Information from a vector of
+                        integers.
+get_site.numeric        Return Site information from a vector of
+                        numeric elements.
+get_table               Get Neotoma value tables.
+get_taxa                Get taxon information from Neotoma.
+gp.table                A list of all the geopolitical entities in the
+                        Neotoma database.
+plot_leaflet            Leaflet plots for neotoma data.
+pollen.equiv            A table to convert the pollen taxa identified
+                        by investigators to standardized lists.
+read.tilia              Read proxy data from Tilia TLX files
+read_bacon              Function to read in defined Bacon outputs.
+taxa                    Access proxy taxonomic data
+taxon.list              Neotoma taxon list
+translate.table         A table to convert the original taxa to
+                        standardized lists.
+write_agefile           Write age control file to disk formatted for
+                        either Bacon or Clam
