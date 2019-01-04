@@ -1,0 +1,1055 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 3 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [1{/var/lib/texmf/fonts
+/map/pdftex/updmap/pdftex.map}]
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [2] [3]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 202--204
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+[4] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8]
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [9]
+Overfull \hbox (9.75328pt too wide) in paragraph at lines 464--464
+ []\T1/zi4/m/n/9 t8kyr.datasets <- get_dataset(taxonname=\TS1/zi4/m/n/9 '\T1/zi
+4/m/n/9 Thuja*\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , loc=c(-150, 20, -100, 60), ageyou
+ng = 8000)[] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 579--581
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
+Overfull \hbox (90.93509pt too wide) in paragraph at lines 677--679
+[]\T1/ptm/m/n/10 + Neotoma Project Web-site: http://www.neotomadb.org + API Ref
+-er-ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 808--808
+[]\T1/ptm/m/it/10 Function to re-turn chrono-log-i-cal con-trol ta-bles from a
+[16] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 871--873
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 952--954
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[19] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 969--969
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+
+Overfull \hbox (30.5882pt too wide) in paragraph at lines 986--987
+[]\T1/ptm/m/n/10 An op-tional value, ei-ther a \T1/zi4/m/n/10 numeric \T1/ptm/m
+/n/10 site ID or ob-ject of class \T1/zi4/m/n/10 download\T1/ptm/m/n/10 , \T1/z
+i4/m/n/10 download_list
+
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 988--989
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1000--1001
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1002--1003
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+[20]
+Overfull \hbox (1.44719pt too wide) in paragraph at lines 1032--1033
+[]\T1/ptm/m/n/10 An ar-ray of ob-jects that de-scribe Prin-ci-pal In-ves-ti-ga-
+tors as-so-ci-ated with a dataset. 
+
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1042--1044
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[21] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 1067--1067
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 1085--1086
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+[22]
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1097--1098
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1099--1100
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [23]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 1174--1174
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from an ob-ject of class
+[24] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [25]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [26]
+Overfull \hbox (35.74846pt too wide) in paragraph at lines 1296--1299
+\T1/zi4/m/n/10 get_geochron \T1/ptm/m/n/10 for these ob-jects. The chronolo-gie
+s can be aug-mented us-ing the func-tion \T1/zi4/m/n/10 get_chroncontrol\T1/ptm
+/m/n/10 ,
+[27]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1306--1308
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[28] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [29]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [30]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1491--1493
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[31] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [32]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1575--1577
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [33]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 1173) in paragraph at lines 1613--1613
+[]\T1/ptm/m/it/10 A func-tion to get pub-li-ca-tions for dataset_lists in the N
+eotoma
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [34]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [35]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [36]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 1762--1764
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [37]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [39]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [41]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2007--2009
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [42]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2078--2080
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[43] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [44]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [45]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [46]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [47]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2293--2294
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [48]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2340--2341
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [49]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [50]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [51]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2517--2519
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[52]
+No file Rd2.ind.
+[53] (/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.try} has been referenced but does not exist, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/sha
+re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dis
+t/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/
+type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (53 pages, 176289 bytes).
+Transcript written on Rd2.log.
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 3 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
+Writing index file Rd2.idx
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.out)
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.toc [1{/var/lib/texmf/fonts/map/pdftex/u
+pdmap/pdftex.map}] [2]) (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [3]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [4]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 202--204
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8] [9]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+Overfull \hbox (9.75328pt too wide) in paragraph at lines 464--464
+ []\T1/zi4/m/n/9 t8kyr.datasets <- get_dataset(taxonname=\TS1/zi4/m/n/9 '\T1/zi
+4/m/n/9 Thuja*\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , loc=c(-150, 20, -100, 60), ageyou
+ng = 8000)[] 
+[11] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 579--581
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+[13] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+Overfull \hbox (90.93509pt too wide) in paragraph at lines 677--679
+[]\T1/ptm/m/n/10 + Neotoma Project Web-site: http://www.neotomadb.org + API Ref
+-er-ence: http://api.neotomadb.org/doc/resources/contacts 
+[15] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [16]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 808--808
+[]\T1/ptm/m/it/10 Function to re-turn chrono-log-i-cal con-trol ta-bles from a
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 871--873
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [19] [20]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 952--954
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 969--969
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+
+Overfull \hbox (30.5882pt too wide) in paragraph at lines 986--987
+[]\T1/ptm/m/n/10 An op-tional value, ei-ther a \T1/zi4/m/n/10 numeric \T1/ptm/m
+/n/10 site ID or ob-ject of class \T1/zi4/m/n/10 download\T1/ptm/m/n/10 , \T1/z
+i4/m/n/10 download_list
+
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 988--989
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+[21]
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1000--1001
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1002--1003
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+[22]
+Overfull \hbox (1.44719pt too wide) in paragraph at lines 1032--1033
+[]\T1/ptm/m/n/10 An ar-ray of ob-jects that de-scribe Prin-ci-pal In-ves-ti-ga-
+tors as-so-ci-ated with a dataset. 
+
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1042--1044
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 1067--1067
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+[23]
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 1085--1086
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1097--1098
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1099--1100
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 1174--1174
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from an ob-ject of class
+[25] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [26]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [27]
+Overfull \hbox (35.74846pt too wide) in paragraph at lines 1296--1299
+\T1/zi4/m/n/10 get_geochron \T1/ptm/m/n/10 for these ob-jects. The chronolo-gie
+s can be aug-mented us-ing the func-tion \T1/zi4/m/n/10 get_chroncontrol\T1/ptm
+/m/n/10 ,
+[28]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1306--1308
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[29] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [30]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [31]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1491--1493
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[32] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [33]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1575--1577
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [34]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 1173) in paragraph at lines 1613--1613
+[]\T1/ptm/m/it/10 A func-tion to get pub-li-ca-tions for dataset_lists in the N
+eotoma
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [35]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [36]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [37]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 1762--1764
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [39]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [41]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [42]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2007--2009
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [43]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2078--2080
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[44] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [45]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [46]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [47]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [48]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2293--2294
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [49]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2340--2341
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [50]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [51]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [52]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2517--2519
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[53]
+No file Rd2.ind.
+[54] (/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux) )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.try} has been referenced but does not exist, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/sha
+re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dis
+t/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/
+type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (54 pages, 182870 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2017] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (127 entries accepted, 0 rejected).
+Sorting entries....done (957 comparisons).
+Generating output file Rd2.ind....done (154 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 3 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
+Writing index file Rd2.idx
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.out)
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.toc [1{/var/lib/texmf/fonts/map/pdftex/u
+pdmap/pdftex.map}] [2]) (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [3]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [4]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 202--204
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8] [9]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+Overfull \hbox (9.75328pt too wide) in paragraph at lines 464--464
+ []\T1/zi4/m/n/9 t8kyr.datasets <- get_dataset(taxonname=\TS1/zi4/m/n/9 '\T1/zi
+4/m/n/9 Thuja*\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , loc=c(-150, 20, -100, 60), ageyou
+ng = 8000)[] 
+[11] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 579--581
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+[13] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+Overfull \hbox (90.93509pt too wide) in paragraph at lines 677--679
+[]\T1/ptm/m/n/10 + Neotoma Project Web-site: http://www.neotomadb.org + API Ref
+-er-ence: http://api.neotomadb.org/doc/resources/contacts 
+[15] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [16]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 808--808
+[]\T1/ptm/m/it/10 Function to re-turn chrono-log-i-cal con-trol ta-bles from a
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 871--873
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [19] [20]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 952--954
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 969--969
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+
+Overfull \hbox (30.5882pt too wide) in paragraph at lines 986--987
+[]\T1/ptm/m/n/10 An op-tional value, ei-ther a \T1/zi4/m/n/10 numeric \T1/ptm/m
+/n/10 site ID or ob-ject of class \T1/zi4/m/n/10 download\T1/ptm/m/n/10 , \T1/z
+i4/m/n/10 download_list
+
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 988--989
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+[21]
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1000--1001
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1002--1003
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+[22]
+Overfull \hbox (1.44719pt too wide) in paragraph at lines 1032--1033
+[]\T1/ptm/m/n/10 An ar-ray of ob-jects that de-scribe Prin-ci-pal In-ves-ti-ga-
+tors as-so-ci-ated with a dataset. 
+
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1042--1044
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 1067--1067
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+[23]
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 1085--1086
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1097--1098
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1099--1100
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 1174--1174
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from an ob-ject of class
+[25] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [26]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [27]
+Overfull \hbox (35.74846pt too wide) in paragraph at lines 1296--1299
+\T1/zi4/m/n/10 get_geochron \T1/ptm/m/n/10 for these ob-jects. The chronolo-gie
+s can be aug-mented us-ing the func-tion \T1/zi4/m/n/10 get_chroncontrol\T1/ptm
+/m/n/10 ,
+[28]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1306--1308
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[29] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [30]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [31]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1491--1493
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[32] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [33]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1575--1577
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [34]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 1173) in paragraph at lines 1613--1613
+[]\T1/ptm/m/it/10 A func-tion to get pub-li-ca-tions for dataset_lists in the N
+eotoma
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [35]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [36]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [37]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 1762--1764
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [39]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [41]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [42]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2007--2009
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [43]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2078--2080
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[44] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [45]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [46]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [47]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [48]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2293--2294
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [49]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2340--2341
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [50]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [51]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [52]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2517--2519
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[53] (/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.ind [54] [55] [56])
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.try} has been referenced but does not exist, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/sha
+re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dis
+t/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/
+type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
+s/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (56 pages, 198278 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2017] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (127 entries accepted, 0 rejected).
+Sorting entries....done (957 comparisons).
+Generating output file Rd2.ind....done (154 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 3 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu)))
+Writing index file Rd2.idx
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.out)
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.toc [1{/var/lib/texmf/fonts/map/pdftex/u
+pdmap/pdftex.map}] [2]) (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [3]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [4]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 202--204
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8] [9]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+Overfull \hbox (9.75328pt too wide) in paragraph at lines 464--464
+ []\T1/zi4/m/n/9 t8kyr.datasets <- get_dataset(taxonname=\TS1/zi4/m/n/9 '\T1/zi
+4/m/n/9 Thuja*\TS1/zi4/m/n/9 '\T1/zi4/m/n/9 , loc=c(-150, 20, -100, 60), ageyou
+ng = 8000)[] 
+[11] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 579--581
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+[13] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+Overfull \hbox (90.93509pt too wide) in paragraph at lines 677--679
+[]\T1/ptm/m/n/10 + Neotoma Project Web-site: http://www.neotomadb.org + API Ref
+-er-ence: http://api.neotomadb.org/doc/resources/contacts 
+[15] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [16]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [17]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 808--808
+[]\T1/ptm/m/it/10 Function to re-turn chrono-log-i-cal con-trol ta-bles from a
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [18]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 871--873
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [19] [20]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 952--954
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 969--969
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+
+Overfull \hbox (30.5882pt too wide) in paragraph at lines 986--987
+[]\T1/ptm/m/n/10 An op-tional value, ei-ther a \T1/zi4/m/n/10 numeric \T1/ptm/m
+/n/10 site ID or ob-ject of class \T1/zi4/m/n/10 download\T1/ptm/m/n/10 , \T1/z
+i4/m/n/10 download_list
+
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 988--989
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+[21]
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1000--1001
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1002--1003
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+[22]
+Overfull \hbox (1.44719pt too wide) in paragraph at lines 1032--1033
+[]\T1/ptm/m/n/10 An ar-ray of ob-jects that de-scribe Prin-ci-pal In-ves-ti-ga-
+tors as-so-ci-ated with a dataset. 
+
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1042--1044
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 3503) in paragraph at lines 1067--1067
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from the Neotoma Pa-le-oe-co-lo
+g-i-cal
+[23]
+Overfull \hbox (33.79906pt too wide) in paragraph at lines 1085--1086
+\T1/ptm/m/n/10 Neotoma Database. Al-lowed types in-clude: \T1/zi4/m/n/10 "geoch
+ronologic"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "loss-on-ignition"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (3.95871pt too wide) in paragraph at lines 1097--1098
+[]\T1/ptm/m/n/10 A nu-meric iden-ti-fier for the taxon. See [][]\T1/zi4/m/n/10 
+get_table[][][] \T1/ptm/m/n/10 and use \T1/zi4/m/n/10 get_tables(\TS1/zi4/m/n/1
+0 '\T1/zi4/m/n/10 Taxa\TS1/zi4/m/n/10 '\T1/zi4/m/n/10 )
+
+Overfull \hbox (9.25705pt too wide) in paragraph at lines 1099--1100
+[]\T1/ptm/m/n/10 A char-ac-ter string cor-re-spond-ing to a valid taxon iden-ti
+ty in the Neotoma Database.
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [24]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 10000) in paragraph at lines 1174--1174
+[]\T1/ptm/m/it/10 Obtain dataset in-for-ma-tion from an ob-ject of class
+[25] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [26]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [27]
+Overfull \hbox (35.74846pt too wide) in paragraph at lines 1296--1299
+\T1/zi4/m/n/10 get_geochron \T1/ptm/m/n/10 for these ob-jects. The chronolo-gie
+s can be aug-mented us-ing the func-tion \T1/zi4/m/n/10 get_chroncontrol\T1/ptm
+/m/n/10 ,
+[28]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1306--1308
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[29] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [30]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [31]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1491--1493
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[32] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [33]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 1575--1577
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [34]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Underfull \hbox (badness 1173) in paragraph at lines 1613--1613
+[]\T1/ptm/m/it/10 A func-tion to get pub-li-ca-tions for dataset_lists in the N
+eotoma
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [35]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [36]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [37]
+Overfull \hbox (60.86526pt too wide) in paragraph at lines 1762--1764
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/sites 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [38]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [39]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [40]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [41]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [42]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2007--2009
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [43]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2078--2080
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[44] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [45]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [46]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [47]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [48]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2293--2294
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [49]
+Overfull \hbox (6.9689pt too wide) in paragraph at lines 2340--2341
+[]\T1/ptm/m/n/10 An op-tion for axis trans-for-ma-tion us-ing \T1/zi4/m/n/10 tr
+an \T1/ptm/m/n/10 from the \T1/zi4/m/n/10 analogue \T1/ptm/m/n/10 pack-age. \T1
+/zi4/m/n/10 "none"
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [50]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [51]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [52]
+Overfull \hbox (75.85526pt too wide) in paragraph at lines 2517--2519
+[]\T1/ptm/m/n/10 Neotoma Project Web-site: http://www.neotomadb.org API Ref-er-
+ence: http://api.neotomadb.org/doc/resources/contacts 
+[53] (/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.ind [54] [55] [56])
+(/tmp/RtmpL8uMK9/Rd2pdf662d83384b3/Rd2.aux) )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.try} has been referenced but does not exist, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/sha
+re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dis
+t/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/
+type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
+s/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (56 pages, 198507 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘neotoma-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /tmp/RtmpL8uMK9/Rd2pdf662d83384b3'

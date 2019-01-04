@@ -4,7 +4,7 @@
 \alias{get_dataset.integer}
 \title{Obtain dataset information from a vector of dataset IDs.}
 \usage{
-\method{get_dataset}{integer}(x = NULL, ...)
+\method{get_dataset}{integer}(x, ...)
 }
 \arguments{
 \item{x}{A single numeric dataset id, or a numeric vector.}

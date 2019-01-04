@@ -1,0 +1,37 @@
+
+R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #  Code as used in rOpenSci package rfigshare
+> #  author: Carl Boettiger
+> #  file: https://github.com/ropensci/rfigshare/commit/4f479b6e34f2ab5e89b3aa3da2355156ae659950#diff-aec6d055aaf98780cdcb2bb54dd3631c
+> #  minor modification by : S. Goring
+> 
+> if (packageVersion("testthat") >= "0.7.1.99") {
++   library("testthat")
++   test_check("neotoma")
++ } 
+Loading required package: neotoma
+══ testthat results  ═══════════════════════════════════════════════════════════
+OK: 0 SKIPPED: 1 FAILED: 0
+> if (packageVersion("testthat") < "0.7.1.99") {
++   library("testthat")
++   test_package("neotoma")
++ }
+> 
+> proc.time()
+   user  system elapsed 
+  2.022   0.132   2.190 
