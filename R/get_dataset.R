@@ -397,7 +397,11 @@ get_dataset.geochronologic_list <- function(x, ...) {
 #' @param x A single numeric dataset id, or a numeric vector.
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @export
-get_dataset.numeric <- function(x, ...) {
+get_dataset.numeric <- function(x = NULL, ...) {
+  
+  if (is.null(x)) {
+    return(get_dataset.default(...))
+  }
   
   rep_NULL <- function(x) { 
     if (is.null(x) | length(x) == 0) {NA}
