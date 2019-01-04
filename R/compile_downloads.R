@@ -1,4 +1,6 @@
-#' Function to convert multiple downloads into a single large table.
+#' @title Compile download objects
+#' 
+#' @description Function to convert multiple downloads into a single large table.
 #'
 #' From the assemblage data for multiple cores, return a single data.frame with columns for site
 #' metadata and assemblage data.

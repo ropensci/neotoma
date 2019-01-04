@@ -1,3 +1,8 @@
+neotoma 1.7.4
+====================
+o Bug fix: `get_dataset(gpid=123) was returning an error, fix corrects the error to allow unassigned `x` variables.
+o Updated the allowable dataset types for searching to reflect the larger set of dataset types within Neotoma.
+
 neotoma 1.7.3
 ====================
 o Added numeric/integer methods to the `get_site` and `get_dataset` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.

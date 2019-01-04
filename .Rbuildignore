@@ -11,3 +11,6 @@ tests/local_dont_run/*.*
 download.out
 inst/Cores
 R/dev_Bchron.R
+^./..Rcheck
+^./.git
+neotoma_1.7.4.tar.gz

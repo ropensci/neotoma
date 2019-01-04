@@ -310,7 +310,10 @@ get_site.integer <- function(sitename, ...) {
 #' @param sitename A numeric value or vector of numeric elements.
 #' @param ... Arguments passed from the generic method, not used.
 #' @export
-get_site.numeric <- function(sitename, ...) {
-  
-  get_site(as.integer(sitename))
+get_site.numeric <- function(sitename = NULL, ...) {
+  if (is.null(sitename)) {
+    return(get_site.default(...))
+  } else {
+    return(get_site(as.numeric(sitename)))
+  }
 }
