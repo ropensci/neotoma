@@ -2,7 +2,7 @@
 % Please edit documentation in R/compile_downloads.R
 \name{compile_downloads}
 \alias{compile_downloads}
-\title{Function to convert multiple downloads into a single large table.}
+\title{Compile download objects}
 \usage{
 compile_downloads(downloads)
 }
@@ -13,10 +13,11 @@ compile_downloads(downloads)
 This command returns a data frame.
 }
 \description{
+Function to convert multiple downloads into a single large table.
+
 From the assemblage data for multiple cores, return a single data.frame with columns for site
 metadata and assemblage data.
-}
-\details{
+
 To support further synthesis and analysis \code{compile_download} works to transform a list
 returned by \code{\link{get_download}} into a large data frame with columns for site and sample attributes
 and also with the associated assemblage data at each sample depth.  This function also does the same for

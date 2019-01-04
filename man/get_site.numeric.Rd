@@ -4,7 +4,7 @@
 \alias{get_site.numeric}
 \title{Return Site information from a vector of numeric elements.}
 \usage{
-\method{get_site}{numeric}(sitename, ...)
+\method{get_site}{numeric}(sitename = NULL, ...)
 }
 \arguments{
 \item{sitename}{A numeric value or vector of numeric elements.}
