@@ -27,7 +27,7 @@ user defined destination for age modelling with existing age-depth modeling soft
 #  The point of pulling chronology tables is to re-build or examine the chronological 
 #  information that was used to build the age-depth model for the core.
 # Find the closest records to Madison, WI:
-get_closest(x = c(-89.4012, 43.0731), n = 10, buffer = 5, datasettype = "pollen")
+get_closest(x = c(-89.4012, 43.0731), n = 10, buffer = 5000, datasettype = "pollen")
 }
 }
 \references{

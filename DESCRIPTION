@@ -30,7 +30,9 @@ Imports:
     xml2,
     analogue,
     leaflet,
-    dplyr
+    dplyr,
+    sf,
+    assertthat
 Suggests:
     testthat,
     knitr
