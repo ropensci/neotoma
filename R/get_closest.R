@@ -8,7 +8,7 @@
 #' @import sf
 #' @param x A vector long/lat pair, or a dataset, site or download.
 #' @param n The maximum number of records to return (in the case of ties the return may be larger)
-#' @param buffer The size of the buffer for dataset search (in meters)
+#' @param buffer The size of the buffer for dataset search (in kilometers)
 #' @param ... optional arguments to pass into \code{get_dataset}.
 #' 
 #' @details The function uses the \code{sf} package to generate a circular buffer around a point of interest.  
@@ -55,7 +55,7 @@ get_closest.default <- function(x, n, buffer, ...) {
     sf::st_sfc() %>%
     sf::st_set_crs(4326) %>% 
     sf::st_transform(crs = proj) %>%
-    sf::st_buffer(buffer) %>%
+    sf::st_buffer(buffer * 1000) %>%
     sf::st_transform(4326) %>%
     sf::st_bbox() %>% 
     as.numeric()
@@ -63,7 +63,7 @@ get_closest.default <- function(x, n, buffer, ...) {
   buff_sets <- suppressMessages(get_dataset(loc = bbox, ...))
   
   if (is.null(buff_sets)) {
-    message(paste0("There are no sites within ", buffer, "m of coordinates [", x[1], ", ", x[2], "]"))
+    message(paste0("There are no sites within ", buffer, "km of coordinates [", x[1], ", ", x[2], "]"))
     return(NULL)
   } else {
     sites <- get_site(buff_sets)
