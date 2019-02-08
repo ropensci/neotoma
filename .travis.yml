@@ -5,6 +5,8 @@ cache: packages
 env:
   - NOT_CRAN=true
 
+apt_packages: libudunits2-dev
+
 r_github_packages:
   - jimhester/covr
 
