@@ -1,3 +1,9 @@
+neotoma 1.7.5
+====================
+o Introduction of the `sf` package into the package.  Using `sf` to buffer and transform coordinates to allow a proper buffer and bounding box to be generated to identify the *n* closest sites to a point of interest.
+o Added a warning to `plot_leaflet()` for the default response.
+o Updated `param_check()` to include new dataset types within the database.
+
 neotoma 1.7.4
 ====================
 o Bug fix: `get_dataset(gpid=123) was returning an error, fix corrects the error to allow unassigned `x` variables.
@@ -5,24 +11,24 @@ o Updated the allowable dataset types for searching to reflect the larger set of
 
 neotoma 1.7.3
 ====================
-o Added numeric/integer methods to the `get_site` and `get_dataset` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
+o Added numeric/integer methods to the `get_site()` and `get_dataset()` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
 
 neotoma 1.7.2
 ====================
-o Bugfixes, added the `taxa` function to easily extract taxa from one or multiple download objects.
+o Bugfixes, added the `taxa()` function to easily extract taxa from one or multiple download objects.
 
 neotoma 1.7.1
 ====================
-o Bugfix for `compile_download`, single sample downloads were failing to compile properly.
+o Bugfix for `compile_download()`, single sample downloads were failing to compile properly.
 
 neotoma 1.7.0
 ====================
-o Added `plot_leaflet` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.
+o Added `plot_leaflet()` to allow interactive exploration of downloaded Neotoma data.  Integrates with the Neotoma Explorer.
 o Minor bugfix for `get_download` to allow records to be sent to Neotoma and to be filtered.
 
 neotoma 1.6.2
 ====================
-o Bugfix in `get_chroncontrol`, `read.tilia` based on experience in extensive testing.  Improved the basic `plot` method based on tests against Tilia files in the Neotoma Holding Tank.
+o Bugfix in `get_chroncontrol()`, `read.tilia()` based on experience in extensive testing.  Improved the basic `plot` method based on tests against Tilia files in the Neotoma Holding Tank.
 o Built more robust interpolation in `read_bacon` so that age models without interpolated dates can still be imported.
 o `browse` now opens multiple datastes in the Neotoma Explorer at once.
 

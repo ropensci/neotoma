@@ -4,7 +4,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
 #' @param x An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.
-#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
+#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.  See note in Details delow.
 #' @param piid Numeric value for the Principle Investigator's ID number.
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
@@ -18,6 +18,7 @@
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
+#' @details With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_tables("datasettypes")} to see the full list of available dataset types in the database.
 #' @return More details on the use of these parameters can be obtained from
 #'    \url{http://api.neotomadb.org/doc/resources/datasets}.
 #'

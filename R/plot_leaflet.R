@@ -11,6 +11,12 @@ plot_leaflet <- function(x, providerTiles = "Stamen.TerrainBackground", ...) {
   UseMethod('plot_leaflet')
 }
 
+#' @export
+plot_leaflet.default <- function(x, providerTiles = "Stamen.TerrainBackground", ...) {
+  stop('Leaflet plots for Neotoma data can only be generated for `site`, `dataset` or `download` type objects.')
+}
+
+#' @export
 plot_leaflet.site <- function(x, providerTiles = "Stamen.TerrainBackground", ...) {
   map <- leaflet(data = x)
   map <- addProviderTiles(map, providerTiles)
