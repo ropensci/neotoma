@@ -10,7 +10,7 @@ get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 \arguments{
 \item{x}{An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.}
 
-\item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.}
+\item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.  See note in Details delow.}
 
 \item{piid}{Numeric value for the Principle Investigator's ID number.}
 
@@ -56,6 +56,9 @@ More details on the use of these parameters can be obtained from
 }
 \description{
 A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
+}
+\details{
+With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_tables("datasettypes")} to see the full list of available dataset types in the database.
 }
 \examples{
 \dontrun{
