@@ -94,17 +94,17 @@ param_check <- function(cl) {
   # Parameter check for the datasettype, make sure
   # it's one of the accepted types:
   if ('datasettype' %in% names(cl)) {
-    settypes <- c('geochronologic', 'loss-on-ignition', 'pollen', 'plant macrofossil', 
-                  'vertebrate fauna', 'macroinvertebrate', 'pollen surface sample', 
-                  'insect', 'ostracode', 'water chemistry', 'diatom', 
-                  'ostracode surface sample', 'diatom surface sample', 'geochemistry', 
-                  'physical sedimentology', 'charcoal', 'testate amoebae', 
-                  'X-ray fluorescence (XRF)', 'X-ray diffraction (XRD)', 
-                  'energy dispersive X-ray spectroscopy (EDS/EDX)', 'biomarker', 
-                  'modern plant biomarker', 'phytolith', 'specimen stable isotope', 
-                  'paleomagnetic', 'biochemistry', 'modern biochemistry', 'organic carbon', 
-                  'insect modern', 'chironomid', 'stable isotope', 
-                  'testate amoebae surface sample', 'charcoal surface sample', 'cladocera')
+    settypes <- c('biochemistry', 'biomarker', 'charcoal', 'charcoal surface sample', 
+                  'chironomid', 'cladocera', 'diatom', 'diatom surface sample', 
+                  'diatom top-bottom', 'energy dispersive X-ray spectroscopy (EDS/EDX)', 
+                  'geochemistry', 'geochronologic', 'insect', 'insect modern', 
+                  'loss-on-ignition', 'macroinvertebrate', 'modern biochemistry', 
+                  'modern plant biomarker', 'organic carbon', 'ostracode', 
+                  'ostracode surface sample', 'paleomagnetic', 'physical sedimentology', 
+                  'phytolith', 'plant macrofossil', 'pollen', 'pollen surface sample', 
+                  'specimen stable isotope', 'stable isotope', 'testate amoebae', 
+                  'testate amoebae surface sample', 'vertebrate fauna', 'water chemistry', 
+                  'X-ray diffraction (XRD)', 'X-ray fluorescence (XRF)')
     
     set <- pmatch(cl$datasettype, settypes, nomatch = NA)
     if (is.na(set)) {

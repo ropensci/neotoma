@@ -69,7 +69,7 @@ get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonid
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A numeric value corresponding to the site ID.
-#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.
+#' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  You can find the full list of allowed datasettypes using: \code{get_table("datasettypes")}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
