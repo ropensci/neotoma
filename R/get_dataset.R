@@ -10,7 +10,7 @@
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
 #' @param loc A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator
 #' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
-#' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.
+#' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param ageold The oldest date acceptable for the search (in years before present).
 #' @param ageyoung The youngest date acceptable for the search.
@@ -18,7 +18,7 @@
 #' @param subdate Date of dataset submission, either YYYY-MM-DD or MM-DD-YYYY.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-#' @details With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_tables("datasettypes")} to see the full list of available dataset types in the database.
+#' @details With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_table("datasettypes")} to see the full list of available dataset types in the database.
 #' @return More details on the use of these parameters can be obtained from
 #'    \url{http://api.neotomadb.org/doc/resources/datasets}.
 #'
@@ -75,7 +75,7 @@ get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonid
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
 #' @param loc A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator
 #' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
-#' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.
+#' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param ageold The oldest date acceptable for the search (in years before present).
 #' @param ageyoung The youngest date acceptable for the search.
