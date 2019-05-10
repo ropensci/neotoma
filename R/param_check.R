@@ -149,8 +149,8 @@ param_check <- function(cl) {
 
       # The latitudes must be from -90 to 90
       # The longitudes must be from -180 to 180
-      if (all(findInterval(cl$loc[c(2,4)], c(-90, 90)) == 1) &
-            all(findInterval(cl$loc[c(1,3)], c(-180, 180)) == 1)) {
+      if (all(cl$loc[c(2,4)] >= -90 & cl$loc[c(2,4)] <= 90) &&
+          all(cl$loc[c(1,3)] >= -180 & cl$loc[c(2,4)] <= 180)) {
         cl$loc <- paste(cl$loc, collapse = ',')
       } else {
         error$flag <- 1
