@@ -18,7 +18,7 @@ Description: Access paleoecological datasets from the Neotoma Paleoecological
     in this package access various pre-built API functions and attempt to return
     the results from Neotoma in a usable format for researchers and the public.
 License: MIT + file LICENSE
-URL: https://github.com/ropensci/neotoma
+URL: https://docs.ropensci.org/neotoma, https://github.com/ropensci/neotoma
 BugReports: https://github.com/ropensci/neotoma/issues
 Depends:
     R (>= 2.10)
