@@ -79,7 +79,7 @@ lines(seq(20000, 0, by = -100), smooth.curve, lwd=2, lty=2, col=2)
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

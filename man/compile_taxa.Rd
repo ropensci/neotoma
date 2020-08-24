@@ -4,8 +4,7 @@
 \alias{compile_taxa}
 \title{Function to convert assemblage taxa to standardized lists.}
 \usage{
-compile_taxa(object, list.name, alt.table = NULL, cf = TRUE,
-  type = TRUE)
+compile_taxa(object, list.name, alt.table = NULL, cf = TRUE, type = TRUE)
 }
 \arguments{
 \item{object}{A pollen object returned by \code{\link{get_download}}.}
@@ -63,7 +62,7 @@ Williams J, Shuman B. 2008. Obtaining accurate and precise environmental
   reconstructions from the modern analog technique and North American surface pollen 
   dataset. Quaternary Science Reviews. 27:669-687.
 
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

@@ -38,7 +38,7 @@ get_closest(x = c(-89.4012, 43.0731), n = 10, buffer = 5000, datasettype = "poll
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}, Andria Dawson \email{andria.dawson@gmail.com}

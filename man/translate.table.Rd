@@ -4,7 +4,9 @@
 \name{translate.table}
 \alias{translate.table}
 \title{A table to convert the original taxa to standardized lists.}
-\format{a \code{data.frame} object}
+\format{
+a \code{data.frame} object
+}
 \source{
 The Neotoma database.
 }

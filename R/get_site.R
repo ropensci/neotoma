@@ -10,7 +10,7 @@
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://wnapi.neotomadb.org/apdx/geopol.htm
 #' @param  ... Optional additional arguments
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -42,7 +42,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/sites
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
 get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
@@ -61,7 +61,7 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
 #' @export
 get_site.default <- function(sitename, ...) {
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/sites'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/sites'
 
   cl <- as.list(match.call())
   
@@ -231,7 +231,7 @@ get_site.geochronologic_list <- function(sitename, ...) {
 get_site.integer <- function(sitename, ...) {
   
   call_site <- function(x) {
-    base.uri <- 'http://api.neotomadb.org/v1/data/sites/'
+    base.uri <- 'http://wnapi.neotomadb.org/v1/data/sites/'
     
     neotoma_content <- httr::content(httr::GET(paste0(base.uri, x)), as = "text")
     

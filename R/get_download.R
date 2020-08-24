@@ -67,7 +67,7 @@
 #'
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 get_download <- function(x, verbose = TRUE) {
@@ -97,7 +97,7 @@ get_download.default <- function(x, verbose = TRUE) {
 
   get.sample <- function(x) {
     # query Neotoma for data set
-    base.uri <- 'http://api.neotomadb.org/v1/data/downloads'
+    base.uri <- 'http://wnapi.neotomadb.org/v1/data/downloads'
 
     neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/', x)), as = "text")
     if (identical(neotoma_content, "")) stop("")

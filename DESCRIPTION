@@ -20,6 +20,7 @@ Description: Access paleoecological datasets from the Neotoma Paleoecological
 License: MIT + file LICENSE
 URL: https://docs.ropensci.org/neotoma, https://github.com/ropensci/neotoma
 BugReports: https://github.com/ropensci/neotoma/issues
+LazyData: true
 Depends:
     R (>= 2.10)
 Imports:
@@ -36,4 +37,4 @@ Imports:
 Suggests:
     testthat,
     knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

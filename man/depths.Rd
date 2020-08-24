@@ -51,7 +51,7 @@ new_chron <- Bchron::Bchronology(ages   = pollen.chron$chron.control$age,
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/sites
+API Reference:  http://wnapi.neotomadb.org/doc/resources/sites
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

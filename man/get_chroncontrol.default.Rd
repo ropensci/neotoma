@@ -4,8 +4,7 @@
 \alias{get_chroncontrol.default}
 \title{Function to return chronological control tables from a chronologic ID.}
 \usage{
-\method{get_chroncontrol}{default}(x, chronology = 1, verbose = TRUE,
-  add = FALSE)
+\method{get_chroncontrol}{default}(x, chronology = 1, verbose = TRUE, add = FALSE)
 }
 \arguments{
 \item{x}{A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.}

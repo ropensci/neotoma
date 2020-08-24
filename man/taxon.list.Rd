@@ -4,7 +4,9 @@
 \name{taxon.list}
 \alias{taxon.list}
 \title{Neotoma taxon list}
-\format{a \code{data.frame} object}
+\format{
+a \code{data.frame} object
+}
 \source{
 The Neotoma database.
 }

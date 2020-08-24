@@ -13,7 +13,7 @@ get_taxa(taxonid, taxonname, status, taxagroup, ecolgroup)
 
 \item{status}{The current status of the taxon, one of 'extinct', 'extant', 'all'.}
 
-\item{taxagroup}{The taxonomic grouping for the taxa. See \url{http://api.neotomadb.org/doc/resources/taxa} for the list of approved groupings.}
+\item{taxagroup}{The taxonomic grouping for the taxa. See \url{http://wnapi.neotomadb.org/doc/resources/taxa} for the list of approved groupings.}
 
 \item{ecolgroup}{The ecological group of the taxa. More detailed than \code{taxagroup}, can be obtained using \code{get_table("EcolGroupTypes")}.}
 }
@@ -42,7 +42,7 @@ taxa <- get_taxa(taxonname = "Abies*")
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

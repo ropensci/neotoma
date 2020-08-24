@@ -4,8 +4,7 @@
 \alias{get_chroncontrol.download}
 \title{Function to return chronological control tables from a \code{download} object.}
 \usage{
-\method{get_chroncontrol}{download}(x, chronology = 1, verbose = TRUE,
-  add = FALSE)
+\method{get_chroncontrol}{download}(x, chronology = 1, verbose = TRUE, add = FALSE)
 }
 \arguments{
 \item{x}{A single \code{download} object.}

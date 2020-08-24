@@ -15,7 +15,7 @@ get_site(sitename, altmin, altmax, loc, gpid, ...)
 
 \item{loc}{A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.}
 
-\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm}
+\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://wnapi.neotomadb.org/apdx/geopol.htm}
 
 \item{...}{Optional additional arguments}
 }
@@ -56,7 +56,7 @@ nw.sites <- get_site(nw.datasets)
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/sites
+API Reference:  http://wnapi.neotomadb.org/doc/resources/sites
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
