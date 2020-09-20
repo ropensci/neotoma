@@ -4,8 +4,21 @@
 \alias{get_dataset}
 \title{Obtain dataset information from the Neotoma Paleoecological Database or an existing object.}
 \usage{
-get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
-  taxonname, ageold, ageyoung, ageof, subdate)
+get_dataset(
+  x,
+  datasettype,
+  piid,
+  altmin,
+  altmax,
+  loc,
+  gpid,
+  taxonids,
+  taxonname,
+  ageold,
+  ageyoung,
+  ageof,
+  subdate
+)
 }
 \arguments{
 \item{x}{An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.}
@@ -20,9 +33,9 @@ get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 
 \item{loc}{A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator}
 
-\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}}
+\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://wnapi.neotomadb.org/apdx/geopol.htm}}
 
-\item{taxonids}{A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.}
+\item{taxonids}{A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.}
 
 \item{taxonname}{A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.}
 
@@ -36,7 +49,7 @@ get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 }
 \value{
 More details on the use of these parameters can be obtained from
-   \url{http://api.neotomadb.org/doc/resources/datasets}.
+   \url{http://wnapi.neotomadb.org/doc/resources/datasets}.
 
    A list of class `dataset_list`, with each item corresponding to an individual record.
    Searches that return no items will result in a NULL value being returned.
@@ -58,7 +71,7 @@ More details on the use of these parameters can be obtained from
 A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 }
 \details{
-With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_tables("datasettypes")} to see the full list of available dataset types in the database.
+With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_table("datasettypes")} to see the full list of available dataset types in the database.
 }
 \examples{
 \dontrun{
@@ -79,7 +92,7 @@ v2kyr.datasets <- get_dataset(datasettype='vertebrate fauna',
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

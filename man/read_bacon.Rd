@@ -4,9 +4,17 @@
 \alias{read_bacon}
 \title{Function to read in defined Bacon outputs.}
 \usage{
-read_bacon(x, path = ".", add = FALSE, chron_name = "Bacon",
-  as_default = TRUE, download = NULL, sections = NULL,
-  age_field = "median", interp = TRUE)
+read_bacon(
+  x,
+  path = ".",
+  add = FALSE,
+  chron_name = "Bacon",
+  as_default = TRUE,
+  download = NULL,
+  sections = NULL,
+  age_field = "median",
+  interp = TRUE
+)
 }
 \arguments{
 \item{x}{A folder path that contains a Bacon \code{age} file.}

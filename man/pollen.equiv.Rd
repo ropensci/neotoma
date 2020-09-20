@@ -4,9 +4,11 @@
 \name{pollen.equiv}
 \alias{pollen.equiv}
 \title{A table to convert the pollen taxa identified by investigators to standardized lists.}
-\format{a \code{data.frame} object}
+\format{
+a \code{data.frame} object
+}
 \usage{
-translate.table
+data(pollen.equiv)
 }
 \description{
 A list of standardized (published) taxonomies from the literature to help standardize taxonomies for synthesis work.

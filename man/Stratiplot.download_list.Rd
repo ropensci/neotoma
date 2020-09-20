@@ -4,8 +4,7 @@
 \alias{Stratiplot.download_list}
 \title{Palaeoecological stratigraphic diagrams}
 \usage{
-\method{Stratiplot}{download_list}(x, yaxis = "age", method = "none",
-  group = NULL, ...)
+\method{Stratiplot}{download_list}(x, yaxis = "age", method = "none", group = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{download_list} object.}

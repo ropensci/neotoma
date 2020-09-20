@@ -4,8 +4,7 @@
 \alias{write_agefile}
 \title{Write age control file to disk formatted for either Bacon or Clam}
 \usage{
-write_agefile(download, chronology = 1, path, corename,
-  cal.prog = "Bacon")
+write_agefile(download, chronology = 1, path, corename, cal.prog = "Bacon")
 }
 \arguments{
 \item{download}{A single site returned by \code{get_download}.}
@@ -43,7 +42,7 @@ write_agefile(download = three_pines[[1]],
 }
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

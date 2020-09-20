@@ -10,8 +10,7 @@ taxa(obj, ...)
 
 \method{taxa}{download}(obj, ...)
 
-\method{taxa}{download_list}(obj, collapse = TRUE, hierarchy = FALSE,
-  ...)
+\method{taxa}{download_list}(obj, collapse = TRUE, hierarchy = FALSE, ...)
 }
 \arguments{
 \item{obj}{an R object from which counts are to be extracted.}

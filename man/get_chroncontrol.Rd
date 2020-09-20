@@ -53,7 +53,7 @@ new_ages <- predict(model, x = three_pines[[1]]$sample.meta$depth)
 }
 \references{
 + Neotoma Project Website: http://www.neotomadb.org
-+ API Reference:  http://api.neotomadb.org/doc/resources/contacts
++ API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
