@@ -33,14 +33,14 @@
  #  context('The API itself is working properly')
  #  test_that('The API is returning data as expected from its documentation',
  #        {
- #            aa <- jsonlite::fromJSON(httr::content(httr::GET('http://api.neotomadb.org/v1/data/datasets?siteid=1'), as = 'text'))
- #            bb <- jsonlite::fromJSON(httr::content(httr::GET('http://api.neotomadb.org/v1/data/datasets?gpid=756'), as = 'text'))
+ #            aa <- jsonlite::fromJSON(httr::content(httr::GET('http://wnapi.neotomadb.org/v1/data/datasets?siteid=1'), as = 'text'))
+ #            bb <- jsonlite::fromJSON(httr::content(httr::GET('http://wnapi.neotomadb.org/v1/data/datasets?gpid=756'), as = 'text'))
  #            expect_is(aa, 'list')
  #            expect_is(bb, 'list')
  #            expect_equal(length(aa), 2)
  #            expect_equal(aa[[1]], 1)
  #            expect_more_than(length(aa[[2]]), 0)
- #            expect_equal(jsonlite::fromJSON(httr::content(httr::GET('http://api.neotomadb.org/v1/data/datasets?banana'), as = 'text'))[[1]], 0)
+ #            expect_equal(jsonlite::fromJSON(httr::content(httr::GET('http://wnapi.neotomadb.org/v1/data/datasets?banana'), as = 'text'))[[1]], 0)
  #            expect_equal(bb[[1]], 1)
  #            expect_more_than(length(bb[[2]]), 0)
  #        })
