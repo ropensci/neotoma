@@ -1,3 +1,9 @@
+neotoma 1.7.6
+====================
+o Updated the API endpoints to correctly point to the new windows API endpoint, in preparation for migration.
+o Fixed the help for `get_closest()`
+o Changed character encoding for two data tables, `pollen.equiv` and `taxon.list`, made them available in the main package using `data()`.
+
 neotoma 1.7.5
 ====================
 o Introduction of the `sf` package into the package.  Using `sf` to buffer and transform coordinates to allow a proper buffer and bounding box to be generated to identify the *n* closest sites to a point of interest.
@@ -92,7 +98,7 @@ o Publication of Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W.,
 
 neotoma 0.1
 ====================
-o continued development of API implementation and working toward a common 
+o continued development of API implementation and working toward a common
   standard for data output.
 
 o Continued development of tests for the package.
