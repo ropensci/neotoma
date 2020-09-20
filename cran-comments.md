@@ -4,9 +4,8 @@
 +   [Appveyor](https://ci.appveyor.com/project/sckott/neotoma/build/1.0.1397) tests are passing.
 
 ## R CMD check results:
-+   R CMD check succeeded (0 errors, warnings, notes)
-+   Travis gives no notes.
-+   Appveyor passes
++   R CMD check succeeded (0 errors, warnings, 1 note)
++   The single note is for timestamps and error described here: https://stackoverflow.com/questions/63613301/r-cmd-check-note-unable-to-verify-current-time
 
 ## Downstream Dependencies:
 NA
