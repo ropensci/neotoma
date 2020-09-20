@@ -47,12 +47,12 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 get_contact <- function(contactid, contactname, contactstatus, familyname){
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/contacts'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/contacts'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL

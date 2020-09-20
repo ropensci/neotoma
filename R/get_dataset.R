@@ -9,7 +9,7 @@
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
 #' @param loc A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://wnapi.neotomadb.org/apdx/geopol.htm}
 #' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param ageold The oldest date acceptable for the search (in years before present).
@@ -20,7 +20,7 @@
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @details With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_table("datasettypes")} to see the full list of available dataset types in the database.
 #' @return More details on the use of these parameters can be obtained from
-#'    \url{http://api.neotomadb.org/doc/resources/datasets}.
+#'    \url{http://wnapi.neotomadb.org/doc/resources/datasets}.
 #'
 #'    A list of class `dataset_list`, with each item corresponding to an individual record.
 #'    Searches that return no items will result in a NULL value being returned.
@@ -55,7 +55,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 #'
@@ -74,7 +74,7 @@ get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonid
 #' @param altmin Numeric value indicating the minimum altitude for the site (can be used alone or with \code{altmax}).
 #' @param altmax Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).
 #' @param loc A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://wnapi.neotomadb.org/apdx/geopol.htm}
 #' @param taxonids A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param taxonname A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.
 #' @param ageold The oldest date acceptable for the search (in years before present).
@@ -86,7 +86,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
   # The issue here is that these objects
   # have multiple tables of multiple lengths.
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/datasets'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/datasets'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
@@ -247,7 +247,7 @@ get_dataset.site <- function(x, ...) {
     
     cl <- lapply(cl, function(x){ if (length(x) > 1) {paste0(x, collapse = ',')} else {x} })
     
-    base.uri <- 'http://api.neotomadb.org/v1/data/datasets/?siteid='
+    base.uri <- 'http://wnapi.neotomadb.org/v1/data/datasets/?siteid='
     
     neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
     
@@ -419,7 +419,7 @@ get_dataset.numeric <- function(x = NULL, ...) {
 
     #  Pass the parameters to param_check to make sure everything is kosher.
 
-    base.uri <- paste0('http://api.neotomadb.org/v1/data/datasets/', x)
+    base.uri <- paste0('http://wnapi.neotomadb.org/v1/data/datasets/', x)
     
     neotoma_content <- httr::content(httr::GET(base.uri), as = "text")
     

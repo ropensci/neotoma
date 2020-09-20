@@ -54,7 +54,7 @@
 #'
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 get_geochron <- function(x, verbose = TRUE){
@@ -75,7 +75,7 @@ get_geochron.default <- function(x, verbose = TRUE){
   # one or more geochronologies at a time.
   get_sample <- function(x){
     
-    base.uri <- 'http://api.neotomadb.org/v1/apps/geochronologies'
+    base.uri <- 'http://wnapi.neotomadb.org/v1/apps/geochronologies'
     
     # query Neotoma for data set
     neotoma_content <- httr::content(httr::GET(paste0(base.uri, '/?datasetid=', x)), as = "text")
@@ -125,7 +125,7 @@ get_geochron.default <- function(x, verbose = TRUE){
       # with data in the dataset returned.
       
       # We have to pull the dataset information from the `download`:
-      dl <- try(jsonlite::fromJSON(paste0('http://api.neotomadb.org/v1/data/downloads/', x)))[[2]]
+      dl <- try(jsonlite::fromJSON(paste0('http://wnapi.neotomadb.org/v1/data/downloads/', x)))[[2]]
       
       dl <- lapply(dl, function(x)rep_NULL(x))
       

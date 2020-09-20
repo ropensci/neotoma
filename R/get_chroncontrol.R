@@ -41,7 +41,7 @@
 #' }
 #' @references
 #' + Neotoma Project Website: http://www.neotomadb.org
-#' + API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' + API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 get_chroncontrol <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
@@ -63,7 +63,7 @@ get_chroncontrol.default <- function(x, chronology = 1, verbose = TRUE, add = FA
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
-  base.uri <- 'http://api.neotomadb.org/v1/data/chronologies'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/chronologies'
   
   if (missing(x)) {
     stop(paste(sQuote("chronologyid"), "(x) must be provided."))

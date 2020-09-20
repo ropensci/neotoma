@@ -30,7 +30,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/sites
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
 `depths` <- function(obj, ...){

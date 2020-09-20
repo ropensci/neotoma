@@ -27,7 +27,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 #' 
@@ -58,7 +58,7 @@ get_publication<- function(x, contactid, datasetid, author,
 get_publication.default <- function(x, contactid, datasetid, author,
                             pubtype, year, search){
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/publications'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/publications'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL

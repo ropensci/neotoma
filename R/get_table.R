@@ -3,7 +3,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
 #' @param table.name Call one of the available tables in the Neotoma Database.
-#'    A full listing of tables can be found here: \url{http://api.neotomadb.org/doc/resources/dbtables}.
+#'    A full listing of tables can be found here: \url{http://wnapi.neotomadb.org/doc/resources/dbtables}.
 #'    By default it returns all objects in the table.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -21,12 +21,12 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
 get_table <- function(table.name = NULL){
 
-  base.uri <- 'http://api.neotomadb.org/v1/dbtables/'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/dbtables/'
 
   name.list <- c('AgeTypes', 'AggregateChronologies',
                  'AggregateDatasets', 'AggregateOrderTypes',
