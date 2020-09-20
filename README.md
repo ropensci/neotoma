@@ -9,6 +9,8 @@ neotoma
 [![NSF-1550707](https://img.shields.io/badge/NSF-1550707-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1550707)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
 
+**NOTE** *The Neotoma R package accesses the Windows-based API for the database.  This API is being deprecated, but is still available.  Due to changes in the database servers, the API Help is no longer functioning. Links to API help have been left, but do not resolve.*
+
 The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](http://www.neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
 
 `neotoma` is part of the [rOpenSci](http://ropensci.org) project and is also hosted on [Figshare](http://dx.doi.org/10.6084/m9.figshare.677131).  The `neotoma` package has been available on [CRAN](https://cran.r-project.org/package=neotoma) since May 3, 2015.
