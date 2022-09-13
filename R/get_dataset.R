@@ -3,6 +3,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom methods is
 #' @param x An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.  See note in Details delow.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -68,6 +69,7 @@ get_dataset <- function(x, datasettype, piid, altmin, altmax, loc, gpid, taxonid
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @param x A numeric value corresponding to the site ID.
 #' @param datasettype A character string corresponding to one of the allowed dataset types in the Neotoma Database.  You can find the full list of allowed datasettypes using: \code{get_table("datasettypes")}.
 #' @param piid Numeric value for the Principle Investigator's ID number.
@@ -119,7 +121,7 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
     rep_NULL <- function(x) { 
       if (is.null(x)) {NA}
       else{
-        if (class(x) == 'list') {
+        if (is(x, 'list')) {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -166,18 +168,18 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 
           if ('CollType' %in% names(x)) {x$CollUnitType <- x$CollType} # This is a fix for a very specific issue we were having.
           
-          new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
+          new.output$dataset.meta <- data.frame(dataset.id = ifelse(is(x$DatasetID, 'logical'),
                                                                     NA, x$DatasetID),
-                                                dataset.name = ifelse(class(x$DatasetName) == 'logical',
+                                                dataset.name = ifelse(is(x$DatasetName, 'logical'),
                                                                       NA, x$DatasetName),
-                                                collection.type = ifelse(class(x$CollUnitType) == 'logical',
+                                                collection.type = ifelse(is(x$CollUnitType, 'logical'),
                                                                          NA, x$CollUnitType),
-                                                collection.handle = ifelse(class(x$CollUnitHandle) == 'logical',
+                                                collection.handle = ifelse(is(x$CollUnitHandle, 'logical'),
                                                                            NA, x$CollUnitHandle),
-                                                dataset.type = ifelse(class(x$DatasetType) == 'logical',
+                                                dataset.type = ifelse(is(x$DatasetType,  'logical'),
                                                                       NA, x$DatasetType),
                                                 stringsAsFactors = FALSE)
-          if (class(x$DatasetPIs) == 'logical') { 
+          if (is(x$DatasetPIs, 'logical')) { 
             new.output$pi.data <- NA
           } else {
             new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
@@ -217,13 +219,14 @@ get_dataset.default <- function(x, datasettype, piid, altmin, altmax, loc, gpid,
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @export
 get_dataset.site <- function(x, ...) {
 
   rep_NULL <- function(x) { 
     if (is.null(x) | length(x) == 0) {NA}
     else{
-      if (class(x) == 'list') {
+      if (is(x, 'list')) {
         lapply(x, rep_NULL)
       } else {
         return(x)
@@ -286,18 +289,18 @@ get_dataset.site <- function(x, ...) {
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
       
-      new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
+      new.output$dataset.meta <- data.frame(dataset.id = ifelse(is(x$DatasetID, 'logical'),
                                                                 NA, x$DatasetID),
-                                            dataset.name = ifelse(class(x$DatasetName) == 'logical',
+                                            dataset.name = ifelse(is(x$DatasetName, 'logical'),
                                                                   NA, x$DatasetName),
-                                            collection.type = ifelse(class(x$CollUnitType) == 'logical',
+                                            collection.type = ifelse(is(x$CollUnitType, 'logical'),
                                                                      NA, x$CollUnitType),
-                                            collection.handle = ifelse(class(x$CollUnitHandle) == 'logical',
+                                            collection.handle = ifelse(is(x$CollUnitHandle, 'logical'),
                                                                        NA, x$CollUnitHandle),
-                                            dataset.type = ifelse(class(x$DatasetType) == 'logical',
+                                            dataset.type = ifelse(is(x$DatasetType, 'logical'),
                                                                   NA, x$DatasetType),
                                             stringsAsFactors = FALSE)
-      if (class(x$DatasetPIs) == 'logical') { 
+      if (is(x$DatasetPIs, 'logical')) { 
         new.output$pi.data <- NA
       } else {
         new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)
@@ -399,15 +402,15 @@ get_dataset.geochronologic_list <- function(x, ...) {
 #' @param ... objects passed from the generic.  Not used in the call.
 #' @export
 get_dataset.numeric <- function(x = NULL, ...) {
-  
+
   if (is.null(x)) {
     return(get_dataset.default(...))
   }
-  
+
   rep_NULL <- function(x) { 
     if (is.null(x) | length(x) == 0) {NA}
-    else{
-      if (class(x) == 'list') {
+    else {
+      if (is(x, 'list')) {
         lapply(x, rep_NULL)
       } else {
         return(x)
@@ -458,18 +461,18 @@ get_dataset.numeric <- function(x = NULL, ...) {
                                          row.names = x$Site$SiteName,
                                          stringsAsFactors = FALSE)
       
-      new.output$dataset.meta <- data.frame(dataset.id = ifelse(class(x$DatasetID) == 'logical',
+      new.output$dataset.meta <- data.frame(dataset.id = ifelse(is(x$DatasetID, 'logical'),
                                                                 NA, x$DatasetID),
-                                            dataset.name = ifelse(class(x$DatasetName) == 'logical',
+                                            dataset.name = ifelse(is(x$DatasetName, 'logical'),
                                                                   NA, x$DatasetName),
-                                            collection.type = ifelse(class(x$CollUnitType) == 'logical',
+                                            collection.type = ifelse(is(x$CollUnitType, 'logical'),
                                                                      NA, x$CollUnitType),
-                                            collection.handle = ifelse(class(x$CollUnitHandle) == 'logical',
+                                            collection.handle = ifelse(is(x$CollUnitHandle, 'logical'),
                                                                        NA, x$CollUnitHandle),
-                                            dataset.type = ifelse(class(x$DatasetType) == 'logical',
+                                            dataset.type = ifelse(is(x$DatasetType, 'logical'),
                                                                   NA, x$DatasetType),
                                             stringsAsFactors = FALSE)
-      if (class(x$DatasetPIs) == 'logical') { 
+      if (is(x$DatasetPIs, 'logical')) { 
         new.output$pi.data <- NA
       } else {
         new.output$pi.data <- do.call(rbind.data.frame, x$DatasetPIs)

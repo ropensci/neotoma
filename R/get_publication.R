@@ -4,6 +4,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
@@ -46,6 +47,7 @@ get_publication<- function(x, contactid, datasetid, author,
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom methods is
 #' @param x Numeric Publication ID value, either from \code{\link{get_dataset}} or known.
 #' @param contactid Numeric Contact ID value, either from \code{\link{get_dataset}} or \code{\link{get_contact}}
 #' @param datasetid Numeric Dataset ID, known or from \code{\link{get_dataset}}
@@ -90,7 +92,7 @@ get_publication.default <- function(x, contactid, datasetid, author,
     rep_NULL <- function(x){ 
       if(is.null(x)){NA}
       else{
-        if(class(x) == 'list'){
+        if(is(x, 'list')){
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -109,7 +111,7 @@ get_publication.default <- function(x, contactid, datasetid, author,
     }
   }
 
-  if (class(aa) == 'try-error'){
+  if (is(aa, 'try-error')){
     output <- NA
   } else {
 

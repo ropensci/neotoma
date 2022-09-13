@@ -1,5 +1,6 @@
 #' @title Internal function to check passed parameters.
 #'
+#' @importFrom methods is
 #' @description Functions \code{\link{get_site}}, \code{\link{get_dataset}} and others pass parameters to \code{param_check}, which tells them if there's a problem.
 #' @param cl Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
@@ -145,7 +146,7 @@ param_check <- function(cl) {
   if ('loc' %in% names(cl)) {
     cl$loc <- eval(cl$loc)
 
-    if (class(cl$loc) == 'numeric' & length(cl$loc == 4)) {
+    if (is(cl$loc, 'numeric') & length(cl$loc == 4)) {
 
       # The latitudes must be from -90 to 90
       # The longitudes must be from -180 to 180
@@ -181,7 +182,7 @@ param_check <- function(cl) {
   }
 
   if ('taxonname' %in% names(cl)) {
-    if (!class(cl$taxonname) == 'character') {
+    if (!is(cl$taxonname, 'character')) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The taxonname must be a character.'
     }

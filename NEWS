@@ -1,3 +1,8 @@
+neotoma 1.7.7
+====================
+o This represents the end-of-life update for the package. Updates some function calls and Rd file formatting.
+o All new development for Neotoma in R is part of the `neotoma2` R package at https://github.com/NeotomaDB/neotoma2
+
 neotoma 1.7.6
 ====================
 o Updated the API endpoints to correctly point to the new windows API endpoint, in preparation for migration.

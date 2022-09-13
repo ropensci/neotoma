@@ -4,6 +4,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
 #' @importFrom stats na.omit
+#' @importFrom methods is
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}, or a \code{site}, \code{dataset}, or \code{dataset_list}.
 #' @param verbose logical; should messages on API call be printed?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -79,6 +80,7 @@ get_download <- function(x, verbose = TRUE) {
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom methods is
 #' @param x A single numeric dataset ID or a vector of numeric dataset IDs as returned by \code{get_datasets}.
 #' @param verbose logical; should messages on API call be printed?
 #' @export
@@ -126,7 +128,7 @@ get_download.default <- function(x, verbose = TRUE) {
           # small function to recursively fill all NULL values with NAs.
           if (is.null(x)) {NA}
           else{
-            if (class(x) == 'list') {
+            if (is(x, 'list')) {
               lapply(x, rep_NULL)
             } else {
               return(x)
@@ -335,7 +337,7 @@ get_download.default <- function(x, verbose = TRUE) {
                                       'age.younger', 'chronology.name',
                                       'age.type', 'chronology.id', 'dataset.id')
 
-            if (!class(chrons) == 'try-error') {
+            if (!is(chrons, 'try-error')) {
               # Now we create the chronologies, so long as samples have assigned "SampleAges"
               # If they don't, then we stick in the empty `base.frame` and assign it a name "1"
               # Create the list:
