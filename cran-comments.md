@@ -5,7 +5,7 @@
 
 ## R CMD check results:
 +   R CMD check succeeded (0 errors, warnings, 0 note)
-+   Windows check returns errors for missing API documentation.  Due to a change in the backend services the API documentation is now offline.
++   Windows check returns Notes for URLs. These have been resolved to the best of our ability.
 
 ## Downstream Dependencies:
 NA

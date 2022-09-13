@@ -41,8 +41,8 @@ taxa <- get_taxa(taxonname = "Abies*")
 }
 }
 \references{
-Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
+Neotoma Project Website: https://neotomadb.org
+API Reference: API v1.0 documentation is deprecated. Please see https://api.neotomadb.org
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}

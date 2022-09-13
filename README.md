@@ -11,6 +11,8 @@ neotoma
 
 **NOTE** *The Neotoma R package accesses the Windows-based API for the database.  This API is being deprecated, but is still available.  Due to changes in the database servers, the API Help is no longer functioning. Links to API help have been left, but do not resolve.*
 
+**For up to date data from Neotoma please use the [neotoma2](https://github.com/NeotomaDB/neotoma2) R package.**
+
 The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](https://neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
 
 `neotoma` is part of the [rOpenSci](https://ropensci.org) project and is also hosted on [Figshare](https://dx.doi.org/10.6084/m9.figshare.677131).  The `neotoma` package has been available on [CRAN](https://cran.r-project.org/package=neotoma) since May 3, 2015.
@@ -67,6 +69,7 @@ More functions are available through the package help.  These represent the core
 + `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](https://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
++ 1.7.7: This represents the end-of-life update for the package. Updates some function calls and Rd file formatting.  All new development for Neotoma in R is part of the `neotoma2` R package at https://github.com/NeotomaDB/neotoma2
 + 1.7.6: Updated the API endpoints to correctly point to the new windows API endpoint, in preparation for migration; Fixed the help for `get_closest()`; Changed character encoding for two data tables, `pollen.equiv` and `taxon.list`, made them available in the main package using `data()`.
 + 1.7.4: Bug fix: `get_dataset(gpid=123)` was returning an error, fix corrects the error to allow unassigned `x` variables.  Updated the allowable dataset types for searching to reflect the larger set of dataset types within Neotoma.
 + 1.7.3: Added numeric/integer methods to the `get_site()` and `get_dataset()` functions so that a vector of dataset or siteids can be passed to improve more general workflow methods.
