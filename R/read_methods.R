@@ -1,28 +1,29 @@
-##' Read proxy data from a Tilia TLX format file.
-##'
-##' @importFrom xml2 xml_attr read_xml as_list xml_text xml_find_one xml_find_all
-##' @title Read proxy data from Tilia TLX files
-##'
-##' @param file a string representing a Tilia TLX format file.
-##' @return Return a `download` object.
-##'
-##' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
-##'
-##' @export
-##' @rdname read.tilia
-##'
-##' @examples
-##' \dontrun{
-##'   crystal <- read.tilia('crystal.tlx')
-##' }
-##' 
+#' Read proxy data from a Tilia TLX format file.
+#'
+#' @importFrom xml2 xml_attr read_xml as_list xml_text xml_find_one xml_find_all
+#' @importFrom methods is
+#' @title Read proxy data from Tilia TLX files
+#'
+#' @param file a string representing a Tilia TLX format file.
+#' @return Return a `download` object.
+#'
+#' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
+#'
+#' @export
+#' @rdname read.tilia
+#'
+#' @examples
+#' \dontrun{
+#'   crystal <- read.tilia('crystal.tlx')
+#' }
+#' 
 `read.tilia` <- function(file) {
     tilia_xml <- xml2::read_xml(file)
     tilia_list <- xml2::as_list(tilia_xml)
     
     find_NA <- function(x,y) {
       wrap <- try(xml2::xml_text(xml2::xml_find_first(x,y)), silent = TRUE)
-      if (class(wrap) == 'try-error') wrap <- NA
+      if (is(wrap, 'try-error')) wrap <- NA
       return(wrap)
     }
     

@@ -15,7 +15,5 @@ TO DO
 }
 \author{
 Simon Goring
-
-Simon Goring
 }
 \keyword{methods}

@@ -5,6 +5,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @param x A numeric dataset ID or a vector of numeric dataset IDs, or an object of class of class \code{site}, \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list} for which geochrons are required.
 #' @param verbose logical; should messages on API call be printed?
 #' 
@@ -40,8 +41,8 @@
 #'
 #' get_ages <- function(x){
 #'   any.ages <- try(x[[2]]$age[x[[2]]$age.type == 'Radiocarbon years BP'])
-#'   if(class(any.ages) == 'try-error') output <- NA
-#'   if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
+#'   if(is(any.ages, 'try-error')) output <- NA
+#'   if(!is(any.ages, 'try-error')) output <- unlist(any.ages)
 #'   output
 #' }
 #'
@@ -63,6 +64,7 @@ get_geochron <- function(x, verbose = TRUE){
 
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @export
 get_geochron.default <- function(x, verbose = TRUE){
 
@@ -107,7 +109,7 @@ get_geochron.default <- function(x, verbose = TRUE){
       rep_NULL <- function(x){ 
         if (is.null(x)) {NA}
         else {
-          if (class(x) == 'list') {
+          if (is(x, 'list')) {
             lapply(x, rep_NULL)
           } else {
             return(x)

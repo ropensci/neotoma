@@ -2,6 +2,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom methods is
 #' @param table.name Call one of the available tables in the Neotoma Database.
 #'    A full listing of tables can be found here: \url{http://wnapi.neotomadb.org/doc/resources/dbtables}.
 #'    By default it returns all objects in the table.
@@ -82,7 +83,7 @@ get_table <- function(table.name = NULL){
         rep_NULL <- function(x){ 
           if(is.null(x)){NA}
           else{
-            if(class(x) == 'list'){
+            if(is(x, 'list')){
               lapply(x, rep_NULL)
             } else {
               return(x)

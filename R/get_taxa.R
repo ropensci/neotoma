@@ -3,6 +3,7 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @param taxonid Numeric taxon identifier used in Neotoma
 #' @param taxonname A character string representing the full or partial name of taxa of interest.
 #' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.
@@ -92,7 +93,7 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup) {
     rep_NULL <- function(x) {
       if (is.null(x)) {NA}
       else{
-        if (class(x) == 'list') {
+        if (is(x, 'list')) {
           # Recursive function to go through the list & clear NULL values.
           lapply(x, rep_NULL)
         } else {
@@ -108,7 +109,7 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup) {
         length(output), 'records.\n')
   }
 
-  if (class(aa) == 'try-error') {
+  if (is(aa, 'try-error')) {
     output <- aa
   } else {
 

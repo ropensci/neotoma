@@ -49,8 +49,8 @@ geochron.records <- get_geochron(marion_close)
 
 get_ages <- function(x){
   any.ages <- try(x[[2]]$age[x[[2]]$age.type == 'Radiocarbon years BP'])
-  if(class(any.ages) == 'try-error') output <- NA
-  if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
+  if(is(any.ages, 'try-error')) output <- NA
+  if(!is(any.ages, 'try-error')) output <- unlist(any.ages)
   output
 }
 

@@ -5,6 +5,7 @@
 #'    based on parameters defined by the user.
 #'
 #' @importFrom jsonlite fromJSON
+#' @importFrom methods is
 #' @importFrom httr content GET
 #' @param sitename character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
 #' @param altmin Minimum site altitude  (in m).
@@ -54,6 +55,7 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
 #' @description Return site information from the Neotoma Paleoecological Database.
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom methods is
 
 #' @param sitename A character string representing the full or partial site name.
 #' @param ... Arguments passed from the generic method, not used.
@@ -91,7 +93,7 @@ get_site.default <- function(sitename, ...) {
     rep_NULL <- function(x) { 
       if (is.null(x)) {NA}
       else{
-        if (class(x) == 'list') {
+        if (is(x, 'list')) {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -111,7 +113,7 @@ get_site.default <- function(sitename, ...) {
     
   }
 
-  if (class(aa) == 'try-error') {
+  if (is(aa, 'try-error')) {
      output <- aa
   } else {
     
@@ -227,6 +229,7 @@ get_site.geochronologic_list <- function(sitename, ...) {
 #'
 #' @param sitename An integer or vector of integers.
 #' @param ... Arguments passed from the generic method, not used.
+#' @importFrom methods is
 #' @export
 get_site.integer <- function(sitename, ...) {
   
@@ -248,7 +251,7 @@ get_site.integer <- function(sitename, ...) {
       rep_NULL <- function(x) { 
         if (is.null(x)) {NA}
         else{
-          if (class(x) == 'list') {
+          if (is(x, 'list')) {
             lapply(x, rep_NULL)
           } else {
             return(x)
@@ -268,7 +271,7 @@ get_site.integer <- function(sitename, ...) {
       
     }
     
-    if (class(aa) == 'try-error') {
+    if (is(aa, 'try-error')) {
       output <- aa
     } else {
       

@@ -78,9 +78,9 @@ get_chroncontrol.default <- function(x, chronology = 1, verbose = TRUE, add = FA
   if (identical(neotoma_content, "")) {
     stop("")
   }
-  
+
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
-  
+
   # Might as well check here for error and bail
   if (inherits(aa, "try-error")) {
     return(aa)
@@ -98,7 +98,7 @@ get_chroncontrol.default <- function(x, chronology = 1, verbose = TRUE, add = FA
     rep_NULL <- function(x) { 
       if (is.null(x)) { NA }
       else{
-        if (class(x) == 'list') {
+        if (is(x, "list")) {
           lapply(x, rep_NULL)
         } else {
           return(x)
