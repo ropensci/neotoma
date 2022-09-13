@@ -56,7 +56,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
+#' API Reference: API v1.0 documentation is deprecated. Please see https://api.neotomadb.org
 #' @keywords IO connection
 #' @export
 #'

@@ -4,36 +4,36 @@ neotoma
 [![Build Status](https://api.travis-ci.org/ropensci/neotoma.png)](https://travis-ci.org/ropensci/neotoma)
 [![Build status](https://ci.appveyor.com/api/projects/status/t2xyqbs0d8h998cb/branch/master)](https://ci.appveyor.com/project/sckott/neotoma/branch/master)
 [![codecov.io](https://codecov.io/github/ropensci/neotoma/coverage.svg?branch=master)](https://codecov.io/github/ropensci/neotoma?branch=master)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/neotoma)](https://github.com/metacran/cranlogs.app)
-[![cran version](http://www.r-pkg.org/badges/version/neotoma)](https://cran.r-project.org/package=neotoma)
+[![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/neotoma)](https://github.com/r-hub/cranlogs.app)
+[![cran version](https://www.r-pkg.org/badges/version/neotoma)](https://cran.r-project.org/package=neotoma)
 [![NSF-1550707](https://img.shields.io/badge/NSF-1550707-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1550707)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
 
 **NOTE** *The Neotoma R package accesses the Windows-based API for the database.  This API is being deprecated, but is still available.  Due to changes in the database servers, the API Help is no longer functioning. Links to API help have been left, but do not resolve.*
 
-The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](http://www.neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
+The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](https://neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
 
-`neotoma` is part of the [rOpenSci](http://ropensci.org) project and is also hosted on [Figshare](http://dx.doi.org/10.6084/m9.figshare.677131).  The `neotoma` package has been available on [CRAN](https://cran.r-project.org/package=neotoma) since May 3, 2015.
+`neotoma` is part of the [rOpenSci](https://ropensci.org) project and is also hosted on [Figshare](https://dx.doi.org/10.6084/m9.figshare.677131).  The `neotoma` package has been available on [CRAN](https://cran.r-project.org/package=neotoma) since May 3, 2015.
 
 For more information on the package please refer to:
 
-Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W., Grimm, E. C., & Williams, J. W.. (2015). neotoma: A Programmatic Interface to the Neotoma Paleoecological Database. *Open Quaternary*, 1(1), Art. 2. DOI: [10.5334/oq.ab](http://doi.org/10.5334/oq.ab)
+Goring, S., Dawson, A., Simpson, G. L., Ram, K., Graham, R. W., Grimm, E. C., & Williams, J. W.. (2015). neotoma: A Programmatic Interface to the Neotoma Paleoecological Database. *Open Quaternary*, 1(1), Art. 2. DOI: [10.5334/oq.ab](https://doi.org/10.5334/oq.ab)
 
-For ongoing news, issues or information please join the [Neotoma Slack server](https://bit.ly/2FrZyYD) (and add the #r channel).  [Slack](http://www.slack.com/) is a real time chat application and collaboration hub with mobile and desktop applications.
+For ongoing news, issues or information please join the [Neotoma Slack server](https://bit.ly/2FrZyYD) (and add the #r channel).  [Slack](https://www.slack.com/) is a real time chat application and collaboration hub with mobile and desktop applications.
 
 ### Development
 
 *We welcome contributions from any individual, whether code, documentation, or issue tracking.  All participants are expected to follow the [code of conduct](https://github.com/ROpensci/neotoma/blob/master/code_of_conduct.md) for this project.*
 
-+ [Simon Goring](http://goring.org) - University of Wisconsin-Madison, Department of Geography
++ [Simon Goring](http://goring.org/) - University of Wisconsin-Madison, Department of Geography
 
 ### Contributors
-+ [Gavin Simpson](http://www.fromthebottomoftheheap.net/) - University of Regina, Department of Biology
-+ [Jeremiah Marsicek](http://geoweb.uwyo.edu/ggstudent/jmarsice/Site/Home.html) - University of Wyoming, Department of Geology and Geophysics
-+ [Karthik Ram](http://nature.berkeley.edu/~kram/) - University of California - Berkely, Berkeley Institue for Data Science.
++ [Gavin Simpson](https://www.fromthebottomoftheheap.net/) - University of Regina, Department of Biology
++ [Jeremiah Marsicek](https://geoweb.uwyo.edu/ggstudent/jmarsice/Site/Home.html) - University of Wyoming, Department of Geology and Geophysics
++ [Karthik Ram](https://nature.berkeley.edu/~kram/) - University of California - Berkely, Berkeley Institue for Data Science.
 + [Luke Sosalla](https://github.com/sosalla) - University of Wisconsin, Department of Geography
 
-Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](http://api.neotomadb.org/doc/resources/home).
+Package functions resolve various Neotoma APIs and re-form the data returned by the Neotoma database into R data objects.  The format of the Neotoma data, and the actual API functions can be accessed on the Neotoma API [website](https://api.neotomadb.org/doc/resources/home).
 
 If you have used the package please consider providing us feedback through a [short survey](https://docs.google.com/forms/d/e/1FAIpQLSdRNat6L9grRF0xU5gibkr26xq9jD9wyHgw_AWxhrgn0lWv7w/viewform).
 
@@ -56,15 +56,15 @@ library(neotoma)
 
 More functions are available through the package help.  These represent the core functions:
 
-+ `get_site` - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](http://api.neotomadb.org/doc/resources/sites)
-+ `get_dataset` - obtain dataset metadata from Neotoma. [API](http://api.neotomadb.org/doc/resources/datasets)
-+ `get_download` - obtain full datasets (pollen or mammal) from Neotoma. [API](http://api.neotomadb.org/doc/resources/downloads)
++ `get_site` - obtain information on sites in the Neotoma dataset (which may contain multiple datasets). [API](https://api.neotomadb.org/doc/resources/sites)
++ `get_dataset` - obtain dataset metadata from Neotoma. [API](https://api.neotomadb.org/doc/resources/datasets)
++ `get_download` - obtain full datasets (pollen or mammal) from Neotoma. [API](https://api.neotomadb.org/doc/resources/downloads)
 + `compile_list` - using established pollen-related taxonomies from the literature, take the published taxon list and standardize it to allow cross site analysis.
-+ `get_contact` - find contact information for data contributors to Neotoma. [API](http://api.neotomadb.org/doc/resources/contacts)
-+ `get_publication` - obtain publication information from Neotoma. [API](http://api.neotomadb.org/doc/resources/publications)
-+ `get_table` - return matrices corresponding to one of the Neotoma database tables. [tables](http://api.neotomadb.org/doc/resources/dbtables)
-+ `get_taxa` - Get taxon information from Neotoma. [API](http://api.neotomadb.org/doc/resources/taxa)
-+ `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](http://api.neotomadb.org/doc/resources/chroncontrol)
++ `get_contact` - find contact information for data contributors to Neotoma. [API](https://api.neotomadb.org/doc/resources/contacts)
++ `get_publication` - obtain publication information from Neotoma. [API](https://api.neotomadb.org/doc/resources/publications)
++ `get_table` - return matrices corresponding to one of the Neotoma database tables. [tables](https://api.neotomadb.org/doc/resources/dbtables)
++ `get_taxa` - Get taxon information from Neotoma. [API](https://api.neotomadb.org/doc/resources/taxa)
++ `get_chroncontrol` - Get chronological information used to build the age-depth model for the record. [API](https://api.neotomadb.org/doc/resources/chroncontrol)
 
 ### Recent Changes
 + 1.7.6: Updated the API endpoints to correctly point to the new windows API endpoint, in preparation for migration; Fixed the help for `get_closest()`; Changed character encoding for two data tables, `pollen.equiv` and `taxon.list`, made them available in the main package using `data()`.
@@ -77,7 +77,7 @@ More functions are available through the package help.  These represent the core
 + 1.6.1: New `Stratiplot()` method, using the `analogue` package to plot dataset diagrams from `download` and `download_list` objects, bug fixes for `write_agefile()` and a new function, `read_bacon()`, to read in and integrate Bacon chronologies into `download` objects.
 + 1.6.0: Support for vector inputs in the `gpid` selection. Added a `get_closest()` function to find the closest sample site. Mostly clean-up of reported bugs by users. Revised examples for faster check speed.
 + 1.5.1: Minor fix to the `get_dataset()` for site level data to account for some datasets with empty submission data.  Some style changes to code (non-functional changes)
-+ 1.5.0: More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported. Function `read.tilia()` added to read Tilia (http://tiliait.com) style XML files. Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
++ 1.5.0: More extensive testing to support multiple dataset types.  Water chemistry datasets still unsupported. Function `read.tilia()` added to read Tilia (https://tiliait.com) style XML files. Moved to using `xml2`, `httr` and `jsonlite` to support parsing.
 + 1.4.1: Small changes to `get_geochron()` to address bug reports and improve object `print` methods.
 + 1.4.0: Added `plot()` method for datasets, sites & downloads.  Fixed a bug with records missing chronologies.
 
@@ -163,9 +163,9 @@ Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/24fb1228204f
 
 #### Other Resources Using `neotoma`
 
-*  [A simple `neotoma` workshop](http://www.goring.org/resources/Neotoma_Lesson.html)
-*  [Data exploration and chronologies with `neotoma`](http://www.goring.org/resources/neotoma_lab_meeting.html)
+*  [A simple `neotoma` workshop](https://www.goring.org/resources/Neotoma_Lesson.html)
+*  [Data exploration and chronologies with `neotoma`](https://www.goring.org/resources/neotoma_lab_meeting.html)
 
 ### `neotoma` Workshops
 
-We have provided a set of educational tools through the [NeotomaDB](http://github.com/neotomaDB) GitHub repository in the [Workshops](http://github.com/NeotomaDB/Workshops) repository.  These are free to share, and can be modified as needed.
+We have provided a set of educational tools through the [NeotomaDB](https://github.com/neotomaDB) GitHub repository in the [Workshops](https://github.com/NeotomaDB/Workshops) repository.  These are free to share, and can be modified as needed.
