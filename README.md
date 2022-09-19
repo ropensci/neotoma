@@ -27,11 +27,11 @@ For ongoing news, issues or information please join the [Neotoma Slack server](h
 
 *We welcome contributions from any individual, whether code, documentation, or issue tracking.  All participants are expected to follow the [code of conduct](https://github.com/ROpensci/neotoma/blob/master/code_of_conduct.md) for this project.*
 
-+ [Simon Goring](http://goring.org/) - University of Wisconsin-Madison, Department of Geography
++ [Simon Goring](http://www.goring.org/) - University of Wisconsin-Madison, Department of Geography
 
 ### Contributors
-+ [Gavin Simpson](https://www.fromthebottomoftheheap.net/) - University of Regina, Department of Biology
-+ [Jeremiah Marsicek](https://geoweb.uwyo.edu/ggstudent/jmarsice/Site/Home.html) - University of Wyoming, Department of Geology and Geophysics
++ [Gavin Simpson](https://fromthebottomoftheheap.net/) - University of Regina, Department of Biology
++ Jeremiah Marsicek
 + [Karthik Ram](https://nature.berkeley.edu/~kram/) - University of California - Berkely, Berkeley Institue for Data Science.
 + [Luke Sosalla](https://github.com/sosalla) - University of Wisconsin, Department of Geography
 
@@ -166,8 +166,8 @@ Found at [Simon Goring's gist.](https://gist.github.com/SimonGoring/24fb1228204f
 
 #### Other Resources Using `neotoma`
 
-*  [A simple `neotoma` workshop](https://www.goring.org/resources/Neotoma_Lesson.html)
-*  [Data exploration and chronologies with `neotoma`](https://www.goring.org/resources/neotoma_lab_meeting.html)
+*  [A simple `neotoma` workshop](http://www.goring.org/resources/Neotoma_Lesson.html)
+*  [Data exploration and chronologies with `neotoma`](http://www.goring.org/resources/neotoma_lab_meeting.html)
 
 ### `neotoma` Workshops
 

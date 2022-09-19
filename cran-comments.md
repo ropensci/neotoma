@@ -5,7 +5,7 @@
 
 ## R CMD check results:
 +   R CMD check succeeded (0 errors, warnings, 0 note)
-+   Windows check returns Notes for URLs. These have been resolved to the best of our ability.
++   Windows check returns Notes for URLs. These have been resolved to the best of our ability, some remain as a result of the deprecation of elements of the API service.
 
 ## Downstream Dependencies:
 NA
