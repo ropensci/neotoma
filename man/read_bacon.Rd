@@ -4,9 +4,17 @@
 \alias{read_bacon}
 \title{Function to read in defined Bacon outputs.}
 \usage{
-read_bacon(x, path = ".", add = FALSE, chron_name = "Bacon",
-  as_default = TRUE, download = NULL, sections = NULL,
-  age_field = "median", interp = TRUE)
+read_bacon(
+  x,
+  path = ".",
+  add = FALSE,
+  chron_name = "Bacon",
+  as_default = TRUE,
+  download = NULL,
+  sections = NULL,
+  age_field = "median",
+  interp = TRUE
+)
 }
 \arguments{
 \item{x}{A folder path that contains a Bacon \code{age} file.}
@@ -32,6 +40,7 @@ Reads in Bacon output and formats it for inclusion in a download object.
 }
 \details{
 The function expects that you are in a working directory containing a "Cores" which would then contain output files from Bacon runs.  The output can either be added to an existing record (for example, replacing the default age model returned by Neotoma), or it can be loaded on its own.
+If the depths for the loaded file do not match with the depths in the `download`'s `sample.meta` then the user can use the `interp` parameter to interpolate between depths.  This method uses linear interpolation.
 }
 \examples{
 \dontrun{
@@ -46,11 +55,15 @@ write_agefile(lake_o_dl[[1]], path = ".", chronology = 1,
 
 source("Bacon.R") 
 
-# These defaults just help the core run quickly, they're not neccesarily good parameters.
-Bacon("LAKEPINES", acc.mean = 10, thick = 50, depths.file = TRUE, suggest = FALSE, ask = FALSE)
+# These defaults just help the core run quickly, they're not 
+# neccesarily good parameters.
 
-lake_o_dl <- read_bacon("LAKEPINES", add = TRUE, download = download, sections = 17)
+Bacon("LAKEPINES", acc.mean = 10, 
+      thick = 50, depths.file = TRUE, 
+      suggest = FALSE, ask = FALSE)
+
+lake_o_dl <- read_bacon("LAKEPINES", add = TRUE, 
+                        download = download, sections = 17)
 
 }
 }
-

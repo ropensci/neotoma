@@ -4,7 +4,9 @@
 \name{gp.table}
 \alias{gp.table}
 \title{A list of all the geopolitical entities in the Neotoma database.}
-\format{a \code{data.frame} object}
+\format{
+a \code{data.frame} object
+}
 \source{
 The Neotoma database.
 }
@@ -17,4 +19,3 @@ A list of geopolitical entities with associated numeric ID values.
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-

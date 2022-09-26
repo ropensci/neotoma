@@ -7,13 +7,15 @@
 browse(x)
 }
 \arguments{
-\item{x}{A \code{numeric} value for the dataset ID, a \code{dataset} or \code{download} object.}
+\item{x}{A numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object.}
 }
 \value{
 Returns a NULL value, opens a browser.
 }
 \description{
 Using a \code{download} or \code{dataset} object, open up a browser window in the users default browser. Passing a \code{download_list} or \code{dataset_list} will open Neotoma Explorer with the first object and return a warning.
+
+Using a numeric value, \code{download}, \code{download_list}, \code{dataset} or \code{dataset_list} object, open up a browser window in the users default browser. Very large objects
 }
 \examples{
 \dontrun{
@@ -24,13 +26,12 @@ browse(xrf.data)
 
 }
 }
+\references{
+Neotoma Project Website: http://www.neotomadb.org
+API Reference:  http://wnapi.neotomadb.org/doc/resources/sites
+}
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-\references{
-Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/sites
-}
 \keyword{IO}
 \keyword{connection}
-

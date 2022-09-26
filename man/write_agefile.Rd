@@ -28,7 +28,8 @@ user defined destination for age modelling with existing age-depth modeling soft
 \dontrun{
 # Find a particular record:
 
-three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), 
+                                        datasettype = "pollen"))
 
 # You will need to edit the `path` argument here to point to a directory that 
 # contains a `Cores` directory.
@@ -39,14 +40,13 @@ write_agefile(download = three_pines[[1]],
               cal.prog = "Bacon")
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
+}
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \keyword{API}
 \keyword{Neotoma}
 \keyword{Palaeoecology}
-

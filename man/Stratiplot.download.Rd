@@ -4,8 +4,7 @@
 \alias{Stratiplot.download}
 \title{Palaeoecological stratigraphic diagrams}
 \usage{
-\method{Stratiplot}{download}(x, yaxis = "age", method = "none",
-  group = NULL, ...)
+\method{Stratiplot}{download}(x, yaxis = "age", method = "none", group = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{download} object.}
@@ -33,4 +32,3 @@ lake_o_dl <- get_download(15925)
 Stratiplot(lake_o_dl[[1]])
 }
 }
-

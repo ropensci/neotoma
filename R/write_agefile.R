@@ -4,6 +4,7 @@
 #' user defined destination for age modelling with existing age-depth modeling software.
 #'
 #' @importFrom utils write.csv write.table
+#' @importFrom methods is
 #' @param download A single site returned by \code{get_download}.
 #' @param chronology Default is \code{1}, the default chronology for the core.  If a core has more than one chronology the user can define a different set of chronological controls.
 #' @param path The location of the 'Cores' folder & working directory for Bacon.  Do not include "Cores" in the path name.
@@ -17,7 +18,8 @@
 #' @examples \dontrun{
 #' # Find a particular record:
 #'
-#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), 
+#'                                         datasettype = "pollen"))
 #' 
 #' # You will need to edit the `path` argument here to point to a directory that 
 #' # contains a `Cores` directory.
@@ -29,7 +31,7 @@
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords Neotoma Palaeoecology API
 #' @export
 write_agefile <- function(download, chronology = 1, path, 
@@ -49,7 +51,7 @@ write_agefile <- function(download, chronology = 1, path,
     
     if ('download' %in% class(download[[1]])) { download <- download[[1]] }
     
-    if (class(download$chronologies[[chronology]]) == 'list') {
+    if (is(download$chronologies[[chronology]], 'list')) {
       # This is new.  We can push chroncontrols into the download object:
       chron.controls <- download$chronologies[[chronology]]$chroncontrol
     } else {

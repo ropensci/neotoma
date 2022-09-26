@@ -9,9 +9,9 @@ get_closest(x, n, buffer, ...)
 \arguments{
 \item{x}{A vector long/lat pair, or a dataset, site or download.}
 
-\item{n}{The number of records to return.}
+\item{n}{The maximum number of records to return (in the case of ties the return may be larger)}
 
-\item{buffer}{The size of the buffer for dataset search (in kilometers)}
+\item{buffer}{The size of the buffer for dataset search (in meters)}
 
 \item{...}{optional arguments to pass into \code{get_dataset}.}
 }
@@ -22,22 +22,27 @@ This command returns a \code{dataset} or \code{dataset_list}, or NULL if no reco
 Passing in a download object the function outputs a Bacon or Clam formatted file to a
 user defined destination for age modelling with existing age-depth modeling software.
 }
+\details{
+The function uses the \code{sf} package to generate a circular buffer around a point of interest.
+From there a square bounding box is sent to Neotoma using the \code{get_dataset()} function.  To use the buffering
+function we must convert from long/lat to UTM coordinates, which we do by guessing the UTM zone of the point of interest.
+Details can be found in the function's R code hosted on GitHub: \url{https://github.com/ropensci/neotoma/blob/master/R/get_closest.R}
+}
 \examples{
 \dontrun{
-#  The point of pulling chronology tables is to re-build or examine the chronological 
+#  The point of pulling chronology tables is to re-build or examine the chronological
 #  information that was used to build the age-depth model for the core.
 # Find the closest records to Madison, WI:
-get_closest(x = c(-89.4012, 43.0731), n = 10, buffer = 5, datasettype = "pollen")
+get_closest(x = c(-89.4012, 43.0731), n = 10, buffer = 5000, datasettype = "pollen")
 }
+}
+\references{
+Neotoma Project Website: http://www.neotomadb.org
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}, Andria Dawson \email{andria.dawson@gmail.com}
 }
-\references{
-Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
-}
 \keyword{API}
 \keyword{Neotoma}
 \keyword{Palaeoecology}
-

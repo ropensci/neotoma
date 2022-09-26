@@ -5,13 +5,14 @@
 #'    based on parameters defined by the user.
 #'
 #' @importFrom jsonlite fromJSON
+#' @importFrom methods is
 #' @importFrom httr content GET
 #' @param sitename character string representing the full or partial site name, or an object of class \code{dataset}, \code{dataset_list}, \code{download} or \code{download_list}
 #' @param altmin Minimum site altitude  (in m).
 #' @param altmax Maximum site altitude (in m).
 #' @param loc A numeric vector c(lonW, latS, lonE, latN) representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator.
-#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://api.neotomadb.org/apdx/geopol.htm
-#' @param  ... Optional additional arugments
+#' @param gpid A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: http://wnapi.neotomadb.org/apdx/geopol.htm
+#' @param  ... Optional additional arguments
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
 #' @return A data frame:
@@ -33,13 +34,16 @@
 #' main = 'Altitudinal Distribution of Neotoma Sites', xlab = 'Altitude (m)', log='x')
 #'
 #' #  Get site information from a dataset:
-#' nw.datasets <- get_dataset(loc = c(-140, 50, -110, 65), datasettype='pollen',taxonname='Pinus*')
+#' nw.datasets <- get_dataset(loc = c(-140, 50, -110, 65), 
+#'                            datasettype='pollen',
+#'                            taxonname='Pinus*')
+#'                            
 #' nw.sites <- get_site(nw.datasets)
 #'
 #' }
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/sites
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/sites
 #' @keywords IO connection
 #' @export
 get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
@@ -51,6 +55,7 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
 #' @description Return site information from the Neotoma Paleoecological Database.
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr content GET
+#' @importFrom methods is
 
 #' @param sitename A character string representing the full or partial site name.
 #' @param ... Arguments passed from the generic method, not used.
@@ -58,7 +63,7 @@ get_site <- function(sitename, altmin, altmax, loc, gpid, ...) {
 #' @export
 get_site.default <- function(sitename, ...) {
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/sites'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/sites'
 
   cl <- as.list(match.call())
   
@@ -88,7 +93,7 @@ get_site.default <- function(sitename, ...) {
     rep_NULL <- function(x) { 
       if (is.null(x)) {NA}
       else{
-        if (class(x) == 'list') {
+        if (is(x, 'list')) {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -108,7 +113,7 @@ get_site.default <- function(sitename, ...) {
     
   }
 
-  if (class(aa) == 'try-error') {
+  if (is(aa, 'try-error')) {
      output <- aa
   } else {
     
@@ -139,7 +144,7 @@ get_site.default <- function(sitename, ...) {
 }
 
 
-#' @title Return Site Information from a \code{dataset}
+#' @title Return Site Information from a numeric list of site ids.
 #' @description Return site information from the Neotoma Paleoecological Database.
 #'
 #' @param sitename An object of class \code{dataset}.
@@ -217,4 +222,101 @@ get_site.geochronologic_list <- function(sitename, ...) {
   
   class(site) <- c('site', 'data.frame')
   site
+}
+
+#' @title Return Site Information from a vector of integers.
+#' @description Return site information from the Neotoma Paleoecological Database.
+#'
+#' @param sitename An integer or vector of integers.
+#' @param ... Arguments passed from the generic method, not used.
+#' @importFrom methods is
+#' @export
+get_site.integer <- function(sitename, ...) {
+  
+  call_site <- function(x) {
+    base.uri <- 'http://wnapi.neotomadb.org/v1/data/sites/'
+    
+    neotoma_content <- httr::content(httr::GET(paste0(base.uri, x)), as = "text")
+    
+    if (identical(neotoma_content, "")) stop("")
+    
+    aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
+    
+    if (aa[[1]] == 0) {
+      stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
+    }
+    if (aa[[1]] == 1) {
+      aa <- aa[[2]]
+      
+      rep_NULL <- function(x) { 
+        if (is.null(x)) {NA}
+        else{
+          if (is(x, 'list')) {
+            lapply(x, rep_NULL)
+          } else {
+            return(x)
+          }
+        }
+      }
+      
+      aainsta <- rep_NULL(aa)
+      
+      if (length(aa) == 0) {
+        cat('The API call was successful, but no records were returned.\n')
+        return()
+      }
+      
+      cat('The API call was successful, you have returned ',
+          length(aa), 'records.\n')
+      
+    }
+    
+    if (is(aa, 'try-error')) {
+      output <- aa
+    } else {
+      
+      # replace NULL values:
+      aa <- lapply(aa, function(x) ifelse(x == "NULL", NA, x))
+      
+      output <- data.frame(site.id = sapply(aa, '[[', 'SiteID'),
+                           site.name = sapply(aa, '[[', 'SiteName'),
+                           long = rowMeans(data.frame(sapply(aa, '[[', 'LongitudeWest'), 
+                                                      sapply(aa, '[[', 'LongitudeEast')),
+                                           na.rm = TRUE),
+                           lat = rowMeans(data.frame(sapply(aa, '[[', 'LatitudeNorth'),
+                                                     sapply(aa, '[[', 'LatitudeSouth')),
+                                          na.rm = TRUE),
+                           elev = sapply(aa, '[[', 'Altitude'),
+                           description = sapply(aa, '[[', 'SiteDescription'),
+                           long.acc = abs(sapply(aa, '[[', 'LongitudeWest') - 
+                                            sapply(aa, '[[', 'LongitudeEast')),
+                           lat.acc = abs(sapply(aa, '[[', 'LatitudeNorth') - 
+                                           sapply(aa, '[[', 'LatitudeSouth')),
+                           stringsAsFactors = FALSE)
+      
+    }
+    
+    return(output)
+    
+  }
+  
+  output <- do.call(rbind.data.frame, lapply(sitename, call_site))
+  class(output) <- c('site', 'data.frame')
+  output
+  
+}
+
+
+#' @title Return Site information from a vector of numeric elements.
+#' @description Return site information from the Neotoma Paleoecological Database.
+#'
+#' @param sitename A numeric value or vector of numeric elements.
+#' @param ... Arguments passed from the generic method, not used.
+#' @export
+get_site.numeric <- function(sitename = NULL, ...) {
+  if (is.null(sitename)) {
+    return(get_site.default(...))
+  } else {
+    return(get_site(as.numeric(sitename)))
+  }
 }

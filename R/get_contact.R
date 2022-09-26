@@ -15,7 +15,7 @@
 #' @return The function takes parameters defined by the user and returns a list
 #'    of contact information supplied by the Neotoma Paleoecological Database.
 #'    The user may define all or none of the possible fields.  The function contains
-#'    data chacks for each defined parameter.
+#'    data checks for each defined parameter.
 #'
 #'    The function returns either a single item of class \code{"try-error"} describing
 #'    the reason for failure (either mis-defined parameters or an error from the Neotoma API),
@@ -46,13 +46,13 @@
 #' smith.cont <- get_contact(familyname = 'Smith')
 #' }
 #' @references
-#' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' Neotoma Project Website: https://neotomadb.org
+#' API Reference: API v1.0 documentation is deprecated. Please see https://api.neotomadb.org
 #' @keywords IO connection
 #' @export
 get_contact <- function(contactid, contactname, contactstatus, familyname){
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/contacts'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/contacts'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL

@@ -17,4 +17,3 @@ A list of standardized (published) taxonomies from the literature to help standa
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-

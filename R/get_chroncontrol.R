@@ -5,7 +5,8 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
-#' @param x A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.
+#' @param x A single numeric chronology ID, a vector of numeric dataset IDs as returned by \code{\link{get_dataset}} or a \code{download} or \code{download_list} object.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param verbose logical, should messages on API call be printed?
 #' @param add logical, should this chron control be added to the download object?
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -22,11 +23,13 @@
 #'  If Neotoma returns empty content, either the control table or the associated metadata (which happens in approximately 25% of cases) then the data.frames are returned with NA content.
 #'  
 #' @examples \dontrun{
-#' #  The point of pulling chronology tables is to re-build or examine the chronological
-#' #  information that was used to build the age-depth model for the core.  You can do this by hand,
-#' #  but the `write_agefile` function works with `download` objects directly.
+#' #  The point of pulling chronology tables is to re-build or examine the 
+#' #  chronological information that was used to build the age-depth model for 
+#' #  the core.  You can do this by hand, but the `write_agefile` function works 
+#' #  with `download` objects directly.
 #' 
-#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+#' three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), 
+#'                                         datasettype = "pollen"))
 #' pines_chron <- get_chroncontrol(three_pines)
 #' 
 #' # Spline interpolation:
@@ -37,11 +40,11 @@
 #' 
 #' }
 #' @references
-#' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' + Neotoma Project Website: http://www.neotomadb.org
+#' + API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords IO connection
 #' @export
-get_chroncontrol <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   UseMethod('get_chroncontrol')
 }
 
@@ -51,15 +54,16 @@ get_chroncontrol <- function(x, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A single numeric chronology ID or a vector of numeric chronology IDs as returned by \code{get_datasets}.
+#' @param chronology For \code{download} methods, which chronology controls should be used?
 #' @param add logical, should this chron control be added to the download object?
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.default <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
   # Updated the processing here. There is no need to be fiddling with
   # call. Use missing() to check for presence of argument
   # and then process as per usual
-  base.uri <- 'http://api.neotomadb.org/v1/data/chronologies'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/chronologies'
   
   if (missing(x)) {
     stop(paste(sQuote("chronologyid"), "(x) must be provided."))
@@ -74,9 +78,9 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
   if (identical(neotoma_content, "")) {
     stop("")
   }
-  
+
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
-  
+
   # Might as well check here for error and bail
   if (inherits(aa, "try-error")) {
     return(aa)
@@ -94,7 +98,7 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
     rep_NULL <- function(x) { 
       if (is.null(x)) { NA }
       else{
-        if (class(x) == 'list') {
+        if (is(x, "list")) {
           lapply(x, rep_NULL)
         } else {
           return(x)
@@ -185,11 +189,17 @@ get_chroncontrol.default <- function(x, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A single \code{download} object.
+#' @param chronology For \code{download} methods, which chronology controls should be used?
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
-  chron_id <- x$sample.meta$chronology.id[1]
+get_chroncontrol.download <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
+  
+  chron_id <- x$chronologies[[chronology]]$chronology.id[1]
+  
+  if (!is.numeric(chron_id) & !is.na(chron_id)) {
+    stop(paste0("The supplied chronology ID, ", chron_id, ", is not numeric.  Please pick a different `download` chronology."))
+  }
   
   if (is.na(chron_id)) {
     output <- list(chron.control = data.frame(depth = NA,
@@ -207,7 +217,8 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
                                             age.younger = NA,
                                             chron.id    = NA,
                                             date        = NA),
-                    
+                   
+                    access.date = Sys.time(),
                     parent = data.frame(dataset.name = NA,
                                         dataset.id = NA,
                                         dataset.type = NA))
@@ -247,10 +258,11 @@ get_chroncontrol.download <- function(x, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A \code{download_list} object.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param add Should the \code{chroncontrol} be added to the download object (default \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.download_list <- function(x,  chronology = 1, verbose = TRUE, add = FALSE) {
   
   output <- lapply(x, function(y)get_chroncontrol(y, verbose, add = add))
   if (add == FALSE) {
@@ -268,10 +280,11 @@ get_chroncontrol.download_list <- function(x, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A \code{dataset_list} object.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.dataset_list <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.dataset_list <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
   output <- lapply(get_download(x), function(y)get_chroncontrol(y, verbose, add = FALSE))
   
@@ -287,10 +300,11 @@ get_chroncontrol.dataset_list <- function(x, verbose = TRUE, add = FALSE) {
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @param x A \code{dataset}.
+#' @param chronology When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.
 #' @param add Should the \code{chroncontrol} be added to the download object (only accepts \code{FALSE})
 #' @param verbose logical; should messages on API call be printed?
 #' @export
-get_chroncontrol.dataset <- function(x, verbose = TRUE, add = FALSE) {
+get_chroncontrol.dataset <- function(x, chronology = 1, verbose = TRUE, add = FALSE) {
   
   output <- get_chroncontrol(get_download(x, verbose = verbose), 
                              verbose = verbose, add = FALSE)
@@ -298,5 +312,5 @@ get_chroncontrol.dataset <- function(x, verbose = TRUE, add = FALSE) {
   class(output) <- c('chroncontrol_list', 'list')
   
   return(output)
-  
+
 }

@@ -1,8 +1,9 @@
 Package: neotoma
 Type: Package
 Title: Access to the Neotoma Paleoecological Database Through R
-Version: 1.6.1
-Date: 2016-08-17
+Version: 1.7.7
+Date: 2022-09-19
+Encoding: UTF-8
 Author: Simon J. Goring [aut, cre], Gavin L. Simpson [aut], Jeremiah P. Marsicek
     [ctb], Karthik Ram [aut], Luke Sosalla [ctb]
 Authors@R: c(person(given = c("Simon", "J."), family = "Goring",
@@ -12,12 +13,14 @@ Authors@R: c(person(given = c("Simon", "J."), family = "Goring",
     person(given = "Karthik", family = "Ram", role = "aut"),
     person(given = "Luke", family = "Sosalla", role = "ctb"))
 Maintainer: Simon J. Goring <goring@wisc.edu>
-Description: Access paleoecological datasets from the Neotoma Paleoecological
-    Database using the published API (http://api.neotomadb.org/).  The functions
-    in this package access various pre-built API functions and attempt to return
-    the results from Neotoma in a usable format for researchers and the public.
+Description: NOTE: This package is deprecated. Please use the neotoma2 package 
+    described at <https://github.com/NeotomaDB/neotoma2>. Access paleoecological 
+    datasets from the Neotoma Paleoecological Database using the published API, 
+    only containing datasets uploaded prior to June 2020.  The functions in this 
+    package access various pre-built API  functions and attempt to return the 
+    results from Neotoma in a usable format for researchers and the public.
 License: MIT + file LICENSE
-URL: https://github.com/ropensci/neotoma
+URL: https://docs.ropensci.org/neotoma/, https://github.com/ropensci/neotoma/
 BugReports: https://github.com/ropensci/neotoma/issues
 Depends:
     R (>= 2.10)
@@ -27,8 +30,13 @@ Imports:
     jsonlite,
     httr,
     xml2,
-    analogue
+    analogue,
+    leaflet,
+    dplyr,
+    sf,
+    assertthat,
+    methods
 Suggests:
     testthat,
     knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 7.2.1

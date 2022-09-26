@@ -4,10 +4,12 @@
 \alias{get_chroncontrol.dataset}
 \title{Function to return chronological control tables from a \code{dataset}.}
 \usage{
-\method{get_chroncontrol}{dataset}(x, verbose = TRUE, add = FALSE)
+\method{get_chroncontrol}{dataset}(x, chronology = 1, verbose = TRUE, add = FALSE)
 }
 \arguments{
 \item{x}{A \code{dataset}.}
+
+\item{chronology}{When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.}
 
 \item{verbose}{logical; should messages on API call be printed?}
 
@@ -16,4 +18,3 @@
 \description{
 Using a \code{dataset}, return the default chron-control table.
 }
-

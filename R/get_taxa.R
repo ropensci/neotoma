@@ -3,10 +3,11 @@
 #'
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
+#' @importFrom methods is
 #' @param taxonid Numeric taxon identifier used in Neotoma
 #' @param taxonname A character string representing the full or partial name of taxa of interest.
 #' @param status The current status of the taxon, one of 'extinct', 'extant', 'all'.
-#' @param taxagroup The taxonomic grouping for the taxa. See \url{http://api.neotomadb.org/doc/resources/taxa} for the list of approved groupings.
+#' @param taxagroup The taxonomic grouping for the taxa. See \url{http://wnapi.neotomadb.org/doc/resources/taxa} for the list of approved groupings.
 #' @param ecolgroup The ecological group of the taxa. More detailed than \code{taxagroup}, can be obtained using \code{get_table("EcolGroupTypes")}.
 #'
 #' @author Simon J. Goring \email{simon.j.goring@@gmail.com}
@@ -29,13 +30,13 @@
 #' taxa <- get_taxa(taxonname = "Abies*")
 #' }
 #' @references
-#' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' Neotoma Project Website: https://neotomadb.org
+#' API Reference: API v1.0 documentation is deprecated. Please see https://api.neotomadb.org
 #' @keywords IO connection
 #' @export
 get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup) {
 
-  base.uri <- 'http://api.neotomadb.org/v1/data/taxa'
+  base.uri <- 'http://wnapi.neotomadb.org/v1/data/taxa'
 
   cl <- as.list(match.call())
   cl[[1]] <- NULL
@@ -82,17 +83,17 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup) {
   neotoma_content <- httr::content(httr::GET(base.uri, query = cl), as = "text")
   if (identical(neotoma_content, "")) stop("")
   aa <- jsonlite::fromJSON(neotoma_content, simplifyVector = FALSE)
-  
+
   if (aa[[1]] == 0) {
     stop(paste('Server returned an error message:\n', aa[[2]]), call. = FALSE)
   }
   if (aa[[1]] == 1) {
     output <- aa[[2]]
-    
-    rep_NULL <- function(x) { 
+
+    rep_NULL <- function(x) {
       if (is.null(x)) {NA}
       else{
-        if (class(x) == 'list') {
+        if (is(x, 'list')) {
           # Recursive function to go through the list & clear NULL values.
           lapply(x, rep_NULL)
         } else {
@@ -100,15 +101,15 @@ get_taxa <- function(taxonid, taxonname, status, taxagroup, ecolgroup) {
         }
       }
     }
-    
+
     # Clear NULLs from the output object & replace with NA values.
     output <- lapply(output, function(x)rep_NULL(x))
-    
+
     cat('The API call was successful, you have returned ',
         length(output), 'records.\n')
   }
 
-  if (class(aa) == 'try-error') {
+  if (is(aa, 'try-error')) {
     output <- aa
   } else {
 

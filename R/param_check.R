@@ -1,5 +1,6 @@
 #' @title Internal function to check passed parameters.
 #'
+#' @importFrom methods is
 #' @description Functions \code{\link{get_site}}, \code{\link{get_dataset}} and others pass parameters to \code{param_check}, which tells them if there's a problem.
 #' @param cl Contact ID is a numerical value associated with the Neotoma
 #'    Contact table's numerical Contact ID.
@@ -11,27 +12,27 @@
 #'
 #' @references
 #' Neotoma Project Website: http://www.neotomadb.org
-#' API Reference:  http://api.neotomadb.org/doc/resources/contacts
+#' API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
 #' @keywords internal misc
 #' @export
-param_check <- function(cl){
+param_check <- function(cl) {
   #  A long list of proper parameter formatting so that it's not stuck in all
   #  the basic functions.
 
   error <- list(flag = 0,
                 message = list())
 
-  if ('ageof' %in% names(cl)){
-    if (!cl$ageof %in% c('sample', 'taxon', 'dataset')){
+  if ('ageof' %in% names(cl)) {
+    if (!cl$ageof %in% c('sample', 'taxon', 'dataset')) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'ageof parameter must be one of: sample, taxon or dataset'
     } else {
-      if (any(c('taxonid', 'taxonname') %in% names(cl)) & !cl$ageof == 'taxon'){
+      if (any(c('taxonid', 'taxonname') %in% names(cl)) & !cl$ageof == 'taxon') {
         error$flag <- 1
         error$message[[length(error$message) + 1]] <- 'When taxonid or taxonname is invoked, ageof must be taxon'
       }
     }
-    if (!any(c('ageyoung', 'ageold') %in% names(cl))){
+    if (!any(c('ageyoung', 'ageold') %in% names(cl))) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- paste0('When ageof in invoked you also need to provide ',
                                                            'an age range using ageyounger or ageolder.')
@@ -39,10 +40,10 @@ param_check <- function(cl){
   }
 
   # Parameter check on ages:
-  if (all(c('ageold', 'ageyoung') %in% names(cl))){
+  if (all(c('ageold', 'ageyoung') %in% names(cl))) {
     # If the user defines a minimum and maximum age, make sure that the
     # minimum is smaller than the max.
-    if (cl$ageyoung > cl$ageold){
+    if (cl$ageyoung > cl$ageold) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- paste0('ageyoung must be smaller than ageold, ',
                                                            'values were switched in call.')
@@ -51,39 +52,39 @@ param_check <- function(cl){
 
   # Parameter check on altitudes.  This gets reused, we could turn it into a
   # higher level function to save reading lame code:
-  if (all(c('altmin', 'altmax') %in% names(cl))){
+  if (all(c('altmin', 'altmax') %in% names(cl))) {
     # If the user defines a minimum and maximum altitude, make sure that the
     # minimum is smaller than the max.
-    if (cl$altmin > cl$altmax){
+    if (cl$altmin > cl$altmax) {
       error$flag = 1
       error$message[[length(error$message) + 1]] <- 'altmin must be smaller than altmax.'
     }
   }
 
   # Parameter check on contactid:
-  if ('contactid' %in% names(cl)){
-    if (!is.numeric(cl$contactid)){
+  if ('contactid' %in% names(cl)) {
+    if (!is.numeric(cl$contactid)) {
       error$flag = 1
       error$message[[length(error$message) + 1]] <- 'The contactid must be numeric.'
     }
   }
 
   # Parameter check on contactname:
-  if ('contactname' %in% names(cl)){
-    if (!is.character(cl$contactname)){
+  if ('contactname' %in% names(cl)) {
+    if (!is.character(cl$contactname)) {
       error$flag = 1
       error$message[[length(error$message) + 1]] <- 'The contactname must be a character string.'
     }
   }
 
   #  Parameter check on contactstatus:
-  if ('contactstatus' %in% names(cl)){
-    if (!is.character(cl$contactstatus)){
+  if ('contactstatus' %in% names(cl)) {
+    if (!is.character(cl$contactstatus)) {
       error$flag = 1
       error$message[[length(error$message) + 1]] <- 'The contactstatus must be a character string.'
     } else {
       if (!cl$contactstatus %in% c('active', 'deceased', 'defunct',
-                                   'extant', 'inactive', 'retired', 'unknown')){
+                                   'extant', 'inactive', 'retired', 'unknown')) {
         error$flag = 1
         error$message[[length(error$message) + 1]] = paste0('status must be an accepted term.  ',
                                                             'Use get_table(\'ContactStatuses\')')
@@ -93,40 +94,45 @@ param_check <- function(cl){
 
   # Parameter check for the datasettype, make sure
   # it's one of the accepted types:
-  if ('datasettype' %in% names(cl)){
-    settypes <- c("geochronologic", "loss-on-ignition", "pollen", "plant macrofossil", 
-                  "vertebrate fauna", "macroinvertebrate", "pollen surface sample",                      
-                  "insect", "ostracode", "water chemistry", "diatom", 
-                  "ostracode surface sample", "diatom surface sample", "geochemistry", 
-                  "physical sedimentology", "charcoal", "testate amoebae", 
-                  "X-ray fluorescence (XRF)", "X-ray diffraction (XRD)", 
-                  "Energy dispersive X-ray spectroscopy (EDS/EDX)")
+  if ('datasettype' %in% names(cl)) {
+    settypes <- c('biochemistry', 'biomarker', 'charcoal', 'charcoal surface sample', 
+                  'chironomid', 'cladocera', 'diatom', 'diatom surface sample', 
+                  'diatom top-bottom', 'energy dispersive X-ray spectroscopy (EDS/EDX)', 
+                  'geochemistry', 'geochronologic', 'insect', 'insect modern', 
+                  'loss-on-ignition', 'macroinvertebrate', 'modern biochemistry', 
+                  'modern plant biomarker', 'organic carbon', 'ostracode', 
+                  'ostracode surface sample', 'paleomagnetic', 'physical sedimentology', 
+                  'phytolith', 'plant macrofossil', 'pollen', 'pollen surface sample', 
+                  'specimen stable isotope', 'stable isotope', 'testate amoebae', 
+                  'testate amoebae surface sample', 'vertebrate fauna', 'water chemistry', 
+                  'X-ray diffraction (XRD)', 'X-ray fluorescence (XRF)')
     
     set <- pmatch(cl$datasettype, settypes, nomatch = NA)
     if (is.na(set)) {
-      stop(paste0('datasettype must be one of: \n* ',paste0(settypes, collapse = '\n* ')))
+      warning(paste0('datasettype is not within the known set of records:: \n* ',paste0(settypes, collapse = '\n* '), ''))
     }
   }
   
   # Parameter check on familyname:
-  if ('familyname' %in% names(cl)){
-    if (!is.character(cl$familyname)){
+  if ('familyname' %in% names(cl)) {
+    if (!is.character(cl$familyname)) {
       error$flag = 1
       error$message[[length(error$message) + 1]] <- 'The familyname must be a character string.'
     }
   }
 
   #  Test the geographic identification against the Geopolitical name table.
-  if ('gpid' %in% names(cl)){
-    if (is.character(cl$gpid)){
-      gprow <- match(x=cl$gpid, table=gp.table$GeoPoliticalName)
-      if (is.na(gprow)){
+  if ('gpid' %in% names(cl)) {
+    if (is.character(cl$gpid)) {
+      gprow <- match(x = cl$gpid, table = gp.table$GeoPoliticalName)
+      if (any(is.na(gprow))) {
         error$flag <- 1
-        error$message[[length(error$message) + 1]] <- 'Cannot find a match for the gpid provided.'
+        message <- paste0('Cannot find a match for the gpid provided. Missing: ', cl$gpid[which(is.na(gprow))])
+        error$message[[length(error$message) + 1]] <- message
       }
       cl$gpid <- gp.table$GeoPoliticalID[gprow]
     } else {
-      if (!is.numeric(cl$gpid)){
+      if (!is.numeric(cl$gpid)) {
         error$flag <- 1
         error$message[[length(error$message) + 1]] <- 'The gpid must be either a character string or an integer.'
       }
@@ -137,15 +143,15 @@ param_check <- function(cl){
   # lonW, latS, lonE, latN when it is passed out, but it's probably
   # better to pass in a vector.  Although it might be better to associate
   # it with a spatial object existing in R like an extent or bbox.
-  if ('loc' %in% names(cl)){
+  if ('loc' %in% names(cl)) {
     cl$loc <- eval(cl$loc)
 
-    if (class(cl$loc) == 'numeric' & length(cl$loc == 4)){
+    if (is(cl$loc, 'numeric') & length(cl$loc == 4)) {
 
       # The latitudes must be from -90 to 90
       # The longitudes must be from -180 to 180
-      if (all(findInterval(cl$loc[c(2,4)], c(-90, 90)) == 1) &
-            all(findInterval(cl$loc[c(1,3)], c(-180, 180)) == 1)){
+      if (all(cl$loc[c(2,4)] >= -90 & cl$loc[c(2,4)] <= 90) &&
+          all(cl$loc[c(1,3)] >= -180 & cl$loc[c(2,4)] <= 180)) {
         cl$loc <- paste(cl$loc, collapse = ',')
       } else {
         error$flag <- 1
@@ -159,46 +165,46 @@ param_check <- function(cl){
   }
 
   #  Test the PI identification.
-  if ('piid' %in% names(cl)){
+  if ('piid' %in% names(cl)) {
     # piid must be the numeric PI id number in the Neotoma database.
-    if (!is.numeric(cl$piid)){
+    if (!is.numeric(cl$piid)) {
       error$flag = 1
       error$message[[length(error$message) + 1]] = 'piid must be a numeric value.'
     }
   }
 
   # Parameter check on siteid:
-  if ('siteid' %in% names(cl)){
-    if (!is.numeric(cl$siteid)){
+  if ('siteid' %in% names(cl)) {
+    if (!is.numeric(cl$siteid)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'siteid must be numeric.'
     }
   }
 
-  if ('taxonname' %in% names(cl)){
-    if (!class(cl$taxonname) == 'character'){
+  if ('taxonname' %in% names(cl)) {
+    if (!is(cl$taxonname, 'character')) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The taxonname must be a character.'
     }
   }
   
   # Parameter check on author:
-  if ('search' %in% names(cl)){
-    if (!is.character(cl$search)){
+  if ('search' %in% names(cl)) {
+    if (!is.character(cl$search)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The search string must be a character string.'
     }
   }
   
-  if ('year' %in% names(cl)){
-    if (!is.numeric(cl$year)){
+  if ('year' %in% names(cl)) {
+    if (!is.numeric(cl$year)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The year used must be numeric.'
     }
   }
   
-  if ('pubtype' %in% names(cl)){
-    if (!is.character(cl$pubtype)){
+  if ('pubtype' %in% names(cl)) {
+    if (!is.character(cl$pubtype)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- paste0('The pubtype must be a character string. Use get.table',
                   '(\'PublicationTypes\') to find acceptable tables.')
@@ -206,32 +212,32 @@ param_check <- function(cl){
   }
   
   # Parameter check on pubid:
-  if ('pubid' %in% names(cl)){
-    if (!is.numeric(cl$pubid)){
+  if ('pubid' %in% names(cl)) {
+    if (!is.numeric(cl$pubid)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The pubid must be numeric.'
     }
   }
   
   # Parameter check on contactid:
-  if ('contactid' %in% names(cl)){
-    if (!is.numeric(cl$contactid)){
+  if ('contactid' %in% names(cl)) {
+    if (!is.numeric(cl$contactid)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The contactid must be numeric.'
     }
   }
   
   # Parameter check on datasetid:
-  if ('datasetid' %in% names(cl)){
-    if (!is.numeric(cl$datasetid)){
+  if ('datasetid' %in% names(cl)) {
+    if (!is.numeric(cl$datasetid)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The datasetid must be numeric.'
     }
   }
   
   # Parameter check on author:
-  if ('author' %in% names(cl)){
-    if (!is.character(cl$author)){
+  if ('author' %in% names(cl)) {
+    if (!is.character(cl$author)) {
       error$flag <- 1
       error$message[[length(error$message) + 1]] <- 'The author name must be a character string.'
     }

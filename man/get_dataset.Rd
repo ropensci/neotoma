@@ -4,13 +4,26 @@
 \alias{get_dataset}
 \title{Obtain dataset information from the Neotoma Paleoecological Database or an existing object.}
 \usage{
-get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
-  taxonname, ageold, ageyoung, ageof, subdate)
+get_dataset(
+  x,
+  datasettype,
+  piid,
+  altmin,
+  altmax,
+  loc,
+  gpid,
+  taxonids,
+  taxonname,
+  ageold,
+  ageyoung,
+  ageof,
+  subdate
+)
 }
 \arguments{
 \item{x}{An optional value, either a \code{numeric} site ID or object of class \code{download}, \code{download_list} or \code{site}.}
 
-\item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.}
+\item{datasettype}{A character string corresponding to one of the allowed dataset types in the Neotoma Database.  Allowed types include: \code{"geochronologic"}, \code{"loss-on-ignition"}, \code{"pollen"}, \code{"plant macrofossils"}, \code{"vertebrate fauna"}, \code{"mollusks"}, and \code{"pollen surface sample"}.  See note in Details delow.}
 
 \item{piid}{Numeric value for the Principle Investigator's ID number.}
 
@@ -18,11 +31,11 @@ get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 
 \item{altmax}{Numeric value indicating the maximum altitude for the site (can be used alone or with \code{altmin}).}
 
-\item{loc}{A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Grewnwich or longitudes south of the equator}
+\item{loc}{A numeric vector \code{c(lonW, latS, lonE, latN)} representing the bounding box within which to search for sites.  The convention here is to use negative values for longitudes west of Greenwich or longitudes south of the equator}
 
-\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://api.neotomadb.org/apdx/geopol.htm}}
+\item{gpid}{A character string or numeric value, must correspond to a valid geopolitical identity in the Neotoma Database.  Use get.tables('GeoPoliticalUnits') for a list of acceptable values, or link here: \url{http://wnapi.neotomadb.org/apdx/geopol.htm}}
 
-\item{taxonids}{A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_tables('Taxa')} for a list of acceptable values.}
+\item{taxonids}{A numeric identifier for the taxon.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.}
 
 \item{taxonname}{A character string corresponding to a valid taxon identity in the Neotoma Database.  See \code{\link{get_table}} and use \code{get_table('Taxa')} for a list of acceptable values.}
 
@@ -36,7 +49,7 @@ get_dataset(x, datasettype, piid, altmin, altmax, loc, gpid, taxonids,
 }
 \value{
 More details on the use of these parameters can be obtained from
-   \url{http://api.neotomadb.org/doc/resources/datasets}.
+   \url{http://wnapi.neotomadb.org/doc/resources/datasets}.
 
    A list of class `dataset_list`, with each item corresponding to an individual record.
    Searches that return no items will result in a NULL value being returned.
@@ -50,33 +63,39 @@ More details on the use of these parameters can be obtained from
  \item{ \code{DatasetType}  }{The dataset type, such as: geochronologic, loss-on-ignition, pollen, plant macrofossils, vertebrate fauna, etc.}
  \item{ \code{AgeOldest}  }{The oldest of all sample ages (in calendar years before present) in the dataset.}
  \item{ \code{AgeYoungest}  }{The youngest of all sample ages (in calendar years before present) in the dataset.}
- \item{ \code{SubDates}  }{An array of objects that describe dataset submission events.  If multiple submissions occured then this is a table.}
+ \item{ \code{SubDates}  }{An array of objects that describe dataset submission events.  If multiple submissions occurred then this is a table.}
  \item{ \code{DatasetPIs}  }{An array of objects that describe Principal Investigators associated with a dataset.}
  \item{ \code{Site}  }{An object describing the site where the dataset samples were taken.}
 }
 \description{
 A function to access the Neotoma API and return datasets corresponding to the parameters defined by the user.
 }
+\details{
+With regards to \code{datasettypes}, because Neotoma is a "living" database, and new dataset types are being added in an ongoing manner as new research disciplines use the database, you can use \code{get_table("datasettypes")} to see the full list of available dataset types in the database.
+}
 \examples{
 \dontrun{
 # Search for sites with "Thuja" pollen that are older than 8kyr BP and
 # that are on the west coast of North America:
-t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.datasets <- get_dataset(taxonname='Thuja*', 
+                              loc=c(-150, 20, -100, 60), 
+                              ageyoung = 8000)
 
 # Search for vertebrate fossils in Canada (gpid: 756) within the last 2kyr.
 gpids <- get_table(table.name='GeoPoliticalUnits')
 canID <- gpids[which(gpids$GeoPoliticalName == 'Canada'),1]
 
-v2kyr.datasets <- get_dataset(datasettype='vertebrate fauna', gpid=canID, ageold = 2000)
+v2kyr.datasets <- get_dataset(datasettype='vertebrate fauna', 
+                              gpid=canID, 
+                              ageold = 2000)
 }
+}
+\references{
+Neotoma Project Website: http://www.neotomadb.org
+API Reference: API v1.0 documentation is deprecated. Please see https://api.neotomadb.org
 }
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-\references{
-Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
-}
 \keyword{IO}
 \keyword{connection}
-

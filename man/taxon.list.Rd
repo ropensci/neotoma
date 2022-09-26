@@ -4,12 +4,14 @@
 \name{taxon.list}
 \alias{taxon.list}
 \title{Neotoma taxon list}
-\format{a \code{data.frame} object}
+\format{
+a \code{data.frame} object
+}
 \source{
 The Neotoma database.
 }
 \usage{
-taxon.list
+data(taxon.list)
 }
 \description{
 The taxonomy table for datasets in neotoma, as would be returned by \code{\link{get_table}}
@@ -17,4 +19,3 @@ The taxonomy table for datasets in neotoma, as would be returned by \code{\link{
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-

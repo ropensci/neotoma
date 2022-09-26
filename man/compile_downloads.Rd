@@ -2,21 +2,22 @@
 % Please edit documentation in R/compile_downloads.R
 \name{compile_downloads}
 \alias{compile_downloads}
-\title{Function to convert multiple downloads into a single large table.}
+\title{Compile download objects}
 \usage{
 compile_downloads(downloads)
 }
 \arguments{
-\item{downloads}{A download_list as returned by \code{\link{get_download}}, or mutliple downloads joined in a list.}
+\item{downloads}{A download_list as returned by \code{\link{get_download}}, or multiple downloads joined in a list.}
 }
 \value{
 This command returns a data frame.
 }
 \description{
+Function to convert multiple downloads into a single large table.
+
 From the assemblage data for multiple cores, return a single data.frame with columns for site
 metadata and assemblage data.
-}
-\details{
+
 To support further synthesis and analysis \code{compile_download} works to transform a list
 returned by \code{\link{get_download}} into a large data frame with columns for site and sample attributes
 and also with the associated assemblage data at each sample depth.  This function also does the same for
@@ -26,9 +27,12 @@ single sites.
 \dontrun{
 #  Search for sites with "Thuja" pollen that are older than 8kyr BP and
 #  that are on the west coast of North America:
-t8kyr.datasets <- get_dataset(taxonname='Thuja*', loc=c(-150, 20, -100, 60), ageyoung = 8000)
+t8kyr.datasets <- get_dataset(taxonname='Thuja*', 
+                              loc=c(-150, 20, -100, 60), 
+                              ageyoung = 8000)
 
-#  Returns 3 records (as of 04/04/2013), get dataset for the first record, Gold Lake Bog.
+#  Returns 3 records (as of 04/04/2013), get dataset for the first record, 
+#  Gold Lake Bog.
 thuja.sites <- get_download(t8kyr.datasets)
 
 gold.p25 <- compile_taxa(thuja.sites, 'P25')
@@ -44,9 +48,6 @@ plot(x = all.gold$age,
 
 }
 }
-\author{
-Simon J. Goring \email{simon.j.goring@gmail.com}
-}
 \references{
 Neotoma Project Website: http://www.neotomadb.org
 
@@ -56,7 +57,9 @@ Whitmore J, Gajewski K, Sawada M, Williams JW, Shuman B, Bartlein PJ, Minckley T
 
 Williams J, Shuman B. 2008. Obtaining accurate and precise environmental reconstructions from the modern analog technique and North American surface pollen dataset. Quaternary Science Reviews. 27:669-687.
 
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
+}
+\author{
+Simon J. Goring \email{simon.j.goring@gmail.com}
 }
 \keyword{utilities}
-

@@ -4,10 +4,12 @@
 \alias{get_chroncontrol}
 \title{Function to return chronological control tables used to build age models.}
 \usage{
-get_chroncontrol(x, verbose = TRUE, add = FALSE)
+get_chroncontrol(x, chronology = 1, verbose = TRUE, add = FALSE)
 }
 \arguments{
-\item{x}{A single numeric chronology ID or a vector of numeric dataset IDs as returned by \code{\link{get_dataset}}.}
+\item{x}{A single numeric chronology ID, a vector of numeric dataset IDs as returned by \code{\link{get_dataset}} or a \code{download} or \code{download_list} object.}
+
+\item{chronology}{When \code{download} objects have more than associated chronology, which chronology do you want?  Default is \code{1}.}
 
 \item{verbose}{logical, should messages on API call be printed?}
 
@@ -32,11 +34,13 @@ Using the dataset ID, return all records associated with the data.  At present,
 }
 \examples{
 \dontrun{
-#  The point of pulling chronology tables is to re-build or examine the chronological
-#  information that was used to build the age-depth model for the core.  You can do this by hand,
-#  but the `write_agefile` function works with `download` objects directly.
+#  The point of pulling chronology tables is to re-build or examine the 
+#  chronological information that was used to build the age-depth model for 
+#  the core.  You can do this by hand, but the `write_agefile` function works 
+#  with `download` objects directly.
 
-three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), datasettype = "pollen"))
+three_pines <- get_download(get_dataset(get_site("Three Pines Bog"), 
+                                        datasettype = "pollen"))
 pines_chron <- get_chroncontrol(three_pines)
 
 # Spline interpolation:
@@ -47,13 +51,12 @@ new_ages <- predict(model, x = three_pines[[1]]$sample.meta$depth)
 
 }
 }
+\references{
++ Neotoma Project Website: http://www.neotomadb.org
++ API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
+}
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-\references{
-Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
-}
 \keyword{IO}
 \keyword{connection}
-

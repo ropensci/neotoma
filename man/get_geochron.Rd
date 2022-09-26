@@ -12,7 +12,7 @@ get_geochron(x, verbose = TRUE)
 \item{verbose}{logical; should messages on API call be printed?}
 }
 \value{
-This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) definined by the error returned
+This command returns either an object of class \code{"try-error"}' (see \code{\link{try}}) defined by the error returned
    from the Neotoma API call, or a \code{geochronologic} object, which is a list with two components, a \code{dataset} and a geochronology table, a \code{data.frame} with the following components:
 
  \item{ \code{sample.id} }{A unique identifier for the geochronological unit.}
@@ -21,10 +21,10 @@ This command returns either an object of class \code{"try-error"}' (see \code{\l
  \item{ \code{e.older} }{The older error limit of the age value.  Commonly 1 standard deviation.}
  \item{ \code{e.young} }{The younger error limit of the age value.}
  \item{ \code{delta13C} }{The measured or assumed delta13C value for radiocarbon dates, if provided.}
- \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatable with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
+ \item{ \code{material.dated} }{A table describing the collection, including dataset information, PI data compatible with \code{\link{get_contact}} and site data compatable with \code{\link{get_site}}.}
  \item{ \code{geo.chron.type} }{Text string, type of geochronological analysis, i.e., Radiocarbon dating, luminesence.}
  \item{ \code{notes} }{Text string}
- \item{ \code{infinite} }{Boolean, does the dated material return an "infinte" date?}
+ \item{ \code{infinite} }{Boolean, does the dated material return an "infinite" date?}
 
  A full data object containing all the relevant geochronological data available for a dataset.
 }
@@ -34,21 +34,23 @@ Using the dataset ID, return all geochronological data associated with the dataI
 }
 \examples{
 \dontrun{
-#  Search for the sites around Marion Lake, BC.  I want to find sites within about 1km.
+#  Search for the sites around Marion Lake, BC.  I want to find sites within 
+#  about 1km.
 
 marion <- get_site(sitename = "Marion Lake*")
 
 marion_close <- get_closest(marion, n = 10, buffer = 1)
 
-#  Returns 116 records (as of 13/07/2015).  These are the pollen records though, we want the sites:
+#  Returns 116 records (as of 13/07/2015).  These are the pollen records though, 
+#  we want the sites:
 geochron.records <- get_geochron(marion_close)
 
 #  We want to extract all the radiocarbon ages from the records:
 
 get_ages <- function(x){
   any.ages <- try(x[[2]]$age[x[[2]]$age.type == 'Radiocarbon years BP'])
-  if(class(any.ages) == 'try-error') output <- NA
-  if(!class(any.ages) == 'try-error') output <- unlist(any.ages)
+  if(is(any.ages, 'try-error')) output <- NA
+  if(!is(any.ages, 'try-error')) output <- unlist(any.ages)
   output
 }
 
@@ -60,13 +62,12 @@ hist(radio.chron[radio.chron<40000], breaks=seq(0, 25000, by = 1000),
 }
 
 }
+\references{
+Neotoma Project Website: http://www.neotomadb.org
+API Reference:  http://wnapi.neotomadb.org/doc/resources/contacts
+}
 \author{
 Simon J. Goring \email{simon.j.goring@gmail.com}
 }
-\references{
-Neotoma Project Website: http://www.neotomadb.org
-API Reference:  http://api.neotomadb.org/doc/resources/contacts
-}
 \keyword{IO}
 \keyword{connection}
-

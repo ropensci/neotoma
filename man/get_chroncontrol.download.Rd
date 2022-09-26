@@ -4,10 +4,12 @@
 \alias{get_chroncontrol.download}
 \title{Function to return chronological control tables from a \code{download} object.}
 \usage{
-\method{get_chroncontrol}{download}(x, verbose = TRUE, add = FALSE)
+\method{get_chroncontrol}{download}(x, chronology = 1, verbose = TRUE, add = FALSE)
 }
 \arguments{
 \item{x}{A single \code{download} object.}
+
+\item{chronology}{For \code{download} methods, which chronology controls should be used?}
 
 \item{verbose}{logical; should messages on API call be printed?}
 
@@ -16,4 +18,3 @@
 \description{
 Using a \code{download}, return the default chron-control table as a \code{data.frame}.
 }
-
