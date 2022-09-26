@@ -528,7 +528,7 @@ get_download.default <- function(x, verbose = TRUE) {
             take <- !(taxon.list$taxon.group == "Laboratory analyses" |
                         taxon.list$taxon.group == "Charcoal")
 
-            count.data <- t(cast_table[take, 7:ncol(cast_table)])
+            count.data <- t(cast_table[take, 7:ncol(cast_table), drop = FALSE])
             if ('alias' %in% colnames(taxon.list)) {
               colnames(count.data) <- taxon.list$alias[take]
             } else {
@@ -539,7 +539,7 @@ get_download.default <- function(x, verbose = TRUE) {
             # the same way as the previous:
 
             if (sum(take) > 0) {
-              lab.data <- t(cast_table[!take, 7:ncol(cast_table)])
+              lab.data <- t(cast_table[!take, 7:ncol(cast_table), drop = FALSE])
               colnames(lab.data) <- taxon.list$alias[!take]
             } else {
                 lab.data <- NULL
