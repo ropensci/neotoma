@@ -9,7 +9,7 @@ neotoma
 [![NSF-1550707](https://img.shields.io/badge/NSF-1550707-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1550707)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
 
-**NOTE** *The Neotoma R package accesses the Windows-based API for the database.  This API is being deprecated, but is still available.  Due to changes in the database servers, the API Help is no longer functioning. Links to API help have been left, but do not resolve.*
+**NOTE** *The package `neotoma` has now been deprecated. Unfortunately our wnapi.neotomadb.org server reached end of life and was no longer operable. The package has been replaced by [neotoma2](https://github.com/NeotomaDB/neotoma2). As much as possible we have kept many of the same patterns, but there are new data structures. The wnapi server was only passing along data submitted before June 2020. The new package accesses all data up until the present. Please contact us directly either by email (goring@wisc.edu) or on our slack workspace (there is an it_r channel) and we can help assist you in migrating to neotoma2.*
 
 The `neotoma` package is a programmatic R interface to the [Neotoma Paleoecological Database](http://www.neotomadb.org/). The package is intended to both allow users to search for sites and to download data for use in analyical workflows of paleoecological research.
 
@@ -23,7 +23,7 @@ For ongoing news, issues or information please join the [Neotoma Slack server](h
 
 ### Development
 
-*We welcome contributions from any individual, whether code, documentation, or issue tracking.  All participants are expected to follow the [code of conduct](https://github.com/ROpensci/neotoma/blob/master/code_of_conduct.md) for this project.*
+*We expect no further development of this package, however, we welcome contributions from any individual, whether code, documentation, or issue tracking.  All participants are expected to follow the [code of conduct](https://github.com/ROpensci/neotoma/blob/master/code_of_conduct.md) for this project.*
 
 + [Simon Goring](http://goring.org) - University of Wisconsin-Madison, Department of Geography
 
